@@ -1,0 +1,24 @@
+TODO actual license
+
+If you want to take code from this library, please contact us first (see
+`AUTHORS'). If you want to link your program with our library, you're free to do
+so, without needing to contact us first, for any purpose you want.
+
+If you want to redistribute this library (binary or source code), please contact
+us first as well. You'll probably also have to put our copyright notice
+somewhere, as we don't type our fingers to the bone so someone steals all our
+hard work, now do we?
+
+I prefer that you don't redistribute modified versions of my source code, as
+this can get very confusing (until we have a real licence, that is). Instead,
+redistribute patches. If you really want to redistribute a modified version,
+please contact us first. If your patches are good, they'll probably go upstream,
+which means there is no need to redistribute a version that's different from
+upstream.
+
+I don't get any money programming this stuff, it's just a hobby. You didn't pay
+for downloading this. That means: no warranty. Use at your own risk. This code
+may screw up your computer. This code may eat babies. Etc...
+
+If you've anything to say about this program, just look at the `AUTHORS' file ;)
+(I'm getting repetive, no?)
