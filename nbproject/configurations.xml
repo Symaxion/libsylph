@@ -1,0 +1,498 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="51">
+  <logicalFolder name="root" displayName="root" projectFiles="true">
+    <logicalFolder name="HeaderFiles"
+                   displayName="Header Files"
+                   projectFiles="true">
+    </logicalFolder>
+    <logicalFolder name="f1" displayName="Other files" projectFiles="true">
+      <itemPath>AUTHORS</itemPath>
+      <itemPath>COPYING</itemPath>
+      <itemPath>developers.sh</itemPath>
+      <itemPath>README</itemPath>
+    </logicalFolder>
+    <logicalFolder name="ResourceFiles"
+                   displayName="Resource Files"
+                   projectFiles="true">
+    </logicalFolder>
+    <logicalFolder name="SourceFiles"
+                   displayName="Source Files"
+                   projectFiles="true">
+    </logicalFolder>
+    <logicalFolder name="src" displayName="src" projectFiles="true">
+      <logicalFolder name="Sylph" displayName="Sylph" projectFiles="true">
+        <logicalFolder name="AppServ" displayName="AppServ" projectFiles="true">
+          <logicalFolder name="IO" displayName="IO" projectFiles="true">
+            <itemPath>src/Sylph/AppServ/IO/FileOps.h</itemPath>
+          </logicalFolder>
+        </logicalFolder>
+        <logicalFolder name="Core" displayName="Core" projectFiles="true">
+          <logicalFolder name="IO" displayName="IO" projectFiles="true">
+            <itemPath>src/Sylph/Core/IO/FileFilter.h</itemPath>
+            <itemPath>src/Sylph/Core/IO/FileType.h</itemPath>
+          </logicalFolder>
+          <itemPath>src/Sylph/Core/Application.cpp</itemPath>
+          <itemPath>src/Sylph/Core/Application.h</itemPath>
+          <itemPath>src/Sylph/Core/Array.cpp</itemPath>
+          <itemPath>src/Sylph/Core/Array.h</itemPath>
+          <itemPath>src/Sylph/Core/ArrayIterator.cpp</itemPath>
+          <itemPath>src/Sylph/Core/ArrayIterator.h</itemPath>
+          <itemPath>src/Sylph/Core/Boostdefs.h</itemPath>
+          <itemPath>src/Sylph/Core/Collection.h</itemPath>
+          <itemPath>src/Sylph/Core/Comparable.h</itemPath>
+          <itemPath>src/Sylph/Core/Dictionary.cpp</itemPath>
+          <itemPath>src/Sylph/Core/Dictionary.h</itemPath>
+          <itemPath>src/Sylph/Core/Equals.cpp</itemPath>
+          <itemPath>src/Sylph/Core/Equals.h</itemPath>
+          <itemPath>src/Sylph/Core/Exception.h</itemPath>
+          <itemPath>src/Sylph/Core/File.cpp</itemPath>
+          <itemPath>src/Sylph/Core/File.h</itemPath>
+          <itemPath>src/Sylph/Core/Hash.cpp</itemPath>
+          <itemPath>src/Sylph/Core/Hash.h</itemPath>
+          <itemPath>src/Sylph/Core/Hashable.h</itemPath>
+          <itemPath>src/Sylph/Core/Iterable.h</itemPath>
+          <itemPath>src/Sylph/Core/Iterator.h</itemPath>
+          <itemPath>src/Sylph/Core/Library.cpp</itemPath>
+          <itemPath>src/Sylph/Core/Library.h</itemPath>
+          <itemPath>src/Sylph/Core/Mylib.h</itemPath>
+          <itemPath>src/Sylph/Core/Object.cpp</itemPath>
+          <itemPath>src/Sylph/Core/Object.h</itemPath>
+          <itemPath>src/Sylph/Core/Random.h</itemPath>
+          <itemPath>src/Sylph/Core/String.cpp</itemPath>
+          <itemPath>src/Sylph/Core/String.h</itemPath>
+          <itemPath>src/Sylph/Core/UncaughtExceptionHandler.cpp</itemPath>
+          <itemPath>src/Sylph/Core/UncaughtExceptionHandler.h</itemPath>
+          <itemPath>src/Sylph/Core/Util.cpp</itemPath>
+          <itemPath>src/Sylph/Core/Util.h</itemPath>
+          <itemPath>src/Sylph/Core/Vector.cpp</itemPath>
+          <itemPath>src/Sylph/Core/Vector.h</itemPath>
+          <itemPath>src/Sylph/Core/VectorIterator.cpp</itemPath>
+          <itemPath>src/Sylph/Core/VectorIterator.h</itemPath>
+          <itemPath>src/Sylph/Core/Wrapper.h</itemPath>
+        </logicalFolder>
+        <logicalFolder name="f1" displayName="OS" projectFiles="true">
+          <itemPath>src/Sylph/OS/GuessOS.h</itemPath>
+          <itemPath>src/Sylph/OS/LinuxBundleAppSelf.cpp</itemPath>
+          <itemPath>src/Sylph/OS/LinuxBundleAppSelf.h</itemPath>
+          <itemPath>src/Sylph/OS/LinuxFHSAppSelf.h</itemPath>
+          <itemPath>src/Sylph/OS/MacOSAppSelf.h</itemPath>
+          <itemPath>src/Sylph/OS/MacOSFHSAppSelf.h</itemPath>
+          <itemPath>src/Sylph/OS/OS.h</itemPath>
+          <itemPath>src/Sylph/OS/WindowsAppSelf.h</itemPath>
+        </logicalFolder>
+      </logicalFolder>
+      <itemPath>src/Sylph.cpp</itemPath>
+      <itemPath>src/Sylph.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false">
+      <itemPath>developers.sh</itemPath>
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Debug" type="2">
+      <toolsSet>
+        <developmentServer>localhost</developmentServer>
+        <compilerSet>GNU_C++0x|GNU</compilerSet>
+        <platform>4</platform>
+      </toolsSet>
+      <compileType>
+        <ccCompilerTool>
+          <includeDirectories>
+            <directoryPath>src</directoryPath>
+            <directoryPath>deps/binreloc</directoryPath>
+            <directoryPath>deps/boost</directoryPath>
+            <directoryPath>deps/gc/include</directoryPath>
+          </includeDirectories>
+          <commandLine>-std=c++0x</commandLine>
+          <preprocessorList>
+            <Elem>SYLPH_DEBUG</Elem>
+            <Elem>__GXX_EXPERIMENTAL_CXX0X__</Elem>
+          </preprocessorList>
+        </ccCompilerTool>
+        <linkerTool>
+          <linkerAddLib>
+            <directoryPath>lib</directoryPath>
+          </linkerAddLib>
+          <linkerLibItems>
+            <linkerLibLibItem>boost</linkerLibLibItem>
+            <linkerLibLibItem>cord</linkerLibLibItem>
+            <linkerLibLibItem>gc</linkerLibLibItem>
+            <linkerLibStdlibItem>PosixThreads</linkerLibStdlibItem>
+            <linkerLibLibItem>binreloc</linkerLibLibItem>
+          </linkerLibItems>
+        </linkerTool>
+      </compileType>
+      <item path="AUTHORS">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="COPYING">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="README">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="developers.sh">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/Sylph.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/AppServ/IO/FileOps.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Application.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Application.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Array.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Array.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/ArrayIterator.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/Sylph/Core/ArrayIterator.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Boostdefs.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Collection.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Comparable.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Dictionary.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Dictionary.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Equals.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Equals.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Exception.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/File.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/Sylph/Core/File.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Hash.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Hash.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Hashable.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/IO/FileFilter.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/IO/FileType.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Iterable.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Iterator.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Library.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Library.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Mylib.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Object.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Object.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Random.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/String.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/Sylph/Core/String.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/UncaughtExceptionHandler.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/Sylph/Core/UncaughtExceptionHandler.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Util.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Util.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Vector.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Vector.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/VectorIterator.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/Sylph/Core/VectorIterator.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Wrapper.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/OS/GuessOS.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/OS/LinuxBundleAppSelf.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/Sylph/OS/LinuxBundleAppSelf.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/OS/LinuxFHSAppSelf.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/OS/MacOSAppSelf.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/OS/MacOSFHSAppSelf.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/OS/OS.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/OS/WindowsAppSelf.h">
+        <itemTool>3</itemTool>
+      </item>
+    </conf>
+    <conf name="Release" type="2">
+      <toolsSet>
+        <developmentServer>localhost</developmentServer>
+        <compilerSet>GNU|GNU</compilerSet>
+        <platform>2</platform>
+      </toolsSet>
+      <compileType>
+        <cCompilerTool>
+          <developmentMode>5</developmentMode>
+        </cCompilerTool>
+        <ccCompilerTool>
+          <developmentMode>5</developmentMode>
+          <includeDirectories>
+            <directoryPath>src</directoryPath>
+            <directoryPath>deps/binreloc</directoryPath>
+            <directoryPath>deps/boost</directoryPath>
+            <directoryPath>deps/gc/include</directoryPath>
+          </includeDirectories>
+          <commandLine>-std=c++0x</commandLine>
+        </ccCompilerTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <linkerTool>
+          <linkerAddLib>
+            <directoryPath>lib</directoryPath>
+          </linkerAddLib>
+          <linkerLibItems>
+            <linkerLibLibItem>boost</linkerLibLibItem>
+            <linkerLibLibItem>cord</linkerLibLibItem>
+            <linkerLibLibItem>gc</linkerLibLibItem>
+            <linkerLibStdlibItem>PosixThreads</linkerLibStdlibItem>
+            <linkerLibLibItem>binreloc</linkerLibLibItem>
+          </linkerLibItems>
+        </linkerTool>
+      </compileType>
+      <item path="AUTHORS">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="COPYING">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="README">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="developers.sh">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/Sylph.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/AppServ/IO/FileOps.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Application.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Application.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Array.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Array.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/ArrayIterator.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/Sylph/Core/ArrayIterator.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Boostdefs.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Collection.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Comparable.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Dictionary.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Dictionary.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Equals.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Equals.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Exception.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/File.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/Sylph/Core/File.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Hash.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Hash.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Hashable.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/IO/FileFilter.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/IO/FileType.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Iterable.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Iterator.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Library.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Library.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Mylib.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Object.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Object.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Random.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/String.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/Sylph/Core/String.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/UncaughtExceptionHandler.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/Sylph/Core/UncaughtExceptionHandler.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Util.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Util.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Vector.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Vector.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/VectorIterator.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/Sylph/Core/VectorIterator.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Wrapper.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/OS/GuessOS.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/OS/LinuxBundleAppSelf.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/Sylph/OS/LinuxBundleAppSelf.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/OS/LinuxFHSAppSelf.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/OS/MacOSAppSelf.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/OS/MacOSFHSAppSelf.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/OS/OS.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/OS/WindowsAppSelf.h">
+        <itemTool>3</itemTool>
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>

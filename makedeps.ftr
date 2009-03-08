@@ -1,0 +1,14 @@
+# Makedeps -- footer
+# to be sourced from every makedeps.sh
+
+case $task in
+  clean)
+    clean
+  ;;
+  all|'')
+    all
+  ;;
+  *)
+    echo "Usage: $0 all|clean"
+  ;;
+esac

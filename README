@@ -1,0 +1,85 @@
+     _             _       _______             _            _
+    / /           / /     / _____/            / /          / /
+   / /       _   / /__   / /____    _    _   / / _____    / /_
+  / /       / / / __  \  \_____ \  / /  / / / / / __  \  / __ \
+ / /_____  / / / /__/ /  _____/ / / /__/ / / / / /__/ / / /  \ \
+/_______/ /_/ /______/  /______/  \___  / /_/ / _____/ /_/   /_/
+                                     / /     / /
+                                    / /     / /
+                                   /_/     /_/
+
+############################################################
+
+  Table of Contents
+
+  1. Dependancies
+    1.1 Supported Operating Systems
+    1.2 Supported Compilers
+    1.3 Additional Libraries
+
+  2. Build instructions
+    2.1 Compiling the source code
+    2.2 Installing
+
+  3. Acknowledgements
+    3.1 Copyright and licensing
+    3.2 Reporting bugs
+
+###########################################################
+
+  1. Dependancies
+
+    1.1 Supported Operating Systems
+
+       Currently, LibSylph can be run most Unix-systems, including, but not
+       limited to, Linux, FreeBSD, Cygwin, Mac OS X, and a few others.
+       In order for the binary relocation function to work (i.e.
+       thisapp->getXXX() ), support for /proc/self/exe is required. On Mac OS X,
+       the /proc filesystem is not enabled by default. However, OS X provides
+       an alternate method for retrieving the full path to the running
+       executable, therefore no extra software is needed to function correctly
+       on Mac OS X.
+
+       Minimal support for Microsoft Windows is included as well. However, no
+       compiler for this platform meets the required features (see 1.2), there-
+       fore LibSylph WON'T run on Microsoft Windows currently.
+
+    1.2 Supported Compilers
+
+        As of now, only one specific compiler is supported: the GNU C++ compiler
+        (g++), version 4.4.0-20081219 or later. LibSylph uses certain GNU C++
+        specific extensions. Furthermore, support for C++0x (more specific,
+        initializer lists) is required. At the day of writing this document,
+        only the compiler mentioned above supports these extensions. In case
+        you found another compiler to meet these requirements, please contact
+        the LibSylph developers (see section 3.2)
+
+  2. Build Instructions
+
+    2.1 Compiling the source code
+
+        TODO CMake
+        Currently it is sufficient to run 'make'. This may or may not work. In
+        case it doesn't, don't blame me.
+
+    2.2 Installing
+
+        TODO Cmake
+        No installation procedure is included at the moment. Just copy all
+        headers to /usr/include and the dynamic library file to /usr/lib.
+
+  3. Acknowledgements
+
+    3.1 Copyright and licensing
+
+        Please see the files `AUTHORS' and `COPYING' to see the names of the
+        original authors and the license of the code, respectively.
+
+    3.2 Reporting bugs.
+
+        TODO Mailing list.
+        We're poor devs, we don't have a mailing list. Just bother one of us
+        with your questions (see `AUTHORS') and if we're in a good mood, we'll
+        reply.
+
+###########################################################
