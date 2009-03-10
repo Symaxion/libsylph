@@ -88,13 +88,13 @@ void Vector::set(std::size_t idx, const T & t) {
 void Vector::trim() {
     Array<T> * oldElements = elements;
     elements = new Array<T > (elementCount);
-    arraycopy(oldElements, 0, elements, 0, elementCount);
+    arraycopy(*oldElements, 0, *elements, 0, elementCount);
     delete oldElements;
 }
 
 bool Vector::add(const T & t) {
     ensureCapacity(elementCount + 1);
-    elements[elementCount] = t;
+    *elements[elementCount] = t;
     elementCount++;
     return true;
 }
@@ -109,7 +109,7 @@ bool Vector::addAll(Collection<T> & c) {
 
 void Vector::clear() {
     Array<T> * oldElements = elements;
-    elements = new Array<T > (oldElements.length);
+    elements = new Array<T > (oldElements->length);
     delete oldElements;
     elementCount = 0;
 }
@@ -155,7 +155,7 @@ void Vector::removeAt(std::size_t idx) {
     if(idx > size()) sthrow(ArrayException,"Vector out of bounds");
     elementCount--;
     if (idx < elementCount)
-      arraycopy(elements, idx + 1, elements, idx,
+      arraycopy(*elements, idx + 1, *elements, idx,
                        elementCount - idx);
 }
 
@@ -163,12 +163,12 @@ bool Vector::removeAll(Collection<T> & c) {
     std::size_t i;
     std::size_t j;
     for (i = 0; i < elementCount; i++) {
-        if (c.contains(elements[i])) break;
+        if (c.contains(*elements[i])) break;
     }
     if (i == elementCount) return false;
 
     for (j = i++; i < elementCount; i++) {
-        if (!c.contains(elements[i])) elements[j++] = elements[i];
+        if (!c.contains(*elements[i])) *elements[j++] = *elements[i];
     }
     elementCount -= i - j;
     return true;
@@ -178,12 +178,12 @@ bool Vector::retainAll(Collection<T> & c) {
     std::size_t i;
     std::size_t j;
     for (i = 0; i < elementCount; i++) {
-        if (!c.contains(elements[i])) break;
+        if (!c.contains(*elements[i])) break;
     }
     if (i == elementCount) return false;
 
     for (j = i++; i < elementCount; i++) {
-        if (c.contains(elements[i])) elements[j++] = elements[i];
+        if (c.contains(*elements[i])) *elements[j++] = *elements[i];
     }
     elementCount -= i - j;
     return true;
@@ -212,7 +212,7 @@ void Vector::ensureCapacity(std::size_t capacity) {
     else newsize = capacity + capacityIncrease;
     Array<T> * oldElements = elements;
     elements = new Array<T > (newsize);
-    arraycopy(oldElements, 0, elements, 0, oldElements.length);
+    arraycopy(*oldElements, 0, *elements, 0, oldElements->length);
     capacity = newsize;
     delete oldElements;
 }
@@ -242,5 +242,13 @@ int Vector::lastIndexOf(T & t, std::size_t idx) {
         }
     }
     return -1;
+}
+
+Vector<T> * Vector::deepCopy() const {
+    Vector<T> * toReturn = new Vector(elements->length,capacityIncrease);
+    arraycopy(*elements,0,*(toReturn->elements),0,elements->length);
+    toReturn->elementCount = elementCount;
+    toReturn->capacity = capacity;
+    return toReturn;
 }
 SYLPH_END_NAMESPACE(Core)

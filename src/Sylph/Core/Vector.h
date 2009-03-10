@@ -44,6 +44,7 @@ public:
     bool contains(T & t) const;
     bool containsAll(Collection<T> & c) const;
     bool operator ==(Collection<T> & c) const;
+    Vector<T> * deepCopy() const;
 
     int hashCode() const;
     bool empty() const;

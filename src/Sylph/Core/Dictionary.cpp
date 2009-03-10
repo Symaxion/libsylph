@@ -77,7 +77,7 @@ Dictionary::Dictionary(Dictionary<Key, Value, HashFunction> & orig) {
     arraycopy(*(orig.buckets), 0, *buckets, 0, orig.buckets->length);
 }
 
-virtual Dictionary::~Dictionary() {
+Dictionary::~Dictionary() {
     delete this->buckets;
 }
 
@@ -94,7 +94,7 @@ bool Dictionary::containsValue(Value & value) const {
 
 }
 
-Vector<DictionaryEntry> Dictionary::entrySet() {
+const Vector<DictionaryEntry> Dictionary::entrySet() {
 
 }
 
@@ -132,12 +132,12 @@ bool Dictionary::empty() {
     return size() == 0;
 }
 
-Vector<_key> Dictionary::keys() {
-
+const Vector<_key> Dictionary::keys() {
+    return keyCache;
 }
 
-Vector<_value> Dictionary::values() {
-
+const Vector<_value *> Dictionary::values() {
+    return valueCache;
 }
 
 _value * Dictionary::put(Key & key, Value & value) {
@@ -148,6 +148,8 @@ _value * Dictionary::put(Key & key, Value & value) {
         if (Equals(key, entry->key)) {
             Value * val = entry->value;
             entry->value = val;
+            valueCache.remove(val);
+            valueCache.add(value);
             return val;
         } else {
             entry = entry->next;
@@ -161,13 +163,17 @@ _value * Dictionary::put(Key & key, Value & value) {
     DictionaryEntry<Key, Value> newEnt = new DictionaryEntry<Key, Value > (key, value);
     newEnt.next = buckets[idx];
     buckets[idx] = newEnt;
+    keyCache.add(key);
+    valueCache.add(value);
+    entryCache.add(newEnt);
 
     return NULL;
 }
 
 void Dictionary::putAll(Dictionary<Key, Value, HashFunction> & dict) {
+
     sforeach(DictionaryEntry de, dict.entrySet()) {
-        this->put(de.key,de.value);
+        this->put(de.key, de.value);
     }
 }
 
@@ -184,6 +190,22 @@ int Dictionary::hash(Key & key) {
 }
 
 void Dictionary::rehash() {
+    Array<DictionaryEntry<Key, Value>*> * oldBuckets = buckets;
 
+    int newcapacity = (buckets.length * 2) + 1;
+    threshold = (int) (newcapacity * loadFactor);
+    buckets = new Array<DictionaryEntry<Key, Value>*>(newcapacity);
+
+    for (int i = oldBuckets.length - 1; i >= 0; i--) {
+        DictionaryEntry<Key, Value>* entry = oldBuckets[i];
+        while (entry != NULL) {
+            int idx = hash(entry->key);
+            DictionaryEntry<Key, Value>* dest = buckets[idx];
+            DictionaryEntry<Key, Value>* next = entry->next;
+            entry->next = buckets[idx];
+            buckets[idx] = entry;
+            entry = next;
+        }
+    }
 }
 SYLPH_END_NAMESPACE(Core)
