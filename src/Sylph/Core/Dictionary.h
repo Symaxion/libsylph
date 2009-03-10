@@ -31,7 +31,7 @@ public:
     void clear();
     bool containsKey(Key & key) const;
     bool containsValue(Value & value) const;
-    Vector<DictionaryEntry> entrySet();
+    const Vector<DictionaryEntry> entrySet();
 
     Value * get(Key & key);
     const Value * get(Key & key) const;
@@ -40,8 +40,8 @@ public:
     const DictionaryPointer<Key> operator[](Key & key) const;
 
     bool empty();
-    Vector<Key> keys();
-    Vector<Value> values();
+    const Vector<Key> keys();
+    const Vector<Value *> values();
 
     Value * put(Key & key, Value * value);
     void putAll(Dictionary<Key,Value,HashFunction> & dict);
@@ -51,6 +51,9 @@ public:
 private:
     std::size_t size;
     Array<DictionaryEntry<Key,Value>*> * buckets;
+    Vector<Key> keyCache;
+    Vector<Value *> valueCache;
+    Vector<DictionaryEntry<Key,Value>*> entryCache;
     std::size_t threshold;
     float loadFactor;
     HashFunction hashf;
