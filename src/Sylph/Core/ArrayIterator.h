@@ -20,7 +20,7 @@ SYLPH_PUBLIC
 template<class T>
 class ArrayIterator : public virtual Iterator<T> {
 public:
-    ArrayIterator(Array<T> & array) : ar(array) {}
+    ArrayIterator(Array<T> & array) : ar(&array) {}
     virtual ~ArrayIterator() {}
     bool hasNext() const;
     const T & next() const;
@@ -29,7 +29,7 @@ public:
     std::size_t nextIndex() const;
     std::size_t previousIndex() const;
 protected:
-    Array<T> ar;
+    Array<T> * ar;
     T * last;
     std::size_t idx = 0;
 };

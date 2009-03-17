@@ -20,7 +20,7 @@ SYLPH_PUBLIC
 template<class T>
 class VectorIterator : public virtual Iterator<T> {
 public:
-    VectorIterator(Vector<T> & vector) : vt(vector) {}
+    VectorIterator(Vector<T> & vector) : vt(&vector) {}
     virtual ~VectorIterator() {}
     bool hasNext() const;
     const T & next() const;
@@ -29,7 +29,7 @@ public:
     std::size_t nextIndex() const;
     std::size_t previousIndex() const;
 protected:
-    Vector<T> vt;
+    Vector<T> * vt;
     T * last;
     std::size_t idx = 0;
 };

@@ -81,21 +81,29 @@ Dictionary::~Dictionary() {
     delete this->buckets;
 }
 
-void Dictionary::clear() {
-    delete this->buckets;
-    this->buckets = new new Array<DictionaryEntry<Key, Value>*>(11);
-}
-
 bool Dictionary::containsKey(Key & key) const {
-
+    std::size_t idx = hash(key);
+    DictionaryEntry<Key, Value> * entry = buckets[idx];
+    while (entry != NULL) {
+        if (Equals(key, entry->key)) return true;
+        entry = entry->next;
+    }
+    return false;
 }
 
 bool Dictionary::containsValue(Value & value) const {
-
+    for (std::size_t i = buckets.length - 1; i >= 0; i--) {
+        DictionaryEntry<Key, Value> * entry = buckets[i];
+        while (entry != NULL) {
+            if (Equals(value, entry->value)) return true;
+            entry = entry->next;
+        }
+    }
+    return false;
 }
 
 const Vector<DictionaryEntry> Dictionary::entrySet() {
-
+    ;
 }
 
 _value * Dictionary::get(Key & key) {
@@ -133,11 +141,10 @@ bool Dictionary::empty() {
 }
 
 const Vector<_key> Dictionary::keys() {
-    return keyCache;
+    
 }
-
 const Vector<_value *> Dictionary::values() {
-    return valueCache;
+    
 }
 
 _value * Dictionary::put(Key & key, Value & value) {
@@ -148,8 +155,6 @@ _value * Dictionary::put(Key & key, Value & value) {
         if (Equals(key, entry->key)) {
             Value * val = entry->value;
             entry->value = val;
-            valueCache.remove(val);
-            valueCache.add(value);
             return val;
         } else {
             entry = entry->next;
@@ -163,9 +168,6 @@ _value * Dictionary::put(Key & key, Value & value) {
     DictionaryEntry<Key, Value> newEnt = new DictionaryEntry<Key, Value > (key, value);
     newEnt.next = buckets[idx];
     buckets[idx] = newEnt;
-    keyCache.add(key);
-    valueCache.add(value);
-    entryCache.add(newEnt);
 
     return NULL;
 }
@@ -178,10 +180,33 @@ void Dictionary::putAll(Dictionary<Key, Value, HashFunction> & dict) {
 }
 
 _value * Dictionary::remove(Key & key) {
+    std::size_t idx = hash(key);
+    DictionaryEntry<Key, Value> * entry = buckets[idx];
+    DictionaryEntry<Key, Value> * last = NULL;
 
+    while (entry != NULL)
+      {
+        if (Equals(key, entry->key))
+          {
+            if (last == NULL) { buckets[idx] = entry->next; }
+            else {
+
+      last->next = entry->next; }
+            size--;
+            return entry->value;
+          }
+        last = entry;
+        entry = entry->next;
+      }
+    return NULL;
 }
 
 void Dictionary::clear() {
+    delete buckets;
+
+    threshold = loadFactor * 11;
+    size = 0;
+    buckets = new Array<DictionaryEntry<Key, Value>*>(11);
 
 }
 
@@ -200,7 +225,6 @@ void Dictionary::rehash() {
         DictionaryEntry<Key, Value>* entry = oldBuckets[i];
         while (entry != NULL) {
             int idx = hash(entry->key);
-            DictionaryEntry<Key, Value>* dest = buckets[idx];
             DictionaryEntry<Key, Value>* next = entry->next;
             entry->next = buckets[idx];
             buckets[idx] = entry;

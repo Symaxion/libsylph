@@ -15,6 +15,7 @@ SYLPH_START_NAMESPACE(Core)
 class Vector;
 class DictionaryPointer;
 class DictionaryEntry;
+enum DictionaryIteratorType;
 
 template<class _key, class _value, class _hash = Hash<_key>()>
 class Dictionary {
@@ -47,13 +48,15 @@ public:
     void putAll(Dictionary<Key,Value,HashFunction> & dict);
 
     Value * remove(Key & key);
-    void clear();
+    
+    template<class T>
+    DictionaryIterator<T,Key,Value> iterator(DictionaryIteratorType type);
+    DictionaryIterator<Key,Key,Value> keyIterator();
+    DictionaryIterator<Value,Key,Value> valueIterator();
+    DictionaryIterator<DictionaryEntry *,Key,Value> entryIterator();
 private:
     std::size_t size;
     Array<DictionaryEntry<Key,Value>*> * buckets;
-    Vector<Key> keyCache;
-    Vector<Value *> valueCache;
-    Vector<DictionaryEntry<Key,Value>*> entryCache;
     std::size_t threshold;
     float loadFactor;
     HashFunction hashf;

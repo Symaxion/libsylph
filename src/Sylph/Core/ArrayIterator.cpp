@@ -4,11 +4,11 @@
 SYLPH_START_NAMESPACE(Core)
 
 bool ArrayIterator::hasNext() const {
-    return idx < ar.length();
+    return idx < ar->length();
 }
 
 const T & ArrayIterator::next() const {
-    return last = ar[idx++];
+    return last = *ar[idx++];
 }
 
 bool ArrayIterator::hasPrevious() const {
@@ -16,7 +16,7 @@ bool ArrayIterator::hasPrevious() const {
 }
 
 const T & ArrayIterator::previous() const {
-    return last = ar[--idx];
+    return last = *ar[--idx];
 }
 
 std::size_t ArrayIterator::nextIndex() const {

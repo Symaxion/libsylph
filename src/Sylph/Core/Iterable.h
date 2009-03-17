@@ -14,7 +14,7 @@
 SYLPH_START_NAMESPACE(Core)
 
         SYLPH_PUBLIC
-        template<typename T>
+        template<class T>
         interface Iterable : public Object {
         public:
             Iterable() {}

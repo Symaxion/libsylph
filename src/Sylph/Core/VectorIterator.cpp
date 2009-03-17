@@ -11,11 +11,11 @@
 SYLPH_START_NAMESPACE(Core)
 
 bool VectorIterator::hasNext() const {
-    return idx < vt.size();
+    return idx < vt->size();
 }
 
 const T & VectorIterator::next() const {
-    return last = vt[idx++];
+    return last = *vt[idx++];
 }
 
 bool VectorIterator::hasPrevious() const {
@@ -23,7 +23,7 @@ bool VectorIterator::hasPrevious() const {
 }
 
 const T & VectorIterator::previous() const {
-    return last = vt[--idx];
+    return last = *vt[--idx];
 }
 
 std::size_t VectorIterator::nextIndex() const {
