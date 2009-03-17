@@ -29,9 +29,13 @@ OBJECTDIR=build/Release/${PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/src/Sylph/Core/Library.o \
+	${OBJECTDIR}/src/Sylph/Core/DictionaryIterator.o \
+	${OBJECTDIR}/test/ThisApp.o \
 	${OBJECTDIR}/src/Sylph/Core/ArrayIterator.o \
 	${OBJECTDIR}/src/Sylph/Core/String.o \
+	${OBJECTDIR}/test/Arguments.o \
 	${OBJECTDIR}/src/Sylph/Core/VectorIterator.o \
+	${OBJECTDIR}/test/HelloWorld.o \
 	${OBJECTDIR}/src/Sylph/Core/Hash.o \
 	${OBJECTDIR}/src/Sylph.o \
 	${OBJECTDIR}/src/Sylph/Core/Util.o \
@@ -71,6 +75,16 @@ ${OBJECTDIR}/src/Sylph/Core/Library.o: src/Sylph/Core/Library.cpp
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -Isrc -Ideps/binreloc -Ideps/boost -Ideps/gc/include -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Sylph/Core/Library.o src/Sylph/Core/Library.cpp
 
+${OBJECTDIR}/src/Sylph/Core/DictionaryIterator.o: src/Sylph/Core/DictionaryIterator.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/Sylph/Core
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -Isrc -Ideps/binreloc -Ideps/boost -Ideps/gc/include -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Sylph/Core/DictionaryIterator.o src/Sylph/Core/DictionaryIterator.cpp
+
+${OBJECTDIR}/test/ThisApp.o: test/ThisApp.cpp 
+	${MKDIR} -p ${OBJECTDIR}/test
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -Isrc -Ideps/binreloc -Ideps/boost -Ideps/gc/include -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/test/ThisApp.o test/ThisApp.cpp
+
 ${OBJECTDIR}/src/Sylph/Core/ArrayIterator.o: src/Sylph/Core/ArrayIterator.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/Sylph/Core
 	${RM} $@.d
@@ -81,10 +95,20 @@ ${OBJECTDIR}/src/Sylph/Core/String.o: src/Sylph/Core/String.cpp
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -Isrc -Ideps/binreloc -Ideps/boost -Ideps/gc/include -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Sylph/Core/String.o src/Sylph/Core/String.cpp
 
+${OBJECTDIR}/test/Arguments.o: test/Arguments.cpp 
+	${MKDIR} -p ${OBJECTDIR}/test
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -Isrc -Ideps/binreloc -Ideps/boost -Ideps/gc/include -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/test/Arguments.o test/Arguments.cpp
+
 ${OBJECTDIR}/src/Sylph/Core/VectorIterator.o: src/Sylph/Core/VectorIterator.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/Sylph/Core
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -Isrc -Ideps/binreloc -Ideps/boost -Ideps/gc/include -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Sylph/Core/VectorIterator.o src/Sylph/Core/VectorIterator.cpp
+
+${OBJECTDIR}/test/HelloWorld.o: test/HelloWorld.cpp 
+	${MKDIR} -p ${OBJECTDIR}/test
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -Isrc -Ideps/binreloc -Ideps/boost -Ideps/gc/include -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/test/HelloWorld.o test/HelloWorld.cpp
 
 ${OBJECTDIR}/src/Sylph/Core/Hash.o: src/Sylph/Core/Hash.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/Sylph/Core

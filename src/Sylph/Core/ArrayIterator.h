@@ -37,7 +37,7 @@ public:
     ArrayIterator(Array<T> & array) : ar(&array) {}
     /**
      * Default destructor
-     *
+     */
     virtual ~ArrayIterator() {}
     /**
      * Check if this iterator has any more entries
