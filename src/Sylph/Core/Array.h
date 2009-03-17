@@ -30,7 +30,7 @@ class Array : public virtual Iterable<T> {
 public:
     /**
      * The type of the array, for using with arrays with an unkown type. E.g.:
-     * </code>myarray::Type t = myarray[3];
+     * <pre>myarray::Type t = myarray[3];</pre>
      */
     typedef T Type;
     /**
@@ -106,13 +106,13 @@ public:
      * that of c-style arrays, but throws an exception instead of overflowing
      * or causing segfaults.
      * @param idx the index in the array from which to return an element
-     * @throw ArrayException if <pre>idx > length</pre>
+     * @throw ArrayException if <code>idx > length</code>
      */
     T & operator[](std::size_t idx) throw (Exception);
     /**
-     * This is the <pre>const</pre> version of T& operator[]
+     * This is the <code>const</code> version of T& operator[]
      * @param idx the index in the array from which to return an element
-     * @throw ArrayException if <pre>idx > length</pre>
+     * @throw ArrayException if <code>idx > length</code>
      */
     const T & operator[](std::size_t idx) const throw (Exception);
 
