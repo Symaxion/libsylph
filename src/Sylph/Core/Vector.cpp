@@ -13,7 +13,7 @@
 SYLPH_START_NAMESPACE(Core)
 
 Vector::Vector(std::size_t initialCount, std::size_t increase) {
-    elements = new Array<T > (initialCount);
+    elements = new Array<T> (initialCount);
     capacity = initialCount;
     capacityIncrease = increase;
     elementCount = 0;

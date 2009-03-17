@@ -38,14 +38,14 @@ const T * Array::carray() const {
 }
 
 Iterator<T> Array::iterator() const {
-    return ArrayIterator<T > (*this);
+    return ArrayIterator<T> (*this);
 }
 
 MutableIterator<T> Array::mutableIterator() const {
-    return ArrayMutableIterator<T > (*this);
+    return ArrayMutableIterator<T> (*this);
 }
 
-template<class V> Array& Array::operator=(const Array<V, N> & other) {
+template<class T> Array& Array::operator=(const Array<T> & other) {
     for (std::size_t idx = 0; idx < other.length(); idx++) {
         carray[idx] = other.carray[idx];
     }
@@ -53,7 +53,7 @@ template<class V> Array& Array::operator=(const Array<V, N> & other) {
 };
 
 T& Array::operator[](std::size_t idx) throw (Exception) {
-    if (idx < N) {
+    if (idx < length) {
         return carray[idx];
     } else {
         sthrow(ArrayException);
@@ -61,7 +61,7 @@ T& Array::operator[](std::size_t idx) throw (Exception) {
 }
 
 const T& Array::operator[](std::size_t idx) const throw (Exception) {
-    if (idx < N) {
+    if (idx < length) {
         return carray[idx];
     } else {
         sthrow(ArrayException);
@@ -77,7 +77,7 @@ inline bool operator==(const Array<T>& lhs, const Array<T>& rhs) {
 template<class T>
 inline bool operator<(const Array<T>& lhs, const Array<T>& rhs) {
     return lhs.length == rhs.length ?
-            std::lexicographical_compare(lhs.carray[0], lhs.carray[lhs - 1],
+            std::lexicographical_compare(lhs.carray[0], lhs.carray[lhs.length - 1],
             rhs[0], rhs[rhs.length - 1]) : false;
 }
 SYLPH_END_NAMESPACE(Core)

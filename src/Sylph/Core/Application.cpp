@@ -64,11 +64,11 @@ namespace Core {
     void ApplicationSelf::fail(const string & reason, const string & file, int line) {
         _fail(appName, reason, file, line);
     }
-    void _fail(const string & appName, const string & reason) {
+    void ApplicationSelf::_fail(const string & appName, const string & reason) {
         cout << appName <<" error: " << reason << endl;
         exit(1);
     }
-    void _fail(const string & appName, const string & reason,
+    void ApplicationSelf::_fail(const string & appName, const string & reason,
                 const string & file, int line) {
         cout << appName <<" error: " << reason << "@" << file << ":" << line << endl;
     }

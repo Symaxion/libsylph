@@ -17,7 +17,7 @@
 SYLPH_START_NAMESPACE(Core)
 
 SYLPH_PUBLIC
-template<typename T>
+template<class T>
 class Vector : public virtual Collection<T> {
 public:
     typedef T Type;

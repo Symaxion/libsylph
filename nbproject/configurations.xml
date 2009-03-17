@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configurationDescriptor version="51">
   <logicalFolder name="root" displayName="root" projectFiles="true">
-    <logicalFolder name="HeaderFiles"
-                   displayName="Header Files"
-                   projectFiles="true">
-    </logicalFolder>
     <logicalFolder name="f1" displayName="Other files" projectFiles="true">
       <itemPath>AUTHORS</itemPath>
       <itemPath>COPYING</itemPath>
@@ -15,11 +11,7 @@
                    displayName="Resource Files"
                    projectFiles="true">
     </logicalFolder>
-    <logicalFolder name="SourceFiles"
-                   displayName="Source Files"
-                   projectFiles="true">
-    </logicalFolder>
-    <logicalFolder name="src" displayName="src" projectFiles="true">
+    <logicalFolder name="src" displayName="Sources" projectFiles="true">
       <logicalFolder name="Sylph" displayName="Sylph" projectFiles="true">
         <logicalFolder name="AppServ" displayName="AppServ" projectFiles="true">
           <logicalFolder name="IO" displayName="IO" projectFiles="true">
@@ -42,6 +34,8 @@
           <itemPath>src/Sylph/Core/Comparable.h</itemPath>
           <itemPath>src/Sylph/Core/Dictionary.cpp</itemPath>
           <itemPath>src/Sylph/Core/Dictionary.h</itemPath>
+          <itemPath>src/Sylph/Core/DictionaryIterator.cpp</itemPath>
+          <itemPath>src/Sylph/Core/DictionaryIterator.h</itemPath>
           <itemPath>src/Sylph/Core/Equals.cpp</itemPath>
           <itemPath>src/Sylph/Core/Equals.h</itemPath>
           <itemPath>src/Sylph/Core/Exception.h</itemPath>
@@ -83,6 +77,11 @@
       </logicalFolder>
       <itemPath>src/Sylph.cpp</itemPath>
       <itemPath>src/Sylph.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="f2" displayName="Test Cases" projectFiles="true">
+      <itemPath>test/Arguments.cpp</itemPath>
+      <itemPath>test/HelloWorld.cpp</itemPath>
+      <itemPath>test/ThisApp.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -180,6 +179,12 @@
       <item path="src/Sylph/Core/Dictionary.h">
         <itemTool>3</itemTool>
       </item>
+      <item path="src/Sylph/Core/DictionaryIterator.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/Sylph/Core/DictionaryIterator.h">
+        <itemTool>3</itemTool>
+      </item>
       <item path="src/Sylph/Core/Equals.cpp">
         <itemTool>1</itemTool>
       </item>
@@ -290,6 +295,15 @@
       </item>
       <item path="src/Sylph/OS/WindowsAppSelf.h">
         <itemTool>3</itemTool>
+      </item>
+      <item path="test/Arguments.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="test/HelloWorld.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="test/ThisApp.cpp">
+        <itemTool>1</itemTool>
       </item>
     </conf>
     <conf name="Release" type="2">
@@ -382,6 +396,12 @@
       <item path="src/Sylph/Core/Dictionary.h">
         <itemTool>3</itemTool>
       </item>
+      <item path="src/Sylph/Core/DictionaryIterator.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/Sylph/Core/DictionaryIterator.h">
+        <itemTool>3</itemTool>
+      </item>
       <item path="src/Sylph/Core/Equals.cpp">
         <itemTool>1</itemTool>
       </item>
@@ -492,6 +512,15 @@
       </item>
       <item path="src/Sylph/OS/WindowsAppSelf.h">
         <itemTool>3</itemTool>
+      </item>
+      <item path="test/Arguments.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="test/HelloWorld.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="test/ThisApp.cpp">
+        <itemTool>1</itemTool>
       </item>
     </conf>
   </confs>
