@@ -13,15 +13,17 @@
 
 SYLPH_START_NAMESPACE(Core)
 
-        SYLPH_PUBLIC
-        template<class T>
-        interface Iterable : public Object {
-        public:
-            Iterable() {}
-            virtual ~Iterable() {}
-            virtual Iterator<T> iterator() const = 0;
-            virtual MutableIterator<T> mutableIterator() = 0;
-        };
+SYLPH_PUBLIC
+/**
+ */
+template<class T>
+class Iterable : public Object {
+public:
+    Iterable() {}
+    virtual ~Iterable() {}
+    virtual Iterator<T> iterator() const = 0;
+    virtual MutableIterator<T> mutableIterator() = 0;
+};
 SYLPH_END_NAMESPACE(Core)
 
 #endif	/* _ITERABLE_H */

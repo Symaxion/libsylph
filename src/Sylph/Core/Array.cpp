@@ -6,23 +6,23 @@
 
 SYLPH_START_NAMESPACE(Core)
 
-Array::Array(std::size_t len) : length(len){
+Array::Array(std::size_t len) : length(len) {
     carray = new T[length];
 }
 
 Array::Array(std::initializer_list<T> il) : length(il.size()) {
     carray = new T[il.size()];
-    carraycopy(il.begin(),0,carray,0,il.size());
+    carraycopy(il.begin(), 0, carray, 0, il.size());
 }
 
 Array::Array(T & array[]) : length(carraysize(array)) {
     carray = new T[length];
-    carraycopy(array,0,carray,0,length;
+    carraycopy(array, 0, carray, 0, length);
 }
 
 Array::Array(Array<T> & ar) : length(ar.length) {
     carray = new T[length];
-    carraycopy(ar.carray,0,carray,0,length);
+    carraycopy(ar.carray, 0, carray, 0, length);
 }
 
 Array::~Array() {
@@ -38,19 +38,31 @@ const T * Array::carray() const {
 }
 
 Iterator<T> Array::iterator() const {
-    return ArrayIterator<T> (*this);
+    return ArrayIterator<T > (*this);
 }
 
 MutableIterator<T> Array::mutableIterator() const {
-    return ArrayMutableIterator<T> (*this);
+    return ArrayMutableIterator<T > (*this);
 }
 
-template<class T> Array& Array::operator=(const Array<T> & other) {
+Array& Array::operator=(const Array<T> & other) {
     for (std::size_t idx = 0; idx < other.length(); idx++) {
         carray[idx] = other.carray[idx];
     }
     return * this;
-};
+}
+
+Array & Array::operator=(const std::initializer_list<T> & other) {
+    delete carray;
+    carray = new T[other.size()];
+    carraycopy(other.begin(), 0, carray, 0, other.size());
+}
+
+Array & Array::operator=(const T other[]) {
+    delete carray;
+    carray = new T[length];
+    carraycopy(other, 0, carray, 0, length);
+}
 
 T& Array::operator[](std::size_t idx) throw (Exception) {
     if (idx < length) {
