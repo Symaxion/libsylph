@@ -16,9 +16,11 @@ class Vector;
 class DictionaryPointer;
 class DictionaryEntry;
 enum DictionaryIteratorType;
+class DictClctEntries;
 
 template<class _key, class _value, class _hash = Hash<_key>()>
-class Dictionary {
+class Dictionary : public Object {
+    friend class DictClctEntries;
 public:
     typedef _key Key;
     typedef _value Value;
@@ -32,7 +34,8 @@ public:
     void clear();
     bool containsKey(Key & key) const;
     bool containsValue(Value & value) const;
-    const Vector<DictionaryEntry> entrySet();
+    const Collection<DictionaryEntry*> entrySet();
+    std::size_t size();
 
     Value * get(Key & key);
     const Value * get(Key & key) const;
@@ -41,19 +44,20 @@ public:
     const DictionaryPointer<Key> operator[](Key & key) const;
 
     bool empty();
-    const Vector<Key> keys();
-    const Vector<Value *> values();
+    const Collection<Key> keys();
+    const Collection<Value *> values();
 
     Value * put(Key & key, Value * value);
     void putAll(Dictionary<Key,Value,HashFunction> & dict);
 
     Value * remove(Key & key);
+
     
     template<class T>
-    DictionaryIterator<T,Key,Value> iterator(DictionaryIteratorType type);
-    DictionaryIterator<Key,Key,Value> keyIterator();
-    DictionaryIterator<Value,Key,Value> valueIterator();
-    DictionaryIterator<DictionaryEntry *,Key,Value> entryIterator();
+    DictionaryIterator<T,Key,Value*> iterator(DictionaryIteratorType type);
+    DictionaryIterator<Key,Key,Value*> keyIterator();
+    DictionaryIterator<Value*,Key,Value*> valueIterator();
+    DictionaryIterator<DictionaryEntry *,Key,Value*> entryIterator();
 private:
     std::size_t size;
     Array<DictionaryEntry<Key,Value>*> * buckets;

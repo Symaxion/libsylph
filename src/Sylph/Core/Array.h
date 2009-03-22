@@ -41,7 +41,7 @@ public:
     const int length;
 
 private:
-    T carray[];
+    T * carray = NULL;
 
 public:
     /**
@@ -99,7 +99,19 @@ public:
      * Default assignment operator
      * @param other The other array
      */
-    template<class T> Array & operator=(const Array<T> & other);
+    Array & operator=(const Array<T> & other);
+
+    /**
+     * Intializer list assignment operator
+     * @param other The initializer list
+     */
+    Array & operator=(const std::initializer_list<T> & other);
+
+    /**
+     * C-style array assignment operator
+     * @param other The C-style array
+     */
+    Array & operator=(const T other[]);
 
     /**
      * Used for accessing the Array's contents. Its behaviour is identical to

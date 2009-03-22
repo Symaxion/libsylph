@@ -3,6 +3,7 @@
 #include "Dictionary.h"
 #include "Vector.h"
 #include "Array.h"
+#include "DictionaryIterator.h"
 
 #include <cmath>
 
@@ -59,6 +60,201 @@ bool operator!=(const DictionaryPointer & p, const Value & v) {
     return !(p == v);
 }
 
+template<class T>
+class DictClctKeys : public Collection<T> {
+public:
+
+    DictClctKeys(Dictionary * _dict) : dict(_dict) {
+    }
+
+    virtual ~DictClctKeys() {
+    }
+
+    bool add(const T & t) {
+        sthrow(UnsupportedOperationException);
+    }
+    bool addAll(Collection<T> & c) {
+        sthrow(UnsupportedOperationException);
+    }
+    void clear() {
+        dict->clear()
+    }
+    bool contains(T & t) {
+        return dict->containsKey(t);
+    }
+    bool containsAll(Collection<T> & c) {
+        sthrow(UnsupportedOperationException);
+    }
+    bool operator ==(Collection<T> & c) {
+        sthrow(UnsupportedOperationException);
+    }
+
+    int hashCode() {
+        // TODO!
+        return 0;
+    };
+    bool empty() {
+        return dict->empty();
+    }
+    bool remove(T & t) {
+        return dict->remove(t) != NULL;
+    }
+    bool removeAll(Collection<T> & c) {
+        sthrow(UnsupportedOperationException);
+    }
+    bool retainAll(Collection<T> & c) {
+
+    }
+    std::size_t size() const {
+        return dict->size();
+    }
+    const Array<T> toArray() const {
+        sthrow(UnsupportedOperationException);
+    }
+
+    Iterator<T> iterator() const {
+        return dict->keyIterator();
+    }
+    MutableIterator<T> mutableIterator() {
+        sthrow(UnsupportedOperationException);
+    }
+private:
+    Dictionary * dict;
+};
+
+
+template<class T>
+class DictClctValues : public Collection<T> {
+public:
+
+    DictClctValues(Dictionary * _dict) : dict(_dict) {
+    }
+
+    virtual ~DictClctValues() {
+    }
+
+    bool add(const T & t) {
+        sthrow(UnsupportedOperationException);
+    }
+    bool addAll(Collection<T> & c) {
+        sthrow(UnsupportedOperationException);
+    }
+    void clear() {
+        dict->clear()
+    }
+    bool contains(T & t) {
+        return dict->containsValue(t);
+    }
+    bool containsAll(Collection<T> & c) {
+        sthrow(UnsupportedOperationException);
+    }
+    bool operator ==(Collection<T> & c) {
+        sthrow(UnsupportedOperationException);
+    }
+
+    int hashCode() {
+        // TODO!
+        return 0;
+    };
+    bool empty() {
+        return dict->empty();
+    }
+    bool remove(T & t) {
+        sthrow(UnsupportedOperationException);
+    }
+    bool removeAll(Collection<T> & c) {
+        sthrow(UnsupportedOperationException);
+    }
+    bool retainAll(Collection<T> & c) {
+
+    }
+    std::size_t size() const {
+        return dict->size();
+    }
+    const Array<T> toArray() const {
+        sthrow(UnsupportedOperationException);
+    }
+
+    Iterator<T> iterator() const {
+        return dict->valueIterator();
+    }
+    MutableIterator<T> mutableIterator() {
+        sthrow(UnsupportedOperationException);
+    }
+private:
+    Dictionary * dict;
+};
+
+template<class K,class V>
+class DictClctEntries : public Collection<DictionaryEntry<K,V*> > {
+public:
+
+    DictClctEntries(Dictionary * _dict) : dict(_dict) {
+    }
+
+    virtual ~DictClctEntries() {
+    }
+
+    bool add(const DictionaryEntry<K,V*> & t) {
+        dict->put(t.key, t.value);
+    }
+    bool addAll(Collection<DictionaryEntry<K,V*> > & c) {
+        sforeach(DictionaryEntry<K,V*> & entry, c) {
+            dict->put(entry.key, entry.value);
+        }
+    }
+    void clear() {
+        dict->clear()
+    }
+    bool contains(DictionaryEntry<K,V*> & t) {
+        return Equals(dict->get(t.key),t.value);
+    }
+    bool containsAll(Collection<DictionaryEntry<K,V*> > & c) {
+        sforeach(DictionaryEntry<K,V*> & entry, c) {
+            if(!contains(entry)) return false;
+        }
+        return true;
+    }
+    bool operator ==(Collection<DictionaryEntry<K,V*> > & c) {
+        sthrow(UnsupportedOperationException);
+    }
+
+    int hashCode() {
+        // TODO!
+        return 0;
+    };
+    bool empty() {
+        return dict->empty();
+    }
+    bool remove(DictionaryEntry<K,V*> & t) {
+        return dict->remove(t.key) != NULL;
+    }
+    bool removeAll(Collection<DictionaryEntry<K,V*> > & c) {
+        sthrow(UnsupportedOperationException);
+    }
+    bool retainAll(Collection<DictionaryEntry<K,V*> > & c) {
+        sthrow(UnsupportedOperationException);
+    }
+    std::size_t size() const {
+        return dict->size();
+    }
+    const Array<DictionaryEntry<K,V*> > toArray() const {
+        sthrow(UnsupportedOperationException);
+    }
+
+    Iterator<DictionaryEntry<K,V*> > iterator() const {
+        return dict->entryIterator();
+    }
+    MutableIterator<DictionaryEntry<K,V*> > mutableIterator() {
+        sthrow(UnsupportedOperationException);
+    }
+private:
+    Dictionary * dict;
+};
+
+
+
+
 Dictionary::Dictionary(std::size_t initialCapacity, float loadFactor) {
     this->loadFactor = loadFactor;
     this->size = 0;
@@ -102,10 +298,13 @@ bool Dictionary::containsValue(Value & value) const {
     return false;
 }
 
-const Vector<DictionaryEntry> Dictionary::entrySet() {
+const Collection<DictionaryEntry*> Dictionary::entrySet() {
     ;
 }
 
+std::size_t Dictionary::size() {
+    return size;
+}
 _value * Dictionary::get(Key & key) {
     int h = hash(Key);
     DictionaryEntry<Key, Value> * entry = buckets[h];
@@ -140,11 +339,12 @@ bool Dictionary::empty() {
     return size() == 0;
 }
 
-const Vector<_key> Dictionary::keys() {
-    
+const Collection<_key> Dictionary::keys() {
+    return DictClctKeys<Key>(this);
 }
-const Vector<_value *> Dictionary::values() {
-    
+
+const Collection<_value *> Dictionary::values() {
+    return DictClctValues<Value*>(this);
 }
 
 _value * Dictionary::put(Key & key, Value & value) {
@@ -184,20 +384,20 @@ _value * Dictionary::remove(Key & key) {
     DictionaryEntry<Key, Value> * entry = buckets[idx];
     DictionaryEntry<Key, Value> * last = NULL;
 
-    while (entry != NULL)
-      {
-        if (Equals(key, entry->key))
-          {
-            if (last == NULL) { buckets[idx] = entry->next; }
-            else {
+    while (entry != NULL) {
+        if (Equals(key, entry->key)) {
+            if (last == NULL) {
+                buckets[idx] = entry->next;
+            } else {
 
-      last->next = entry->next; }
+                last->next = entry->next;
+            }
             size--;
             return entry->value;
-          }
+        }
         last = entry;
         entry = entry->next;
-      }
+    }
     return NULL;
 }
 
@@ -232,4 +432,23 @@ void Dictionary::rehash() {
         }
     }
 }
+
+template<class T>
+DictionaryIterator<T, _key, _value *> Dictionary::iterator(DictionaryIteratorType type) {
+    return DictionaryIterator<T, Key, Value > (*this, type);
+}
+
+DictionaryIterator<_key, _key, _value *> Dictionary::keyIterator() {
+    return DictionaryIterator<Key, Key, Value > (*this, KEYS);
+}
+
+DictionaryIterator<_value *, _key, _value *> Dictionary::valueIterator() {
+    return DictionaryIterator<Key, Key, Value > (*this, VALUES);
+}
+
+DictionaryIterator<DictionaryEntry *, _key, _value *> Dictionary::entryIterator() {
+    return DictionaryIterator<Key, Key, Value > (*this, ENTRIES);
+
+}
+
 SYLPH_END_NAMESPACE(Core)
