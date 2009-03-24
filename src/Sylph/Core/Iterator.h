@@ -15,6 +15,15 @@ SYLPH_START_NAMESPACE(Core)
 SYLPH_PUBLIC
 class Iterable;
 
+/**
+ * Iterator provides a transparant interface for iterating over collections.
+ * Each @c Iterable should have a specific implementation of this class. In case
+ * a certain method cannot be implemented (e.g. previous() when a collection
+ * does not support reverse iteration) it should throw an @c 
+ * UnsupportedOperationException. <p>
+ * This class is used implicitly by @c sforeach(), and therefore a correct
+ * implementation of it is necessary.
+ */
 template<class T>
 class Iterator : public Object {
 public:
