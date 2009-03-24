@@ -30,36 +30,63 @@
 <a name="l00009"></a>00009 <span class="preprocessor"></span><span class="preprocessor">#define STRING_H_</span>
 <a name="l00010"></a>00010 <span class="preprocessor"></span>
 <a name="l00011"></a>00011 <span class="preprocessor">#include "Object.h"</span>
-<a name="l00012"></a>00012 
-<a name="l00013"></a>00013 <span class="preprocessor">#include &lt;string&gt;</span>
-<a name="l00014"></a>00014 
-<a name="l00015"></a>00015 <span class="keyword">namespace </span>Sylph {
-<a name="l00016"></a>00016 <span class="keyword">namespace </span>Core {
-<a name="l00017"></a>00017         <span class="keyword">class </span>String : <span class="keyword">public</span> Object, <span class="keyword">public</span> std::string {
-<a name="l00018"></a>00018         <span class="keyword">public</span>:
-<a name="l00019"></a>00019                 <span class="keyword">inline</span> String();
-<a name="l00020"></a>00020                 String(<span class="keyword">const</span> String &amp; orig);
-<a name="l00021"></a>00021                 String(<span class="keyword">const</span> std::string &amp; stlstring);
-<a name="l00022"></a>00022                 String(<span class="keyword">const</span> std::allocator&lt;char&gt; &amp; alloc);
-<a name="l00023"></a>00023                 String(<span class="keyword">const</span> String &amp; str, size_type pos,
-<a name="l00024"></a>00024                    size_type n = npos);
-<a name="l00025"></a>00025                 String(<span class="keyword">const</span> String &amp; str, size_type pos,
-<a name="l00026"></a>00026                    size_type n, <span class="keyword">const</span> std::allocator&lt;char&gt; &amp; a);
-<a name="l00027"></a>00027             String(<span class="keyword">const</span> <span class="keywordtype">char</span> * s, <span class="keyword">const</span> std::allocator&lt;char&gt; &amp; a = std::allocator&lt;char&gt;());
-<a name="l00028"></a>00028             String(size_type n, <span class="keywordtype">char</span> c, <span class="keyword">const</span> std::allocator&lt;char&gt; &amp; a = std::allocator&lt;char&gt;());
-<a name="l00029"></a>00029             <span class="keyword">template</span>&lt;<span class="keyword">class</span> InputIterator&gt;
-<a name="l00030"></a>00030                 String(InputIterator beg, InputIterator end,
-<a name="l00031"></a>00031                              <span class="keyword">const</span> std::allocator&lt;char&gt; &amp; a = std::allocator&lt;char&gt;());
-<a name="l00032"></a>00032                 <span class="keyword">virtual</span> ~String();
-<a name="l00033"></a>00033         <span class="keyword">private</span>:
-<a name="l00034"></a>00034                 <span class="comment">//</span>
-<a name="l00035"></a>00035         };
-<a name="l00036"></a>00036 }
-<a name="l00037"></a>00037 }
-<a name="l00038"></a>00038 
-<a name="l00039"></a>00039 <span class="preprocessor">#endif </span><span class="comment">/* STRING_H_ */</span>
+<a name="l00012"></a>00012 <span class="preprocessor">#include "<a class="code" href="_comparable_8h.html" title="Include this file if you want your objects to be comparable with operator&amp;lt; ,…...">Comparable.h</a>"</span>
+<a name="l00013"></a>00013 
+<a name="l00014"></a>00014 <span class="keyword">class </span>QString;
+<a name="l00015"></a>00015 
+<a name="l00016"></a>00016 SYLPH_START_NAMESPACE(Core)
+<a name="l00017"></a>00017 SYLPH_PUBLIC
+<a name="l00018"></a>00018 
+<a name="l00019"></a>00019 class String : public Object {
+<a name="l00020"></a>00020     <span class="keyword">friend</span> <span class="keywordtype">bool</span> operator==(String lhs, <span class="keyword">const</span> <span class="keywordtype">char</span> * rhs);
+<a name="l00021"></a>00021     <span class="keyword">friend</span> <span class="keywordtype">bool</span> operator==(String lhs, std::string &amp; rhs);
+<a name="l00022"></a>00022     <span class="keyword">friend</span> <span class="keywordtype">bool</span> operator==(String lhs, String rhs);
+<a name="l00023"></a>00023     <span class="keyword">friend</span> <span class="keywordtype">bool</span> operator==(String lhs, QString rhs);
+<a name="l00024"></a>00024 
+<a name="l00025"></a>00025     <span class="keyword">friend</span> <span class="keywordtype">bool</span> operator&lt;(String lhs, <span class="keyword">const</span> <span class="keywordtype">char</span> * rhs);
+<a name="l00026"></a>00026     <span class="keyword">friend</span> <span class="keywordtype">bool</span> operator&lt;(String lhs, std::string &amp; rhs);
+<a name="l00027"></a>00027     <span class="keyword">friend</span> <span class="keywordtype">bool</span> operator&lt;(String lhs, String rhs);
+<a name="l00028"></a>00028     <span class="keyword">friend</span> <span class="keywordtype">bool</span> operator&lt;(String lhs, QString rhs);
+<a name="l00029"></a>00029 <span class="keyword">public</span>:
+<a name="l00030"></a>00030     String();
+<a name="l00031"></a>00031     String(<span class="keyword">const</span> <span class="keywordtype">char</span> * orig);
+<a name="l00032"></a>00032     String(<span class="keyword">const</span> std::string &amp; orig);
+<a name="l00033"></a>00033     String(<span class="keyword">const</span> QString orig);
+<a name="l00034"></a>00034     String(<span class="keyword">const</span> String orig);
+<a name="l00035"></a>00035     <span class="keyword">virtual</span> ~String();
+<a name="l00036"></a>00036 
+<a name="l00037"></a>00037     String operator=(<span class="keyword">const</span> <span class="keywordtype">char</span> * orig);
+<a name="l00038"></a>00038     String operator=(<span class="keyword">const</span> std::string &amp; orig);
+<a name="l00039"></a>00039     String operator=(<span class="keyword">const</span> QString orig);
+<a name="l00040"></a>00040     String operator=(<span class="keyword">const</span> String orig);
+<a name="l00041"></a>00041 
+<a name="l00042"></a>00042     operator const char *();
+<a name="l00043"></a>00043     operator std::string();
+<a name="l00044"></a>00044     operator QString();
+<a name="l00045"></a>00045 
+<a name="l00046"></a>00046 <span class="keyword">private</span>:
+<a name="l00047"></a>00047     <span class="keyword">struct </span>Data {
+<a name="l00048"></a>00048         <span class="keywordtype">wchar_t</span> data[];
+<a name="l00049"></a>00049         std::size_t length;
+<a name="l00050"></a>00050         std::size_t refcount = 0;
+<a name="l00051"></a>00051     } * strdata;
+<a name="l00052"></a>00052 
+<a name="l00053"></a>00053 };
+<a name="l00054"></a>00054 
+<a name="l00055"></a>00055 <span class="keywordtype">bool</span> operator==(String lhs, <span class="keyword">const</span> <span class="keywordtype">char</span> * rhs);
+<a name="l00056"></a>00056 <span class="keywordtype">bool</span> operator==(String lhs, std::string &amp; rhs);
+<a name="l00057"></a>00057 <span class="keywordtype">bool</span> operator==(String lhs, String rhs);
+<a name="l00058"></a>00058 <span class="keywordtype">bool</span> operator==(String lhs, QString rhs);
+<a name="l00059"></a>00059 
+<a name="l00060"></a>00060 <span class="keywordtype">bool</span> operator&lt;(String lhs, <span class="keyword">const</span> <span class="keywordtype">char</span> * rhs);
+<a name="l00061"></a>00061 <span class="keywordtype">bool</span> operator&lt;(String lhs, std::string &amp; rhs);
+<a name="l00062"></a>00062 <span class="keywordtype">bool</span> operator&lt;(String lhs, String rhs);
+<a name="l00063"></a>00063 <span class="keywordtype">bool</span> operator&lt;(String lhs, QString rhs);
+<a name="l00064"></a>00064 SYLPH_END_NAMESPACE(Core)
+<a name="l00065"></a>00065 
+<a name="l00066"></a>00066 <span class="preprocessor">#endif </span><span class="comment">/* STRING_H_ */</span>
 </pre></div></div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Tue Mar 17 17:01:24 2009 for LibSylph by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Sat Mar 21 15:05:26 2009 for LibSylph by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.8 </small></address>
 </body>

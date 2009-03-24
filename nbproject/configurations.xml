@@ -23,6 +23,7 @@
             <itemPath>src/Sylph/Core/IO/FileFilter.h</itemPath>
             <itemPath>src/Sylph/Core/IO/FileType.h</itemPath>
           </logicalFolder>
+          <itemPath>src/Sylph/Core/Any.h</itemPath>
           <itemPath>src/Sylph/Core/Application.cpp</itemPath>
           <itemPath>src/Sylph/Core/Application.h</itemPath>
           <itemPath>src/Sylph/Core/Array.cpp</itemPath>
@@ -62,7 +63,6 @@
           <itemPath>src/Sylph/Core/Vector.h</itemPath>
           <itemPath>src/Sylph/Core/VectorIterator.cpp</itemPath>
           <itemPath>src/Sylph/Core/VectorIterator.h</itemPath>
-          <itemPath>src/Sylph/Core/Wrapper.h</itemPath>
         </logicalFolder>
         <logicalFolder name="f1" displayName="OS" projectFiles="true">
           <itemPath>src/Sylph/OS/GuessOS.h</itemPath>
@@ -144,6 +144,9 @@
         <itemTool>3</itemTool>
       </item>
       <item path="src/Sylph/AppServ/IO/FileOps.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Any.h">
         <itemTool>3</itemTool>
       </item>
       <item path="src/Sylph/Core/Application.cpp">
@@ -267,9 +270,6 @@
         <itemTool>1</itemTool>
       </item>
       <item path="src/Sylph/Core/VectorIterator.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="src/Sylph/Core/Wrapper.h">
         <itemTool>3</itemTool>
       </item>
       <item path="src/Sylph/OS/GuessOS.h">
@@ -363,6 +363,9 @@
       <item path="src/Sylph/AppServ/IO/FileOps.h">
         <itemTool>3</itemTool>
       </item>
+      <item path="src/Sylph/Core/Any.h">
+        <itemTool>3</itemTool>
+      </item>
       <item path="src/Sylph/Core/Application.cpp">
         <itemTool>1</itemTool>
       </item>
@@ -484,9 +487,6 @@
         <itemTool>1</itemTool>
       </item>
       <item path="src/Sylph/Core/VectorIterator.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="src/Sylph/Core/Wrapper.h">
         <itemTool>3</itemTool>
       </item>
       <item path="src/Sylph/OS/GuessOS.h">
