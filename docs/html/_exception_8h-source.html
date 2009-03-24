@@ -35,42 +35,50 @@
 <a name="l00014"></a>00014 <span class="preprocessor">#include &lt;string&gt;</span>
 <a name="l00015"></a>00015 
 <a name="l00016"></a>00016 SYLPH_START_NAMESPACE(Core)
-<a name="l00017"></a>00017     class Exception : public Object, public std::exception {
-<a name="l00018"></a>00018     <span class="keyword">protected</span>:
-<a name="l00019"></a>00019         <span class="keyword">typedef</span> <span class="keyword">const</span> std::string string_t;
-<a name="l00020"></a>00020         string_t name;
-<a name="l00021"></a>00021         string_t reason;
-<a name="l00022"></a>00022     <span class="keyword">public</span>:
-<a name="l00023"></a>00023         string_t file;
-<a name="l00024"></a>00024         <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> line;
-<a name="l00025"></a>00025         
-<a name="l00026"></a>00026     <span class="keyword">public</span>:
-<a name="l00027"></a>00027         Exception(string_t &amp; n, string_t &amp; r = <span class="stringliteral">""</span>, string_t &amp; f = <span class="stringliteral">"unknown"</span>, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> l = 0)
-<a name="l00028"></a>00028                 throw() : name(n), reason(r), file(f), line(l) {}
-<a name="l00029"></a>00029         
-<a name="l00030"></a>00030         <span class="keyword">virtual</span> ~Exception() throw() {};
-<a name="l00031"></a>00031         <span class="keyword">virtual</span> <span class="keyword">const</span> <span class="keywordtype">char</span>* what() <span class="keyword">const</span> throw() {
-<a name="l00032"></a>00032             <span class="keywordflow">return</span> reason.c_str();
-<a name="l00033"></a>00033         }
-<a name="l00034"></a>00034         <span class="keyword">virtual</span> string_t &amp; name() { <span class="keywordflow">return</span> name; }
-<a name="l00035"></a>00035 
-<a name="l00036"></a>00036     };
-<a name="l00037"></a>00037     
-<a name="l00038"></a>00038 <span class="preprocessor">#ifdef SYLPH_DEBUG</span>
-<a name="l00039"></a>00039 <span class="preprocessor"></span><span class="preprocessor">    #define sthrow(__x) throw Sylph::Core::Exception(# __x, "", __FILE__, __LINE__)</span>
-<a name="l00040"></a>00040 <span class="preprocessor"></span><span class="preprocessor">    #define sthrow(__x, __r) throw Sylph::Core::Exception(# __x, __r, __FILE__, __LINE__)</span>
-<a name="l00041"></a>00041 <span class="preprocessor"></span><span class="preprocessor">#else</span>
-<a name="l00042"></a>00042 <span class="preprocessor"></span><span class="preprocessor">    #define sthrow(__x) throw Sylph::Core::Exception(# __x, "")</span>
-<a name="l00043"></a>00043 <span class="preprocessor"></span><span class="preprocessor">    #define sthrow(__x, __r) throw Sylph::Core::Exception(# __x, __r)</span>
-<a name="l00044"></a>00044 <span class="preprocessor"></span><span class="preprocessor">#endif</span>
-<a name="l00045"></a>00045 <span class="preprocessor"></span>
-<a name="l00046"></a>00046 <span class="preprocessor">#define if_nullptr(__x) if(__builtin_expect(!!(__x) == 0, 0))</span>
-<a name="l00047"></a>00047 <span class="preprocessor"></span><span class="preprocessor">#define check_nullptr(__x) if_nullptr(__x) sthrow (NullPointerException, "Dereferenced a null pointer")</span>
-<a name="l00048"></a>00048 <span class="preprocessor"></span>SYLPH_END_NAMESPACE(Core)
-<a name="l00049"></a>00049 <span class="preprocessor">#endif  </span><span class="comment">/* EXCEPTION_H_ */</span>
-<a name="l00050"></a>00050 
+<a name="l00017"></a>00017 
+<a name="l00018"></a>00018 
+<a name="l00074"></a><a class="code" href="class_sylph_1_1_core_1_1_exception.html">00074</a> class <a class="code" href="class_sylph_1_1_core_1_1_exception.html" title="This class provides a ready-to-use interface for exception handling.">Exception</a> : public <a class="code" href="class_sylph_1_1_core_1_1_object.html" title="The root of all classes.">Object</a>, public std::exception {
+<a name="l00075"></a>00075 <span class="keyword">public</span>:
+<a name="l00080"></a><a class="code" href="class_sylph_1_1_core_1_1_exception.html#f3df465262dc2dd2c2b655c49dcb8178">00080</a>     <a class="code" href="class_sylph_1_1_core_1_1_exception.html" title="This class provides a ready-to-use interface for exception handling.">Exception</a>(string_t &amp; n, string_t &amp; r = <span class="stringliteral">""</span>, string_t &amp; f = <span class="stringliteral">"unknown"</span>, <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> l = 0)
+<a name="l00081"></a>00081     throw () : name(n), reason(r), file(f), line(l) {
+<a name="l00082"></a>00082     }
+<a name="l00083"></a>00083 
+<a name="l00087"></a><a class="code" href="class_sylph_1_1_core_1_1_exception.html#563ac89dcc4f7a4c7471bd290c28e9d7">00087</a>     <a class="code" href="class_sylph_1_1_core_1_1_exception.html#563ac89dcc4f7a4c7471bd290c28e9d7" title="Default destructor.">~Exception</a>() throw () {
+<a name="l00088"></a>00088     };
+<a name="l00089"></a>00089 
+<a name="l00095"></a><a class="code" href="class_sylph_1_1_core_1_1_exception.html#97e8e53edf192523669bddc3378b0f7f">00095</a>     <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="class_sylph_1_1_core_1_1_exception.html#97e8e53edf192523669bddc3378b0f7f" title="Returns the reason why this Exception was thrown, i.e. the second parameter to sthrow()...">what</a>() <span class="keyword">const</span> throw () {
+<a name="l00096"></a>00096         <span class="keywordflow">return</span> reason.c_str();
+<a name="l00097"></a>00097     }
+<a name="l00098"></a>00098 
+<a name="l00105"></a><a class="code" href="class_sylph_1_1_core_1_1_exception.html#d922d06c02438ff944a6f609017c14e1">00105</a>     string_t &amp; <a class="code" href="class_sylph_1_1_core_1_1_exception.html#d922d06c02438ff944a6f609017c14e1" title="Returns the name of this Exception.">name</a>() <span class="keyword">const</span> throw () {
+<a name="l00106"></a>00106         <span class="keywordflow">return</span> name;
+<a name="l00107"></a>00107     }
+<a name="l00108"></a>00108 <span class="keyword">private</span>:
+<a name="l00109"></a>00109     <span class="keyword">typedef</span> <span class="keyword">const</span> std::string string_t;
+<a name="l00110"></a>00110     <span class="keyword">const</span> string_t name;
+<a name="l00111"></a>00111     <span class="keyword">const</span> string_t reason;
+<a name="l00112"></a>00112 <span class="keyword">public</span>:
+<a name="l00116"></a><a class="code" href="class_sylph_1_1_core_1_1_exception.html#cec07e82e18d91dca588083538a0fd78">00116</a>     <span class="keyword">const</span> string_t file;
+<a name="l00120"></a><a class="code" href="class_sylph_1_1_core_1_1_exception.html#e3d5592e999bdda42fec64ab44cbc8fd">00120</a>     <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> line;
+<a name="l00121"></a>00121 
+<a name="l00122"></a>00122 
+<a name="l00123"></a>00123 };
+<a name="l00124"></a>00124 
+<a name="l00125"></a>00125 <span class="preprocessor">#ifdef SYLPH_DEBUG</span>
+<a name="l00126"></a>00126 <span class="preprocessor"></span><span class="preprocessor">#define sthrow(__x) throw Sylph::Core::Exception(# __x, "", __FILE__, __LINE__)</span>
+<a name="l00127"></a>00127 <span class="preprocessor"></span><span class="preprocessor">#define sthrow(__x, __r) throw Sylph::Core::Exception(# __x, __r, __FILE__, __LINE__)</span>
+<a name="l00128"></a>00128 <span class="preprocessor"></span><span class="preprocessor">#else</span>
+<a name="l00129"></a>00129 <span class="preprocessor"></span><span class="preprocessor">#define sthrow(__x) throw Sylph::Core::Exception(# __x, "")</span>
+<a name="l00130"></a>00130 <span class="preprocessor"></span><span class="preprocessor">#define sthrow(__x, __r) throw Sylph::Core::Exception(# __x, __r)</span>
+<a name="l00131"></a>00131 <span class="preprocessor"></span><span class="preprocessor">#endif</span>
+<a name="l00132"></a>00132 <span class="preprocessor"></span>
+<a name="l00133"></a>00133 <span class="preprocessor">#define if_nullptr(__x) if(__builtin_expect(!!(__x) == 0, 0))</span>
+<a name="l00134"></a>00134 <span class="preprocessor"></span><span class="preprocessor">#define check_nullptr(__x) if_nullptr(__x) sthrow (NullPointerException, "Dereferenced a null pointer")</span>
+<a name="l00135"></a>00135 <span class="preprocessor"></span>SYLPH_END_NAMESPACE(Core)
+<a name="l00136"></a>00136 <span class="preprocessor">#endif  </span><span class="comment">/* EXCEPTION_H_ */</span>
+<a name="l00137"></a>00137 
 </pre></div></div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Tue Mar 17 17:01:24 2009 for LibSylph by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Sat Mar 21 15:05:26 2009 for LibSylph by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.8 </small></address>
 </body>

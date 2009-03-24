@@ -68,10 +68,15 @@ Inherits Sylph::Core::Iterable&lt;T&gt;.
 <tr><td class="memItemLeft" nowrap align="right" valign="top">const T *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sylph_1_1_core_1_1_array.html#a1373010f4df1863a3fa1a57997c3e6f">carray</a> () const </td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Returns a c-style array representing the contents of this <a class="el" href="class_sylph_1_1_core_1_1_array.html" title="Array provides a safe array.">Array</a>.  <a href="#a1373010f4df1863a3fa1a57997c3e6f"></a><br></td></tr>
-<tr><td class="memTemplParams" nowrap colspan="2">template&lt;class T &gt; </td></tr>
-<tr><td class="memTemplItemLeft" nowrap align="right" valign="top"><a class="el" href="class_sylph_1_1_core_1_1_array.html">Array</a> &amp;&nbsp;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_sylph_1_1_core_1_1_array.html#c7c6f4172ec40bc030777f43349aec32">operator=</a> (const <a class="el" href="class_sylph_1_1_core_1_1_array.html">Array</a>&lt; T &gt; &amp;other)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_sylph_1_1_core_1_1_array.html">Array</a> &amp;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sylph_1_1_core_1_1_array.html#c7c6f4172ec40bc030777f43349aec32">operator=</a> (const <a class="el" href="class_sylph_1_1_core_1_1_array.html">Array</a>&lt; T &gt; &amp;other)</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Default assignment operator.  <a href="#c7c6f4172ec40bc030777f43349aec32"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_sylph_1_1_core_1_1_array.html">Array</a> &amp;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sylph_1_1_core_1_1_array.html#173b544876bf2df1fcebab1d2d98e74d">operator=</a> (const std::initializer_list&lt; T &gt; &amp;other)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Intializer list assignment operator.  <a href="#173b544876bf2df1fcebab1d2d98e74d"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_sylph_1_1_core_1_1_array.html">Array</a> &amp;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sylph_1_1_core_1_1_array.html#7770db7d61a6cd143b5297f70a22fab3">operator=</a> (const T other[])</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">C-style array assignment operator.  <a href="#7770db7d61a6cd143b5297f70a22fab3"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">T &amp;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sylph_1_1_core_1_1_array.html#c48965a8c9110ba0c4a2e46bc671dd62">operator[]</a> (std::size_t idx)  throw (Exception)</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Used for accessing the Array's contents.  <a href="#c48965a8c9110ba0c4a2e46bc671dd62"></a><br></td></tr>
@@ -96,7 +101,7 @@ bool&nbsp;</td><td class="memItemRight" valign="bottom"><b>operator&lt;</b> (con
 
 <a class="el" href="class_sylph_1_1_core_1_1_array.html" title="Array provides a safe array.">Array</a> provides a safe array. 
 <p>
-It works the same like a c-style array (not like std::vector which can expand), but instead of overflowing, it throws an <code>Exception</code> whenever you try to access data outside its bounds. Therefore it also keeps track of its own length. <hr><h2>Member Typedef Documentation</h2>
+It works the same like a c-style array (not like std::vector which can expand), but instead of overflowing, it throws an <code><a class="el" href="class_sylph_1_1_core_1_1_exception.html" title="This class provides a ready-to-use interface for exception handling.">Exception</a></code> whenever you try to access data outside its bounds. Therefore it also keeps track of its own length. <hr><h2>Member Typedef Documentation</h2>
 <a class="anchor" name="7184fa203e3930c8a6af54faab240095"></a><!-- doxytag: member="Sylph::Core::Array::Type" ref="7184fa203e3930c8a6af54faab240095" args="" -->
 <div class="memitem">
 <div class="memproto">
@@ -320,13 +325,69 @@ Returns an mutable iterator over the elements.
 Elements can be modified by the iterator. The type of the iterator is <code>ArrayMutableIterator</code>. 
 </div>
 </div><p>
+<a class="anchor" name="7770db7d61a6cd143b5297f70a22fab3"></a><!-- doxytag: member="Sylph::Core::Array::operator=" ref="7770db7d61a6cd143b5297f70a22fab3" args="(const T other[])" -->
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_sylph_1_1_core_1_1_array.html">Array</a> &amp; <a class="el" href="class_sylph_1_1_core_1_1_array.html">Sylph::Core::Array</a>&lt; T &gt;::operator=           </td>
+          <td>(</td>
+          <td class="paramtype">const T&nbsp;</td>
+          <td class="paramname"> <em>other</em>[]          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+C-style array assignment operator. 
+<p>
+<dl compact><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>other</em>&nbsp;</td><td>The C-style array </td></tr>
+  </table>
+</dl>
+
+</div>
+</div><p>
+<a class="anchor" name="173b544876bf2df1fcebab1d2d98e74d"></a><!-- doxytag: member="Sylph::Core::Array::operator=" ref="173b544876bf2df1fcebab1d2d98e74d" args="(const std::initializer_list&lt; T &gt; &amp;other)" -->
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_sylph_1_1_core_1_1_array.html">Array</a> &amp; <a class="el" href="class_sylph_1_1_core_1_1_array.html">Sylph::Core::Array</a>&lt; T &gt;::operator=           </td>
+          <td>(</td>
+          <td class="paramtype">const std::initializer_list&lt; T &gt; &amp;&nbsp;</td>
+          <td class="paramname"> <em>other</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Intializer list assignment operator. 
+<p>
+<dl compact><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>other</em>&nbsp;</td><td>The initializer list </td></tr>
+  </table>
+</dl>
+
+</div>
+</div><p>
 <a class="anchor" name="c7c6f4172ec40bc030777f43349aec32"></a><!-- doxytag: member="Sylph::Core::Array::operator=" ref="c7c6f4172ec40bc030777f43349aec32" args="(const Array&lt; T &gt; &amp;other)" -->
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;class T&gt; </div>
-<div class="memtemplate">
-template&lt;class T &gt; </div>
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="class_sylph_1_1_core_1_1_array.html">Array</a> &amp; <a class="el" href="class_sylph_1_1_core_1_1_array.html">Sylph::Core::Array</a>&lt; T &gt;::operator=           </td>
@@ -334,7 +395,7 @@ template&lt;class T &gt; </div>
           <td class="paramtype">const <a class="el" href="class_sylph_1_1_core_1_1_array.html">Array</a>&lt; T &gt; &amp;&nbsp;</td>
           <td class="paramname"> <em>other</em>          </td>
           <td>&nbsp;)&nbsp;</td>
-          <td><code> [inline]</code></td>
+          <td></td>
         </tr>
       </table>
 </div>
@@ -363,7 +424,7 @@ template&lt;class T&gt; </div>
           <td class="paramtype">std::size_t&nbsp;</td>
           <td class="paramname"> <em>idx</em>          </td>
           <td>&nbsp;)&nbsp;</td>
-          <td> const  throw (Exception)</td>
+          <td> const  throw (<a class="el" href="class_sylph_1_1_core_1_1_exception.html">Exception</a>)</td>
         </tr>
       </table>
 </div>
@@ -397,7 +458,7 @@ template&lt;class T&gt; </div>
           <td class="paramtype">std::size_t&nbsp;</td>
           <td class="paramname"> <em>idx</em>          </td>
           <td>&nbsp;)&nbsp;</td>
-          <td>  throw (Exception)</td>
+          <td>  throw (<a class="el" href="class_sylph_1_1_core_1_1_exception.html">Exception</a>)</td>
         </tr>
       </table>
 </div>
@@ -442,7 +503,7 @@ This variable is 1-based, while the array itself is 0-based, i.e. if length == N
 <hr>The documentation for this class was generated from the following files:<ul>
 <li>Sylph/Core/<a class="el" href="_array_8h-source.html">Array.h</a><li>Sylph/Core/Array.cpp</ul>
 </div>
-<hr size="1"><address style="text-align: right;"><small>Generated on Tue Mar 17 17:01:24 2009 for LibSylph by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Sat Mar 21 15:05:26 2009 for LibSylph by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.8 </small></address>
 </body>
