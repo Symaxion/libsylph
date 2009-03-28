@@ -18,6 +18,9 @@ SYLPH_START_NAMESPACE(Core)
 
 SYLPH_PUBLIC
 template<class T>
+class Array;
+
+template<class T>
 class Vector : public virtual Collection<T> {
 public:
     typedef T Type;
@@ -39,26 +42,26 @@ public:
     void trim();
 
     bool add(const T & t);
-    bool addAll(Collection<T> & c);
+    bool addAll(const Collection<T> & c);
     void clear();
-    bool contains(T & t) const;
-    bool containsAll(Collection<T> & c) const;
-    bool operator ==(Collection<T> & c) const;
+    bool contains(const T & t) const;
+    bool containsAll(const Collection<T> & c) const;
+    bool operator ==(const Collection<T> & c) const;
     Vector<T> * deepCopy() const;
 
     int hashCode() const;
     bool empty() const;
     void remove(T & t);
     void removeAt(std::size_t idx);
-    bool removeAll(Collection<T> & c);
-    bool retainAll(Collection<T> & c);
+    bool removeAll(const Collection<T> & c);
+    bool retainAll(const Collection<T> & c);
     std::size_t size() const;
     const Array<T> toArray() const;
 
-    T & front();
-    T & back();
-    int indexOf(T & t, std::size_t idx = 0);
-    int lastIndexOf(T & t, std::size_t idx = elementCount);
+    const T & front() const;
+    const T & back() const;
+    int indexOf(const T & t, std::size_t idx = 0);
+    int lastIndexOf(const T & t, std::size_t idx = elementCount);
 
     Iterator<T> iterator() const;
     MutableIterator<T> mutableIterator();

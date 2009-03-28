@@ -49,22 +49,22 @@ public:
      * @param len the length of the new array
      */
     explicit Array(std::size_t len);
-    /*
+    /**
      * Creates an array from an initializer list.
      * @param il the initializer list
      */
-    Array(std::initializer_list<T> il);
+    Array(const std::initializer_list<T> & il);
     /**
      * Creates an array from a C-style array. The contents of the array are
      * copied into this array. The original array will not be modified.
      * @param array the c-style array
      */
-    Array(T & array[]);
+    Array(const T & array[]);
     /**
      * Copy constructor. Copies all entries into this array.
      * @param ar the other array
      */
-    Array(Array<T> & ar);
+    Array(const Array<T> & ar);
     /**
      * Destructor. Deletes the backing c-style array
      */
@@ -129,8 +129,22 @@ public:
     const T & operator[](std::size_t idx) const throw (Exception);
 
 };
+/**
+ * Compares the two Arrays on equality. To Arrays compare equal when their
+ * lengths are identical and each of the items compare equal to the item on the
+ * same position in the other array.
+ * @return <i>true</i> when the two arrays compare equal, <i>false</i>
+ * otherwise.
+ */
 template<class T>
 inline bool operator==(const Array<T>& lhs, const Array<T>& rhs);
+/**
+ * Compares the two Arrays. To Arrays compare less than when their lengths are
+ * identical and each of the items compare less than to the item on the same
+ * position in the other array.
+ * @return <i>true</i> when the first array compares less than the first,
+ * <i>false</i> otherwise.
+ */
 template<class T>
 inline bool operator<(const Array<T>& lhs, const Array<T>& rhs);
 

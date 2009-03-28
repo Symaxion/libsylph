@@ -23,6 +23,12 @@
             <itemPath>src/Sylph/Core/IO/FileFilter.h</itemPath>
             <itemPath>src/Sylph/Core/IO/FileType.h</itemPath>
           </logicalFolder>
+          <logicalFolder name="f1" displayName="Serialization" projectFiles="true">
+            <itemPath>src/Sylph/Core/Serialization/Deserializer.h</itemPath>
+            <itemPath>src/Sylph/Core/Serialization/Key.h</itemPath>
+            <itemPath>src/Sylph/Core/Serialization/Serialization.h</itemPath>
+            <itemPath>src/Sylph/Core/Serialization/Serializer.h</itemPath>
+          </logicalFolder>
           <itemPath>src/Sylph/Core/Any.h</itemPath>
           <itemPath>src/Sylph/Core/Application.cpp</itemPath>
           <itemPath>src/Sylph/Core/Application.h</itemPath>
@@ -242,6 +248,18 @@
       <item path="src/Sylph/Core/Random.h">
         <itemTool>3</itemTool>
       </item>
+      <item path="src/Sylph/Core/Serialization/Deserializer.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Serialization/Key.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Serialization/Serialization.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Serialization/Serializer.h">
+        <itemTool>3</itemTool>
+      </item>
       <item path="src/Sylph/Core/String.cpp">
         <itemTool>1</itemTool>
       </item>
@@ -457,6 +475,18 @@
         <itemTool>3</itemTool>
       </item>
       <item path="src/Sylph/Core/Random.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Serialization/Deserializer.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Serialization/Key.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Serialization/Serialization.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Serialization/Serializer.h">
         <itemTool>3</itemTool>
       </item>
       <item path="src/Sylph/Core/String.cpp">

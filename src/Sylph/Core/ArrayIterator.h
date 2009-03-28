@@ -61,9 +61,11 @@ public:
     std::size_t nextIndex() const;
     std::size_t previousIndex() const;
 protected:
+    #ifndef SYLPH_DOXYGEN
     Array<T> * ar;
     T * last;
     std::size_t idx = 0;
+    #endif
 };
 
 template<class T>

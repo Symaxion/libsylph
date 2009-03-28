@@ -12,7 +12,6 @@
 #undef SYLPH_PUBLIC
 #endif /* SYLPH_PUBLIC */
 #define SYLPH_PUBLIC
-#define interface class
 
 #define SYLPH_START_NAMESPACE(_x) namespace Sylph { namespace _x {
 #define SYLPH_END_NAMESPACE(_x) }}
@@ -30,8 +29,8 @@
  * The Sylph::Core namespace contains the fundamental classes of LibSylph.
  * Examples are Application, Object, String, Vector, ....
  * <p>
- * <b>Dependancies:</b> Sylph::OS<br>
- * <b>Cross-platform?</b> Most classes are cross-platform, but Array currently
+ * @depends Sylph::OS
+ * @crossplatform Most classes are cross-platform, but Array currently
  * depends on C++0x initializer_lists.
  * </p>
  */
@@ -39,10 +38,10 @@
 /**
  * \namespace Sylph::OS
  * The Sylph::OS namespace contains all portability modules. Currently there is
- * support for Mac OS X and Linux. Minimal Windows support is present as well.
+ * support for Mac %OS X and Linux. Minimal Windows support is present as well.
  * <p>
- * <b>Dependancies:</b> None<br>
- * <b>Cross-platform?</b> Yes, by definition.
+ * @depends None
+ * @crossplatform Yes, by definition.
  * </p>
  */
 
@@ -74,6 +73,7 @@ enum GCPlacement {
  * from Object.
  */
 class Object {
+#ifndef SYLPH_DOXYGEN
 public:
 Object();
 virtual ~Object();
@@ -94,10 +94,10 @@ inline void operator delete[](void* obj);
 inline void operator delete[](void*, GCPlacement);
 inline void operator delete[](void*, void*);
 private:
-
+#endif
 };
 
 SYLPH_END_NAMESPACE(Core)
 
-#endif	/* _OBJECT_H */
+#endif	/* OBJECT_H_ */
 
