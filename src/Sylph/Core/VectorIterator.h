@@ -20,7 +20,7 @@ SYLPH_PUBLIC
 template<class T>
 class VectorIterator : public virtual Iterator<T> {
 public:
-    VectorIterator(Vector<T> & vector) : vt(&vector) {}
+    VectorIterator(const Vector<T> & vector) : vt(&vector) {}
     virtual ~VectorIterator() {}
     bool hasNext() const;
     const T & next() const;
@@ -38,7 +38,7 @@ template<class T>
 class VectorMutableIterator : public virtual MutableIterator<T>,
         public virtual VectorIterator<T> {
 public:
-    VectorMutableIterator(Vector<T> & vt) : VectorIterator(vt) {}
+    VectorMutableIterator(const Vector<T> & vt) : VectorIterator(vt) {}
     virtual ~VectorMutableIterator() {}
     void set(T & t) throw(Exception);
     void insert(T & t) throw(Exception);

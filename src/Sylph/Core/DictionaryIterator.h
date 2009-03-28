@@ -23,7 +23,7 @@ enum DictionaryIteratorType {
 template<class T, class Key, class Value>
 class DictionaryIterator : public virtual Iterator<T> {
 public:
-    explicit DictionaryIterator(Dictionary<Key,Value> & _dict,
+    explicit DictionaryIterator(const Dictionary<Key,Value> & _dict,
             DictionaryIteratorType _type) : dict(_dict), type(_type),
             idx(_dict.buckets->length), count(dict.size) {}
     virtual ~DictionaryIterator() {}

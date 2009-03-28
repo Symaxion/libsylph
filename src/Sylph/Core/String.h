@@ -10,13 +10,14 @@
 
 #include "Object.h"
 #include "Comparable.h"
+#include "Hashable.h"
 
 class QString;
 
 SYLPH_START_NAMESPACE(Core)
 SYLPH_PUBLIC
 
-class String : public Object {
+class String : public Object, public virtual Hashable {
     friend bool operator==(const String lhs, const char * rhs);
     friend bool operator==(const String lhs, const std::string & rhs);
     friend bool operator==(const String lhs, const String rhs);
@@ -70,6 +71,7 @@ public:
     static String valueOf(double d);
 
     String copy() const;
+    int hashCode();
     
     String operator=(const char * orig);
     String operator=(const std::string & orig);
