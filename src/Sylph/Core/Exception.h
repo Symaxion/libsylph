@@ -11,7 +11,7 @@
 #include "Object.h"
 
 #include <exception>
-#include <string>
+#include "String.h"
 
 SYLPH_START_NAMESPACE(Core)
 
@@ -77,8 +77,8 @@ public:
      * Creates a new Exception. You should not use this directly, instead, use
      * <code>sthrow()</code>
      */
-    Exception(string_t & n, string_t & r = "", string_t & f = "unknown", const unsigned int l = 0)
-    throw () : name(n), reason(r), file(f), line(l) {
+    Exception(String n, String r = "", String f = "unknown", const unsigned int l = 0)
+    throw () : _name(n), _reason(r), _file(f), _line(l) {
     }
 
     /**
@@ -93,7 +93,7 @@ public:
      * @return The reason why this Exception was thrown.
      */
     const char* what() const throw () {
-        return reason.c_str();
+        return _reason.ascii();
     }
 
     /**
@@ -102,24 +102,17 @@ public:
      * parameter to <code>sthrow()</code>
      * @return The name of this Exception, as defined by <code>sthrow()</code>
      */
-    string_t & name() const throw () {
-        return name;
+    String name() const throw () {
+        return _name;
     }
 private:
-    typedef const std::string string_t;
-    const string_t name;
-    const string_t reason;
+    const String _name;
+    const String _reason;
 public:
-    /**
-     * Do not use
-     */
-    const string_t file;
-    /**
-     * Do not use
-     */
-    const unsigned int line;
-
-
+#ifndef SYLPH_DOXYGEN
+    const String _file;
+    const unsigned int _line;
+#endif
 };
 
 #ifdef SYLPH_DEBUG

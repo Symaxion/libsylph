@@ -34,7 +34,7 @@ SYLPH_START_NAMESPACE(Core)
 
             static ApplicationSelf * self_app;
 
-            static void init(int argc, char * argv[], char * apple[], AppType type);
+            static void init(int argc, char * argv[], char * apple[], ::Sylph::AppType type);
 
         protected:
 
@@ -61,7 +61,7 @@ SYLPH_START_NAMESPACE(Core)
                 return _appName;
             }
 
-            AppType appType();
+            ::Sylph::AppType appType();
 
             void fail(const string & reason);
             void fail(const string & reason, const string & file, int line);

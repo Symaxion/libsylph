@@ -12,9 +12,14 @@
 #include "Comparable.h"
 #include "Hashable.h"
 
+#include <string>
+
 class QString;
 
 SYLPH_START_NAMESPACE(Core)
+
+template<class T> class Array;
+
 SYLPH_PUBLIC
 
 class String : public Object, public virtual Hashable {
@@ -43,7 +48,7 @@ public:
     String(const char * orig);
     String(const std::string & orig);
     String(const QString orig);
-    String(const String orig);
+    String(const String & orig);
     virtual ~String();
 
     std::size_t length() const;
@@ -61,7 +66,8 @@ public:
     bool startsWith(const String other) const;
 
     String trim() const;
-    String substring(std::size_t begin, std::size_t end = length());
+    String substring(std::size_t begin);
+    String substring(std::size_t begin, std::size_t end);
 
     static String valueOf(bool b);
     static String valueOf(char c);
@@ -84,9 +90,9 @@ public:
 
 private:
     struct Data {
-        Array<wchar_t> * data = NULL;
+        Array<wchar_t> * data;
         std::size_t length;
-        std::size_t refcount = 0;
+        std::size_t refcount;
     } * strdata;
 
 };

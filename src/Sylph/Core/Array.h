@@ -24,8 +24,6 @@ SYLPH_PUBLIC
  */
 template <class T>
 class Array : public virtual Iterable<T> {
-    friend bool operator==(const Array<T>& lhs, const Array<T>& rhs);
-    friend bool operator<(const Array<T>& lhs, const Array<T>& rhs);
 
 public:
     /**
@@ -41,7 +39,7 @@ public:
     const int length;
 
 private:
-    T * carray = NULL;
+    T * carray;
 
 public:
     /**
@@ -59,7 +57,7 @@ public:
      * copied into this array. The original array will not be modified.
      * @param array the c-style array
      */
-    Array(const T & array[]);
+    Array(const T array[]);
     /**
      * Copy constructor. Copies all entries into this array.
      * @param ar the other array
