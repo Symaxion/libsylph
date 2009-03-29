@@ -60,8 +60,8 @@ public:
 
     const T & front() const;
     const T & back() const;
-    int indexOf(const T & t, std::size_t idx = 0);
-    int lastIndexOf(const T & t, std::size_t idx = elementCount);
+    int indexOf(const T & t, std::size_t idx = 0) const;
+    int lastIndexOf(const T & t, std::size_t idx = elementCount) const;
 
     Iterator<T> iterator() const;
     MutableIterator<T> mutableIterator();

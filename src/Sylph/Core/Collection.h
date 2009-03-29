@@ -35,10 +35,7 @@ template<typename T>
 class Collection : public virtual Iterable<T>, public virtual Hashable {
 public:
 
-    /**
-     * Adds the given entry to this Collection.
-     * @param t The entry to add.
-     */
+    
     virtual bool add(const T & t) = 0;
     virtual bool addAll(const Collection<T> & c) = 0;
     virtual void clear() = 0;
