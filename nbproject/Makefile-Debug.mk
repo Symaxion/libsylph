@@ -12,13 +12,14 @@ MKDIR=mkdir
 CP=cp
 CCADMIN=CCadmin
 RANLIB=ranlib
-CC=gcc
-CCC=g++
-CXX=g++
+CCDIR=/usr/lib/gcc-4.4.0/bin
+CC=${CCDIR}/gcc
+CCC=${CCDIR}/g++
+CXX=${CCDIR}/g++
 FC=gfortran
 
 # Macros
-PLATFORM=GNU_C++0x-MacOSX
+PLATFORM=GNU_C++0x-Linux
 
 # Include project Makefile
 include Makefile

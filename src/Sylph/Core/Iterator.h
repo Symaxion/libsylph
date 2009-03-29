@@ -13,6 +13,7 @@
 
 SYLPH_START_NAMESPACE(Core)
 SYLPH_PUBLIC
+template<class T>
 class Iterable;
 
 /**
@@ -33,7 +34,7 @@ public:
      * nothing.
      * @param it The iterable to iterate over.
      */
-    Iterator(const Iterable & it) {}
+    Iterator(const Iterable<T> & it) {}
 
     /**
      * Default destructor.
@@ -118,11 +119,11 @@ public:
      * nothing.
      * @param it The iterable to iterate over.
      */
-    MutableIterator(const Iterable & it) {}
+    MutableIterator(const Iterable<T> & it) {}
     /**
      * Default destructor.
      */
-    virtual ~Iterator() {}
+    virtual ~MutableIterator() {}
     /**
      * Replaces the last item returned by next() or previous() with the given
      * item
@@ -155,7 +156,7 @@ class s_foreach_container_fjAk8tb1 {
     public:
     inline s_foreach_container_fjAk8tb1(const T& t): c(t), brk(0), i(c){};
     const T c;
-    int brk;
+    mutable int brk;
     Sylph::Core::Iterator<T> i;
     inline bool condition() const { return (!brk++ && i.hasNext()); }
 

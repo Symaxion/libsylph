@@ -68,7 +68,7 @@ T& Array::operator[](std::size_t idx) throw (Exception) {
     if (idx < length) {
         return carray[idx];
     } else {
-        sthrow(ArrayException);
+        sthrow(ArrayException,"");
     }
 }
 
@@ -76,7 +76,7 @@ const T& Array::operator[](std::size_t idx) const throw (Exception) {
     if (idx < length) {
         return carray[idx];
     } else {
-        sthrow(ArrayException);
+        sthrow(ArrayException,"");
     }
 }
 
