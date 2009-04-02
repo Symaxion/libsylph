@@ -16,7 +16,7 @@
 
 class QString;
 
-SYLPH_START_NAMESPACE(Core)
+SYLPH_BEGIN_NAMESPACE
 
 template<class T> class Array;
 
@@ -116,6 +116,6 @@ String operator+(const String lhs, const char * rhs);
 String operator+(const String lhs, const std::string & rhs);
 String operator+(const String lhs, const String rhs);
 String operator+(const String lhs, const QString rhs);
-SYLPH_END_NAMESPACE(Core)
+SYLPH_END_NAMESPACE
 
 #endif /* STRING_H_ */

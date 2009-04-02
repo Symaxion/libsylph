@@ -11,7 +11,7 @@
 #include "Sylph/OS/OS.h"
 #include "Sylph/Core/Application.h"
 
-namespace Sylph {
+SYLPH_BEGIN_NAMESPACE
     /**
      * This enumeration contains the possible Application Types. Each element
      * is backed by an implementation of @c ApplicationSelf in @c Sylph::OS.<p>
@@ -58,7 +58,7 @@ namespace Sylph {
      * The syntax is very similar to that of the normal new operator.
      */
      template<class T> T * newgc(T & t);
-}
+SYLPH_END_NAMESPACE
 
 #ifndef SYLPH_NO_SYLPHMAIN
 #ifdef SYLPH_OS_MACOSX
@@ -67,7 +67,7 @@ int main(int argc, char * argv[], char * envp[], char * apple[]);
 int main(int argc, char * argv[]);
 #endif
 static void SylphInit(int argc, char * argv[], char * apple[]) {
-    Sylph::Core::Application::init(argc, argv, apple, APP_TYPE);
+    Sylph::Application::init(argc, argv, apple, APP_TYPE);
 }
 int SylphMain();
 #endif

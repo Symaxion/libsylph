@@ -13,39 +13,18 @@
 #endif /* SYLPH_PUBLIC */
 #define SYLPH_PUBLIC
 
-#define SYLPH_START_NAMESPACE(_x) namespace Sylph { namespace _x {
-#define SYLPH_END_NAMESPACE(_x) }}
+#define SYLPH_BEGIN_NAMESPACE namespace Sylph {
+#define SYLPH_END_NAMESPACE }
 
 #include <cstddef>
-
-// seems a good place to document Sylph, Core, and OS namespaces, no?
 
 /**
  * \namespace Sylph
  * The Sylph namespace contains everything in LibSylph.
  */
-/**
- * \namespace Sylph::Core
- * The Sylph::Core namespace contains the fundamental classes of LibSylph.
- * Examples are Application, Object, String, Vector, ....
- * <p>
- * @depends Sylph::OS
- * @crossplatform Most classes are cross-platform, but Array currently
- * depends on C++0x initializer_lists.
- * </p>
- */
 
-/**
- * \namespace Sylph::OS
- * The Sylph::OS namespace contains all portability modules. Currently there is
- * support for Mac %OS X and Linux. Minimal Windows support is present as well.
- * <p>
- * @depends None
- * @crossplatform Yes, by definition.
- * </p>
- */
 
-SYLPH_START_NAMESPACE(Core)
+SYLPH_BEGIN_NAMESPACE
 SYLPH_PUBLIC
 
 /**
@@ -75,29 +54,28 @@ enum GCPlacement {
 class Object {
 #ifndef SYLPH_DOXYGEN
 public:
-Object();
-virtual ~Object();
-inline void* operator new( size_t size);
-inline void* operator new( size_t size, GCPlacement gcp);
-inline void* operator new( size_t size, void *p);
-/* Must be redefined here, since the other overloadings	*/
-/* hide the global definition.				*/
-inline void operator delete( void* obj);
-inline void operator delete( void*, GCPlacement);
-/* called if construction fails.	*/
-inline void operator delete( void*, void*);
+    inline Object();
+    inline virtual ~Object();
+    inline void* operator new( size_t size);
+    inline void* operator new( size_t size, GCPlacement gcp);
+    inline void* operator new( size_t size, void *p);
+    inline void operator delete( void* obj);
+    inline void operator delete( void*, GCPlacement);
+    inline void operator delete( void*, void*);
 
-inline void* operator new[](size_t size);
-inline void* operator new[](size_t size, GCPlacement gcp);
-inline void* operator new[](size_t size, void *p);
-inline void operator delete[](void* obj);
-inline void operator delete[](void*, GCPlacement);
-inline void operator delete[](void*, void*);
+    // Arrays from Object are *never* gc'ed, and I recommend using Sylph::Array
+    // instead. Maybe we should document this somewhere?
+    inline void* operator new[](size_t size);
+    inline void* operator new[](size_t size, void *p);
+    inline void operator delete[](void* obj);
+    inline void operator delete[](void*, void*);
+
 private:
+    inline static void cleanup(void* obj, void* clientData);
 #endif
 };
 
-SYLPH_END_NAMESPACE(Core)
+SYLPH_END_NAMESPACE
 
 #endif	/* OBJECT_H_ */
 

@@ -4,79 +4,52 @@
 
 #include <algorithm>
 
-SYLPH_START_NAMESPACE(Core)
+SYLPH_BEGIN_NAMESPACE
 
 Array::Array(std::size_t len) : length(len) {
-    carray = new T[length];
+    _carray = (T*) calloc(len, sizeof(T));
 }
 
 Array::Array(std::initializer_list<T> il) : length(il.size()) {
-    carray = new T[il.size()];
-    carraycopy(il.begin(), 0, carray, 0, il.size());
+    _carray = (T*) calloc(il.size(), sizeof(T));
+    carraycopy(il.begin(), 0, _carray, 0, il.size());
 }
 
 Array::Array(T & array[]) : length(carraysize(array)) {
-    carray = new T[length];
-    carraycopy(array, 0, carray, 0, length);
+    _carray = (T*) calloc(length,sizeof(T));
+    carraycopy(array, 0, _carray, 0, length);
 }
 
 Array::Array(Array<T> & ar) : length(ar.length) {
-    carray = new T[length];
-    carraycopy(ar.carray, 0, carray, 0, length);
+    _carray = (T*) calloc(length,sizeof(T));
+    carraycopy(ar._carray, 0, _carray, 0, length);
 }
 
 Array::~Array() {
-    delete[] carray;
+    free(_carray);
 }
 
 T * Array::carray() {
-    return carray;
+    return _carray;
 }
 
 const T * Array::carray() const {
-    return carray;
+    return _carray;
 }
 
 Iterator<T> Array::iterator() const {
-    return ArrayIterator<T > (*this);
+    return ArrayIterator<T> (*this);
 }
 
 MutableIterator<T> Array::mutableIterator() const {
-    return ArrayMutableIterator<T > (*this);
-}
-
-Array& Array::operator=(const Array<T> & other) {
-    for (std::size_t idx = 0; idx < other.length(); idx++) {
-        carray[idx] = other.carray[idx];
-    }
-    return * this;
-}
-
-Array & Array::operator=(const std::initializer_list<T> & other) {
-    delete carray;
-    carray = new T[other.size()];
-    carraycopy(other.begin(), 0, carray, 0, other.size());
-}
-
-Array & Array::operator=(const T other[]) {
-    delete carray;
-    carray = new T[length];
-    carraycopy(other, 0, carray, 0, length);
-}
-
-T& Array::operator[](std::size_t idx) throw (Exception) {
-    if (idx < length) {
-        return carray[idx];
-    } else {
-        sthrow(ArrayException,"");
-    }
+    return ArrayMutableIterator<T> (*this);
 }
 
 const T& Array::operator[](std::size_t idx) const throw (Exception) {
     if (idx < length) {
         return carray[idx];
     } else {
-        sthrow(ArrayException,"");
+        sthrow(ArrayException, "Array overflow");
     }
 }
 
@@ -92,4 +65,4 @@ inline bool operator<(const Array<T>& lhs, const Array<T>& rhs) {
             std::lexicographical_compare(lhs.carray[0], lhs.carray[lhs.length - 1],
             rhs[0], rhs[rhs.length - 1]) : false;
 }
-SYLPH_END_NAMESPACE(Core)
+SYLPH_END_NAMESPACE

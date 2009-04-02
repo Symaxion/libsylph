@@ -1,7 +1,5 @@
 #include "Application.h"
 
-#include "File.h"
-
 #include <iostream>
 #include <cstdlib>
 
@@ -14,10 +12,7 @@
 #include "../OS/WindowsAppSelf.h"
 
 
-namespace Sylph {
-namespace Core {
-
-    namespace SO = Sylph::OS;
+SYLPH_BEGIN_NAMESPACE
 
     Application::Application() {
 
@@ -29,20 +24,23 @@ namespace Core {
     void Application::init(int argc, char* argv[], char * apple[], AppType type) {
         switch(type) {
             case S_APPTYPE_BUNDLE:
-                self_app = new SO::LinuxBundleAppSelf(argc,argv);
+                self_app = new LinuxBundleAppSelf(argc,argv);
                 break;
             case S_APPTYPE_FHS:
-                self_app = new SO::LinuxFHSAppSelf(argc,argv);
+                self_app = new LinuxFHSAppSelf(argc,argv);
                 break;
             case S_APPTYPE_MACOS:
-                self_app = new SO::MacOSAppSelf(argc,argv,apple);
+                self_app = new MacOSAppSelf(argc,argv,apple);
                 break;
             case S_APPTYPE_MACOS_FHS:
+                self_app = new MacOSFHSAppSelf(argc,argv,apple);
                 break;
             case S_APPTYPE_WINDOWS:
+                self_app = new WindowsAppSelf(argc,argv);
                 break;
             default:
-                _fail("LibSylph","Unknown App Type!",__FILE__,__LINE__);
+                std::cout << "LibSylph error: Unknown App Type! "<< "@"
+                         << __FILE__<<":"<<__LINE__ << std::endl;
         }
         self_app->_appType = type;
     }
@@ -65,14 +63,13 @@ namespace Core {
         _fail(appName, reason, file, line);
     }
     void ApplicationSelf::_fail(const string & appName, const string & reason) {
-        cout << appName <<" error: " << reason << endl;
+        std::cout << appName <<" error: " << reason << std::endl;
         exit(1);
     }
     void ApplicationSelf::_fail(const string & appName, const string & reason,
                 const string & file, int line) {
-        cout << appName <<" error: " << reason << "@" << file << ":" << line << endl;
+        std::cout << appName <<" error: " << reason << "@" << file << ":" <<
+           line << std::endl;
     }
 
-}
-}
-
+SYLPH_END_NAMESPACE

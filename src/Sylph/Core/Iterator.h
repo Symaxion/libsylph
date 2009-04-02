@@ -11,7 +11,7 @@
 #include "Object.h"
 #include "Exception.h"
 
-SYLPH_START_NAMESPACE(Core)
+SYLPH_BEGIN_NAMESPACE
 SYLPH_PUBLIC
 template<class T>
 class Iterable;
@@ -147,7 +147,7 @@ public:
      */
     virtual void remove() throw(Exception) = 0;
 };
-SYLPH_END_NAMESPACE(Core)
+SYLPH_END_NAMESPACE
 
 
 // note : there is a reason why the name is so strange -- do not use directly!
@@ -157,7 +157,7 @@ class s_foreach_container_fjAk8tb1 {
     inline s_foreach_container_fjAk8tb1(const T& t): c(t), brk(0), i(c){};
     const T c;
     mutable int brk;
-    Sylph::Core::Iterator<T> i;
+    Sylph::Iterator<T> i;
     inline bool condition() const { return (!brk++ && i.hasNext()); }
 
 };

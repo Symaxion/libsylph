@@ -10,12 +10,12 @@
 
 #include "Object.h"
 
-SYLPH_START_NAMESPACE(Core)
+SYLPH_BEGIN_NAMESPACE
 SYLPH_PUBLIC
 class Hashable : public Object {
     virtual int hashCode() = 0;
 };
-SYLPH_END_NAMESPACE(Core)
+SYLPH_END_NAMESPACE
 
 #endif	/* _HASHABLE_H */
 
