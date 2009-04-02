@@ -1,7 +1,7 @@
 #include "Hash.h"
 #include "Exception.h"
 
-SYLPH_START_NAMESPACE(Core)
+SYLPH_BEGIN_NAMESPACE
         
 union float_union {
     float f;
@@ -62,4 +62,4 @@ inline int Hash<T *>::operator()(T * & t) {
 }
 
 
-SYLPH_END_NAMESPACE(Core)
+SYLPH_END_NAMESPACE

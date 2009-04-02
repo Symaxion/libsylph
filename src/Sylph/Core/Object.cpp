@@ -4,12 +4,7 @@
 
 #include <new>
 
-SYLPH_START_NAMESPACE(Core)
-Object::Object() {
-}
-
-Object::~Object() {
-}
+SYLPH_BEGIN_NAMESPACE
 
 inline void* Object::operator new( size_t size) {
     return GC_MALLOC(size);
@@ -40,11 +35,7 @@ inline void Object::operator delete( void* p, GCPlacement gcp) {
 }
 
 inline void* Object::operator new[](size_t size) {
-    return Object::operator new(size);
-}
-
-inline void* Object::operator new[](size_t size, GCPlacement gcp) {
-    return Object::operator new( size, gcp);
+    return Object::operator new(size, NoGC);
 }
 
 inline void* Object::operator new[](size_t size, void *p) {
@@ -52,15 +43,34 @@ inline void* Object::operator new[](size_t size, void *p) {
 }
 
 inline void Object::operator delete[](void* obj) {
-    Object::operator delete( obj);
+    Object::operator delete(obj);
 }
-
 
 inline void Object::operator delete[](void*, void*) {
 }
 
-inline void Object::operator delete[](void* p, GCPlacement gcp) {
-    Object::operator delete(p);
+inline Object::~Object() {
+    GC_register_finalizer_ignore_self(GC_base(this), 0, 0, 0, 0);
 }
 
-SYLPH_END_NAMESPACE(Core)
+inline void Object::cleanup(void* obj, void* displ) {
+    ((Object*) ((char*) obj + (ptrdiff_t) displ))->~Object();
+}
+
+inline Object::Object() {
+    GC_finalization_proc oldProc;
+    void* oldData;
+    void* base = GC_base((void *) this);
+    if (0 != base) {
+        // Don't call the debug version, since this is a real base address.
+        GC_register_finalizer_ignore_self(
+                base, (GC_finalization_proc) cleanup, (void*) ((char*) this -(char*) base),
+                &oldProc, &oldData);
+        if (0 != oldProc) {
+            GC_register_finalizer_ignore_self(base, oldProc, oldData, 0, 0);
+        }
+    }
+}
+
+
+SYLPH_END_NAMESPACE

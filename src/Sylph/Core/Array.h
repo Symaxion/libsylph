@@ -13,7 +13,7 @@
 #include "Exception.h"
 #include <initializer_list>
 
-SYLPH_START_NAMESPACE(Core)
+SYLPH_BEGIN_NAMESPACE
 
 SYLPH_PUBLIC
 /**
@@ -39,7 +39,7 @@ public:
     const int length;
 
 private:
-    T * carray;
+    T * _carray;
 
 public:
     /**
@@ -94,24 +94,6 @@ public:
     const T * carray() const;
 
     /**
-     * Default assignment operator
-     * @param other The other array
-     */
-    Array & operator=(const Array<T> & other);
-
-    /**
-     * Intializer list assignment operator
-     * @param other The initializer list
-     */
-    Array & operator=(const std::initializer_list<T> & other);
-
-    /**
-     * C-style array assignment operator
-     * @param other The C-style array
-     */
-    Array & operator=(const T other[]);
-
-    /**
      * Used for accessing the Array's contents. Its behaviour is identical to
      * that of c-style arrays, but throws an exception instead of overflowing
      * or causing segfaults.
@@ -146,7 +128,7 @@ inline bool operator==(const Array<T>& lhs, const Array<T>& rhs);
 template<class T>
 inline bool operator<(const Array<T>& lhs, const Array<T>& rhs);
 
-SYLPH_END_NAMESPACE(Core)
+SYLPH_END_NAMESPACE
 
 #endif	/* ARRAY_H_ */
 

@@ -10,10 +10,11 @@
 
 #include "Object.h"
 
-SYLPH_START_NAMESPACE(Core)
+
+SYLPH_BEGIN_NAMESPACE
 SYLPH_PUBLIC
 template<class T>
-class Hash : public unary_function<int,T &> {
+class Hash : public std::unary_function<int,T &> {
     inline int operator()(T & t);
 };
 
@@ -43,7 +44,7 @@ class Hash<T *> {
 };
 
 
-SYLPH_END_NAMESPACE(Core)
+SYLPH_END_NAMESPACE
 
 #endif	/* HASH_H_ */
 

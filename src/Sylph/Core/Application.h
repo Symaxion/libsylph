@@ -12,86 +12,83 @@
 
 #include "../../Sylph.h"
 
-#include <vector>
-#include <string>
 
-#define thisapp ::Sylph::Core::Application::self_app
+#define thisapp ::Sylph::Application::self_app
 
-SYLPH_START_NAMESPACE(Core)
-        using namespace std;
+SYLPH_BEGIN_NAMESPACE
 
-        class ApplicationSelf;
-        class File;
+class ApplicationSelf;
+class String;
 
-        SYLPH_PUBLIC
-        class Application : public Object {
-            friend class ApplicationSelf;
-        public:
+template<class T> class Array;
 
-            const string & location() {
-                return _location;
-            }
+SYLPH_PUBLIC
+class Application : public Object {
+    friend class ApplicationSelf;
+public:
+    const String location() {
+        return _location;
+    }
 
-            static ApplicationSelf * self_app;
+    static ApplicationSelf * self_app;
 
-            static void init(int argc, char * argv[], char * apple[], ::Sylph::AppType type);
+    static void init(int argc, char * argv[], char * apple[], AppType type);
 
-        protected:
+protected:
+    String _location;
 
-            string _location;
-
-        private:
-            Application();
-            virtual ~Application();
+private:
+    Application();
+    virtual ~Application();
 
 
-        };
+};
 
-        ApplicationSelf * Application::self_app;
+ApplicationSelf * Application::self_app;
 
-        class ApplicationSelf : public Application {
-            friend class Application;
-        public:
+class ApplicationSelf : public Application {
+    friend class Application;
+public:
 
-            const vector<string> & arguments() {
-                return _arguments;
-            }
+    const Array<String> & arguments() {
+        return _arguments;
+    }
 
-            const string & appName() {
-                return _appName;
-            }
+    const String appName() {
+        return _appName;
+    }
 
-            ::Sylph::AppType appType();
+    AppType appType();
 
-            void fail(const string & reason);
-            void fail(const string & reason, const string & file, int line);
+    void fail(const String reason);
+    void fail(const String reason, const String file, int line);
 
 
-            virtual const File * getBundle() = 0;
-            virtual const File * getResourceDir() = 0;
-            virtual const File * getPrefix() = 0;
+    virtual const File * getBundle() = 0;
+    virtual const File * getResourceDir() = 0;
+    virtual const File * getPrefix() = 0;
 
-        protected:
-            void _fail(const string & appName, const string & reason);
-            void _fail(const string & appName, const string & reason,
-                    const string & file, int line);
+protected:
+    void _fail(const String appName, const String reason);
+    void _fail(const String appName, const String reason,
+            const String file, int line);
 
-        private:
-            void _preconstruct();
-            vector<string> _arguments;
-            string _appName;
-            AppType _appType;
+private:
+    void _preconstruct();
+    Array<String> _arguments;
+    String _appName;
+    AppType _appType;
 
-            ApplicationSelf(int argc, char * argv[], char * apple[]) : _arguments(argv, argv + argc) {
-                _preconstruct();
-                construct(argc, argv, apple);
-            }
-            virtual ~ApplicationSelf();
-            virtual void construct(int argc, char * argv[], char * apple[]) = 0;
+    ApplicationSelf(int argc, char * argv[], char * apple[]) : _arguments(argv, argv + argc) {
+        _preconstruct();
+        construct(argc, argv, apple);
+    }
+    virtual ~ApplicationSelf();
+    virtual void construct(int argc, char * argv[], char * apple[]) = 0;
 
-        };
+};
 
-SYLPH_END_NAMESPACE(Core)
+SYLPH_END_NAMESPACE
 
 #endif	/* _APPLICATION_H */
 

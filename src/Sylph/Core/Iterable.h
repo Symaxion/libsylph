@@ -11,7 +11,7 @@
 #include "Object.h"
 #include "Iterator.h"
 
-SYLPH_START_NAMESPACE(Core)
+SYLPH_BEGIN_NAMESPACE
 
 SYLPH_PUBLIC
 /**
@@ -37,7 +37,7 @@ public:
      */
     virtual MutableIterator<T> mutableIterator() = 0;
 };
-SYLPH_END_NAMESPACE(Core)
+SYLPH_END_NAMESPACE
 
 #endif	/* _ITERABLE_H */
 

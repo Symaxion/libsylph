@@ -11,11 +11,11 @@
 #include "Object.h"
 
 #include <exception>
-#include "String.h"
 
-SYLPH_START_NAMESPACE(Core)
+SYLPH_BEGIN_NAMESPACE
 
-/**
+class String;
+/*
  * This class provides a ready-to-use interface for exception handling. Unlike
  * most exception classes, you should not extend this class. Instead, use
  * the <code>sthrow</code> keyword to throw an Exception, like this:
@@ -77,6 +77,7 @@ public:
      * Creates a new Exception. You should not use this directly, instead, use
      * <code>sthrow()</code>
      */
+
     Exception(String n, String r = "", String f = "unknown", const unsigned int l = 0)
     throw () : _name(n), _reason(r), _file(f), _line(l) {
     }
@@ -102,7 +103,7 @@ public:
      * parameter to <code>sthrow()</code>
      * @return The name of this Exception, as defined by <code>sthrow()</code>
      */
-    String name() const throw () {
+    const String name() const throw () {
         return _name;
     }
 private:
@@ -115,6 +116,8 @@ public:
 #endif
 };
 
+SYLPH_END_NAMESPACE
+
 #ifdef SYLPH_DEBUG
 #define sthrow(__x, __r) throw Sylph::Core::Exception(# __x, __r, __FILE__, __LINE__)
 #else
@@ -123,6 +126,5 @@ public:
 
 #define if_nullptr(__x) if(__builtin_expect(!!(__x) == 0, 0))
 #define check_nullptr(__x) if_nullptr(__x) sthrow (NullPointerException, "Dereferenced a null pointer")
-SYLPH_END_NAMESPACE(Core)
 #endif	/* EXCEPTION_H_ */
 

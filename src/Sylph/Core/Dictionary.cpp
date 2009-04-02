@@ -7,7 +7,7 @@
 
 #include <cmath>
 
-SYLPH_START_NAMESPACE(Core)
+SYLPH_BEGIN_NAMESPACE
 
 template<class Key, class Value>
 class DictionaryEntry : public Object {
@@ -299,7 +299,7 @@ bool Dictionary::containsValue(Value & value) const {
 }
 
 const Collection<DictionaryEntry*> Dictionary::entrySet() {
-    ;
+    return DictClctEntries<Key,Value>;
 }
 
 std::size_t Dictionary::size() {
@@ -451,4 +451,4 @@ DictionaryIterator<DictionaryEntry *, _key, _value *> Dictionary::entryIterator(
 
 }
 
-SYLPH_END_NAMESPACE(Core)
+SYLPH_END_NAMESPACE
