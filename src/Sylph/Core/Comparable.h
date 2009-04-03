@@ -19,7 +19,7 @@
  * order to make your objects comparable.
  */
 
-SYLPH_START_NAMESPACE(Core)
+SYLPH_BEGIN_NAMESPACE
 SYLPH_PUBLIC
 template<class T, class V>
 inline bool operator!=(const T& lhs, const V& rhs) {
@@ -40,7 +40,7 @@ template<class T, class V>
 inline bool operator>=(const T& lhs, const V& rhs) {
     return !(lhs < rhs);
 }
-SYLPH_END_NAMESPACE(Core)
+SYLPH_END_NAMESPACE
 
 #endif	/* _COMPARABLE_H_ */
 

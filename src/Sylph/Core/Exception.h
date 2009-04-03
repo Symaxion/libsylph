@@ -11,10 +11,10 @@
 #include "Object.h"
 
 #include <exception>
+#include "String.h"
 
 SYLPH_BEGIN_NAMESPACE
 
-class String;
 /*
  * This class provides a ready-to-use interface for exception handling. Unlike
  * most exception classes, you should not extend this class. Instead, use
@@ -78,7 +78,8 @@ public:
      * <code>sthrow()</code>
      */
 
-    Exception(String n, String r = "", String f = "unknown", const unsigned int l = 0)
+    Exception(String n, String r = String(""), String f = String("unknown"),
+            const unsigned int l = 0)
     throw () : _name(n), _reason(r), _file(f), _line(l) {
     }
 
@@ -86,7 +87,7 @@ public:
      * Default destructor.
      */
     ~Exception() throw () {
-    };
+    }
 
     /**
      * Returns the reason why this Exception was thrown, i.e.\ the second
@@ -119,9 +120,9 @@ public:
 SYLPH_END_NAMESPACE
 
 #ifdef SYLPH_DEBUG
-#define sthrow(__x, __r) throw Sylph::Core::Exception(# __x, __r, __FILE__, __LINE__)
+#define sthrow(__x, __r) throw Sylph::Exception(# __x, __r, __FILE__, __LINE__)
 #else
-#define sthrow(__x, __r) throw Sylph::Core::Exception(# __x, __r)
+#define sthrow(__x, __r) throw Sylph::Exception(# __x, __r)
 #endif
 
 #define if_nullptr(__x) if(__builtin_expect(!!(__x) == 0, 0))
