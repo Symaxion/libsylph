@@ -46,7 +46,7 @@ public:
      * @throw UnsupportedOperationException if this Iterator cannot iterate
      * forward.
      */
-    virtual bool hasNext() const = 0;
+    virtual bool hasNext() = 0;
     /**
      * Returns the next entry in the forward direction and moves the iterator
      * one place forward.
@@ -55,14 +55,14 @@ public:
      * @throw Exception if there are no more entries.
      * @return The next entry
      */
-    virtual const T & next() const = 0;
+    virtual const T & next() = 0;
     /**
      * Checks if this iterator has any more entries in backward direction.
      * @return <i>true</i> if there are more entries, <i>false</i> otherwise.
      * @throw UnsupportedOperationException if this Iterator cannot iterate
      * backward.
      */
-    virtual bool hasPrevious() const = 0;
+    virtual bool hasPrevious() = 0;
     /**
      * Returns the next entry in the backward direction and moves the iterator
      * one place backward.
@@ -71,7 +71,7 @@ public:
      * @throw Exception if there are no more entries.
      * @return The previous entry
      */
-    virtual const T & previous() const = 0;
+    virtual const T & previous() = 0;
     /**
      * Returns the next index of the Iterable in the forward direction.
      * @throw UnsupportedOperationException if this Iterator cannot iterate
@@ -80,7 +80,7 @@ public:
      * @throw Exception if there are no more entries.
      * @return The next index in the Iterable
      */
-    virtual std::size_t nextIndex() const = 0;
+    virtual std::size_t nextIndex() = 0;
    /**
      * Returns the next index of the Iterable in the backward direction.
      * @throw UnsupportedOperationException if this Iterator cannot iterate
@@ -89,16 +89,16 @@ public:
      * @throw Exception if there are no more entries.
      * @return The previous index in the Iterable
      */
-    virtual std::size_t previousIndex() const = 0;
+    virtual std::size_t previousIndex() = 0;
 
     /**
      * Synonym for @c next()
      */
-    const T& operator++() const { return next(); }
+    const T& operator++() { return next(); }
     /**
      * Synonym for @c previous()
      */
-    const T& operator--() const { return previous(); }
+    const T& operator--() { return previous(); }
 };
 
 /**

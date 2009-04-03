@@ -13,7 +13,7 @@
 SYLPH_BEGIN_NAMESPACE
 SYLPH_PUBLIC
 class Hashable : public Object {
-    virtual int hashCode() = 0;
+    virtual int hashCode() const = 0;
 };
 SYLPH_END_NAMESPACE
 

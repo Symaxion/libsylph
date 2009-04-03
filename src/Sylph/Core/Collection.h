@@ -13,7 +13,7 @@
 #include "Iterable.h"
 #include "Hashable.h"
 
-SYLPH_START_NAMESPACE(Core)
+SYLPH_BEGIN_NAMESPACE
 SYLPH_PUBLIC
 
 /**
@@ -31,7 +31,7 @@ SYLPH_PUBLIC
  * @c Collection s that are backed by @c Array s are allowed to throw
  * @c ArrayException s if the underlying @c Array gets an out-of-bounds error.
  */
-template<typename T>
+template<class T>
 class Collection : public virtual Iterable<T>, public virtual Hashable {
 public:
 
@@ -64,7 +64,7 @@ public:
     virtual const T & operator[](std::size_t idx) const = 0;
 
 };
-SYLPH_END_NAMESPACE(Core)
+SYLPH_END_NAMESPACE
 
 #endif	/* COLLECTION_H_ */
 

@@ -11,9 +11,9 @@
 #include "Iterator.h"
 #include "Exception.h"
 
-SYLPH_START_NAMESPACE(Core)
+SYLPH_BEGIN_NAMESPACE
 
-class Array;
+template<class T> class Array;
 
 SYLPH_PUBLIC
 
@@ -34,7 +34,7 @@ public:
      * Default constructor.
      * @param array Array to iterate over.
      */
-    ArrayIterator(Array<T> & array) : ar(&array) {}
+    ArrayIterator(Array<T> & array) : ar(&array), idx(0) {}
     /**
      * Default destructor
      */
@@ -45,7 +45,7 @@ public:
      * otherwise
      * @see Array::length
      */
-    bool hasNext() const;
+    bool hasNext();
     /**
      * Returns the next entry in the array and moves this
      * iterator one place forward. 
@@ -55,31 +55,31 @@ public:
      * @see ArrayIterator::hasNext
      * @see Array::operator[]
      */
-    const T & next() const;
-    bool hasPrevious() const;
-    const T & previous() const;
-    std::size_t nextIndex() const;
-    std::size_t previousIndex() const;
+    const T & next();
+    bool hasPrevious();
+    const T & previous();
+    std::size_t nextIndex();
+    std::size_t previousIndex();
 protected:
     #ifndef SYLPH_DOXYGEN
     Array<T> * ar;
     T * last;
-    std::size_t idx = 0;
+    unsigned int idx;
     #endif
 };
 
 template<class T>
 class ArrayMutableIterator : public virtual MutableIterator<T>,
-        public virtual ArrayIterator<T> {
+        public ArrayIterator<T> {
 public:
-    ArrayMutableIterator(Array<T> & array) : ArrayIterator(ar) {}
+    ArrayMutableIterator(Array<T> & array) : ArrayIterator<T>(array) {}
     virtual ~ArrayMutableIterator() {}
     void set(T & t) throw(Exception);
     void insert(T & t) throw(Exception);
     void remove() throw(Exception);
 };
 
-SYLPH_END_NAMESPACE(Core)
+SYLPH_END_NAMESPACE
 
 #endif	/* ARRAYITERATOR_H_ */
 

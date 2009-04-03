@@ -1,42 +1,51 @@
 #include "ArrayIterator.h"
 #include "Array.h"
 
-SYLPH_START_NAMESPACE(Core)
+SYLPH_BEGIN_NAMESPACE
 
-bool ArrayIterator::hasNext() const {
+template<class T>
+bool ArrayIterator<T>::hasNext() {
     return idx < ar->length();
 }
 
-const T & ArrayIterator::next() const {
+template<class T>
+const T & ArrayIterator<T>::next() {
     return last = *ar[idx++];
 }
 
-bool ArrayIterator::hasPrevious() const {
+template<class T>
+bool ArrayIterator<T>::hasPrevious() {
     return idx > 0;
 }
 
-const T & ArrayIterator::previous() const {
+template<class T>
+const T & ArrayIterator<T>::previous() {
     return last = *ar[--idx];
 }
 
-std::size_t ArrayIterator::nextIndex() const {
+template<class T>
+std::size_t ArrayIterator<T>::nextIndex() {
     return idx;
 }
 
-std::size_t ArrayIterator::previousIndex() const {
+template<class T>
+std::size_t ArrayIterator<T>::previousIndex() {
     return idx-1;
 }
 
-void ArrayMutableIterator::set(T & t) throw(Exception) {
-    *last = t;
+template<class T>
+void ArrayMutableIterator<T>::set(T & t) throw(Exception) {
+    *ArrayIterator<T>::last = t;
 }
 
-void ArrayMutableIterator::insert(T & t) throw(Exception) {
-    sthrow(UnsupportedOperationException);
+template<class T>
+void ArrayMutableIterator<T>::insert(T & t) throw(Exception) {
+    sthrow(UnsupportedOperationException,"insert() not supported on arrays");
 }
 
-void ArrayMutableIterator::remove() throw(Exception) {
-    sthrow(UnsupportedOperationException);
+template<class T>
+void ArrayMutableIterator<T>::remove() throw(Exception) {
+    sthrow(UnsupportedOperationException,"remove() not supported on arrays");
 }
 
-SYLPH_END_NAMESPACE(Core)
+SYLPH_END_NAMESPACE

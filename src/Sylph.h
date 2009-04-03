@@ -67,7 +67,7 @@ int main(int argc, char * argv[], char * envp[], char * apple[]);
 int main(int argc, char * argv[]);
 #endif
 static void SylphInit(int argc, char * argv[], char * apple[]) {
-    Sylph::Application::init(argc, argv, apple, APP_TYPE);
+    Sylph::Application::init(argc, argv, apple, Sylph::APP_TYPE);
 }
 int SylphMain();
 #endif
