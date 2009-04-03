@@ -22,7 +22,7 @@ template<class T> class Array;
 
 SYLPH_PUBLIC
 
-class String : public Object, public virtual Hashable {
+class String : public virtual Hashable {
     friend bool operator==(const String lhs, const char * rhs);
     friend bool operator==(const String lhs, const std::string & rhs);
     friend bool operator==(const String lhs, const String rhs);

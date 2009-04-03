@@ -14,7 +14,7 @@
 #include <vector>
 #include <initializer_list>
 
-SYLPH_START_NAMESPACE(Core)
+SYLPH_BEGIN_NAMESPACE
 
 SYLPH_PUBLIC
 template<class T>
@@ -68,6 +68,7 @@ public:
 
     T & operator[](std::size_t idx) { return get(idx); }
     const T & operator[](std::size_t idx) const { return get(idx); }
+    Vector & operator=(const Vector & rhs) const;
 private:
     std::size_t capacity;
     std::size_t elementCount;
@@ -77,6 +78,6 @@ private:
     void ensureCapacity(std::size_t capacity);
 };
 
-SYLPH_END_NAMESPACE(Core)
+SYLPH_END_NAMESPACE
 #endif	/* VECTOR_H_ */
 

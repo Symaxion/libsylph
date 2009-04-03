@@ -10,7 +10,7 @@
 #include "Equals.h"
 #include "VectorIterator.h"
 
-SYLPH_START_NAMESPACE(Core)
+SYLPH_BEGIN_NAMESPACE
 
 Vector::Vector(std::size_t initialCount, std::size_t increase) {
     elements = new Array<T> (initialCount);
@@ -244,11 +244,7 @@ int Vector::lastIndexOf(T & t, std::size_t idx) {
     return -1;
 }
 
-Vector<T> * Vector::deepCopy() const {
-    Vector<T> * toReturn = new Vector(elements->length,capacityIncrease);
-    arraycopy(*elements,0,*(toReturn->elements),0,elements->length);
-    toReturn->elementCount = elementCount;
-    toReturn->capacity = capacity;
-    return toReturn;
+Vector & Vector::operator=(const Vector & rhs) const {
+
 }
-SYLPH_END_NAMESPACE(Core)
+SYLPH_END_NAMESPACE
