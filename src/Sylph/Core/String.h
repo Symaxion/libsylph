@@ -26,12 +26,12 @@ class String : public Object, public virtual Hashable {
     friend bool operator==(const String lhs, const char * rhs);
     friend bool operator==(const String lhs, const std::string & rhs);
     friend bool operator==(const String lhs, const String rhs);
-    friend bool operator==(String lhs, QString rhs);
+    friend bool operator==(const String lhs, const QString rhs);
 
-    friend bool operator<(String lhs, const char * rhs);
-    friend bool operator<(String lhs, const std::string & rhs);
-    friend bool operator<(String lhs, const String rhs);
-    friend bool operator<(String lhs, const QString rhs);
+    friend bool operator<(const String lhs, const char * rhs);
+    friend bool operator<(const String lhs, const std::string & rhs);
+    friend bool operator<(const String lhs, const String rhs);
+    friend bool operator<(const String lhs, const QString rhs);
 
     friend String operator+=(const String lhs, const char * rhs);
     friend String operator+=(const String lhs, const std::string & rhs);
@@ -66,8 +66,8 @@ public:
     bool startsWith(const String other) const;
 
     String trim() const;
-    String substring(std::size_t begin);
-    String substring(std::size_t begin, std::size_t end);
+    String substring(std::size_t begin) const;
+    String substring(std::size_t begin, std::size_t end) const;
 
     static String valueOf(bool b);
     static String valueOf(char c);
@@ -77,7 +77,7 @@ public:
     static String valueOf(double d);
 
     String copy() const;
-    int hashCode();
+    int hashCode() const;
     
     String operator=(const char * orig);
     String operator=(const std::string & orig);
@@ -100,12 +100,12 @@ private:
 bool operator==(const String lhs, const char * rhs);
 bool operator==(const String lhs, const std::string & rhs);
 bool operator==(const String lhs, const String rhs);
-bool operator==(String lhs, QString rhs);
+bool operator==(const String lhs, const QString rhs);
 
-bool operator<(String lhs, const char * rhs);
-bool operator<(String lhs, const std::string & rhs);
-bool operator<(String lhs, const String rhs);
-bool operator<(String lhs, const QString rhs);
+bool operator<(const String lhs, const char * rhs);
+bool operator<(const String lhs, const std::string & rhs);
+bool operator<(const String lhs, const String rhs);
+bool operator<(const String lhs, const QString rhs);
 
 String operator+=(const String lhs, const char * rhs);
 String operator+=(const String lhs, const std::string & rhs);

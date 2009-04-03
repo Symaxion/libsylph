@@ -13,16 +13,7 @@
     </logicalFolder>
     <logicalFolder name="src" displayName="Sources" projectFiles="true">
       <logicalFolder name="Sylph" displayName="Sylph" projectFiles="true">
-        <logicalFolder name="AppServ" displayName="AppServ" projectFiles="true">
-          <logicalFolder name="IO" displayName="IO" projectFiles="true">
-            <itemPath>src/Sylph/AppServ/IO/FileOps.h</itemPath>
-          </logicalFolder>
-        </logicalFolder>
         <logicalFolder name="Core" displayName="Core" projectFiles="true">
-          <logicalFolder name="IO" displayName="IO" projectFiles="true">
-            <itemPath>src/Sylph/Core/IO/FileFilter.h</itemPath>
-            <itemPath>src/Sylph/Core/IO/FileType.h</itemPath>
-          </logicalFolder>
           <logicalFolder name="f1" displayName="Serialization" projectFiles="true">
             <itemPath>src/Sylph/Core/Serialization/Deserializer.h</itemPath>
             <itemPath>src/Sylph/Core/Serialization/Key.h</itemPath>
@@ -46,16 +37,11 @@
           <itemPath>src/Sylph/Core/Equals.cpp</itemPath>
           <itemPath>src/Sylph/Core/Equals.h</itemPath>
           <itemPath>src/Sylph/Core/Exception.h</itemPath>
-          <itemPath>src/Sylph/Core/File.cpp</itemPath>
-          <itemPath>src/Sylph/Core/File.h</itemPath>
           <itemPath>src/Sylph/Core/Hash.cpp</itemPath>
           <itemPath>src/Sylph/Core/Hash.h</itemPath>
           <itemPath>src/Sylph/Core/Hashable.h</itemPath>
           <itemPath>src/Sylph/Core/Iterable.h</itemPath>
           <itemPath>src/Sylph/Core/Iterator.h</itemPath>
-          <itemPath>src/Sylph/Core/Library.cpp</itemPath>
-          <itemPath>src/Sylph/Core/Library.h</itemPath>
-          <itemPath>src/Sylph/Core/Mylib.h</itemPath>
           <itemPath>src/Sylph/Core/Object.cpp</itemPath>
           <itemPath>src/Sylph/Core/Object.h</itemPath>
           <itemPath>src/Sylph/Core/Random.h</itemPath>
@@ -149,9 +135,6 @@
       <item path="src/Sylph.h">
         <itemTool>3</itemTool>
       </item>
-      <item path="src/Sylph/AppServ/IO/FileOps.h">
-        <itemTool>3</itemTool>
-      </item>
       <item path="src/Sylph/Core/Any.h">
         <itemTool>3</itemTool>
       </item>
@@ -203,12 +186,6 @@
       <item path="src/Sylph/Core/Exception.h">
         <itemTool>3</itemTool>
       </item>
-      <item path="src/Sylph/Core/File.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="src/Sylph/Core/File.h">
-        <itemTool>3</itemTool>
-      </item>
       <item path="src/Sylph/Core/Hash.cpp">
         <itemTool>1</itemTool>
       </item>
@@ -218,25 +195,10 @@
       <item path="src/Sylph/Core/Hashable.h">
         <itemTool>3</itemTool>
       </item>
-      <item path="src/Sylph/Core/IO/FileFilter.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="src/Sylph/Core/IO/FileType.h">
-        <itemTool>3</itemTool>
-      </item>
       <item path="src/Sylph/Core/Iterable.h">
         <itemTool>3</itemTool>
       </item>
       <item path="src/Sylph/Core/Iterator.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="src/Sylph/Core/Library.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="src/Sylph/Core/Library.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="src/Sylph/Core/Mylib.h">
         <itemTool>3</itemTool>
       </item>
       <item path="src/Sylph/Core/Object.cpp">
@@ -378,9 +340,6 @@
       <item path="src/Sylph.h">
         <itemTool>3</itemTool>
       </item>
-      <item path="src/Sylph/AppServ/IO/FileOps.h">
-        <itemTool>3</itemTool>
-      </item>
       <item path="src/Sylph/Core/Any.h">
         <itemTool>3</itemTool>
       </item>
@@ -432,12 +391,6 @@
       <item path="src/Sylph/Core/Exception.h">
         <itemTool>3</itemTool>
       </item>
-      <item path="src/Sylph/Core/File.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="src/Sylph/Core/File.h">
-        <itemTool>3</itemTool>
-      </item>
       <item path="src/Sylph/Core/Hash.cpp">
         <itemTool>1</itemTool>
       </item>
@@ -447,25 +400,10 @@
       <item path="src/Sylph/Core/Hashable.h">
         <itemTool>3</itemTool>
       </item>
-      <item path="src/Sylph/Core/IO/FileFilter.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="src/Sylph/Core/IO/FileType.h">
-        <itemTool>3</itemTool>
-      </item>
       <item path="src/Sylph/Core/Iterable.h">
         <itemTool>3</itemTool>
       </item>
       <item path="src/Sylph/Core/Iterator.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="src/Sylph/Core/Library.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="src/Sylph/Core/Library.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="src/Sylph/Core/Mylib.h">
         <itemTool>3</itemTool>
       </item>
       <item path="src/Sylph/Core/Object.cpp">

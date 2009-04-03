@@ -54,24 +54,24 @@ enum GCPlacement {
 class Object {
 #ifndef SYLPH_DOXYGEN
 public:
-    inline Object();
-    inline virtual ~Object();
-    inline void* operator new( size_t size);
-    inline void* operator new( size_t size, GCPlacement gcp);
-    inline void* operator new( size_t size, void *p);
-    inline void operator delete( void* obj);
-    inline void operator delete( void*, GCPlacement);
-    inline void operator delete( void*, void*);
+    Object();
+    virtual ~Object();
+    void* operator new( size_t size);
+    void* operator new( size_t size, GCPlacement gcp);
+    void* operator new( size_t size, void *p);
+    void operator delete( void* obj);
+    void operator delete( void*, GCPlacement);
+    void operator delete( void*, void*);
 
     // Arrays from Object are *never* gc'ed, and I recommend using Sylph::Array
     // instead. Maybe we should document this somewhere?
-    inline void* operator new[](size_t size);
-    inline void* operator new[](size_t size, void *p);
-    inline void operator delete[](void* obj);
-    inline void operator delete[](void*, void*);
+    void* operator new[](size_t size);
+    void* operator new[](size_t size, void *p);
+    void operator delete[](void* obj);
+    void operator delete[](void*, void*);
 
 private:
-    inline static void cleanup(void* obj, void* clientData);
+    static void cleanup(void* obj, void* clientData);
 #endif
 };
 
