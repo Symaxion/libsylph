@@ -3,34 +3,33 @@
 #include "Dictionary.h"
 #include "Vector.h"
 #include "Array.h"
-#include "DictionaryIterator.h"
 
 #include <cmath>
 
 SYLPH_BEGIN_NAMESPACE
 
 template<class Key, class Value>
-class DictionaryEntry : public Object {
+class HashEntry : public virtual Object {
 public:
 
-    DictionaryEntry(Key & _key, Value * _value) : key(_key), value(_value) {
+    HashEntry(Key & _key, Value * _value) : key(_key), value(_value) {
     }
 
-    virtual ~DictionaryEntry() {
+    virtual ~HashEntry() {
     }
 
-    DictionaryEntry<Key, Value> * next = NULL;
+    HashEntry<Key, Value> * next = NULL;
     Key key;
     Value * value;
 };
 
 template<class Key, class Value>
-class DictionaryPointer : public Object {
-    friend bool operator==(const DictionaryPointer & p, const Value & v);
-    friend bool operator!=(const DictionaryPointer & p, const Value & v);
+class HashPointer : public virtual Object {
+    friend bool operator==(const HashPointer & p, const Value & v);
+    friend bool operator!=(const HashPointer & p, const Value & v);
 public:
 
-    DictionaryPointer(Key & _key, Dictionary * _dict) :
+    HashPointer(Key & _key, Dictionary * _dict) :
     key(_key), dict(_dict) {
     }
 
@@ -47,90 +46,90 @@ public:
     }
 private:
     Key key;
-    Dictionary * dict;
+    HashMap<Key,Value> * dict;
 };
 
 template<class Value>
-bool operator==(const DictionaryPointer & p, const Value & v) {
+bool operator==(const HashPointer & p, const Value & v) {
     return Value(p) != NULL && Value(p) == v;
 }
 
 template<class Value>
-bool operator!=(const DictionaryPointer & p, const Value & v) {
+bool operator!=(const HashPointer & p, const Value & v) {
     return !(p == v);
 }
 
-template<class T>
-class DictClctKeys : public Collection<T> {
+template<class K,class V>
+class HashClctKeys : public Collection<K> {
 public:
 
-    DictClctKeys(Dictionary * _dict) : dict(_dict) {
+    HashClctKeys(HashMap<K,V> * _map) : map(_map) {
     }
 
-    virtual ~DictClctKeys() {
+    virtual ~HashClctKeys() {
     }
 
-    bool add(const T & t) {
+    bool add(const K & t) {
         sthrow(UnsupportedOperationException);
     }
-    bool addAll(Collection<T> & c) {
+    bool addAll(Collection<K> & c) {
         sthrow(UnsupportedOperationException);
     }
     void clear() {
-        dict->clear()
+       map->clear()
     }
-    bool contains(T & t) {
-        return dict->containsKey(t);
+    bool contains(K & t) {
+        return map->containsKey(t);
     }
-    bool containsAll(Collection<T> & c) {
+    bool containsAll(Collection<K> & c) {
         sthrow(UnsupportedOperationException);
     }
-    bool operator ==(Collection<T> & c) {
+    bool operator ==(Collection<K> & c) {
         sthrow(UnsupportedOperationException);
     }
 
     int hashCode() {
         // TODO!
         return 0;
-    };
+    }
     bool empty() {
-        return dict->empty();
+        return map->empty();
     }
-    bool remove(T & t) {
-        return dict->remove(t) != NULL;
+    bool remove(K & t) {
+        return map->remove(t) != NULL;
     }
-    bool removeAll(Collection<T> & c) {
+    bool removeAll(Collection<K> & c) {
         sthrow(UnsupportedOperationException);
     }
-    bool retainAll(Collection<T> & c) {
+    bool retainAll(Collection<K> & c) {
 
     }
     std::size_t size() const {
-        return dict->size();
+        return map->size();
     }
-    const Array<T> toArray() const {
+    const Array<K> toArray() const {
         sthrow(UnsupportedOperationException);
     }
 
-    Iterator<T> iterator() const {
-        return dict->keyIterator();
+    Iterator<K> iterator() const {
+        return map->keyIterator();
     }
-    MutableIterator<T> mutableIterator() {
+    MutableIterator<K> mutableIterator() {
         sthrow(UnsupportedOperationException);
     }
 private:
-    Dictionary * dict;
+    HashMap * map;
 };
 
 
 template<class T>
-class DictClctValues : public Collection<T> {
+class HashClctValues : public Collection<T> {
 public:
 
-    DictClctValues(Dictionary * _dict) : dict(_dict) {
+    HashClctValues(HashMap<K,V> * _dict) : map(_map) {
     }
 
-    virtual ~DictClctValues() {
+    virtual ~HashClctValues() {
     }
 
     bool add(const T & t) {
@@ -182,7 +181,7 @@ public:
         sthrow(UnsupportedOperationException);
     }
 private:
-    Dictionary * dict;
+    HashMap * map;
 };
 
 template<class K,class V>

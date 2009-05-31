@@ -13,6 +13,11 @@
 #include <exception>
 #include "String.h"
 
+/*< rev Object-1
+ *  rev Exception-1
+ *  rev String-1
+ >*/
+
 SYLPH_BEGIN_NAMESPACE
 
 /*
@@ -61,17 +66,13 @@ SYLPH_BEGIN_NAMESPACE
  * @c Serializer s and @c Deserializer s when the type of the serialised object
  * and the destination don't match, or when the object could not be serialised
  * due to another Exception, such as an I/O error. </li>
- * <li> <code>TodoException</code> -- similar to the
- * UnsupportedOperationException, however, this Exception type denotes that the
- * operation itself is supported, but not yet implemented by the programmer.
+ * <li> <code>TodoException</code> -- this Exception type denotes that the
+ * operation itself is supported, but not yet implemented by the programmer,
+ * a.k.a. LPS (Lazy Programmer Syndrome).
  * </li>
- * <li> <code>UnsupportedOperationException</code> -- this Exception is usually
- * thrown by classes that are derived from classes with only pure virtual
- * fucntions. This exception denotes that a particular action just doesn't make
- * sense in the case of the implementing class.</li>
  * </ul>
  */
-class Exception : public Object, public std::exception {
+class Exception : public virtual Object, public std::exception {
 public:
     /**
      * Creates a new Exception. You should not use this directly, instead, use

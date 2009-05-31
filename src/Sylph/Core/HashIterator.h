@@ -5,26 +5,30 @@
  * Created on 12 maart 2009, 16:54
  */
 
-#ifndef DICTIONARYITERATOR_H_
-#define	DICTIONARYITERATOR_H_
+#ifndef HASHITERATOR_H_
+#define	HASHITERATOR_H_
 
 #include "Iterator.h"
 #include "Array.h"
+#include "Dictionary.h"
 
-SYLPH_START_NAMESPACE(Core)
+SYLPH_BEGIN_NAMESPACE
 SYLPH_PUBLIC
 
-enum DictionaryIteratorType {
+template<class K,class V, class H>
+class HashMap;
+
+enum HashIteratorType {
     KEYS,
     VALUES,
     ENTRIES
 };
 
 template<class T, class Key, class Value>
-class DictionaryIterator : public virtual Iterator<T> {
+class HashIterator : public virtual Iterator<T> {
 public:
-    explicit DictionaryIterator(const Dictionary<Key,Value> & _dict,
-            DictionaryIteratorType _type) : dict(_dict), type(_type),
+    explicit HashIterator(const HashMap<Key,Value> & _dict,
+            HashIteratorType _type) : dict(_dict), type(_type),
             idx(_dict.buckets->length), count(dict.size) {}
     virtual ~DictionaryIterator() {}
 
@@ -43,7 +47,7 @@ private:
     std::size_t count;
 
 };
-SYLPH_END_NAMESPACE(Core)
+SYLPH_END_NAMESPACE
 
 #endif	/* DICTIONARYITERATOR_H_ */
 

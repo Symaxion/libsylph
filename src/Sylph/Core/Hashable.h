@@ -9,11 +9,17 @@
 #define	_HASHABLE_H
 
 #include "Object.h"
+#include "Primitives.h"
+
+/*< rev Object-1
+ *  rev Hashable-1
+ */
 
 SYLPH_BEGIN_NAMESPACE
 SYLPH_PUBLIC
-class Hashable : public Object {
-    virtual int hashCode() const = 0;
+class Hashable : public virtual Object {
+public:
+    virtual sint hashCode() const = 0;
 };
 SYLPH_END_NAMESPACE
 
