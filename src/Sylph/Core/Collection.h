@@ -32,37 +32,35 @@ SYLPH_PUBLIC
  * @c ArrayException s if the underlying @c Array gets an out-of-bounds error.
  */
 template<class T>
-class Collection : public virtual Iterable<T>, public virtual Hashable {
+class Collection : public Iterable<T>, public Hashable {
 public:
 
-    
-    virtual bool add(const T & t) = 0;
-    virtual bool addAll(const Collection<T> & c) = 0;
-    virtual void clear() = 0;
+    virtual bool add(const T & t);
+    virtual bool addAll(const Collection<T> & c);
+    virtual void clear();
     virtual bool contains(const T & t) const = 0;
-    virtual bool containsAll(const Collection<T> & c) const = 0;
-    virtual bool operator ==(const Collection<T> & c) const = 0;
+    virtual bool containsAll(const Collection<T> & c) const;
+    virtual bool operator ==(const Collection<T> & c) const;
 
     virtual bool operator !=(const Collection<T> & c) const {
         return !(*this == c);
     }
-    virtual int hashCode() const = 0;
+    virtual sint hashCode() const = 0;
     virtual bool empty() const = 0;
-    virtual bool remove(const T & t) = 0;
-    virtual bool removeAll(const Collection<T> & c) = 0;
-    virtual bool retainAll(const Collection<T> & c) = 0;
+    virtual bool remove(const T & t);
+    virtual bool removeAll(const Collection<T> & c);
+    virtual bool retainAll(const Collection<T> & c);
     virtual std::size_t size() const = 0;
     virtual Array<T> toArray() const = 0;
 
-    virtual Iterator<T> iterator() const = 0;
-    virtual MutableIterator<T> mutableIterator() = 0;
+    virtual Iterator iterator() const = 0;
+    virtual MutableIterator mutableIterator() = 0;
 
     operator Array<T>() const {
         return toArray();
     }
-    virtual T & operator[](std::size_t idx) = 0;
-    virtual const T & operator[](std::size_t idx) const = 0;
 
+    virtual Collection & operator<<(const T& t) { add(t); return *this; }
 };
 SYLPH_END_NAMESPACE
 

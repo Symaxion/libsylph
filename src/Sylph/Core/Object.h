@@ -5,6 +5,8 @@
  * Created on 4 november 2008, 18:48
  */
 
+
+
 #ifndef OBJECT_H_
 #define	OBJECT_H_
 
@@ -18,6 +20,8 @@
 
 #include <cstddef>
 
+/*< rev Object-1 >*/
+
 /**
  * \namespace Sylph
  * The Sylph namespace contains everything in LibSylph.
@@ -26,6 +30,9 @@
 
 SYLPH_BEGIN_NAMESPACE
 SYLPH_PUBLIC
+
+class SerializationBuffer;
+class DeserializationBuffer;
 
 /**
  * Used for LibSylph's garbage collection. It is passed as a parameter to new,
@@ -73,7 +80,16 @@ public:
 private:
     static void cleanup(void* obj, void* clientData);
 #endif
-};
+public:
+    enum ObjectType {
+        Normal,
+        Wrapper,
+        Serialized
+    };
+    virtual ObjectType type() { return Normal; }
+    virtual void serialize(SerializationBuffer &) const;
+    virtual void deserialize(SerializationBuffer &);
+ };
 
 SYLPH_END_NAMESPACE
 

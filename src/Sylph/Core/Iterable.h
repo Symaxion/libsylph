@@ -11,6 +11,14 @@
 #include "Object.h"
 #include "Iterator.h"
 
+/*< rev Object-1
+ *  rev Iterable-1
+ *  rev Exception-1
+ *  rev String-1
+ *  rev Hashable-1
+ >*/
+
+
 SYLPH_BEGIN_NAMESPACE
 
 SYLPH_PUBLIC
@@ -18,9 +26,16 @@ SYLPH_PUBLIC
  * Implementing this interface allows your class to be iterated by an
  * @c Iterator. This interface is also required for the correct functioning of
  * the @c sforeach() keyword.
+ * Each Iterator should define an @c %Iterator and an @c %MutableIterator type,
+ * corresponding to the actual types returned by @c iterator() and @c
+ * mutableIterator().
  */
 template<class T>
-class Iterable : public Object {
+class Iterable : public virtual Object {
+public:
+    typedef T Type;
+    typedef const Iterator<T> Iterator;
+    typedef Iterator<T> MutableIterator;
 public:
     /**
      * Get an instance of the Iterator for this class. The iterator returned
@@ -29,13 +44,13 @@ public:
      * method, as it does not allow accidential modifications.
      * @return An @c Iterator specific for the class being iterated over.
      */
-    virtual Iterator<T> iterator() const = 0;
+    virtual Iterator iterator() const = 0;
     /**
      * Get an instance of the MutableIterator for this class. The iterator
      * returned is mutable, i.e. it can modifiy the contents of the collection.
      * @return An @c MutableIterator for the class being iterated over.
      */
-    virtual MutableIterator<T> mutableIterator() = 0;
+    virtual MutableIterator mutableIterator() = 0;
 };
 SYLPH_END_NAMESPACE
 

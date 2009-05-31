@@ -1,78 +1,25 @@
 #include "Array.h"
-#include "ArrayIterator.h"
-#include "Util.h"
+#include "String.h"
 
-#include <algorithm>
+/*< rev Object-1
+ *  rev Iterable-1
+ *  rev Exception-1
+ *  rev String-1
+ *  rev Iterator-1
+ *  rev Hashable-1
+ *  rev Array-1
+ *  rev ArrayIterator-1
+ >*/
 
 SYLPH_BEGIN_NAMESPACE
 
-template<class T>
-Array<T>::Array(std::size_t len) : length(len) {
-    _carray = (T*) calloc(len, sizeof(T));
-}
+template class Array<byte>;
+template class Array<sint>;
+template class Array<suint>;
+template class Array<slong>;
+template class Array<sulong>;
+template class Array<bool>;
 
-template<class T>
-Array<T>::Array(const std::initializer_list<T> & il) : length(il.size()) {
-    _carray = (T*) calloc(il.size(), sizeof(T));
-    carraycopy(il.begin(), 0, _carray, 0, il.size());
-}
+template class Array<String>;
 
-template<class T>
-Array<T>::Array(const T array[]) : length(carraysize(array)) {
-    _carray = (T*) calloc(length,sizeof(T));
-    carraycopy(array, 0, _carray, 0, length);
-}
-
-template<class T>
-Array<T>::Array(const Array<T> & ar) : length(ar.length) {
-    _carray = (T*) calloc(length,sizeof(T));
-    carraycopy(ar._carray, 0, _carray, 0, length);
-}
-
-template<class T>
-Array<T>::~Array() {
-    free(_carray);
-}
-
-template<class T>
-T * Array<T>::carray() {
-    return _carray;
-}
-
-template<class T>
-const T * Array<T>::carray() const {
-    return _carray;
-}
-
-template<class T>
-Iterator<T> Array<T>::iterator() const {
-    return ArrayIterator<T> (*this);
-}
-
-template<class T>
-MutableIterator<T> Array<T>::mutableIterator() const {
-    return ArrayMutableIterator<T> (*this);
-}
-
-template<class T>
-const T& Array<T>::operator[](std::size_t idx) const throw (Exception) {
-    if (idx < length) {
-        return carray[idx];
-    } else {
-        sthrow(ArrayException, "Array overflow");
-    }
-}
-
-template<class T>
-inline bool operator==(const Array<T>& lhs, const Array<T>& rhs) {
-    return lhs.length == rhs.length ?
-            std::equal(lhs.carray[0], lhs.carray[lhs.length - 1], rhs[0]) : false;
-}
-
-template<class T>
-inline bool operator<(const Array<T>& lhs, const Array<T>& rhs) {
-    return lhs.length == rhs.length ?
-            std::lexicographical_compare(lhs.carray[0], lhs.carray[lhs.length - 1],
-            rhs[0], rhs[rhs.length - 1]) : false;
-}
 SYLPH_END_NAMESPACE

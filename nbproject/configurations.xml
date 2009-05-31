@@ -12,12 +12,16 @@
                    projectFiles="true">
     </logicalFolder>
     <logicalFolder name="src" displayName="Sources" projectFiles="true">
+      <logicalFolder name="f1" displayName="csylph" projectFiles="true">
+        <itemPath>src/csylph/csylph.c</itemPath>
+      </logicalFolder>
       <logicalFolder name="Sylph" displayName="Sylph" projectFiles="true">
         <logicalFolder name="Core" displayName="Core" projectFiles="true">
           <logicalFolder name="f1" displayName="Serialization" projectFiles="true">
             <itemPath>src/Sylph/Core/Serialization/Deserializer.h</itemPath>
             <itemPath>src/Sylph/Core/Serialization/Key.h</itemPath>
             <itemPath>src/Sylph/Core/Serialization/Serialization.h</itemPath>
+            <itemPath>src/Sylph/Core/Serialization/SerializedObject.h</itemPath>
             <itemPath>src/Sylph/Core/Serialization/Serializer.h</itemPath>
           </logicalFolder>
           <itemPath>src/Sylph/Core/Any.h</itemPath>
@@ -27,24 +31,26 @@
           <itemPath>src/Sylph/Core/Array.h</itemPath>
           <itemPath>src/Sylph/Core/ArrayIterator.cpp</itemPath>
           <itemPath>src/Sylph/Core/ArrayIterator.h</itemPath>
-          <itemPath>src/Sylph/Core/Boostdefs.h</itemPath>
+          <itemPath>src/Sylph/Core/ByteBuffer.h</itemPath>
           <itemPath>src/Sylph/Core/Collection.h</itemPath>
+          <itemPath>src/Sylph/Core/Common.h</itemPath>
           <itemPath>src/Sylph/Core/Comparable.h</itemPath>
-          <itemPath>src/Sylph/Core/Dictionary.cpp</itemPath>
           <itemPath>src/Sylph/Core/Dictionary.h</itemPath>
-          <itemPath>src/Sylph/Core/DictionaryIterator.cpp</itemPath>
-          <itemPath>src/Sylph/Core/DictionaryIterator.h</itemPath>
-          <itemPath>src/Sylph/Core/Equals.cpp</itemPath>
           <itemPath>src/Sylph/Core/Equals.h</itemPath>
           <itemPath>src/Sylph/Core/Exception.h</itemPath>
-          <itemPath>src/Sylph/Core/Hash.cpp</itemPath>
           <itemPath>src/Sylph/Core/Hash.h</itemPath>
           <itemPath>src/Sylph/Core/Hashable.h</itemPath>
+          <itemPath>src/Sylph/Core/HashIterator.cpp</itemPath>
+          <itemPath>src/Sylph/Core/HashIterator.h</itemPath>
+          <itemPath>src/Sylph/Core/HashMap.cpp</itemPath>
+          <itemPath>src/Sylph/Core/HashMap.h</itemPath>
           <itemPath>src/Sylph/Core/Iterable.h</itemPath>
           <itemPath>src/Sylph/Core/Iterator.h</itemPath>
           <itemPath>src/Sylph/Core/Object.cpp</itemPath>
           <itemPath>src/Sylph/Core/Object.h</itemPath>
+          <itemPath>src/Sylph/Core/Primitives.h</itemPath>
           <itemPath>src/Sylph/Core/Random.h</itemPath>
+          <itemPath>src/Sylph/Core/Range.h</itemPath>
           <itemPath>src/Sylph/Core/String.cpp</itemPath>
           <itemPath>src/Sylph/Core/String.h</itemPath>
           <itemPath>src/Sylph/Core/UncaughtExceptionHandler.cpp</itemPath>
@@ -56,6 +62,10 @@
           <itemPath>src/Sylph/Core/VectorIterator.cpp</itemPath>
           <itemPath>src/Sylph/Core/VectorIterator.h</itemPath>
         </logicalFolder>
+        <logicalFolder name="f2" displayName="IO" projectFiles="true">
+          <itemPath>src/Sylph/IO/InputStream.h</itemPath>
+          <itemPath>src/Sylph/IO/OutputStream.h</itemPath>
+        </logicalFolder>
         <logicalFolder name="f1" displayName="OS" projectFiles="true">
           <itemPath>src/Sylph/OS/GuessOS.h</itemPath>
           <itemPath>src/Sylph/OS/LinuxBundleAppSelf.cpp</itemPath>
@@ -66,7 +76,10 @@
           <itemPath>src/Sylph/OS/OS.h</itemPath>
           <itemPath>src/Sylph/OS/WindowsAppSelf.h</itemPath>
         </logicalFolder>
+        <logicalFolder name="f3" displayName="S11n" projectFiles="true">
+        </logicalFolder>
       </logicalFolder>
+      <itemPath>src/csylph.h</itemPath>
       <itemPath>src/Sylph.cpp</itemPath>
       <itemPath>src/Sylph.h</itemPath>
     </logicalFolder>
@@ -156,29 +169,20 @@
       <item path="src/Sylph/Core/ArrayIterator.h">
         <itemTool>3</itemTool>
       </item>
-      <item path="src/Sylph/Core/Boostdefs.h">
+      <item path="src/Sylph/Core/ByteBuffer.h">
         <itemTool>3</itemTool>
       </item>
       <item path="src/Sylph/Core/Collection.h">
         <itemTool>3</itemTool>
       </item>
+      <item path="src/Sylph/Core/Common.h">
+        <itemTool>3</itemTool>
+      </item>
       <item path="src/Sylph/Core/Comparable.h">
         <itemTool>3</itemTool>
       </item>
-      <item path="src/Sylph/Core/Dictionary.cpp">
-        <itemTool>1</itemTool>
-      </item>
       <item path="src/Sylph/Core/Dictionary.h">
         <itemTool>3</itemTool>
-      </item>
-      <item path="src/Sylph/Core/DictionaryIterator.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="src/Sylph/Core/DictionaryIterator.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="src/Sylph/Core/Equals.cpp">
-        <itemTool>1</itemTool>
       </item>
       <item path="src/Sylph/Core/Equals.h">
         <itemTool>3</itemTool>
@@ -186,10 +190,19 @@
       <item path="src/Sylph/Core/Exception.h">
         <itemTool>3</itemTool>
       </item>
-      <item path="src/Sylph/Core/Hash.cpp">
+      <item path="src/Sylph/Core/Hash.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/HashIterator.cpp">
         <itemTool>1</itemTool>
       </item>
-      <item path="src/Sylph/Core/Hash.h">
+      <item path="src/Sylph/Core/HashIterator.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/HashMap.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/Sylph/Core/HashMap.h">
         <itemTool>3</itemTool>
       </item>
       <item path="src/Sylph/Core/Hashable.h">
@@ -207,7 +220,13 @@
       <item path="src/Sylph/Core/Object.h">
         <itemTool>3</itemTool>
       </item>
+      <item path="src/Sylph/Core/Primitives.h">
+        <itemTool>3</itemTool>
+      </item>
       <item path="src/Sylph/Core/Random.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Range.h">
         <itemTool>3</itemTool>
       </item>
       <item path="src/Sylph/Core/Serialization/Deserializer.h">
@@ -217,6 +236,9 @@
         <itemTool>3</itemTool>
       </item>
       <item path="src/Sylph/Core/Serialization/Serialization.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Serialization/SerializedObject.h">
         <itemTool>3</itemTool>
       </item>
       <item path="src/Sylph/Core/Serialization/Serializer.h">
@@ -252,6 +274,12 @@
       <item path="src/Sylph/Core/VectorIterator.h">
         <itemTool>3</itemTool>
       </item>
+      <item path="src/Sylph/IO/InputStream.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/IO/OutputStream.h">
+        <itemTool>3</itemTool>
+      </item>
       <item path="src/Sylph/OS/GuessOS.h">
         <itemTool>3</itemTool>
       </item>
@@ -275,6 +303,12 @@
       </item>
       <item path="src/Sylph/OS/WindowsAppSelf.h">
         <itemTool>3</itemTool>
+      </item>
+      <item path="src/csylph.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/csylph/csylph.c">
+        <itemTool>0</itemTool>
       </item>
       <item path="test/Arguments.cpp">
         <itemTool>1</itemTool>
@@ -361,29 +395,20 @@
       <item path="src/Sylph/Core/ArrayIterator.h">
         <itemTool>3</itemTool>
       </item>
-      <item path="src/Sylph/Core/Boostdefs.h">
+      <item path="src/Sylph/Core/ByteBuffer.h">
         <itemTool>3</itemTool>
       </item>
       <item path="src/Sylph/Core/Collection.h">
         <itemTool>3</itemTool>
       </item>
+      <item path="src/Sylph/Core/Common.h">
+        <itemTool>3</itemTool>
+      </item>
       <item path="src/Sylph/Core/Comparable.h">
         <itemTool>3</itemTool>
       </item>
-      <item path="src/Sylph/Core/Dictionary.cpp">
-        <itemTool>1</itemTool>
-      </item>
       <item path="src/Sylph/Core/Dictionary.h">
         <itemTool>3</itemTool>
-      </item>
-      <item path="src/Sylph/Core/DictionaryIterator.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="src/Sylph/Core/DictionaryIterator.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="src/Sylph/Core/Equals.cpp">
-        <itemTool>1</itemTool>
       </item>
       <item path="src/Sylph/Core/Equals.h">
         <itemTool>3</itemTool>
@@ -391,10 +416,19 @@
       <item path="src/Sylph/Core/Exception.h">
         <itemTool>3</itemTool>
       </item>
-      <item path="src/Sylph/Core/Hash.cpp">
+      <item path="src/Sylph/Core/Hash.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/HashIterator.cpp">
         <itemTool>1</itemTool>
       </item>
-      <item path="src/Sylph/Core/Hash.h">
+      <item path="src/Sylph/Core/HashIterator.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/HashMap.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="src/Sylph/Core/HashMap.h">
         <itemTool>3</itemTool>
       </item>
       <item path="src/Sylph/Core/Hashable.h">
@@ -412,7 +446,13 @@
       <item path="src/Sylph/Core/Object.h">
         <itemTool>3</itemTool>
       </item>
+      <item path="src/Sylph/Core/Primitives.h">
+        <itemTool>3</itemTool>
+      </item>
       <item path="src/Sylph/Core/Random.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Range.h">
         <itemTool>3</itemTool>
       </item>
       <item path="src/Sylph/Core/Serialization/Deserializer.h">
@@ -422,6 +462,9 @@
         <itemTool>3</itemTool>
       </item>
       <item path="src/Sylph/Core/Serialization/Serialization.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Serialization/SerializedObject.h">
         <itemTool>3</itemTool>
       </item>
       <item path="src/Sylph/Core/Serialization/Serializer.h">
@@ -457,6 +500,12 @@
       <item path="src/Sylph/Core/VectorIterator.h">
         <itemTool>3</itemTool>
       </item>
+      <item path="src/Sylph/IO/InputStream.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/IO/OutputStream.h">
+        <itemTool>3</itemTool>
+      </item>
       <item path="src/Sylph/OS/GuessOS.h">
         <itemTool>3</itemTool>
       </item>
@@ -480,6 +529,12 @@
       </item>
       <item path="src/Sylph/OS/WindowsAppSelf.h">
         <itemTool>3</itemTool>
+      </item>
+      <item path="src/csylph.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/csylph/csylph.c">
+        <itemTool>0</itemTool>
       </item>
       <item path="test/Arguments.cpp">
         <itemTool>1</itemTool>
