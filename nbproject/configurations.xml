@@ -29,8 +29,6 @@
           <itemPath>src/Sylph/Core/Application.h</itemPath>
           <itemPath>src/Sylph/Core/Array.cpp</itemPath>
           <itemPath>src/Sylph/Core/Array.h</itemPath>
-          <itemPath>src/Sylph/Core/ArrayIterator.cpp</itemPath>
-          <itemPath>src/Sylph/Core/ArrayIterator.h</itemPath>
           <itemPath>src/Sylph/Core/ByteBuffer.h</itemPath>
           <itemPath>src/Sylph/Core/Collection.h</itemPath>
           <itemPath>src/Sylph/Core/Common.h</itemPath>
@@ -161,12 +159,6 @@
         <itemTool>1</itemTool>
       </item>
       <item path="src/Sylph/Core/Array.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="src/Sylph/Core/ArrayIterator.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="src/Sylph/Core/ArrayIterator.h">
         <itemTool>3</itemTool>
       </item>
       <item path="src/Sylph/Core/ByteBuffer.h">
@@ -387,12 +379,6 @@
         <itemTool>1</itemTool>
       </item>
       <item path="src/Sylph/Core/Array.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="src/Sylph/Core/ArrayIterator.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="src/Sylph/Core/ArrayIterator.h">
         <itemTool>3</itemTool>
       </item>
       <item path="src/Sylph/Core/ByteBuffer.h">
