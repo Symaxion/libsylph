@@ -58,22 +58,22 @@ private:
         }
 
         const T & next() const {
-            return last = &ar[idx++];
+            return last = *ar[idx++];
         }
 
-        bool hasPrevious() hasPrevious() const {
+        bool hasPrevious() const {
             return idx > 0;
         }
 
         const T & previous() const {
-            return last = &ar[--idx];
+            return last = *ar[--idx];
         }
 
-        std::idx_t nextIndex() nextIndex() const {
+        std::idx_t nextIndex() const {
             return idx;
         }
 
-        std::idx_t previousIndex() previousIndex() const {
+        std::idx_t previousIndex() const {
             return idx - 1;
         }
 
@@ -81,7 +81,7 @@ private:
             idx = 0;
         }
 
-        virtual void back() back() const {
+        virtual void back() const {
             idx = ar->length;
         }
 
