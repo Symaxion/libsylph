@@ -10,6 +10,8 @@
 
 #include "Sylph/OS/OS.h"
 #include "Sylph/Core/Application.h"
+#include "Sylph/Core/Array.h"
+#include "Sylph/Core/String.h"
 
 SYLPH_BEGIN_NAMESPACE
     /**
@@ -57,7 +59,9 @@ SYLPH_BEGIN_NAMESPACE
      * </pre>
      * The syntax is very similar to that of the normal new operator.
      */
-     template<class T> T * newgc(T & t);
+     template<class T> T * newgc(const T & t);
+     template<class T> void deletegc(const T * t);
+     template<class T> void cleanupgc(void *obj, void *displ);
 SYLPH_END_NAMESPACE
 
 #ifndef SYLPH_NO_SYLPHMAIN
@@ -66,10 +70,10 @@ int main(int argc, char * argv[], char * envp[], char * apple[]);
 #else
 int main(int argc, char * argv[]);
 #endif
-static void SylphInit(int argc, char * argv[], char * apple[]) {
+static inline void SylphInit(int argc, char * argv[], char * apple[]) {
     Sylph::Application::init(argc, argv, apple, Sylph::APP_TYPE);
 }
-int SylphMain();
+int SylphMain(Sylph::Array<Sylph::String> & argv);
 #endif
 
 #endif	/* _SYLPH_H */

@@ -8,12 +8,7 @@
 #include "Vector.h"
 
 SYLPH_BEGIN_NAMESPACE
-template class Vector<byte>;
-template class Vector<sint>;
-template class Vector<suint>;
-template class Vector<slong>;
-template class Vector<sulong>;
-template class Vector<bool>;
 
-template class Vector<String>;
+SYLPH_SPECIALIZE_PRIMS(Vector);
+
 SYLPH_END_NAMESPACE

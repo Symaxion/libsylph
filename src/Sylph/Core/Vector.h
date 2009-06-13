@@ -12,7 +12,6 @@
 #include "Collection.h"
 #include "Util.h"
 #include "Equals.h"
-#include "VectorIterator.h"
 
 #include <vector>
 #include <initializer_list>
@@ -22,15 +21,18 @@ SYLPH_BEGIN_NAMESPACE
 SYLPH_PUBLIC
 template<class T>
 class Array;
+template<class T>
+class Vector;
 
 template<class T>
-class Vector : public Collection<T> {
+class Vector_base : public Collection<T> {
+    friend class Vector<T>;
 private:
 
     class VectorIterator : public Iterator<T> {
     public:
 
-        VectorIterator(Vector<T> & vector) : vec(&vector), idx(0), last(0) {
+        VectorIterator(Vector_base<T> & vector) : vec(&vector), idx(0), last(0) {
         }
 
         virtual ~VectorIterator() {
@@ -75,14 +77,14 @@ private:
         void remove();
     protected:
 #ifndef SYLPH_DOXYGEN
-        Vector<T> * vec;
+        Vector_base<T> * vec;
         mutable T * last;
         mutable std::idx_t idx;
 #endif
     };
-public:
+protected:
 
-    explicit Vector(std::size_t initialCount = 16, std::size_t increase = 0) {
+    explicit Vector_base(std::size_t initialCount = 16, std::size_t increase = 0) {
         elements = new Array<T > (initialCount);
         capacityIncrease = increase;
         elementCount = 0;
@@ -95,21 +97,21 @@ public:
      * @param orig The original std
      * @note This constructor is not yet implemented!
      */
-    Vector(const Vector<T> & orig) {
+    Vector_base(const Vector_base<T> & orig) {
         elements = new Array<T > (orig.elements->length);
         capacityIncrease = orig.capacityIncrease;
         elementCount = orig.elementCount;
         arraycopy(orig.*elements, 0, *elements, 0, orig.elements->length);
     }
 
-    Vector(const Array<T> & orig) {
+    Vector_base(const Array<T> & orig) {
         elements = new Array<T > (orig.length * 2);
         arraycopy(orig, 0, *elements, 0, orig.length);
         elementCount = orig.length;
         capacityIncrease = 0;
     }
 
-    Vector(const std::initializer_list<T> & orig) {
+    Vector_base(const std::initializer_list<T> & orig) {
         elements = new Array<T > (orig.size()*2);
         capacityIncrease = 0;
         elementCount = 0;
@@ -117,14 +119,13 @@ public:
             this->push(&t);
         }
     }
-    Vector(const std::initializer_list<T> & orig);
 
-    virtual ~Vector() {
+    virtual ~Vector_base() {
         delete elements;
     }
 
+public:
     // vector specific
-
     void push(const T & t) {
         add(t);
     }
@@ -214,6 +215,13 @@ public:
 
     bool empty() const {
         return size() == 0;
+    }
+    virtual Collection<T> filter(FilterFunction func, Any& clientData) {
+        Vector<T> toReturn;
+        for(idx_t i = 0; i < size(); i++) {
+            if(func(*this[i],clientData)) toReturn.push(*this[i]);
+        }
+        return toReturn;
     }
 
     void remove(const T & t) {
@@ -314,9 +322,8 @@ public:
     const T & operator[](std::idx_t idx) const {
         return get(idx);
     }
-    Vector<T> & operator=(const Vector<T> & rhs);
 
-    Vector & operator=(const Vector<T> & rhs) const {
+    Vector_base<T> & operator=(const Vector_base<T> & rhs) const {
         delete elements;
         elements = new Array<T > (rhs.elements->length);
         capacityIncrease = rhs.capacityIncrease;
@@ -342,9 +349,28 @@ private:
 };
 
 template<class T>
-class Vector<T*> : public Vector<T*> {
+class Vector : public Vector_base<T> {
 public:
+    explicit Vector(std::size_t initialCount = 16, std::size_t increase = 0) :
+        Vector_base(initialCount,increase) {}
 
+    Vector(const Vector<T> & orig) : Vector_base(orig) {}
+
+    Vector(const Array<T> & orig) : Vector_base(orig) {}
+
+    Vector(const std::initializer_list<T> & orig) : Vector_base(orig) {}
+};
+template<class T>
+class Vector<T*> : public Vector_base<T*> {
+public:
+    explicit Vector(std::size_t initialCount = 16, std::size_t increase = 0) :
+        Vector_base(initialCount,increase) {}
+
+    Vector(const Vector<T> & orig) : Vector_base(orig) {}
+
+    Vector(const Array<T> & orig) : Vector_base(orig) {}
+
+    Vector(const std::initializer_list<T> & orig) : Vector_base(orig) {}
     Vector<T*> deepCopy() const {
         Vector<T*> toReturn;
 

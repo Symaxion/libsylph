@@ -54,80 +54,82 @@ namespace std {
 
 SYLPH_BEGIN_NAMESPACE
 
+namespace Primitive {
 enum Primitive {
-    T_Integer,
-    T_Long,
-    T_Float,
-    T_Double,
-    T_Bool,
-    T_Array,
-    T_String,
-    T_Dictionary,
+    Integer,
+    Long,
+    Float,
+    Double,
+    Bool,
+    Array,
+    String,
+    Dictionary,
     FAIL
 };
+}
 
 template<class T>
-inline Primitive primtype(const T &) {
+inline Primitive::Primitive primtype(const T &) {
     return FAIL;
 }
 
 template<>
-inline Primitive primtype<int>(const int &) {
-    return T_Integer;
+inline Primitive::Primitive primtype<int>(const int &) {
+    return Primitive::Integer;
 }
 template<>
-inline Primitive primtype<sint>(const sint &) {
-    return T_Integer;
-}
-
-template<>
-inline Primitive primtype<suint>(const suint &) {
-    return T_Integer;
+inline Primitive::Primitive primtype<sint>(const sint &) {
+    return Primitive::Integer;
 }
 
 template<>
-inline Primitive primtype<long>(const long &) {
-    return sizeof(int) == sizeof(long) ? T_Integer : T_Long;
+inline Primitive::Primitive primtype<suint>(const suint &) {
+    return Primitive::Integer;
 }
 
 template<>
-inline Primitive primtype<long long>(const long long &) {
-    return T_Long;
+inline Primitive::Primitive primtype<long>(const long &) {
+    return sizeof(int) == sizeof(long) ? Primitive::Integer : Primitive::Long;
 }
 
 template<>
-inline Primitive primtype<slong>(const slong &) {
-    return T_Long;
+inline Primitive::Primitive primtype<long long>(const long long &) {
+    return Primitive::Long;
 }
 
 template<>
-inline Primitive primtype<sulong>(const slong &) {
-    return T_Long;
+inline Primitive::Primitive primtype<slong>(const slong &) {
+    return Primitive::Long;
 }
 
 template<>
-inline Primitive primtype<float>(const float &) {
-    return T_Float;
+inline Primitive::Primitive primtype<sulong>(const slong &) {
+    return Primitive::Long;
 }
 
 template<>
-inline Primitive primtype<bool>(const bool &) {
-    return T_Bool;
+inline Primitive::Primitive primtype<float>(const float &) {
+    return Primitive::Float;
+}
+
+template<>
+inline Primitive::Primitive primtype<bool>(const bool &) {
+    return Primitive::Bool;
 }
 
 template<class T>
-inline Primitive primtype<Array<T> >(const Array<T> &) {
-    return T_Array;
+inline Primitive::Primitive primtype<Array<T> >(const Array<T> &) {
+    return Primitive::Array;
 };
 
 template<>
-inline Primitive primtype<String>(const String &) {
-    return T_String;
+inline Primitive::Primitive primtype<String>(const String &) {
+    return Primitive::String;
 }
 
 template<>
-inline Primitive primtype<Dictionary>(const Dictionary &) {
-    return T_Dictionary;
+inline Primitive::Primitive primtype<Dictionary>(const Dictionary &) {
+    return Primitive::Dictionary;
 };
 
 class SChar : public virtual Object {
@@ -149,6 +151,30 @@ private:
 typedef SChar schar;
 SYLPH_END_NAMESPACE
 using Sylph::schar;
+
+#ifndef SYLPH_LIKELY
+    #if __GNUC__ - 0 >= 3
+        #define SYLPH_LIKELY(x) __builtin_expect(!!(x),1)
+        #define SYLPH_UNLIKELY(x) __builtin_expect(!!(x),0)
+    #else
+        #define SYLPH_LIKELY(x) (x)
+        #define SYLPH_UNLIKELY(x) (x)
+    #endif
+#endif
+
+
+#define SYLPH_SPECIALIZE(Class,Type) extern template class Class<Type>
+
+#define SYLPH_SPECIALIZE_PRIMS(Class) \
+    SYLPH_SPECIALIZE(Class,byte); \
+    SYLPH_SPECIALIZE(Class,sint); \
+    SYLPH_SPECIALIZE(Class,suint); \
+    SYLPH_SPECIALIZE(Class,slong); \
+    SYLPH_SPECIALIZE(Class,sulong); \
+    SYLPH_SPECIALIZE(Class,bool); \
+    SYLPH_SPECIALIZE(Class,float); \
+    SYLPH_SPECIALIZE(Class,double); \
+    SYLPH_SPECIALIZE(Class,::Sylph::String)
 
 #endif	/* PRIMITIVES_H_ */
 
