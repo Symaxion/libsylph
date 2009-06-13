@@ -15,20 +15,24 @@
 SYLPH_BEGIN_NAMESPACE
 SYLPH_PUBLIC
 
-class range {
+template<class T>
+class basic_range {
 public:
-    inline range(int first, int last) {
+    inline range(T first, T last) {
         if(first>last) std::swap(first,last);
         _first = first;
         _last = last;
     }
     inline virtual ~range() {}
-    inline int first() { return _first; }
-    inline int last() { return _last; }
+    inline T first() { return _first; }
+    inline T last() { return _last; }
 private:
-    int _first;
-    int _last;
+    T _first;
+    T _last;
 };
+typedef basic_range<int> range;
+typedef basic_range<float> frange;
+typedef basic_range<double> drange;
 
 SYLPH_END_NAMESPACE
 

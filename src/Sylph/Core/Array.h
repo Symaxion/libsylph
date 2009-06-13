@@ -18,15 +18,6 @@
 #include <algorithm>
 #include <initializer_list>
 
-/*< rev Object-1
- *  rev Iterable-1
- *  rev Exception-1
- *  rev String-1
- *  rev Iterator-1
- *  rev Hashable-1
- *  rev Array-1
- >*/
-
 SYLPH_BEGIN_NAMESPACE
 
 SYLPH_PUBLIC
@@ -38,10 +29,6 @@ SYLPH_PUBLIC
  */
 template <class T>
 class Array : public Iterable<T> {
-    friend class Array<int>;
-    #ifndef SYLPH_DOXYGEN
-    friend class Array<String>;
-    #endif
 private:
 
     class ArrayIterator : public Iterator {
@@ -100,12 +87,18 @@ private:
 
 public:
     /**
+     * A function that is used for filtering by the filter() method. This 
+     * function takes both an instance of the class this Array contains, and
+     * a reference to a reference to any kind of other data that may need to
+     * be passed to the FilterFunction.
+     */
+    typedef bool(*FilterFunction)(const T&, Any&);
+    /**
      * The length of the array. This variable is 1-based, while the array itself
      * is 0-based, i.e. if length == N the highest entry in this array is N-1.
      * E.g if array.length == 5, then the higest entry is array[4]
      */
     const int & length;
-public:
     /**
      * Creates an Array<T> from a pointer to T and a length. The new array will
      * have the length specified in <code>length</code>. The original array will
@@ -169,6 +162,26 @@ public:
         this->_length = other.data->length;
         data->refcount++;
     }
+   /**
+     * Creates an array from a range. The following syntax
+     * <pre> Array<int>(range(X, Y)); </pre>
+     * is just shorthand for
+     * <pre>Array<int>(Y-X) arr;
+     * for(int i = X; i < Y; i++) arr[i]=X+i;</pre>
+     * A new shared data pointer gets created. Length is equal to ran.last() -
+     * ran.first() . In order for this constructor to be useful, operator< and
+     * operator++ need to have meaningful implementations.
+     * @param ran The range describing the contents of the array.
+     */
+    Array(const basic_range<T> & ran) : _length(ran.last() - ran.first()),
+            length(_length) {
+        data = new Data(_length);
+        data->_carray = (T*) calloc(_length, sizeof (T));
+        idx_t idx = 0;
+        for (T x = ran.first(); x < ran.last(); x++) {
+            *this[idx] = x; idx++;
+        }
+    }
 
     /**
      * Destructor. This will decrease the reference counter by one. If the
@@ -214,6 +227,45 @@ public:
      */
     const T *carray() const {
         return data->_carray;
+    }
+
+    /**
+     * Creates a copy of this array. The Array returned from this method is
+     * an exact copy of this Array, such that ar == ar.copy() . The returned
+     * Array is different from the one returned by operator=, as the reference
+     * counted data gets copied as well, in other words, both Arrays will
+     * track their own reference count from now.
+     * @return A new Array containing the same data as this Array.
+     */
+    Array<T> copy() {
+        Array<T> toReturn(length);
+        arraycopy(*this,0,toReturn,0,length);
+        return toReturn;
+    }
+
+    /**
+     * This will filter the Array according to a FilterFunction. This function
+     * returns a new, 'filtered' Array, which only contains the entries for
+     * which the FilterFunction returns true.
+     * @param func A pointer to the function which is used for filtering
+     * @param clientData %Any data to be passed to the FilterFunction
+     * @return A new array containing only the filtered data
+     */
+    Array<T> filter(FilterFunction func, Any& clientData) {
+        // I'm terribly sorry but we'll need to iterate twice over the Array...
+        size_t newlength;
+        for(idx_t i = 0; i < length; i++) {
+            if(func(*this[i],clientData)) newlength++;
+        }
+        Array<T> toReturn(newlength);
+        idx_t curpos = 0;
+        for(idx_t i = 0; i < length; i++) {
+            if(func(*this[i],clientData)) {
+                toReturn[curpos] = *this[i];
+                curpos++;
+            }
+        }
+        return toReturn;
     }
 
     /**
@@ -327,34 +379,6 @@ public:
     }
 };
 #endif
-
-/**
- * This is a specialisation for the Array class, for integral types. It's
- * specialisation allows for construction through ranges, otherwise, it's
- * functionality is equal to that of Array .
- */
-template<>
-class Array<int> : public Array<int> {
-public:
-
-    /**
-     * Creates an integer array from a range. The following syntax
-     * <pre> Array<int>(range(X, Y)); </pre>
-     * is just shorthand for
-     * <pre>Array<int>(Y-X) arr;
-     * for(int i = X; i < Y; i++) arr[i]=X+i;</pre>
-     * A new shared data pointer gets created. Length is equal to ran.last() -
-     * ran.first()
-     * @param ran The range describing the contents of the array.
-     */
-    Array(const range & ran) : _length(ran.last() - ran.first()), length(_length) {
-        data = new Data(_length);
-        data->_carray = (T*) calloc(_length, sizeof (T));
-        for (int x = 0; x < _length; x++) {
-            *this[x] = x + ran.first();
-        }
-    }
-};
 
 /**
  * Compares the two Arrays on equality. To Arrays compare equal when their

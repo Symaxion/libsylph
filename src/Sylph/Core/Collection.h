@@ -34,6 +34,14 @@ SYLPH_PUBLIC
 template<class T>
 class Collection : public Iterable<T>, public Hashable {
 public:
+    /**
+     * A function that is used for filtering by the filter() method. This
+     * function takes both an instance of the class this Array contains, and
+     * a reference to a reference to any kind of other data that may need to
+     * be passed to the FilterFunction.
+     */
+    typedef bool(*FilterFunction)(const T&, Any&);
+public:
 
     virtual bool add(const T & t);
     virtual bool addAll(const Collection<T> & c);
@@ -47,6 +55,7 @@ public:
     }
     virtual sint hashCode() const = 0;
     virtual bool empty() const = 0;
+    virtual Collection<T> filter(FilterFunction func, Any& clientData) = 0;
     virtual bool remove(const T & t);
     virtual bool removeAll(const Collection<T> & c);
     virtual bool retainAll(const Collection<T> & c);
@@ -55,6 +64,7 @@ public:
 
     virtual Iterator iterator() const = 0;
     virtual MutableIterator mutableIterator() = 0;
+
 
     operator Array<T>() const {
         return toArray();

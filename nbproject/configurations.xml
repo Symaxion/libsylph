@@ -38,8 +38,6 @@
           <itemPath>src/Sylph/Core/Exception.h</itemPath>
           <itemPath>src/Sylph/Core/Hash.h</itemPath>
           <itemPath>src/Sylph/Core/Hashable.h</itemPath>
-          <itemPath>src/Sylph/Core/HashIterator.cpp</itemPath>
-          <itemPath>src/Sylph/Core/HashIterator.h</itemPath>
           <itemPath>src/Sylph/Core/HashMap.cpp</itemPath>
           <itemPath>src/Sylph/Core/HashMap.h</itemPath>
           <itemPath>src/Sylph/Core/Iterable.h</itemPath>
@@ -57,8 +55,6 @@
           <itemPath>src/Sylph/Core/Util.h</itemPath>
           <itemPath>src/Sylph/Core/Vector.cpp</itemPath>
           <itemPath>src/Sylph/Core/Vector.h</itemPath>
-          <itemPath>src/Sylph/Core/VectorIterator.cpp</itemPath>
-          <itemPath>src/Sylph/Core/VectorIterator.h</itemPath>
         </logicalFolder>
         <logicalFolder name="f2" displayName="IO" projectFiles="true">
           <itemPath>src/Sylph/IO/InputStream.h</itemPath>
@@ -185,12 +181,6 @@
       <item path="src/Sylph/Core/Hash.h">
         <itemTool>3</itemTool>
       </item>
-      <item path="src/Sylph/Core/HashIterator.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="src/Sylph/Core/HashIterator.h">
-        <itemTool>3</itemTool>
-      </item>
       <item path="src/Sylph/Core/HashMap.cpp">
         <itemTool>1</itemTool>
       </item>
@@ -258,12 +248,6 @@
         <itemTool>1</itemTool>
       </item>
       <item path="src/Sylph/Core/Vector.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="src/Sylph/Core/VectorIterator.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="src/Sylph/Core/VectorIterator.h">
         <itemTool>3</itemTool>
       </item>
       <item path="src/Sylph/IO/InputStream.h">
@@ -405,12 +389,6 @@
       <item path="src/Sylph/Core/Hash.h">
         <itemTool>3</itemTool>
       </item>
-      <item path="src/Sylph/Core/HashIterator.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="src/Sylph/Core/HashIterator.h">
-        <itemTool>3</itemTool>
-      </item>
       <item path="src/Sylph/Core/HashMap.cpp">
         <itemTool>1</itemTool>
       </item>
@@ -478,12 +456,6 @@
         <itemTool>1</itemTool>
       </item>
       <item path="src/Sylph/Core/Vector.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="src/Sylph/Core/VectorIterator.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="src/Sylph/Core/VectorIterator.h">
         <itemTool>3</itemTool>
       </item>
       <item path="src/Sylph/IO/InputStream.h">
