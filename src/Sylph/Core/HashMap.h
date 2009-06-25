@@ -28,30 +28,43 @@
 
 SYLPH_BEGIN_NAMESPACE
 
-template<class _key, class _value, class _hash = Hash<_key>(), class _equals = Equals<_key>()>
+template<class key_, class value_, class hash_ = sint(*)(key_), class equals_ = bool(*)(key_) >
 class HashMap : public virtual Object {
 private:
+    class Entry;
+public:
+    typedef key_ Key;
+    typedef value_ Value;
+    typedef hash_ HashFunction;
+    typedef equals_ EqualsFunction;
+    typedef std::pair<Key, Value> EntryPair;
+    typedef std::initializer_list<EntryPair> EntryList;
+    typedef Entry* EntryPtr;
+public:
 
-    class HashEntry : public virtual Object {
+    class Entry : public virtual Object {
+        friend class HashMap;
+        friend class iterator;
     public:
 
-        HashEntry(Key & _key, Value * _value) : key(_key), value(_value),
+        Entry(Key & _key, Value * _value) : key(_key), value(_value),
         next(NULL) {
         }
 
-        virtual ~HashEntry() {
-            delete Value;
+        virtual ~Entry() {
+            delete value;
         }
 
-        HashEntry<Key, Value> * next;
         Key key;
         Value * value;
+    private:
+        Entry * next;
     };
 
-    class HashPointer : public virtual Object {
+    class Pointer : public virtual Object {
     public:
 
-        HashPointer(Key & key, HashMap * _map) :
+        Pointer(Key & key, HashMap * _map) :
         key(key), map(map) {
         }
 
@@ -82,278 +95,90 @@ private:
         inline Value * operator=(Value * value) {
             return map->put(key, value);
         }
+
+        bool operator==(const Value * v) {
+            return static_cast<Value*> (*this) != NULL && v != NULL &&
+                    static_cast<Value*> (*this) == v;
+        }
+
+        bool operator!=(const Value & v) {
+            return !(*this == v);
+        }
+
     private:
         Key key;
         HashMap * map;
     };
 
-    bool operator==(const HashPointer & p, const Value * v) {
-        return Value(p) != NULL && v != NULL && Value(p) == v;
-    }
-
-    template<class Value>
-    bool operator!=(const HashPointer & p, const Value & v) {
-        return !(p == v);
-    }
-
-    class HashClctKeys : public Collection<Key> {
+    class iterator : public ForwardIterator<Entry, HashMap> {
     public:
-
-        HashClctKeys(HashMap * _map) : map(_map) {
-        }
-
-        virtual ~HashClctKeys() {
-        }
-
-        bool add(const Key & t) {
-            map->put(t, NULL);
-        }
-
-        bool addAll(const Collection<Key> & c);
-
-        void clear() {
-            map->clear()
-        }
-
-        bool contains(const Key & t) const {
-            return map->containsKey(t);
-        }
-
-        bool containsAll(const Collection<Key> & c) const;
-
-        bool operator ==(const Collection<Key> & c) const;
-
-        sint hashCode() const {
-            // TODO!
-            return 0;
-        }
-
-        bool empty() const {
-            return map->empty();
-        }
-
-        bool remove(const Key & t) {
-            return map->remove(t) != NULL;
-        }
-
-        bool removeAll(const Collection<Key> & c);
-
-        bool retainAll(const Collection<Key> & c) {
-
-        }
-
-        std::size_t size() const {
-            return map->size();
-        }
-
-        const Array<Key> toArray() const;
-
-        Iterator iterator() const {
-            return map->keyIterator();
-        }
-
-        MutableIterator mutableIterator();
-    private:
-        HashMap * map;
-    };
-
-    class HashClctValues : public Collection<Value *> {
-    public:
-
-        HashClctValues(HashMap * _map) : map(_map) {
-        }
-
-        virtual ~HashClctValues() {
-        }
-
-        bool add(const Value * & t);
-
-        bool addAll(const Collection<Value *> & c);
-
-        void clear() {
-            map->clear()
-        }
-
-        bool contains(const Value * & t) const {
-            return map->containsValue(t);
-        }
-        bool containsAll(const Collection<Value *> & c) const;
-        bool operator ==(const Collection<Value *> & c) const;
-
-        sint hashCode() const {
-            // TODO!
-            return 0;
-        }
-
-        bool empty() const {
-            return map->empty();
-        }
-
-        bool remove(const Value * & t);
-
-        bool removeAll(const Collection<Value *> & c);
-
-        bool retainAll(const Collection<Value *> & c);
-
-        std::size_t size() const {
-            return map->size();
-        }
-        const Array<Value *> toArray() const;
-
-        Iterator iterator() const {
-            return map->valueIterator();
-        }
-        MutableIterator mutableIterator();
-
-    private:
-        HashMap * map;
-    };
-
-    class HashClctEntries : public Collection<EntryPtr> {
-    public:
-
-        HashClctEntries(HashMap * _map) : map(_map) {
-        }
-
-        virtual ~HashClctEntries() {
-        }
-
-        bool add(const EntryPtr& t) {
-            map->put(t->key, t->value);
-        }
-
-        bool addAll(const Collection<EntryPtr> & c) {
-
-            sforeach(EntryPtr entry, c) {
-                map->put(entry->key, entry->value);
+        S_FORWARD_ITERATOR(iterator, Entry, HashMap)
+        void construct(bool begin, HashMap* obj) const {
+            map = obj;
+            if(begin) {
+                count = map.size();
+                idx = map.buckets->length;
+                currentPointer = *(map.buckets)[idx];
+                while(currentPointer == NULL) {
+                    currentPointer = *(map.buckets)[--idx];
+                }
+            } else {
+                count = 0;
+                idx = 0;
+                currentPointer = NULL;
             }
         }
-
-        void clear() {
-            map->clear()
+        pointer current() const {
+            return currentPointer;
         }
-
-        bool contains(const HashEntry & t) const {
-            return EqualsFunction(map->get(t.key), t.value);
-        }
-
-        bool containsAll(const Collection<EntryPtr> & c) const {
-
-            sforeach(EntryPtr entry, c) {
-                if (!contains(entry)) return false;
+        void next() const {
+            currentPointer = currentPointer->next;
+            while(currentPointer == NULL) {
+                currentPointer = *(map.buckets)[--idx];
             }
-            return true;
         }
-
-        bool operator ==(Collection<HashEntry > & c) const;
-
-        int hashCode() {
-            // TODO!
-            return 0;
-        };
-
-        bool empty() const {
-            return map->empty();
-        }
-
-        bool remove(const HashEntry & t) {
-            return map->remove(t.key) != NULL;
-        }
-
-        bool removeAll(const Collection<HashEntry> & c);
-
-        bool retainAll(const Collection<HashEntry> & c);
-
-        std::size_t size() const {
-            return map->size();
-        }
-
-        const Array<EntryPtr> toArray() const;
-
-        Iterator iterator() const {
-            return map->entryIterator();
-        }
-
-        MutableIterator mutableIterator();
-    private:
-        HashMap * map;
-    };
-
-    template<class T>
-    class HashIterator : public Iterator<T> {
-    public:
-
-        enum IteratorType {
-            KEYS,
-            VALUES,
-            ENTRIES
-        };
-    public:
-
-        explicit HashIterator(const HashMap<Key, Value> & _map,
-                HashIterator::IteratorType _type) : map(_map), type(_type),
-        idx(map.buckets->length), count(map.size()), last(NULL), next(NULL) {
-        }
-
-        virtual ~HashIterator() {
-        }
-
         bool hasNext() const {
             return count > 0;
         }
-
-        const T & next() const {
-            if (count == 0) sthrow(ArrayException, "End of iterator, please all get off!");
-            count--;
-            EntryPtr entry = next;
-
-            while (entry == NULL) {
-                entry = map->buckets[--idx];
-            }
-
-            next = entry->next;
-            last = entry;
-            if (type == VALUES) return (T) entry->value;
-            else if (type == KEYS) return (T) entry->key;
-            else return (T) entry;
+        bool equals(iterator<Entry,HashMap>& other) const {
+            return map == other.map && ((count == other.count && idx == other.idx
+                    && currentPointer == other.currentPointer) || (count ==
+                    other.count == 0));
         }
-        bool hasPrevious() const;
-        const T & previous() const;
-        std::size_t nextIndex() const;
-        std::size_t previousIndex() const;
+        void copyFrom(iterator<Entry,HashMap>& other) const {
+            map = other.map;
+            count = other.count;
+            idx = other.idx;
+            currentPointer = other.currentPointer;
+        }
     private:
         HashMap * map;
-        IteratorType type;
-        EntryPtr last;
-        EntryPtr next;
-        std::size_t idx;
-        std::size_t count;
+        mutable idx_t count;
+        mutable idx_t idx;
+        EntryPtr currentPointer;
+
     };
-public:
-    typedef _key Key;
-    typedef _value Value;
-    typedef _hash HashFunction;
-    typedef _equals EqualsFunction;
-    typedef std::pair<Key, Value> EntryPair;
-    typedef std::initializer_list<EntryPair> EntryList;
-    typedef Ptr<HashEntry<Key, Value*> > EntryPtr;
+
 public:
 
-    explicit HashMap(std::size_t initialCapacity = 11, float loadFactor = .75f) {
+    explicit HashMap(std::size_t initialCapacity = 11, float loadFactor = .75f,
+            HashFunction h = Hash<Key>, EqualsFunction e = Equals<Key>) {
         this->loadFactor = loadFactor;
-        this->size = 0;
+        this->_size = 0;
         this->threshold = initialCapacity * loadFactor;
-        this->buckets = new Array<EntryPtr>(initialCapacity);
+        this->buckets = new Array<EntryPtr > (initialCapacity);
         for (int x = 0; x < buckets.length; x++) {
             buckets[x] = NULL;
         }
+        hashf = h;
+        equf = e;
     }
 
     HashMap(const HashMap<Key, Value, HashFunction, EqualsFunction> & orig) {
         this->loadFactor = orig.loadFactor;
-        this->size = orig.size;
+        this->_size = orig._size;
         this->threshold = orig.threshold;
-        this->buckets = new Array<EntryPtr>(orig.buckets->length);
+        this->buckets = new Array<EntryPtr > (orig.buckets->length);
         arraycopy(*(orig.buckets), 0, *buckets, 0, orig.buckets->length);
     }
 
@@ -371,8 +196,8 @@ public:
         delete buckets;
 
         threshold = loadFactor * 11;
-        size = 0;
-        buckets = new Array<EntryPtr>(11);
+        _size = 0;
+        buckets = new Array<EntryPtr > (11);
 
     }
 
@@ -397,20 +222,12 @@ public:
         return false;
     }
 
-    Collection<HashEntry*> entrySet() {
-        return HashClctEntries<Key, Value>;
-    }
-
-    const Collection<HashEntry*> entrySet() const {
-        return HashClctEntries<Key, Value>;
-    }
-
     std::size_t size() const {
-        return size;
+        return _size;
     }
 
     Value * get(const Key & key) {
-        int h = hash(Key);
+        int h = hash(key);
         EntryPtr entry = buckets[h];
         if (entry == NULL) return NULL;
         while (entry->next != NULL) {
@@ -421,7 +238,7 @@ public:
     }
 
     const Value * get(const Key & key) const {
-        int h = hash(Key);
+        int h = hash(key);
         EntryPtr entry = buckets[h];
         if (entry == NULL) return NULL;
         while (entry->next != NULL) {
@@ -432,23 +249,15 @@ public:
     }
 
     SYLPH_HASHMAP_RETURN_T(type) operator[](const Key & key) {
-        return HashPointer(key, this);
+        return Pointer(key, this);
     }
 
     const SYLPH_HASHMAP_RETURN_T(type) operator[](const Key & key) const {
-        return HashPointer(key, this);
+        return Pointer(key, this);
     }
 
     bool empty() const {
         return size() == 0;
-    }
-
-    const Collection<Key> keys() const {
-        return HashClctKeys<Key > (this);
-    }
-
-    const Collection<_value *> values() const {
-        return HashClctValues<Value*>(this);
     }
 
     Value * put(const Key & key, const Value * value) {
@@ -465,11 +274,11 @@ public:
             }
         }
 
-        if (++size > threshold) {
+        if (++_size > threshold) {
             rehash();
             idx = hash(key);
         }
-        EntryPtr newEnt = new HashEntry<Key, Value > (key, value);
+        EntryPtr newEnt = new Entry(key, value);
         newEnt->next = buckets[idx];
         buckets[idx] = newEnt;
 
@@ -496,27 +305,13 @@ public:
 
                     last->next = entry->next;
                 }
-                size--;
+                _size--;
                 return entry->value;
             }
             last = entry;
             entry = entry->next;
         }
         return NULL;
-    }
-
-    template<class T>
-    HashIterator<T> iterator(HashIterator::IteratorType type) {
-        return HashIterator<T>(*this, type);
-    }
-    HashIterator<Key> keyIterator() {
-        return HashIterator<Key>(*this, HashIterator::KEYS);
-    }
-    HashIterator<Value*> valueIterator() {
-        return HashIterator<Value*>(*this, HashIterator::VALUES);
-    }
-    HashIterator<EntryPtr> entryIterator() {
-        return HashIterator<EntryPtr>(*this, HashIterator::ENTRIES);
     }
 
     HashMap & operator<<(const EntryList& elist) {
@@ -527,7 +322,7 @@ public:
     }
 
 private:
-    std::size_t size;
+    std::size_t _size;
     Array<EntryPtr> * buckets;
     std::size_t threshold;
     float loadFactor;
@@ -535,7 +330,7 @@ private:
     EqualsFunction equf;
 
     sint hash(const Key & key) {
-        return key == NULL ? 0 : abs(hashf(key) % buckets.length)
+        return key == NULL ? 0 : abs(hashf(key) % buckets.length);
     }
 
     void rehash() {
@@ -543,7 +338,7 @@ private:
 
         int newcapacity = (buckets.length * 2) + 1;
         threshold = (int) (newcapacity * loadFactor);
-        buckets = new Array<EntryPtr>(newcapacity);
+        buckets = new Array<EntryPtr > (newcapacity);
 
         for (idx_t i = oldBuckets.length - 1; i >= 0; i--) {
             EntryPtr entry = oldBuckets[i];

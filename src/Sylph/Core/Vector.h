@@ -12,6 +12,7 @@
 #include "Collection.h"
 #include "Util.h"
 #include "Equals.h"
+#include "Iterator.h"
 
 #include <vector>
 #include <initializer_list>
@@ -27,61 +28,48 @@ class Vector;
 template<class T>
 class Vector_base : public Collection<T> {
     friend class Vector<T>;
-private:
-
-    class VectorIterator : public Iterator<T> {
+public:
+    class iterator : public RandomAccessIterator<T, Vector<T> > {
     public:
-
-        VectorIterator(Vector_base<T> & vector) : vec(&vector), idx(0), last(0) {
+        S_RANDOM_ACCESS_ITERATOR(iterator,T,Vector<T>)
+        void construct(bool begin, Vector<T>* obj) {
+            _obj = obj;
+            _currentIndex = begin ? 0 : _obj->size();
         }
-
-        virtual ~VectorIterator() {
+        bool equals(iterator& other) {
+            return _currentIndex == other._currentIndex &&
+                    _obj == other._obj;
         }
-
-        bool hasNext() const {
-            return idx < vec->size();
+        void copyFrom(iterator& other) {
+            _currentIndex = other._currentIndex;
+            _obj = other._obj;
         }
-
-        const T& next() const {
-            return last = *vec[idx++];
+        pointer current() {
+            return *_obj[_currentIndex];
         }
-
-        bool hasPrevious() const {
-            return idx > 0;
+        bool hasNext() {
+            return _obj->size() < _currentIndex;
         }
-
-        const T & previous() const {
-            return last = *vec[--idx];
+        void next() {
+            _currentIndex++;
         }
-
-        std::idx_t nextIndex() const {
-            return idx;
+        bool hasPrevious() {
+            return _currentIndex >= 0;
         }
-
-        std::idx_t previousIndex() const {
-            return idx - 1;
+        void previous() {
+            currentIndex--;
         }
-
-        virtual void front() const {
-            idx = 0;
+        idx_t currentIndex() {
+            return _currentIndex;
         }
-
-        virtual void back() const {
-            idx = vec->size();
+        size_t length() {
+            return _obj->size();
         }
-
-        void set(T & t) {
-            *last = t;
-        }
-        void insert(T & t);
-        void remove();
-    protected:
-#ifndef SYLPH_DOXYGEN
-        Vector_base<T> * vec;
-        mutable T * last;
-        mutable std::idx_t idx;
-#endif
+    private:
+        mutable idx_t _currentIndex;
+        Vector<T>* _obj;
     };
+    S_ITERABLE(T)
 protected:
 
     explicit Vector_base(std::size_t initialCount = 16, std::size_t increase = 0) {
@@ -200,7 +188,7 @@ public:
     }
 
     bool operator==(const Collection<T> & c) const {
-        Vector * v = dynamic_cast<Vector> (c);
+        Vector_base * v = dynamic_cast<Vector_base> (c);
         if (v == NULL) return false;
         else if (this->size() != c.size()) return false;
         else {
@@ -216,7 +204,8 @@ public:
     bool empty() const {
         return size() == 0;
     }
-    virtual Collection<T> filter(FilterFunction func, Any& clientData) {
+    virtual Collection<T> filter(typename Vector_base<T>::FilterFunction func,
+      Any& clientData) {
         Vector<T> toReturn;
         for(idx_t i = 0; i < size(); i++) {
             if(func(*this[i],clientData)) toReturn.push(*this[i]);
@@ -224,8 +213,10 @@ public:
         return toReturn;
     }
 
-    void remove(const T & t) {
-        return removeAt(indexOf(t));
+    bool remove(const T & t) {
+        bool b;
+        (b = indexOf(t) != -1) && removeAt(indexOf(t));
+        return b;
     }
 
     void removeAt(std::size_t idx) {
@@ -307,14 +298,6 @@ public:
         return -1;
     }
 
-    Iterator iterator() const {
-        return VectorIterator<T > (*this);
-    }
-
-    MutableIterator mutableIterator() {
-        return VectorIterator<T > (*this);
-    }
-
     T & operator[](std::idx_t idx) {
         return get(idx);
     }
@@ -352,34 +335,36 @@ template<class T>
 class Vector : public Vector_base<T> {
 public:
     explicit Vector(std::size_t initialCount = 16, std::size_t increase = 0) :
-        Vector_base(initialCount,increase) {}
+        Vector_base<T>(initialCount,increase) {}
 
-    Vector(const Vector<T> & orig) : Vector_base(orig) {}
+    Vector(const Vector<T> & orig) : Vector_base<T>(orig) {}
 
-    Vector(const Array<T> & orig) : Vector_base(orig) {}
+    Vector(const Array<T> & orig) : Vector_base<T>(orig) {}
 
-    Vector(const std::initializer_list<T> & orig) : Vector_base(orig) {}
+    Vector(const std::initializer_list<T> & orig) : Vector_base<T>(orig) {}
 };
 template<class T>
 class Vector<T*> : public Vector_base<T*> {
 public:
     explicit Vector(std::size_t initialCount = 16, std::size_t increase = 0) :
-        Vector_base(initialCount,increase) {}
+        Vector_base<T*>(initialCount,increase) {}
 
-    Vector(const Vector<T> & orig) : Vector_base(orig) {}
+    Vector(const Vector<T> & orig) : Vector_base<T*>(orig) {}
 
-    Vector(const Array<T> & orig) : Vector_base(orig) {}
+    Vector(const Array<T> & orig) : Vector_base<T*>(orig) {}
 
-    Vector(const std::initializer_list<T> & orig) : Vector_base(orig) {}
+    Vector(const std::initializer_list<T> & orig) : Vector_base<T*>(orig) {}
     Vector<T*> deepCopy() const {
         Vector<T*> toReturn;
 
-        sforeach(T * t, *this) {
-            toReturn.push(new T(*t));
+        for(typename Vector<T*>::Iterator it = this->getIterator(); it->hasNext();) {
+            toReturn.push(new T(*it.next()));
         }
         return toReturn;
     }
 };
+
+S_CREATE_SYLPH_ITERATOR(Vector)
 
 SYLPH_END_NAMESPACE
 #endif	/* VECTOR_H_ */

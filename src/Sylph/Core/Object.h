@@ -89,7 +89,7 @@ public:
     virtual ObjectType type() { return Normal; }
     virtual void serialize(SerializationBuffer &) const;
     virtual void deserialize(SerializationBuffer &);
- };
+};
 
 SYLPH_END_NAMESPACE
 

@@ -10,7 +10,7 @@
 
 
 #include "Object.h"
-#include "Iterable.h"
+#include "Iterator.h"
 #include "Hashable.h"
 
 SYLPH_BEGIN_NAMESPACE
@@ -32,7 +32,7 @@ SYLPH_PUBLIC
  * @c ArrayException s if the underlying @c Array gets an out-of-bounds error.
  */
 template<class T>
-class Collection : public Iterable<T>, public Hashable {
+class Collection : public Hashable {
 public:
     /**
      * A function that is used for filtering by the filter() method. This
@@ -61,10 +61,6 @@ public:
     virtual bool retainAll(const Collection<T> & c);
     virtual std::size_t size() const = 0;
     virtual Array<T> toArray() const = 0;
-
-    virtual Iterator iterator() const = 0;
-    virtual MutableIterator mutableIterator() = 0;
-
 
     operator Array<T>() const {
         return toArray();

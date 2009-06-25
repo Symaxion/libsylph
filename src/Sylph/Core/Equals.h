@@ -27,9 +27,6 @@ inline bool Equals<char*>(char *& c1, char *& c2) {
 template<class T>
 inline bool PointeeEquals(T * t1, T * t2) {
     return *t1 == *t2;
-};
-SYLPH_END_NAMESPACE
-
 }
 SYLPH_END_NAMESPACE
 

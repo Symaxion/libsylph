@@ -28,7 +28,7 @@ public:
     const T& operator->() const { return *pointee; }
 
     bool operator==(const Ptr<T> & p) const {return p.pointee == pointee; }
-    bool operator==(const T * t) const { return pointee == T; }
+    bool operator==(const T * t) const { return pointee == t; }
 private:
     T * pointee;
 };

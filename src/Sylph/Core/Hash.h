@@ -15,27 +15,6 @@
 
 SYLPH_BEGIN_NAMESPACE
 SYLPH_PUBLIC
-template<class T>
-inline sint Hash(T & t) {
-    return hash_internal(*reinterpret_cast<byte*>(t), sizeof(T));
-}
-
-template<>
-inline sint Hash<int>(int & i) {
-    return i;
-}
-
-template<>
-inline sint Hash<sint>(sint & i) {
-    return i;
-}
-
-// 'Hashables' provide their own hasing method, usually it's based on this one
-template<>
-inline sint Hash<Hashable>(Hashable & h) {
-    return h.hashCode();
-}
-
 inline sint hash_internal(byte * b, std::size_t len) {
    suint hash = 0;
    suint x    = 0;
@@ -52,6 +31,22 @@ inline sint hash_internal(byte * b, std::size_t len) {
    }
 
    return hash;
+}
+
+template<class T>
+inline sint Hash(T & t) {
+    return hash_internal(*reinterpret_cast<byte*>(t), sizeof(T));
+}
+
+template<>
+inline sint Hash<int>(int & i) {
+    return i;
+}
+
+// 'Hashables' provide their own hasing method, usually it's based on this one
+template<>
+inline sint Hash<Hashable>(Hashable & h) {
+    return h.hashCode();
 }
 
 SYLPH_END_NAMESPACE

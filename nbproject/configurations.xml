@@ -45,6 +45,7 @@
           <itemPath>src/Sylph/Core/Object.cpp</itemPath>
           <itemPath>src/Sylph/Core/Object.h</itemPath>
           <itemPath>src/Sylph/Core/Primitives.h</itemPath>
+          <itemPath>src/Sylph/Core/Ptr.h</itemPath>
           <itemPath>src/Sylph/Core/Random.h</itemPath>
           <itemPath>src/Sylph/Core/Range.h</itemPath>
           <itemPath>src/Sylph/Core/String.cpp</itemPath>
@@ -203,6 +204,9 @@
         <itemTool>3</itemTool>
       </item>
       <item path="src/Sylph/Core/Primitives.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Ptr.h">
         <itemTool>3</itemTool>
       </item>
       <item path="src/Sylph/Core/Random.h">
@@ -411,6 +415,9 @@
         <itemTool>3</itemTool>
       </item>
       <item path="src/Sylph/Core/Primitives.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="src/Sylph/Core/Ptr.h">
         <itemTool>3</itemTool>
       </item>
       <item path="src/Sylph/Core/Random.h">
