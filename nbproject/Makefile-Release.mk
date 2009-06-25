@@ -28,26 +28,20 @@ OBJECTDIR=build/Release/${PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/src/Sylph/Core/Library.o \
-	${OBJECTDIR}/src/Sylph/Core/DictionaryIterator.o \
 	${OBJECTDIR}/test/ThisApp.o \
-	${OBJECTDIR}/src/Sylph/Core/ArrayIterator.o \
 	${OBJECTDIR}/src/Sylph/Core/String.o \
 	${OBJECTDIR}/test/Arguments.o \
-	${OBJECTDIR}/src/Sylph/Core/VectorIterator.o \
 	${OBJECTDIR}/test/HelloWorld.o \
-	${OBJECTDIR}/src/Sylph/Core/Hash.o \
+	${OBJECTDIR}/src/csylph/csylph.o \
 	${OBJECTDIR}/src/Sylph.o \
 	${OBJECTDIR}/src/Sylph/Core/Util.o \
 	${OBJECTDIR}/src/Sylph/Core/Application.o \
 	${OBJECTDIR}/src/Sylph/Core/Object.o \
-	${OBJECTDIR}/src/Sylph/Core/Equals.o \
 	${OBJECTDIR}/src/Sylph/Core/Vector.o \
-	${OBJECTDIR}/src/Sylph/Core/File.o \
 	${OBJECTDIR}/src/Sylph/Core/UncaughtExceptionHandler.o \
 	${OBJECTDIR}/src/Sylph/Core/Array.o \
 	${OBJECTDIR}/src/Sylph/OS/LinuxBundleAppSelf.o \
-	${OBJECTDIR}/src/Sylph/Core/Dictionary.o
+	${OBJECTDIR}/src/Sylph/Core/HashMap.o
 
 # C Compiler Flags
 CFLAGS=
@@ -70,25 +64,10 @@ dist/Release/${PLATFORM}/libsylph.so: ${OBJECTFILES}
 	${MKDIR} -p dist/Release/${PLATFORM}
 	${LINK.cc} -dynamiclib -install_name -o dist/Release/${PLATFORM}/libsylph.so -fPIC ${OBJECTFILES} ${LDLIBSOPTIONS} 
 
-${OBJECTDIR}/src/Sylph/Core/Library.o: src/Sylph/Core/Library.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src/Sylph/Core
-	${RM} $@.d
-	$(COMPILE.cc) -O2 -Isrc -Ideps/binreloc -Ideps/boost -Ideps/gc/include -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Sylph/Core/Library.o src/Sylph/Core/Library.cpp
-
-${OBJECTDIR}/src/Sylph/Core/DictionaryIterator.o: src/Sylph/Core/DictionaryIterator.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src/Sylph/Core
-	${RM} $@.d
-	$(COMPILE.cc) -O2 -Isrc -Ideps/binreloc -Ideps/boost -Ideps/gc/include -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Sylph/Core/DictionaryIterator.o src/Sylph/Core/DictionaryIterator.cpp
-
 ${OBJECTDIR}/test/ThisApp.o: test/ThisApp.cpp 
 	${MKDIR} -p ${OBJECTDIR}/test
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -Isrc -Ideps/binreloc -Ideps/boost -Ideps/gc/include -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/test/ThisApp.o test/ThisApp.cpp
-
-${OBJECTDIR}/src/Sylph/Core/ArrayIterator.o: src/Sylph/Core/ArrayIterator.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src/Sylph/Core
-	${RM} $@.d
-	$(COMPILE.cc) -O2 -Isrc -Ideps/binreloc -Ideps/boost -Ideps/gc/include -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Sylph/Core/ArrayIterator.o src/Sylph/Core/ArrayIterator.cpp
 
 ${OBJECTDIR}/src/Sylph/Core/String.o: src/Sylph/Core/String.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/Sylph/Core
@@ -100,20 +79,15 @@ ${OBJECTDIR}/test/Arguments.o: test/Arguments.cpp
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -Isrc -Ideps/binreloc -Ideps/boost -Ideps/gc/include -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/test/Arguments.o test/Arguments.cpp
 
-${OBJECTDIR}/src/Sylph/Core/VectorIterator.o: src/Sylph/Core/VectorIterator.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src/Sylph/Core
-	${RM} $@.d
-	$(COMPILE.cc) -O2 -Isrc -Ideps/binreloc -Ideps/boost -Ideps/gc/include -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Sylph/Core/VectorIterator.o src/Sylph/Core/VectorIterator.cpp
-
 ${OBJECTDIR}/test/HelloWorld.o: test/HelloWorld.cpp 
 	${MKDIR} -p ${OBJECTDIR}/test
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -Isrc -Ideps/binreloc -Ideps/boost -Ideps/gc/include -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/test/HelloWorld.o test/HelloWorld.cpp
 
-${OBJECTDIR}/src/Sylph/Core/Hash.o: src/Sylph/Core/Hash.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src/Sylph/Core
+${OBJECTDIR}/src/csylph/csylph.o: src/csylph/csylph.c 
+	${MKDIR} -p ${OBJECTDIR}/src/csylph
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -Isrc -Ideps/binreloc -Ideps/boost -Ideps/gc/include -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Sylph/Core/Hash.o src/Sylph/Core/Hash.cpp
+	$(COMPILE.c) -O2 -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/csylph/csylph.o src/csylph/csylph.c
 
 ${OBJECTDIR}/src/Sylph.o: src/Sylph.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
@@ -135,20 +109,10 @@ ${OBJECTDIR}/src/Sylph/Core/Object.o: src/Sylph/Core/Object.cpp
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -Isrc -Ideps/binreloc -Ideps/boost -Ideps/gc/include -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Sylph/Core/Object.o src/Sylph/Core/Object.cpp
 
-${OBJECTDIR}/src/Sylph/Core/Equals.o: src/Sylph/Core/Equals.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src/Sylph/Core
-	${RM} $@.d
-	$(COMPILE.cc) -O2 -Isrc -Ideps/binreloc -Ideps/boost -Ideps/gc/include -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Sylph/Core/Equals.o src/Sylph/Core/Equals.cpp
-
 ${OBJECTDIR}/src/Sylph/Core/Vector.o: src/Sylph/Core/Vector.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/Sylph/Core
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -Isrc -Ideps/binreloc -Ideps/boost -Ideps/gc/include -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Sylph/Core/Vector.o src/Sylph/Core/Vector.cpp
-
-${OBJECTDIR}/src/Sylph/Core/File.o: src/Sylph/Core/File.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src/Sylph/Core
-	${RM} $@.d
-	$(COMPILE.cc) -O2 -Isrc -Ideps/binreloc -Ideps/boost -Ideps/gc/include -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Sylph/Core/File.o src/Sylph/Core/File.cpp
 
 ${OBJECTDIR}/src/Sylph/Core/UncaughtExceptionHandler.o: src/Sylph/Core/UncaughtExceptionHandler.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/Sylph/Core
@@ -165,10 +129,10 @@ ${OBJECTDIR}/src/Sylph/OS/LinuxBundleAppSelf.o: src/Sylph/OS/LinuxBundleAppSelf.
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -Isrc -Ideps/binreloc -Ideps/boost -Ideps/gc/include -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Sylph/OS/LinuxBundleAppSelf.o src/Sylph/OS/LinuxBundleAppSelf.cpp
 
-${OBJECTDIR}/src/Sylph/Core/Dictionary.o: src/Sylph/Core/Dictionary.cpp 
+${OBJECTDIR}/src/Sylph/Core/HashMap.o: src/Sylph/Core/HashMap.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/Sylph/Core
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -Isrc -Ideps/binreloc -Ideps/boost -Ideps/gc/include -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Sylph/Core/Dictionary.o src/Sylph/Core/Dictionary.cpp
+	$(COMPILE.cc) -O2 -Isrc -Ideps/binreloc -Ideps/boost -Ideps/gc/include -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Sylph/Core/HashMap.o src/Sylph/Core/HashMap.cpp
 
 # Subprojects
 .build-subprojects:

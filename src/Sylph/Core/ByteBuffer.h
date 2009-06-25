@@ -15,12 +15,12 @@ SYLPH_PUBLIC
 
 class ByteBuffer : public virtual Object {
 public:
-    enum ByteBufferTraits {
+    enum Traits {
         BB_CLOSED = 0x00,
         BB_READ = 0x01,
         BB_WRITE = 0x02
     };
-    ByteBuffer(ByteBufferTraits traits);
+    ByteBuffer(Traits traits);
     ByteBuffer(const Array<byte> & ar);
     ByteBuffer(const byte ar[]);
     ByteBuffer(const ByteBuffer& orig);
@@ -30,7 +30,7 @@ public:
     
     void reset();
     void clear();
-    void skip(tidx_t i);
+    void skip(sidx_t i);
     void mark(idx_t i);
     size_t size();
     idx_t position();
@@ -38,7 +38,7 @@ public:
     
     // traits modifiers
     
-    void setTraits(ByteBufferTraits traits);
+    void setTraits(Traits traits);
     
     ByteBuffer& operator>>(byte b);
     ByteBuffer& operator>>(sint i);
@@ -80,7 +80,7 @@ public:
 private:
     Array<byte> * _array;
     idx_t _pos;
-    ByteBufferTraits _traits;
+    Traits _traits;
 };
 
 SYLPH_END_NAMESPACE

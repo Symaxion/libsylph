@@ -18,12 +18,12 @@ SYLPH_PUBLIC
 template<class T>
 class basic_range {
 public:
-    inline range(T first, T last) {
+    inline basic_range(T first, T last) {
         if(first>last) std::swap(first,last);
         _first = first;
         _last = last;
     }
-    inline virtual ~range() {}
+    inline virtual ~basic_range() {}
     inline T first() { return _first; }
     inline T last() { return _last; }
 private:

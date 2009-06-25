@@ -14,15 +14,28 @@
 
 #include <string>
 
+/*< rev Object-1
+ *  rev Hashable-1
+ *  rev String-1
+ >*/
+
 class QString;
 
 SYLPH_BEGIN_NAMESPACE
 
 template<class T> class Array;
 
+#ifndef SYLPH_DOXYGEN
+#define SYLPH_STRING_CLASS MutableString
+class MutableString;
+typedef const MutableString String;
+#else
+#define SYLPH_STRING_CLASS String
+#endif
+
 SYLPH_PUBLIC
 
-class String : public virtual Hashable {
+class SYLPH_STRING_CLASS : public Hashable {
     friend bool operator==(const String lhs, const char * rhs);
     friend bool operator==(const String lhs, const std::string & rhs);
     friend bool operator==(const String lhs, const String rhs);
@@ -43,13 +56,18 @@ class String : public virtual Hashable {
     friend String operator+(const String lhs, const String rhs);
     friend String operator+(const String lhs, const QString rhs);
 
+    friend String operator%(const String lhs, const String rhs);
+    friend String operator&(const String lhs, const String(*rhs)(String));
+    friend String operator&(const String(*lhs)(String), const String rhs);
+    friend String operator*(const String lhs, const std::size_t len);
+
 public:
-    String();
-    String(const char * orig);
-    String(const std::string & orig);
-    String(const QString orig);
-    String(const String & orig);
-    virtual ~String();
+    SYLPH_STRING_CLASS();
+    SYLPH_STRING_CLASS(const char * orig);
+    SYLPH_STRING_CLASS(const std::string & orig);
+    SYLPH_STRING_CLASS(const QString orig);
+    SYLPH_STRING_CLASS(const String & orig);
+    virtual ~SYLPH_STRING_CLASS();
 
     std::size_t length() const;
     wchar_t at(std::size_t idx) const;
@@ -116,6 +134,14 @@ String operator+(const String lhs, const char * rhs);
 String operator+(const String lhs, const std::string & rhs);
 String operator+(const String lhs, const String rhs);
 String operator+(const String lhs, const QString rhs);
+
+String operator%(const String lhs, const String rhs);
+String operator&(const String lhs, const String(*rhs)(String));
+String operator&(const String(*lhs)(String), const String rhs);
+String operator*(const String lhs, const std::size_t len);
+
+String tr(String rhs);
+
 SYLPH_END_NAMESPACE
 
 #endif /* STRING_H_ */

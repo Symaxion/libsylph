@@ -16,11 +16,8 @@ SYLPH_PUBLIC
 
 class OutputStream : public virtual Object {
 public:
-    OutputStream();
-    OutputStream(const OutputStream& orig);
-    virtual ~OutputStream();
+    
 private:
-
 
 };
 

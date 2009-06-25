@@ -13,11 +13,6 @@
 #include <exception>
 #include "String.h"
 
-/*< rev Object-1
- *  rev Exception-1
- *  rev String-1
- >*/
-
 SYLPH_BEGIN_NAMESPACE
 
 /*
@@ -96,7 +91,7 @@ public:
      * @return The reason why this Exception was thrown.
      */
     const char* what() const throw () {
-        return _reason.ascii();
+        return _reason;
     }
 
     /**

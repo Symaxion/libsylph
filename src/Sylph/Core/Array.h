@@ -9,6 +9,7 @@
 #define	ARRAY_H_
 
 #include "Iterable.h"
+#include "Iterator.h"
 #include "Comparable.h"
 #include "Exception.h"
 #include "Range.h"
@@ -19,75 +20,58 @@
 #include <initializer_list>
 
 SYLPH_BEGIN_NAMESPACE
+class Any;
 
 SYLPH_PUBLIC
-/**
- * Array provides a safe array. It works the same like a c-style array (not like
- * std::vector which can expand), but instead of overflowing, it throws an
- * @c Exception whenever you try to access data outside its bounds. Therefore it
- * also keeps track of its own length.
- */
-template <class T>
-class Array : public Iterable<T> {
-private:
 
-    class ArrayIterator : public Iterator {
+template<class T>
+class Array_base {
+    friend class Array<T>;
+public:
+    class iterator : public RandomAccessIterator<T, Array<T> > {
     public:
-        ArrayIterator(Array<T> & array) : ar(&array), idx(0), last(0) {
+        S_RANDOM_ACCESS_ITERATOR(iterator,T, Array<T>)
+        void construct(bool begin, Array<T>* obj) {
+            _obj = obj;
+            _currentIndex = begin ? 0 : _obj->length;
         }
-
-        #ifndef SYLPH_DOXYGEN
-        virtual ~ArrayIterator() {}
-        #endif
-
-        bool hasNext() const {
-            return idx < ar->length;
+        bool equals(iterator& other) {
+            return _currentIndex == other._currentIndex &&
+                    _obj == other._obj;
         }
-
-        const T & next() const {
-            return last = *ar[idx++];
+        void copyFrom(iterator& other) {
+            _currentIndex = other._currentIndex;
+            _obj = other._obj;
         }
-
-        bool hasPrevious() const {
-            return idx > 0;
+        pointer current() {
+            return *_obj[_currentIndex];
         }
-
-        const T & previous() const {
-            return last = *ar[--idx];
+        bool hasNext() {
+            return _obj->length < _currentIndex;
         }
-
-        std::idx_t nextIndex() const {
-            return idx;
+        void next() {
+            _currentIndex++;
         }
-
-        std::idx_t previousIndex() const {
-            return idx - 1;
+        bool hasPrevious() {
+            return _currentIndex >= 0;
         }
-
-        virtual void front() const {
-            idx = 0;
+        void previous() {
+            currentIndex--;
         }
-
-        virtual void back() const {
-            idx = ar->length;
+        idx_t currentIndex() {
+            return _currentIndex;
         }
-
-        void set(T & t) {
-            *last = t;
+        size_t length() {
+            return _obj->length;
         }
-        void insert(T & t);
-        void remove();
-    protected:
-#ifndef SYLPH_DOXYGEN
-        Array<T> * ar;
-        mutable T * last;
-        mutable std::idx_t idx;
-#endif
+    private:
+        mutable idx_t _currentIndex;
+        Array<T>* _obj;
     };
-
+    S_ITERABLE(T)
 public:
     /**
-     * A function that is used for filtering by the filter() method. This 
+     * A function that is used for filtering by the filter() method. This
      * function takes both an instance of the class this Array contains, and
      * a reference to a reference to any kind of other data that may need to
      * be passed to the FilterFunction.
@@ -121,9 +105,9 @@ public:
      * if a particular entry in the array has been initialized.
      * @param len the length of the new Array.
      */
-    explicit Array(std::size_t len) : _length(len), length(_length) {
+    explicit Array_base(std::size_t len) : _length(len), length(_length) {
         data = new Data(len);
-        data->_carray = (T*) calloc(len, sizeof (T));
+        data->_carray = new T[length];
     }
 
     /**
@@ -132,7 +116,7 @@ public:
      * data is created, its refcount set to 1.
      * @param il the initializer list
      */
-    Array(const std::initializer_list<T> & il) : _length(il.size()), length(_length) {
+    Array_base(const std::initializer_list<T> & il) : _length(il.size()), length(_length) {
         data = new Data(_length);
         data->_carray = (T*) calloc(il.size(), sizeof (T));
         carraycopy(il.begin(), 0, data->_carray, 0, il.size());
@@ -145,7 +129,7 @@ public:
      * reference counted data is created, its refcount set to 1.
      * @param array the c-style array
      */
-    Array(const T array[]) : _length(carraysize(array)), length(_length) {
+    Array_base(const T array[]) : _length(carraysize(array)), length(_length) {
         data = new Data(_length);
         data->_carray = (T*) calloc(_length, sizeof (T));
         carraycopy(array, 0, data->_carray, 0, _length);
@@ -156,10 +140,10 @@ public:
      * pointer to the internal reference and increase the counter by 1.
      * @param other A reference to the other Array.
      */
-    Array(const Array<T> & other) : _length(other._length) {
+    Array_base(const Array_base<T> & other) : _length(other._length) {
         if (this == &other) return;
         this->data = other.data;
-        this->_length = other.data->length;
+        this->_length = other.data->_length;
         data->refcount++;
     }
    /**
@@ -173,7 +157,7 @@ public:
      * operator++ need to have meaningful implementations.
      * @param ran The range describing the contents of the array.
      */
-    Array(const basic_range<T> & ran) : _length(ran.last() - ran.first()),
+    Array_base(const basic_range<T> & ran) : _length(ran.last() - ran.first()),
             length(_length) {
         data = new Data(_length);
         data->_carray = (T*) calloc(_length, sizeof (T));
@@ -187,27 +171,9 @@ public:
      * Destructor. This will decrease the reference counter by one. If the
      * counter reaches zero, the backing data will be deleted.
      */
-    virtual ~Array() {
+    virtual ~Array_base() {
         data->refcount--;
         if (!data->refcount) delete data;
-    }
-
-    /**
-     * Returns an iterator over the elements. The returned iterator is not
-     * mutable. 
-     */
-    Iterator iterator() const {
-        return ArrayIterator<T > (*this);
-    }
-
-    /**
-     * Returns an mutable iterator over the elements. Elements can be modified
-     * by the iterator.
-     * @note Since Array does not support neither insertion nor deletion,
-     * insert() and remove() haven't been implemented.
-     */
-    MutableIterator mutableIterator() {
-        return ArrayIterator<T > (*this);
     }
 
     /**
@@ -237,8 +203,8 @@ public:
      * track their own reference count from now.
      * @return A new Array containing the same data as this Array.
      */
-    Array<T> copy() {
-        Array<T> toReturn(length);
+    Array_base<T> copy() {
+        Array_base<T> toReturn(length);
         arraycopy(*this,0,toReturn,0,length);
         return toReturn;
     }
@@ -251,7 +217,7 @@ public:
      * @param clientData %Any data to be passed to the FilterFunction
      * @return A new array containing only the filtered data
      */
-    Array<T> filter(FilterFunction func, Any& clientData) {
+    Array_base<T> filter(FilterFunction func, Any& clientData) {
         // I'm terribly sorry but we'll need to iterate twice over the Array...
         size_t newlength;
         for(idx_t i = 0; i < length; i++) {
@@ -276,12 +242,12 @@ public:
      * deleted.
      * @param other The other array from which to use the data pointer
      */
-    Array<T> & operator=(const Array<T> & other) {
+    Array_base<T> & operator=(const Array_base<T> & other) {
         if (this->data == other.data) return;
         this->data->refcount--;
         if (!this->data->refcount) delete this->data;
         this->data = other.data;
-        this->_length = other.data->length;
+        this->_length = other.data->_length;
         data->refcount++;
         return *this;
     }
@@ -324,11 +290,11 @@ public:
      * @param ran The range describing the slice.
      * @throw ArrayException if ran.last() > length
      */
-    Array<T> operator[](const range & ran) throw (Exception) {
+    Array_base<T> operator[](const range & ran) throw (Exception) {
         if (ran.first() < 0 || ran.last() > length)
             sthrow(ArrayException, "Array overflow");
 
-        Array<T> toReturn = Array<T>::fromPointer(ran.last() - ran.first(),
+        Array_base<T> toReturn = Array_base<T>::fromPointer(ran.last() - ran.first(),
                 data->_carray + ran.first());
         return toReturn;
     }
@@ -338,17 +304,17 @@ public:
      * @param ran The range describing the slice
      * @throw ArrayException if ran.last() > length
      */
-    const Array<T> operator[](const range & ran) const throw (Exception) {
+    const Array_base<T> operator[](const range & ran) const throw (Exception) {
         if (ran.first() < 0 || ran.last() > length)
             sthrow(ArrayException, "Array overflow");
 
-        Array<T> toReturn = Array<T>::fromPointer(ran.last() - ran.first(),
+        Array_base<T> toReturn = Array_base<T>::fromPointer(ran.last() - ran.first(),
                 data->_carray + ran.first());
         return toReturn;
     }
 
 #ifndef SYLPH_DOXYGEN
-private:
+protected:
 
     struct Data {
         explicit Data(size_t length) : Data::_length(length), refcount(1) {
@@ -356,29 +322,56 @@ private:
         }
 
         virtual ~Data() {
-            free(_carray);
+            delete _carray;
         }
         const int _length;
         T * _carray;
         suint refcount;
     } * data;
-    private int _length;
+    int _length;
 #endif
 };
 
-#ifndef SYLPH_DOXYGEN // doxygen shouldn't know about this *evilgrin*
+/**
+ * Array provides a safe array. It works the same like a c-style array (not like
+ * std::vector which can expand), but instead of overflowing, it throws an
+ * @c Exception whenever you try to access data outside its bounds. Therefore it
+ * also keeps track of its own length.
+ */
+template <class T>
+class Array : public Array_base<T> {
 
-template<>
-class Array<String> : public Array<String> {
-public:
+    explicit Array(std::size_t len) : Array_base<T>(len) {}
+    Array(const std::initializer_list<T> & il) : Array_base<T>(il) {}
 
-    static inline Array<String> fromPointer(std::size_t length, char ** orig) {
-        Array<String> ar(length);
-        for (int x = 0; x < length; x++)ar[x] = orig[x];
-        return ar;
+    Array(const T array[]) : Array_base<T>(array){
+    }
+    Array(const Array<T> & other) : Array_base<T>(other) {
+    }
+    Array(const basic_range<T> & ran) : Array_base<T>(ran) {
+    }
+    virtual ~Array() {}
+};
+
+template <class T>
+class Array<T*> : public Array_base<T> {
+    explicit Array<T*>(std::size_t len) : Array_base<T>(len) {}
+    Array<T*>(const std::initializer_list<T> & il) : Array_base<T*>(il) {}
+
+    Array<T*>(const T array[]) : Array_base<T*>(array){
+    }
+    Array<T*>(const Array<T> & other) : Array_base<T*>(other) {
+    }
+    Array<T*>(const basic_range<T> & ran) : Array_base<T*>(ran) {
+    }
+    virtual ~Array<T*>() {
+        for(idx_t i = 0; i < length; i++) {
+            delete *this[i];
+        }
     }
 };
-#endif
+
+S_CREATE_SYLPH_ITERATOR(Array)
 
 /**
  * Compares the two Arrays on equality. To Arrays compare equal when their

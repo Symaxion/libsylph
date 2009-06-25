@@ -4,6 +4,8 @@
 
 #include <new>
 
+/*< rev Object-1 >*/
+
 SYLPH_BEGIN_NAMESPACE
 
 void* Object::operator new( size_t size) {
