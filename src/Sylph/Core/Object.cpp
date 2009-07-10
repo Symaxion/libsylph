@@ -9,16 +9,18 @@
 SYLPH_BEGIN_NAMESPACE
 
 void* Object::operator new( size_t size) {
-    return GC_MALLOC(size);
+    void * toReturn  = GC_MALLOC(size);
+    if(!toReturn) throw std::bad_alloc();
+    else return toReturn;
 }
 
 void* Object::operator new( size_t size, GCPlacement gcp) {
-    if (gcp == UseGC)
-        return GC_MALLOC(size);
-    else if (gcp == PointerFreeGC)
-        return GC_MALLOC_ATOMIC(size);
-    else
-        return GC_MALLOC_UNCOLLECTABLE(size);
+    void * toReturn;
+    if(gcp == UseGC) toReturn = GC_MALLOC(size);
+    else if(gcp == PointerFreeGC) toReturn = GC_MALLOC_ATOMIC(size);
+    else toReturn = GC_MALLOC_UNCOLLECTABLE(size);
+    if(!toReturn) throw std::bad_alloc();
+    else return toReturn;
 }
 
 void* Object::operator new( size_t size, void *p) {

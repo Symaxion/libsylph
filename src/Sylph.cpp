@@ -1,6 +1,7 @@
 #include "Sylph.h"
 #include "Sylph/Core/Application.h"
 #include <gc.h>
+#include <new>
 #include "Sylph/Core/UncaughtExceptionHandler.h"
 
 #ifdef SYLPH_OS_MACOSX
@@ -27,9 +28,10 @@ int main(int argc, char * argv[]) {
 
 namespace Sylph {
 
-    template<class T> T * newgc(T & t) {
+    template<class T,class... Args> T * newgc(const Args...& args) {
         T * tr = GC_MALLOC(sizeof (T));
-        memcpy(*tr, &t, sizeof (T));
+        if(!tr) throw std::bad_alloc();
+        tr = new(tr) T(args...);
         GC_finalization_proc oldProc;
         void* oldData;
         void* base = GC_base((void *) tr);
@@ -51,7 +53,7 @@ namespace Sylph {
     }
 
     template<class T>
-    void deletegc( T * obj) {
+    void deletegc(const T * obj) {
         GC_FREE(obj);
     }
 }

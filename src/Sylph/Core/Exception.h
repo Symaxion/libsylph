@@ -11,14 +11,16 @@
 #include "Object.h"
 
 #include <exception>
-#include "String.h"
+#include "Primitives.h"
+#include "CurrentFunction.h"
 
 SYLPH_BEGIN_NAMESPACE
 
-/*
- * This class provides a ready-to-use interface for exception handling. Unlike
- * most exception classes, you should not extend this class. Instead, use
- * the <code>sthrow</code> keyword to throw an Exception, like this:
+/**
+ * This class provides a ready-to-use interface for exception handling. Several
+ * macros are provided to make using this Exception class easier. An example is
+ * the <code>sthrow()</code> macro, which is designed to replace the normal
+ * <code>throw</code> keywoard.
  * <pre>void Foo::foobar(const Bar & bar) {
  *     if(bar.myint &lt; 0)
  *        sthrow(IllegalArgumentException,
@@ -27,62 +29,61 @@ SYLPH_BEGIN_NAMESPACE
  *       // ...
  *     }
  * }</pre>
- * <code>sthrow</code> will ensure that a Sylph::Core::Exception is thrown, even
- * when it is not in scope.
- * <code>sthrow</code> also adds certain debug information, i.e. file and line
+ * <code>sthrow</code> adds certain debug information, i.e. file and line
  * numbers, if compilation with the debug flag (<code>-DSYLPH_DEBUG</code>) is
- * enabled. <p>
- * Note that in the example above, no class named
- * <code>IllegalArgumentException</code> actually exists. Instead, the name of
- * the Exception is stored in a String inside this class. Therefore, there are
- * no fixed Exception types, however, the following are recommended:
- * <ul>
- * <li> <code>ArrayException</code> -- A generic Exception thrown when trying
- * to access an item outside the bounds of an @c Array.</li>
- * <li> <code>FileException</code> -- A generic Exception thrown when a file is
- * is not of the supported type, e.g. a directory instead of a regular file.
- * When writing or reading from a file, throw an <code>IOException</code>
- * instead </li>
- * <li> <code>IllegalArgumentException</code> -- Similar to the
- * <code>IllegalStateException</code>, however, this Exception is meant
- * especially for arguments that do not conform to a given set of criteria,
- * where an <code>IllegalStateException</code> can also be thrown when certain
- * conditions, apart from arguments, are not met.</li>
- * <li> <code>IllegalStateException</code> -- The object on which to perform
- * the action is not in the right state, i.e. a variable does not have the right
- * value to perform te action.</li>
- * <li> <code>IOException</code> -- This Exception is thrown whenever an I/O
- * operation, such as a read or a write to a file, or establishing a network
- * connection, failed. </li>
- * <li> <code>NullPointerException</code> -- This Exception is thrown by the
- * <code>check_nullptr()</code> macro. Like it name says, it denotes the
- * dereference of a null (0) pointer. </li>
- * <li> <code>SerialisationException</code> -- This Exception is thrown by
- * @c Serializer s and @c Deserializer s when the type of the serialised object
- * and the destination don't match, or when the object could not be serialised
- * due to another Exception, such as an I/O error. </li>
- * <li> <code>TodoException</code> -- this Exception type denotes that the
- * operation itself is supported, but not yet implemented by the programmer,
- * a.k.a. LPS (Lazy Programmer Syndrome).
- * </li>
- * </ul>
+ * enabled. Therefore one should prefer <code>sthrow()</code> over <code>
+ * throw</code><p>
+ * To create your own Exception class, use the 
+ * <code>S_CREATE_EXCEPTION(</code><i>Name</i>)</code> macro. This will ensure
+ * that everything that is required is in your exception.  A new class with name
+ * '<i>Name</i>' will be created in the current scope. It extends
+ * Sylph::Exception, therefore you can catch all exceptions created with this
+ * macro through <code>catch(const Exception& ex)</code>. <p>
+ * Two other macros are defined as well, namely @c strace and @c straced. These
+ * allow you to add trace information to an Exception (i.e. the name of the
+ * current function). An example is given below:
+ * <pre>
+ * void foobar() {
+ *     try {
+ *        someDangerousFunction();
+ *     } strace;
+ * }
+ * </pre>
+ * <code>straced</code> works similar to <code>strace</code>, but only works
+ * when debug mode (<code>-DSYLPH_DEBUG</code>) is enabled.<p>
+ * Two other useful macros are defined, <code>if_nullptr()</code> and <code>
+ * check_nullptr()</code>. <code>if_nullptr()</code> works similar to a normal
+ * <code>if</code>, but the statements block is only executed when the pointer
+ * passed is <code>NULL</code>. However, this macro is more optimized than a
+ * normal if. <code>check_nullptr()</code> works similar, but instead of
+ * executing a block of code, it will immeadiately throw an
+ * NullPointerException.
  */
-class Exception : public virtual Object, public std::exception {
+class Exception : public std::exception {
 public:
     /**
      * Creates a new Exception. You should not use this directly, instead, use
      * <code>sthrow()</code>
+     * @param r The reason why this Exception got thrown.
+     * @param f The file this Exception got thrown in.
+     * @param l The line number on which this Exception got thrown.
      */
 
-    Exception(String n, String r = String(""), String f = String("unknown"),
+    Exception(const char * r = "", const char * f = "unknown",
             const unsigned int l = 0)
-    throw () : _name(n), _reason(r), _file(f), _line(l) {
+    throw () : _reason(r), _file(f), _line(l) {
     }
 
     /**
-     * Default destructor.
+     * Default destructor. Deletes all trace info.
      */
-    ~Exception() throw () {
+    virtual ~Exception() throw () {
+        TraceMessage * current = tracemsg;
+        while(current != NULL) {
+            TraceMessage * tmp = current;
+            current = tmp->next;
+            delete tmp;
+        }
     }
 
     /**
@@ -95,33 +96,121 @@ public:
     }
 
     /**
-     * Returns the name of this Exception. The name denotes the unique type of
-     * this Exception, and is used instead of subclassing. It is the first
-     * parameter to <code>sthrow()</code>
-     * @return The name of this Exception, as defined by <code>sthrow()</code>
+     * Returns the class name of this Exception. If you used the <code>
+     * S_CREATE_EXCEPTION(</code><i>name</i><code>)</code> macro, this will
+     * be automatically filled in for you. Otherwise you'll have to put in
+     * the name yourself. This is purely diagnostic information.
+     * @return The name of the class of this Exception.
      */
-    const String name() const throw () {
-        return _name;
+    virtual const char* name() const throw() {
+        return "Exception";
     }
-private:
-    const String _name;
-    const String _reason;
+
+    /**
+     * This function adds a message to the trace information inside this
+     * Exception. It can be useful to add the name of a function the Exception
+     * passes through (i.e. what <code>strace</code> does), or any other
+     * information you like to add to the Exception. This information is purely
+     * diagnostic.
+     * @param message The message to add in the traceinfo log.
+     */
+    void addTraceMessage(const char * message) const throw() {
+        if(tracemsg == NULL) {
+            tracemsg = new TraceMessage{message,NULL};
+        } else {
+            TraceMessage * current = tracemsg;
+            while(current->next != NULL) {
+                current = current->next;
+            }
+            current->next = new TraceMessage{message,NULL};
+        }
+    }
+
+    mutable struct TraceMessage {
+        mutable const char * message;
+        mutable TraceMessage * next;
+    } * tracemsg;
+protected:
+    const char * _reason;
 public:
 #ifndef SYLPH_DOXYGEN
-    const String _file;
+    const char * _file;
     const unsigned int _line;
 #endif
 };
 
+#define S_CREATE_EXCEPTION(Class) \
+class Class : public ::Sylph::Exception { \
+public: \
+    Class(const char * r = "", const char * f = "unknown", \
+            const unsigned int l = 0) \
+    throw () : _reason(r), _file(f), _line(l) { \
+    } \
+    virtual const char* name() const throw() {\
+        return #Class ; \
+    }\
+}
+
+/**
+ * A generic Exception when an error occurs with an Array. Examples of such
+ * errors are Array overflow or underflow, Array length too short or too long,
+ * ...
+ */
+S_CREATE_EXCEPTION(ArrayException);
+/**
+ * A genreric Exception which gets thrown whenever something goes wrong in the
+ * File class.
+ */
+S_CREATE_EXCEPTION(FileException);
+/**
+ * This is a generic exception for I/O errors. It can get thrown for example
+ * when a file doesn't exist, when a file can't be accessed, when an socket
+ * connection is down, etc...
+ */
+S_CREATE_EXCEPTION(IOException);
+/**
+ * Generic exception to flag an argument with an illegal state was passed to an
+ * function or method.
+ */
+S_CREATE_EXCEPTION(IllegalArgumentException);
+/**
+ * Generic exception to flag that a method is not supported in the current
+ * state of the object it is invoked on.
+ */
+S_CREATE_EXCEPTION(IllegalStateException);
+/**
+ * This Exception gets thrown when a pointer to <code>NULL</code> is passed to
+ * a function or method. It also gets automatically thrown by the <code>
+ * check_nullptr()</code> macro.
+ */
+S_CREATE_EXCEPTION(NullPointerException);
+/**
+ * This Exception gets thrown if there is a problem with serializing or
+ * deserializing an object.
+ */
+S_CREATE_EXCEPTION(SerializationException);
+
 SYLPH_END_NAMESPACE
 
+
 #ifdef SYLPH_DEBUG
-#define sthrow(__x, __r) throw Sylph::Exception(# __x, __r, __FILE__, __LINE__)
+#define sthrow(__x, __r) throw __x(__r, __FILE__, __LINE__)
 #else
-#define sthrow(__x, __r) throw Sylph::Exception(# __x, __r)
+#define sthrow(__x, __r) throw __x(__r)
 #endif
 
-#define if_nullptr(__x) if(__builtin_expect(!!(__x) == 0, 0))
+#define strace \
+catch(::Sylph::Exception& ex) { \
+    ex.addTraceMessage(S_CURRENT_FUNCTION); \
+    throw; \
+} do{} while(0)
+#ifdef SYLPH_DEBUG
+#define straced strace
+#else
+#define straced do{} while(0)
+#endif
+
+#define if_nullptr(__x) if(SYLPH_UNLIKELY(__x == 0))
 #define check_nullptr(__x) if_nullptr(__x) sthrow (NullPointerException, "Dereferenced a null pointer")
 #endif	/* EXCEPTION_H_ */
 

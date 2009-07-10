@@ -6,10 +6,12 @@
 
 # Macros
 TOP=`pwd`
-PLATFORM=GNU_C++0x-MacOSX
-TMPDIR=build/Debug/${PLATFORM}/tmp-packaging
+CND_PLATFORM=GNU_C++0x-MacOSX
+CND_CONF=Debug
+CND_DISTDIR=dist
+TMPDIR=build/${CND_CONF}/${CND_PLATFORM}/tmp-packaging
 TMPDIRNAME=tmp-packaging
-OUTPUT_PATH=dist/Debug/${PLATFORM}/libsylph.dylib
+OUTPUT_PATH=${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libsylph.dylib
 OUTPUT_BASENAME=libsylph.dylib
 PACKAGE_TOP_DIR=libsylph.dylib/
 
@@ -50,7 +52,7 @@ function copyFileToTmpDir
 
 # Setup
 cd "${TOP}"
-mkdir -p dist/Debug/${PLATFORM}/package
+mkdir -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/package
 rm -rf ${TMPDIR}
 mkdir -p ${TMPDIR}
 
@@ -62,9 +64,9 @@ copyFileToTmpDir "${OUTPUT_PATH}" "${TMPDIR}/${PACKAGE_TOP_DIR}lib/${OUTPUT_BASE
 
 # Generate tar file
 cd "${TOP}"
-rm -f dist/Debug/${PLATFORM}/package/libsylph.dylib.tar
+rm -f ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/package/libsylph.dylib.tar
 cd ${TMPDIR}
-tar -vcf ../../../../dist/Debug/${PLATFORM}/package/libsylph.dylib.tar *
+tar -vcf ../../../../${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/package/libsylph.dylib.tar *
 checkReturnCode
 
 # Cleanup

@@ -54,43 +54,37 @@
 <a name="l00049"></a><a class="code" href="namespace_sylph.html#392e3435758ffcbf741d6637f4695ed0a4af9fd92740c6e987fb58d30e8f0e3f">00049</a>     <a class="code" href="namespace_sylph.html#392e3435758ffcbf741d6637f4695ed0a4af9fd92740c6e987fb58d30e8f0e3f" title="When the object you create does not contain pointers, use this to speed up GC --...">PointerFreeGC</a> 
 <a name="l00052"></a>00052 };
 <a name="l00053"></a>00053 
-<a name="l00061"></a><a class="code" href="class_sylph_1_1_object.html">00061</a> <span class="keyword">class </span><a class="code" href="class_sylph_1_1_object.html" title="The root of all classes.">Object</a> {
-<a name="l00062"></a>00062 <span class="preprocessor">#ifndef SYLPH_DOXYGEN</span>
-<a name="l00063"></a>00063 <span class="preprocessor"></span><span class="keyword">public</span>:
-<a name="l00064"></a>00064     <a class="code" href="class_sylph_1_1_object.html" title="The root of all classes.">Object</a>();
-<a name="l00065"></a>00065     <span class="keyword">virtual</span> ~<a class="code" href="class_sylph_1_1_object.html" title="The root of all classes.">Object</a>();
-<a name="l00066"></a>00066     <span class="keywordtype">void</span>* operator new( <span class="keywordtype">size_t</span> size);
-<a name="l00067"></a>00067     <span class="keywordtype">void</span>* operator new( <span class="keywordtype">size_t</span> size, <a class="code" href="namespace_sylph.html#392e3435758ffcbf741d6637f4695ed0" title="Used for LibSylph&amp;#39;s garbage collection.">GCPlacement</a> gcp);
-<a name="l00068"></a>00068     <span class="keywordtype">void</span>* operator new( <span class="keywordtype">size_t</span> size, <span class="keywordtype">void</span> *p);
-<a name="l00069"></a>00069     <span class="keywordtype">void</span> operator delete( <span class="keywordtype">void</span>* obj);
-<a name="l00070"></a>00070     <span class="keywordtype">void</span> operator delete( <span class="keywordtype">void</span>*, <a class="code" href="namespace_sylph.html#392e3435758ffcbf741d6637f4695ed0" title="Used for LibSylph&amp;#39;s garbage collection.">GCPlacement</a>);
-<a name="l00071"></a>00071     <span class="keywordtype">void</span> operator delete( <span class="keywordtype">void</span>*, <span class="keywordtype">void</span>*);
-<a name="l00072"></a>00072 
-<a name="l00073"></a>00073     <span class="comment">// Arrays from Object are *never* gc'ed, and I recommend using Sylph::Array</span>
-<a name="l00074"></a>00074     <span class="comment">// instead. Maybe we should document this somewhere?</span>
-<a name="l00075"></a>00075     <span class="keywordtype">void</span>* operator new[](<span class="keywordtype">size_t</span> size);
-<a name="l00076"></a>00076     <span class="keywordtype">void</span>* operator new[](<span class="keywordtype">size_t</span> size, <span class="keywordtype">void</span> *p);
-<a name="l00077"></a>00077     <span class="keywordtype">void</span> operator delete[](<span class="keywordtype">void</span>* obj);
-<a name="l00078"></a>00078     <span class="keywordtype">void</span> operator delete[](<span class="keywordtype">void</span>*, <span class="keywordtype">void</span>*);
-<a name="l00079"></a>00079 
-<a name="l00080"></a>00080 <span class="keyword">private</span>:
-<a name="l00081"></a>00081     <span class="keyword">static</span> <span class="keywordtype">void</span> cleanup(<span class="keywordtype">void</span>* obj, <span class="keywordtype">void</span>* clientData);
-<a name="l00082"></a>00082 <span class="preprocessor">#endif</span>
-<a name="l00083"></a>00083 <span class="preprocessor"></span><span class="keyword">public</span>:
-<a name="l00084"></a>00084     <span class="keyword">enum</span> ObjectType {
-<a name="l00085"></a>00085         Normal,
-<a name="l00086"></a>00086         Wrapper,
-<a name="l00087"></a>00087         Serialized
-<a name="l00088"></a>00088     };
-<a name="l00089"></a>00089     <span class="keyword">virtual</span> ObjectType type() { <span class="keywordflow">return</span> Normal; }
-<a name="l00090"></a>00090     <span class="keyword">virtual</span> <span class="keywordtype">void</span> serialize(SerializationBuffer &amp;) <span class="keyword">const</span>;
-<a name="l00091"></a>00091     <span class="keyword">virtual</span> <span class="keywordtype">void</span> deserialize(SerializationBuffer &amp;);
-<a name="l00092"></a>00092  };
-<a name="l00093"></a>00093 
-<a name="l00094"></a>00094 SYLPH_END_NAMESPACE
-<a name="l00095"></a>00095 
-<a name="l00096"></a>00096 <span class="preprocessor">#endif  </span><span class="comment">/* OBJECT_H_ */</span>
-<a name="l00097"></a>00097 
+<a name="l00064"></a><a class="code" href="class_sylph_1_1_object.html">00064</a> <span class="keyword">class </span><a class="code" href="class_sylph_1_1_object.html" title="The root of all classes.">Object</a> {
+<a name="l00065"></a>00065 <span class="preprocessor">#ifndef SYLPH_DOXYGEN</span>
+<a name="l00066"></a>00066 <span class="preprocessor"></span><span class="keyword">public</span>:
+<a name="l00067"></a>00067     <a class="code" href="class_sylph_1_1_object.html" title="The root of all classes.">Object</a>();
+<a name="l00068"></a>00068     <span class="keyword">virtual</span> ~<a class="code" href="class_sylph_1_1_object.html" title="The root of all classes.">Object</a>();
+<a name="l00069"></a>00069     <span class="keywordtype">void</span>* operator new( <span class="keywordtype">size_t</span> size);
+<a name="l00070"></a>00070     <span class="keywordtype">void</span>* operator new( <span class="keywordtype">size_t</span> size, <a class="code" href="namespace_sylph.html#392e3435758ffcbf741d6637f4695ed0" title="Used for LibSylph&amp;#39;s garbage collection.">GCPlacement</a> gcp);
+<a name="l00071"></a>00071     <span class="keywordtype">void</span>* operator new( <span class="keywordtype">size_t</span> size, <span class="keywordtype">void</span> *p);
+<a name="l00072"></a>00072     <span class="keywordtype">void</span> operator delete( <span class="keywordtype">void</span>* obj);
+<a name="l00073"></a>00073     <span class="keywordtype">void</span> operator delete( <span class="keywordtype">void</span>*, <a class="code" href="namespace_sylph.html#392e3435758ffcbf741d6637f4695ed0" title="Used for LibSylph&amp;#39;s garbage collection.">GCPlacement</a>);
+<a name="l00074"></a>00074     <span class="keywordtype">void</span> operator delete( <span class="keywordtype">void</span>*, <span class="keywordtype">void</span>*);
+<a name="l00075"></a>00075 
+<a name="l00076"></a>00076     <span class="comment">// Arrays from Object are *never* gc'ed, and I recommend using Sylph::Array</span>
+<a name="l00077"></a>00077     <span class="comment">// instead. Maybe we should document this somewhere?</span>
+<a name="l00078"></a>00078     <span class="keywordtype">void</span>* operator new[](<span class="keywordtype">size_t</span> size);
+<a name="l00079"></a>00079     <span class="keywordtype">void</span>* operator new[](<span class="keywordtype">size_t</span> size, <span class="keywordtype">void</span> *p);
+<a name="l00080"></a>00080     <span class="keywordtype">void</span> operator delete[](<span class="keywordtype">void</span>* obj);
+<a name="l00081"></a>00081     <span class="keywordtype">void</span> operator delete[](<span class="keywordtype">void</span>*, <span class="keywordtype">void</span>*);
+<a name="l00082"></a>00082 
+<a name="l00083"></a>00083 <span class="keyword">private</span>:
+<a name="l00084"></a>00084     <span class="keyword">static</span> <span class="keywordtype">void</span> cleanup(<span class="keywordtype">void</span>* obj, <span class="keywordtype">void</span>* clientData);
+<a name="l00085"></a>00085 <span class="preprocessor">#endif</span>
+<a name="l00086"></a>00086 <span class="preprocessor"></span><span class="keyword">public</span>:
+<a name="l00092"></a>00092     <span class="keyword">virtual</span> <span class="keywordtype">void</span> serialize(SerializationBuffer &amp; buf) <span class="keyword">const</span>;
+<a name="l00098"></a>00098     <span class="keyword">virtual</span> <span class="keywordtype">void</span> deserialize(DeserializationBuffer &amp; buf);
+<a name="l00099"></a>00099 };
+<a name="l00100"></a>00100 
+<a name="l00101"></a>00101 SYLPH_END_NAMESPACE
+<a name="l00102"></a>00102 
+<a name="l00103"></a>00103 <span class="preprocessor">#endif  </span><span class="comment">/* OBJECT_H_ */</span>
+<a name="l00104"></a>00104 
 </pre></div></div>
 <hr size="1" class="unhidden"><address style="text-align: right;"><small>
 Documentation for LibSylph generated by&nbsp;<a href="http://www.doxygen.org/index.html">Doxygen</a> 1.5.8</small></address>

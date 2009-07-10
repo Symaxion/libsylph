@@ -59,7 +59,7 @@ SYLPH_BEGIN_NAMESPACE
      * </pre>
      * The syntax is very similar to that of the normal new operator.
      */
-     template<class T> T * newgc(const T & t);
+     template<class T,class... Args> T * newgc(const Args...& args);
      template<class T> void deletegc(const T * t);
      template<class T> void cleanupgc(void *obj, void *displ);
 SYLPH_END_NAMESPACE

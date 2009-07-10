@@ -53,10 +53,13 @@ enum GCPlacement {
 
 /**
  * The root of all classes. This class contains the overloaded new and delete
- * operators. All classes in LibSylph extend from this class. If you want your
- * class to communicate with LibSylph, or just if you want to let LibSylph's
+ * operators that use the builtin garbage collection. (Almost) all classes in
+ * LibSylph inherit from this class. If you want your class to communicate with
+ * certain LibSylph features, or just if you want to let LibSylph's
  * garbage collector manage dynamic allocation of your class, you should derive
- * from Object.
+ * from Object.<p>
+ * Note that arrays of Objects are <b>not</b> garbage collected. Instead, use
+ * Sylph::Array if you want a garbage collected, safe Array.
  */
 class Object {
 #ifndef SYLPH_DOXYGEN
@@ -81,14 +84,18 @@ private:
     static void cleanup(void* obj, void* clientData);
 #endif
 public:
-    enum ObjectType {
-        Normal,
-        Wrapper,
-        Serialized
-    };
-    virtual ObjectType type() { return Normal; }
-    virtual void serialize(SerializationBuffer &) const;
-    virtual void deserialize(SerializationBuffer &);
+    /**
+     * Tries to serialize this object to the given SerializationBuffer. The
+     * default implementation does nothing.
+     * @param buf a Buffer to serialize to.
+     */
+    virtual void serialize(SerializationBuffer & buf) const;
+    /**
+     * Tries to deserialize this object from the giver DeserializationBuffer.
+     * The default implmementation does nothing.
+     * @param buf a Buffer to deserialize from.
+     */
+    virtual void deserialize(DeserializationBuffer & buf);
 };
 
 SYLPH_END_NAMESPACE

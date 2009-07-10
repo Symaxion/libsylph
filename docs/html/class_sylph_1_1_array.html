@@ -24,81 +24,46 @@
   </div>
 </div>
 <div class="contents">
-<h1>Sylph::Array&lt; T &gt; Class Template Reference</h1><!-- doxytag: class="Sylph::Array" --><!-- doxytag: inherits="Iterable&lt; T &gt;" --><a class="el" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a> provides a safe array.  
+<h1>Sylph::Array&lt; T &gt; Class Template Reference</h1><!-- doxytag: class="Sylph::Array" --><!-- doxytag: inherits="Array_base&lt; T &gt;" --><a class="el" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a> provides a safe array.  
 <a href="#_details">More...</a>
 <p>
 <code>#include &lt;<a class="el" href="_array_8h-source.html">Sylph/Core/Array.h</a>&gt;</code>
 <p>
-Inherits <a class="el" href="class_sylph_1_1_iterable.html">Iterable&lt; T &gt;</a>.
+Inherits <a class="el" href="class_sylph_1_1_array__base.html">Array_base&lt; T &gt;</a>.
 <p>
 <div class="dynheader">
 Collaboration diagram for Sylph::Array&lt; T &gt;:</div>
 <div class="dynsection">
 <p><center><img src="class_sylph_1_1_array__coll__graph.png" border="0" usemap="#_sylph_1_1_array_3_01_t_01_4__coll__map" alt="Collaboration graph"></center>
 <map name="_sylph_1_1_array_3_01_t_01_4__coll__map">
-<area shape="rect" href="class_sylph_1_1_iterable.html" title="Sylph::Iterable\&lt; T \&gt;" alt="" coords="8,82,192,109"><area shape="rect" href="class_sylph_1_1_object.html" title="The root of all classes." alt="" coords="34,8,165,34"></map>
+<area shape="rect" href="class_sylph_1_1_array__base.html" title="Sylph::Array_base\&lt; T \&gt;" alt="" coords="8,85,226,111"><area shape="rect" href="class_sylph_1_1_object.html" title="The root of all classes." alt="" coords="52,7,182,34"></map>
 <center><font size="2">[<a href="graph_legend.html">legend</a>]</font></center></div>
 
 <p>
 <a href="class_sylph_1_1_array-members.html">List of all members.</a><table border="0" cellpadding="0" cellspacing="0">
 <tr><td></td></tr>
-<tr><td colspan="2"><br><h2>Classes</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">class &nbsp;</td><td class="memItemRight" valign="bottom"><b>ArrayIterator</b></td></tr>
-
 <tr><td colspan="2"><br><h2>Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sylph_1_1_array.html#d1641b1a577699a84a47c08ce0f99e21">Array</a> (std::size_t len)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Creates a new array with the given length.  <a href="#d1641b1a577699a84a47c08ce0f99e21"></a><br></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Creates an <a class="el" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a> with the specified length.  <a href="#d1641b1a577699a84a47c08ce0f99e21"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sylph_1_1_array.html#dbbad8c487665fd8b4b56a8677d7bca8">Array</a> (const std::initializer_list&lt; T &gt; &amp;il)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Creates an array from an initializer list.  <a href="#dbbad8c487665fd8b4b56a8677d7bca8"></a><br></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Creates an <a class="el" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a> from an intializer list.  <a href="#dbbad8c487665fd8b4b56a8677d7bca8"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sylph_1_1_array.html#8582a8da877dc5bb57baa2dfe1e88258">Array</a> (const T array[])</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Creates an array from a C-style array.  <a href="#8582a8da877dc5bb57baa2dfe1e88258"></a><br></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Creates an <a class="el" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a> from an existing C-style array.  <a href="#8582a8da877dc5bb57baa2dfe1e88258"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sylph_1_1_array.html#928ad30994a7f3cd7a9c26bfde51689d">Array</a> (const <a class="el" href="class_sylph_1_1_array.html">Array</a>&lt; T &gt; &amp;other)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Copy constructor.  <a href="#928ad30994a7f3cd7a9c26bfde51689d"></a><br></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Creates an <a class="el" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a> from another instance of the <a class="el" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a> class.  <a href="#928ad30994a7f3cd7a9c26bfde51689d"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sylph_1_1_array.html#6272731c791b129188873fd669a2ac93">Array</a> (const basic_range&lt; T &gt; &amp;ran)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Creates an array from a range.  <a href="#6272731c791b129188873fd669a2ac93"></a><br></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Creates an array from a range of items.  <a href="#6272731c791b129188873fd669a2ac93"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sylph_1_1_array.html#3d4530aa8417cbf35b7d67d75abb15a6">Array</a> (const T &amp;t)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Creates an <a class="el" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a> from a single item.  <a href="#3d4530aa8417cbf35b7d67d75abb15a6"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">virtual&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sylph_1_1_array.html#d4a67621f6f91387f75e50e9ef975bf7">~Array</a> ()</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Destructor.  <a href="#d4a67621f6f91387f75e50e9ef975bf7"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_sylph_1_1_iterator.html">Iterator</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sylph_1_1_array.html#260a5b521557e4b77db1c656089dbe81">iterator</a> () const </td></tr>
-
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Returns an iterator over the elements.  <a href="#260a5b521557e4b77db1c656089dbe81"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_sylph_1_1_iterator.html">MutableIterator</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sylph_1_1_array.html#b17fd8f0ae04a3810a975477f4af6fba">mutableIterator</a> ()</td></tr>
-
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Returns an mutable iterator over the elements.  <a href="#b17fd8f0ae04a3810a975477f4af6fba"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">T *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sylph_1_1_array.html#6f4b7a642f0548cd0c6097b54296e14d">carray</a> ()</td></tr>
-
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Returns a c-style array representing the contents of this <a class="el" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a>.  <a href="#6f4b7a642f0548cd0c6097b54296e14d"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">const T *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sylph_1_1_array.html#7710b1d662712fbdf10b7998b2040cd4">carray</a> () const </td></tr>
-
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Returns a c-style array representing the contents of this <a class="el" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a>.  <a href="#7710b1d662712fbdf10b7998b2040cd4"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_sylph_1_1_array.html">Array</a>&lt; T &gt; &amp;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sylph_1_1_array.html#c3e4f7e2ac9074863b6b94856bd79622">operator=</a> (const <a class="el" href="class_sylph_1_1_array.html">Array</a>&lt; T &gt; &amp;other)</td></tr>
-
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Swaps the data pointer of this <a class="el" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a> with the other <a class="el" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a>.  <a href="#c3e4f7e2ac9074863b6b94856bd79622"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">T &amp;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sylph_1_1_array.html#9976e4486a5e539fc04b39756e67c71e">operator[]</a> (std::sidx_t idx)  throw (Exception)</td></tr>
-
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Used for accessing the Array's contents.  <a href="#9976e4486a5e539fc04b39756e67c71e"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">const T &amp;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sylph_1_1_array.html#563bf3a6b4239d551df7bdb6df48a640">operator[]</a> (std::sidx_t idx) const   throw (Exception)</td></tr>
-
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">This is the <code>const</code> version of T&amp; operator[] .  <a href="#563bf3a6b4239d551df7bdb6df48a640"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_sylph_1_1_array.html">Array</a>&lt; T &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sylph_1_1_array.html#c621cb5748d4fef484a83b91a6e72ece">operator[]</a> (const range &amp;ran)  throw (Exception)</td></tr>
-
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Slices the array and returns the subarray.  <a href="#c621cb5748d4fef484a83b91a6e72ece"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">const <a class="el" href="class_sylph_1_1_array.html">Array</a>&lt; T &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sylph_1_1_array.html#a1221040e56ad8a7ed7e0e4d6af61ea2">operator[]</a> (const range &amp;ran) const   throw (Exception)</td></tr>
-
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Const-version of <a class="el" href="class_sylph_1_1_array.html#c621cb5748d4fef484a83b91a6e72ece" title="Slices the array and returns the subarray.">operator[](const range &amp;)</a> .  <a href="#a1221040e56ad8a7ed7e0e4d6af61ea2"></a><br></td></tr>
-<tr><td colspan="2"><br><h2>Static Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_sylph_1_1_array.html">Array</a>&lt; T &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sylph_1_1_array.html#71636c733d300bf785b95338ebf317ec">fromPointer</a> (std::size_t <a class="el" href="class_sylph_1_1_array.html#1581bf7c3f6a391f0f7f19f6e3eda86e">length</a>, T *orig)</td></tr>
-
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Creates an Array&lt;T&gt; from a pointer to T and a length.  <a href="#71636c733d300bf785b95338ebf317ec"></a><br></td></tr>
-<tr><td colspan="2"><br><h2>Public Attributes</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">const int &amp;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sylph_1_1_array.html#1581bf7c3f6a391f0f7f19f6e3eda86e">length</a></td></tr>
-
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">The length of the array.  <a href="#1581bf7c3f6a391f0f7f19f6e3eda86e"></a><br></td></tr>
 </table>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
 <h3>template&lt;class T&gt;<br>
@@ -106,7 +71,9 @@ Collaboration diagram for Sylph::Array&lt; T &gt;:</div>
 
 <a class="el" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a> provides a safe array. 
 <p>
-It works the same like a c-style array (not like std::vector which can expand), but instead of overflowing, it throws an <code>Exception</code> whenever you try to access data outside its bounds. Therefore it also keeps track of its own length. <hr><h2>Constructor &amp; Destructor Documentation</h2>
+It works the same like a c-style array (not like std::vector which can expand), but instead of overflowing, it throws an <code><a class="el" href="class_sylph_1_1_exception.html" title="This class provides a ready-to-use interface for exception handling.">Exception</a></code> whenever you try to access data outside its bounds. Therefore it also keeps track of its own length. <p>
+The <a class="el" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a> class provided here is reference-counted, which means it's perfectly safe and even recommended to pass it by value instead of by reference or by pointer. This way, the <a class="el" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a> acts more like a builtin type and does not obstruct the workflow. <p>
+Please note that most constructors copy the contents into the array, which means that unless the type used is easy to copy, using the specialized array-to-pointer ( <a class="el" href="class_sylph_1_1_array_3_01_t_01_5_01_4.html" title="Specialisation of the Array class for pointers.">Array&lt;T*&gt;</a> ) is prefered. <hr><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" name="d1641b1a577699a84a47c08ce0f99e21"></a><!-- doxytag: member="Sylph::Array::Array" ref="d1641b1a577699a84a47c08ce0f99e21" args="(std::size_t len)" -->
 <div class="memitem">
 <div class="memproto">
@@ -126,11 +93,11 @@ template&lt;class T&gt; </div>
 <div class="memdoc">
 
 <p>
-Creates a new array with the given length. 
+Creates an <a class="el" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a> with the specified length. 
 <p>
-A new instance of the reference counted data is created, its refcount set to 1. The memory gets zeroed, so it is perfectly safe to compare with 0 to see if a particular entry in the array has been initialized. <dl compact><dt><b>Parameters:</b></dt><dd>
+A new instance of the reference counted data is created, its reference count set to 1 and the internal C array is allocated to have the specified length. <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>len</em>&nbsp;</td><td>the length of the new <a class="el" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a>. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>len</em>&nbsp;</td><td>The length of the new <a class="el" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a>. </td></tr>
   </table>
 </dl>
 
@@ -155,11 +122,11 @@ template&lt;class T&gt; </div>
 <div class="memdoc">
 
 <p>
-Creates an array from an initializer list. 
+Creates an <a class="el" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a> from an intializer list. 
 <p>
-The length is the same as the length of the initializer list. A new instance of the reference counted data is created, its refcount set to 1. <dl compact><dt><b>Parameters:</b></dt><dd>
+This constructor allows the easier, more familiar syntax of <a class="el" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a> creation, but requires C++0x. Using this constructor, arrays can be initialized as following: <pre>Array&lt;int&gt; myarr = {5,4,7,9};</pre> A new instance of the reference counted data is created, the reference count is set to 1, the length is set to the length of the intializer list, and all data is copied into a newly allocated C array. <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>il</em>&nbsp;</td><td>the initializer list </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>il</em>&nbsp;</td><td>The initializer_list used to create the array. </td></tr>
   </table>
 </dl>
 
@@ -184,11 +151,12 @@ template&lt;class T&gt; </div>
 <div class="memdoc">
 
 <p>
-Creates an array from a C-style array. 
+Creates an <a class="el" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a> from an existing C-style array. 
 <p>
-The contents of the array are copied into this array. The original array will not be modified. The length is the same as the length of the C array. A new instance of the reference counted data is created, its refcount set to 1. <dl compact><dt><b>Parameters:</b></dt><dd>
+Note that you can only pass a true array, i.e. you cannot pass a pointer that acts as an array. If you only have a pointer, you'll have to initialize using Array::fromPointer(size_t, length) . <p>
+A new instance of the reference counted data is created, the reference count is set to 1, the length is set to the length of the <a class="el" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a>, all data is copied into a newly allocated C array with the same length as the original array. The original array remains unmodified. <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>array</em>&nbsp;</td><td>the c-style array </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>array</em>&nbsp;</td><td>A traditional, C-style array to create this <a class="el" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a> from. </td></tr>
   </table>
 </dl>
 
@@ -213,11 +181,11 @@ template&lt;class T&gt; </div>
 <div class="memdoc">
 
 <p>
-Copy constructor. 
+Creates an <a class="el" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a> from another instance of the <a class="el" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a> class. 
 <p>
-As <a class="el" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a> is reference-counted, it will just copy the pointer to the internal reference and increase the counter by 1. <dl compact><dt><b>Parameters:</b></dt><dd>
+The data is not copied, instead, the pointer to the refernce counted data will be set to the reference counted data of the other <a class="el" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a>, and the reference count will increase by 1. Other fields of the reference counted data remain unmodified. <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>other</em>&nbsp;</td><td>A reference to the other <a class="el" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a>. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>other</em>&nbsp;</td><td>An other <a class="el" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a> from which to use the reference counted data. </td></tr>
   </table>
 </dl>
 
@@ -242,12 +210,42 @@ template&lt;class T&gt; </div>
 <div class="memdoc">
 
 <p>
-Creates an array from a range. 
+Creates an array from a range of items. 
 <p>
-The following syntax <pre> Array&lt;int&gt;(range(X, Y)); </pre> is just shorthand for <pre>Array&lt;int&gt;(Y-X) arr;
- for(int i = X; i &lt; Y; i++) arr[i]=X+i;</pre> A new shared data pointer gets created. Length is equal to ran.last() - ran.first() . In order for this constructor to be useful, operator&lt; and operator++ need to have meaningful implementations. <dl compact><dt><b>Parameters:</b></dt><dd>
+Every item within the range will be added to the array. This is most useful for integral types, as other types usually don't support the required semantics.<p>
+A new instance of the reference counted data is created, the reference count is set to 1, the length is set to <code>ran.last() - ran.first() </code>, a new C-style array with this length will be allocated. <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>ran</em>&nbsp;</td><td>The range describing the contents of the array. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>ran</em>&nbsp;</td><td>a range class that specifies the lower and upper boundaries. </td></tr>
+  </table>
+</dl>
+
+</div>
+</div><p>
+<a class="anchor" name="3d4530aa8417cbf35b7d67d75abb15a6"></a><!-- doxytag: member="Sylph::Array::Array" ref="3d4530aa8417cbf35b7d67d75abb15a6" args="(const T &amp;t)" -->
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_sylph_1_1_array.html">Sylph::Array</a>&lt; T &gt;::<a class="el" href="class_sylph_1_1_array.html">Array</a>           </td>
+          <td>(</td>
+          <td class="paramtype">const T &amp;&nbsp;</td>
+          <td class="paramname"> <em>t</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Creates an <a class="el" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a> from a single item. 
+<p>
+This is useful for implicit conversions, as it allows a single instance of a class to be passed as an <a class="el" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a> of that class with length 1. <p>
+A new instance of the reference counted data is created, the reference count set to 1, the length is set to 1, and a new C-style array with length 1 is allocated. The object is copied into this array, the original object remains unmodified. <dl compact><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>t</em>&nbsp;</td><td>An object to create a length-1 array from. </td></tr>
   </table>
 </dl>
 
@@ -273,329 +271,7 @@ template&lt;class T&gt; </div>
 <p>
 Destructor. 
 <p>
-This will decrease the reference counter by one. If the counter reaches zero, the backing data will be deleted. 
-</div>
-</div><p>
-<hr><h2>Member Function Documentation</h2>
-<a class="anchor" name="7710b1d662712fbdf10b7998b2040cd4"></a><!-- doxytag: member="Sylph::Array::carray" ref="7710b1d662712fbdf10b7998b2040cd4" args="() const " -->
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;class T&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">const T* <a class="el" href="class_sylph_1_1_array.html">Sylph::Array</a>&lt; T &gt;::carray           </td>
-          <td>(</td>
-          <td class="paramname">          </td>
-          <td>&nbsp;)&nbsp;</td>
-          <td> const<code> [inline]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-Returns a c-style array representing the contents of this <a class="el" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a>. 
-<p>
-The array returned is not a copy of this array, in fact, changes to the returned array are reflected in this <a class="el" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a>. This version returns a const c-style array and is used when this <a class="el" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a> is const. 
-</div>
-</div><p>
-<a class="anchor" name="6f4b7a642f0548cd0c6097b54296e14d"></a><!-- doxytag: member="Sylph::Array::carray" ref="6f4b7a642f0548cd0c6097b54296e14d" args="()" -->
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;class T&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">T* <a class="el" href="class_sylph_1_1_array.html">Sylph::Array</a>&lt; T &gt;::carray           </td>
-          <td>(</td>
-          <td class="paramname">          </td>
-          <td>&nbsp;)&nbsp;</td>
-          <td><code> [inline]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-Returns a c-style array representing the contents of this <a class="el" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a>. 
-<p>
-The array returned is not a copy of this array, in fact, changes to the returned array are reflected in this <a class="el" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a>. 
-</div>
-</div><p>
-<a class="anchor" name="71636c733d300bf785b95338ebf317ec"></a><!-- doxytag: member="Sylph::Array::fromPointer" ref="71636c733d300bf785b95338ebf317ec" args="(std::size_t length, T *orig)" -->
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;class T&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">static <a class="el" href="class_sylph_1_1_array.html">Array</a>&lt;T&gt; <a class="el" href="class_sylph_1_1_array.html">Sylph::Array</a>&lt; T &gt;::fromPointer           </td>
-          <td>(</td>
-          <td class="paramtype">std::size_t&nbsp;</td>
-          <td class="paramname"> <em>length</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">T *&nbsp;</td>
-          <td class="paramname"> <em>orig</em></td><td>&nbsp;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td><td><code> [inline, static]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-Creates an Array&lt;T&gt; from a pointer to T and a length. 
-<p>
-The new array will have the length specified in <code>length</code>. The original array will not be modified, the contents are copied. No bounds-checking is done, therefore, use this function at your own responsability! <dl compact><dt><b>Parameters:</b></dt><dd>
-  <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>length</em>&nbsp;</td><td>The length of the original C array </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>orig</em>&nbsp;</td><td>The original C array, supplied as a pointer. </td></tr>
-  </table>
-</dl>
-
-</div>
-</div><p>
-<a class="anchor" name="260a5b521557e4b77db1c656089dbe81"></a><!-- doxytag: member="Sylph::Array::iterator" ref="260a5b521557e4b77db1c656089dbe81" args="() const " -->
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;class T&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="class_sylph_1_1_iterator.html">Iterator</a> <a class="el" href="class_sylph_1_1_array.html">Sylph::Array</a>&lt; T &gt;::iterator           </td>
-          <td>(</td>
-          <td class="paramname">          </td>
-          <td>&nbsp;)&nbsp;</td>
-          <td> const<code> [inline, virtual]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-Returns an iterator over the elements. 
-<p>
-The returned iterator is not mutable. 
-<p>Implements <a class="el" href="class_sylph_1_1_iterable.html#d0c7484f2fe6374cae774bee2fa28c94">Sylph::Iterable&lt; T &gt;</a>.</p>
-
-</div>
-</div><p>
-<a class="anchor" name="b17fd8f0ae04a3810a975477f4af6fba"></a><!-- doxytag: member="Sylph::Array::mutableIterator" ref="b17fd8f0ae04a3810a975477f4af6fba" args="()" -->
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;class T&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="class_sylph_1_1_iterator.html">MutableIterator</a> <a class="el" href="class_sylph_1_1_array.html">Sylph::Array</a>&lt; T &gt;::mutableIterator           </td>
-          <td>(</td>
-          <td class="paramname">          </td>
-          <td>&nbsp;)&nbsp;</td>
-          <td><code> [inline, virtual]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-Returns an mutable iterator over the elements. 
-<p>
-Elements can be modified by the iterator. <dl class="user" compact><dt><b>Note:</b></dt><dd>Since <a class="el" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a> does not support neither insertion nor deletion, insert() and remove() haven't been implemented. </dd></dl>
-
-<p>Implements <a class="el" href="class_sylph_1_1_iterable.html#af44958049f0415e530b0e5a525493cd">Sylph::Iterable&lt; T &gt;</a>.</p>
-
-</div>
-</div><p>
-<a class="anchor" name="c3e4f7e2ac9074863b6b94856bd79622"></a><!-- doxytag: member="Sylph::Array::operator=" ref="c3e4f7e2ac9074863b6b94856bd79622" args="(const Array&lt; T &gt; &amp;other)" -->
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;class T&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="class_sylph_1_1_array.html">Array</a>&lt;T&gt;&amp; <a class="el" href="class_sylph_1_1_array.html">Sylph::Array</a>&lt; T &gt;::operator=           </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="class_sylph_1_1_array.html">Array</a>&lt; T &gt; &amp;&nbsp;</td>
-          <td class="paramname"> <em>other</em>          </td>
-          <td>&nbsp;)&nbsp;</td>
-          <td><code> [inline]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-Swaps the data pointer of this <a class="el" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a> with the other <a class="el" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a>. 
-<p>
-The refcount for the current data pointer gets decreased, the refcount for the data pointer of the other array gets increased. In case the this Array's original data pointer's refcount reaches zero, the original data is deleted. <dl compact><dt><b>Parameters:</b></dt><dd>
-  <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>other</em>&nbsp;</td><td>The other array from which to use the data pointer </td></tr>
-  </table>
-</dl>
-
-</div>
-</div><p>
-<a class="anchor" name="a1221040e56ad8a7ed7e0e4d6af61ea2"></a><!-- doxytag: member="Sylph::Array::operator[]" ref="a1221040e56ad8a7ed7e0e4d6af61ea2" args="(const range &amp;ran) const " -->
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;class T&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">const <a class="el" href="class_sylph_1_1_array.html">Array</a>&lt;T&gt; <a class="el" href="class_sylph_1_1_array.html">Sylph::Array</a>&lt; T &gt;::operator[]           </td>
-          <td>(</td>
-          <td class="paramtype">const range &amp;&nbsp;</td>
-          <td class="paramname"> <em>ran</em>          </td>
-          <td>&nbsp;)&nbsp;</td>
-          <td> const  throw (Exception)<code> [inline]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-Const-version of <a class="el" href="class_sylph_1_1_array.html#c621cb5748d4fef484a83b91a6e72ece" title="Slices the array and returns the subarray.">operator[](const range &amp;)</a> . 
-<p>
-<dl compact><dt><b>Parameters:</b></dt><dd>
-  <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>ran</em>&nbsp;</td><td>The range describing the slice </td></tr>
-  </table>
-</dl>
-<dl compact><dt><b>Exceptions:</b></dt><dd>
-  <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>ArrayException</em>&nbsp;</td><td>if ran.last() &gt; length </td></tr>
-  </table>
-</dl>
-
-</div>
-</div><p>
-<a class="anchor" name="c621cb5748d4fef484a83b91a6e72ece"></a><!-- doxytag: member="Sylph::Array::operator[]" ref="c621cb5748d4fef484a83b91a6e72ece" args="(const range &amp;ran)" -->
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;class T&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="class_sylph_1_1_array.html">Array</a>&lt;T&gt; <a class="el" href="class_sylph_1_1_array.html">Sylph::Array</a>&lt; T &gt;::operator[]           </td>
-          <td>(</td>
-          <td class="paramtype">const range &amp;&nbsp;</td>
-          <td class="paramname"> <em>ran</em>          </td>
-          <td>&nbsp;)&nbsp;</td>
-          <td>  throw (Exception)<code> [inline]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-Slices the array and returns the subarray. 
-<p>
-E.g. : <pre><a class="el" href="class_sylph_1_1_array.html">Array&lt;String&gt;</a> subarr = myarr[range(5,8)]</pre> <code>subarr</code> now contains the values of <code>myarr</code>[5] to <code>myarr</code>[8] . Please note that the subarray contains a copy of the original. <dl compact><dt><b>Parameters:</b></dt><dd>
-  <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>ran</em>&nbsp;</td><td>The range describing the slice. </td></tr>
-  </table>
-</dl>
-<dl compact><dt><b>Exceptions:</b></dt><dd>
-  <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>ArrayException</em>&nbsp;</td><td>if ran.last() &gt; length </td></tr>
-  </table>
-</dl>
-
-</div>
-</div><p>
-<a class="anchor" name="563bf3a6b4239d551df7bdb6df48a640"></a><!-- doxytag: member="Sylph::Array::operator[]" ref="563bf3a6b4239d551df7bdb6df48a640" args="(std::sidx_t idx) const " -->
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;class T&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">const T&amp; <a class="el" href="class_sylph_1_1_array.html">Sylph::Array</a>&lt; T &gt;::operator[]           </td>
-          <td>(</td>
-          <td class="paramtype">std::sidx_t&nbsp;</td>
-          <td class="paramname"> <em>idx</em>          </td>
-          <td>&nbsp;)&nbsp;</td>
-          <td> const  throw (Exception)<code> [inline]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-This is the <code>const</code> version of T&amp; operator[] . 
-<p>
-Its behaviour is identical to that of c-style const arrays, but throws an exception instead of overflowing or causing segfaults. <dl compact><dt><b>Parameters:</b></dt><dd>
-  <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>idx</em>&nbsp;</td><td>the index in the array from which to return an element </td></tr>
-  </table>
-</dl>
-<dl compact><dt><b>Exceptions:</b></dt><dd>
-  <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>ArrayException</em>&nbsp;</td><td>if <code>idx &gt; length</code> </td></tr>
-  </table>
-</dl>
-
-</div>
-</div><p>
-<a class="anchor" name="9976e4486a5e539fc04b39756e67c71e"></a><!-- doxytag: member="Sylph::Array::operator[]" ref="9976e4486a5e539fc04b39756e67c71e" args="(std::sidx_t idx)" -->
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;class T&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">T&amp; <a class="el" href="class_sylph_1_1_array.html">Sylph::Array</a>&lt; T &gt;::operator[]           </td>
-          <td>(</td>
-          <td class="paramtype">std::sidx_t&nbsp;</td>
-          <td class="paramname"> <em>idx</em>          </td>
-          <td>&nbsp;)&nbsp;</td>
-          <td>  throw (Exception)<code> [inline]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-Used for accessing the Array's contents. 
-<p>
-Its behaviour is identical to that of c-style arrays, but throws an exception instead of overflowing or causing segfaults. <dl compact><dt><b>Parameters:</b></dt><dd>
-  <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>idx</em>&nbsp;</td><td>the index in the array from which to return an element </td></tr>
-  </table>
-</dl>
-<dl compact><dt><b>Exceptions:</b></dt><dd>
-  <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>ArrayException</em>&nbsp;</td><td>if <code>idx &gt; length</code> </td></tr>
-  </table>
-</dl>
-
-</div>
-</div><p>
-<hr><h2>Member Data Documentation</h2>
-<a class="anchor" name="1581bf7c3f6a391f0f7f19f6e3eda86e"></a><!-- doxytag: member="Sylph::Array::length" ref="1581bf7c3f6a391f0f7f19f6e3eda86e" args="" -->
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;class T&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">const int&amp; <a class="el" href="class_sylph_1_1_array.html">Sylph::Array</a>&lt; T &gt;::<a class="el" href="class_sylph_1_1_array.html#1581bf7c3f6a391f0f7f19f6e3eda86e">length</a>          </td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-The length of the array. 
-<p>
-This variable is 1-based, while the array itself is 0-based, i.e. if length == N the highest entry in this array is N-1. E.g if array.length == 5, then the higest entry is array[4] 
+Reduces the reference count by 1. If the reference count reaches 0, the internal backing data will be destroyed. 
 </div>
 </div><p>
 </div>

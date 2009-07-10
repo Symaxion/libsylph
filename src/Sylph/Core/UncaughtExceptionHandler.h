@@ -12,7 +12,7 @@
 #include "Exception.h"
 #include "Application.h"
 
-SYLPH_START_NAMESPACE(Core)
+SYLPH_BEGIN_NAMESPACE
 
 SYLPH_PUBLIC
 
@@ -20,7 +20,7 @@ class UncaughtExceptionHandler : public Object {
 public:
     UncaughtExceptionHandler() {}
     virtual ~UncaughtExceptionHandler() {}
-    virtual void handle(Exception & ex) const = 0;
+    virtual void handle(const Exception & ex) const = 0;
 public:
 #ifdef SYLPH_DEBUG
     static UncaughtExceptionHandler * handler = new DebugUncaughtExceptionHandler;
@@ -31,14 +31,14 @@ public:
 
 static UncaughtExceptionHandler UncaughtExceptionHandler::handler;
 
-class DefaultUncaughtExceptionHandler : public virtual UncaughtExceptionHandler {
-    void handle(Exception & ex);
+class DefaultUncaughtExceptionHandler : public UncaughtExceptionHandler {
+    void handle(const Exception & ex) const;
 };
 
-class DebugUncaughtExceptionHandler : public virtual UncaughtExceptionHandler {
-    void handle(Exception & ex);
+class DebugUncaughtExceptionHandler : public UncaughtExceptionHandler {
+    void handle(const Exception & ex) const;
 };
-SYLPH_END_NAMESPACE(Core)
+SYLPH_END_NAMESPACE
 
 #endif	/* _UNCAUGHTEXCEPTIONHANDLER_H */
 

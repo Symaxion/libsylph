@@ -38,12 +38,12 @@
 <a name="l00018"></a>00018 <span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;
 <a name="l00019"></a>00019 <span class="keyword">class </span>basic_range {
 <a name="l00020"></a>00020 <span class="keyword">public</span>:
-<a name="l00021"></a>00021     <span class="keyword">inline</span> range(T first, T last) {
+<a name="l00021"></a>00021     <span class="keyword">inline</span> basic_range(T first, T last) {
 <a name="l00022"></a>00022         <span class="keywordflow">if</span>(first&gt;last) std::swap(first,last);
 <a name="l00023"></a>00023         _first = first;
 <a name="l00024"></a>00024         _last = last;
 <a name="l00025"></a>00025     }
-<a name="l00026"></a>00026     <span class="keyword">inline</span> <span class="keyword">virtual</span> ~range() {}
+<a name="l00026"></a>00026     <span class="keyword">inline</span> <span class="keyword">virtual</span> ~basic_range() {}
 <a name="l00027"></a>00027     <span class="keyword">inline</span> T first() { <span class="keywordflow">return</span> _first; }
 <a name="l00028"></a>00028     <span class="keyword">inline</span> T last() { <span class="keywordflow">return</span> _last; }
 <a name="l00029"></a>00029 <span class="keyword">private</span>:

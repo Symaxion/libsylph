@@ -41,23 +41,25 @@
 <a name="l00044"></a><a class="code" href="namespace_sylph.html#8e3a8cf0fd1c1cf417e7834d2a473dc4a9161825e0da102c3df69131910396c8">00044</a>         <a class="code" href="namespace_sylph.html#8e3a8cf0fd1c1cf417e7834d2a473dc4a9161825e0da102c3df69131910396c8" title="AppType on Mac OS X that works similar to S_APPTYPE_FHS .">S_APPTYPE_MACOS_FHS</a>, 
 <a name="l00050"></a><a class="code" href="namespace_sylph.html#8e3a8cf0fd1c1cf417e7834d2a473dc4b4c98be2edbe429e3758f36dac08dc46">00050</a>         <a class="code" href="namespace_sylph.html#8e3a8cf0fd1c1cf417e7834d2a473dc4b4c98be2edbe429e3758f36dac08dc46" title="Default AppType on Windows.">S_APPTYPE_WINDOWS</a> 
 <a name="l00053"></a>00053     };
-<a name="l00062"></a>00062      <span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt; T * newgc(T &amp; t);
-<a name="l00063"></a>00063 SYLPH_END_NAMESPACE
-<a name="l00064"></a>00064 
-<a name="l00065"></a>00065 <span class="preprocessor">#ifndef SYLPH_NO_SYLPHMAIN</span>
-<a name="l00066"></a>00066 <span class="preprocessor"></span><span class="preprocessor">#ifdef SYLPH_OS_MACOSX</span>
-<a name="l00067"></a>00067 <span class="preprocessor"></span><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> * argv[], <span class="keywordtype">char</span> * envp[], <span class="keywordtype">char</span> * apple[]);
-<a name="l00068"></a>00068 <span class="preprocessor">#else</span>
-<a name="l00069"></a>00069 <span class="preprocessor"></span><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> * argv[]);
-<a name="l00070"></a>00070 <span class="preprocessor">#endif</span>
-<a name="l00071"></a>00071 <span class="preprocessor"></span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> SylphInit(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> * argv[], <span class="keywordtype">char</span> * apple[]) {
-<a name="l00072"></a>00072     Sylph::Application::init(argc, argv, apple, Sylph::APP_TYPE);
-<a name="l00073"></a>00073 }
-<a name="l00074"></a>00074 <span class="keywordtype">int</span> SylphMain(<a class="code" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Sylph::Array&lt;Sylph::String&gt;</a> &amp; argv);
-<a name="l00075"></a>00075 <span class="preprocessor">#endif</span>
-<a name="l00076"></a>00076 <span class="preprocessor"></span>
-<a name="l00077"></a>00077 <span class="preprocessor">#endif  </span><span class="comment">/* _SYLPH_H */</span>
-<a name="l00078"></a>00078 
+<a name="l00062"></a>00062      <span class="keyword">template</span>&lt;<span class="keyword">class </span>T,<span class="keyword">class</span>... Args&gt; T * newgc(<span class="keyword">const</span> Args...&amp; args);
+<a name="l00063"></a>00063      <span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt; <span class="keywordtype">void</span> deletegc(<span class="keyword">const</span> T * t);
+<a name="l00064"></a>00064      <span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt; <span class="keywordtype">void</span> cleanupgc(<span class="keywordtype">void</span> *obj, <span class="keywordtype">void</span> *displ);
+<a name="l00065"></a>00065 SYLPH_END_NAMESPACE
+<a name="l00066"></a>00066 
+<a name="l00067"></a>00067 <span class="preprocessor">#ifndef SYLPH_NO_SYLPHMAIN</span>
+<a name="l00068"></a>00068 <span class="preprocessor"></span><span class="preprocessor">#ifdef SYLPH_OS_MACOSX</span>
+<a name="l00069"></a>00069 <span class="preprocessor"></span><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> * argv[], <span class="keywordtype">char</span> * envp[], <span class="keywordtype">char</span> * apple[]);
+<a name="l00070"></a>00070 <span class="preprocessor">#else</span>
+<a name="l00071"></a>00071 <span class="preprocessor"></span><span class="keywordtype">int</span> main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> * argv[]);
+<a name="l00072"></a>00072 <span class="preprocessor">#endif</span>
+<a name="l00073"></a>00073 <span class="preprocessor"></span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> SylphInit(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> * argv[], <span class="keywordtype">char</span> * apple[]) {
+<a name="l00074"></a>00074     Sylph::Application::init(argc, argv, apple, Sylph::APP_TYPE);
+<a name="l00075"></a>00075 }
+<a name="l00076"></a>00076 <span class="keywordtype">int</span> SylphMain(<a class="code" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Sylph::Array&lt;Sylph::String&gt;</a> &amp; argv);
+<a name="l00077"></a>00077 <span class="preprocessor">#endif</span>
+<a name="l00078"></a>00078 <span class="preprocessor"></span>
+<a name="l00079"></a>00079 <span class="preprocessor">#endif  </span><span class="comment">/* _SYLPH_H */</span>
+<a name="l00080"></a>00080 
 </pre></div></div>
 <hr size="1" class="unhidden"><address style="text-align: right;"><small>
 Documentation for LibSylph generated by&nbsp;<a href="http://www.doxygen.org/index.html">Doxygen</a> 1.5.8</small></address>

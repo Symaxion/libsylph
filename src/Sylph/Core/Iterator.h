@@ -74,8 +74,22 @@ enum itr_end_t {
     { copyFrom(other); }
 
 
+/**
+ * Facade used to simplify usage of forward iterators. This class provides
+ * several methods to override, which will be used to make a correct
+ * implementation of a forward iterator.<p>
+ * Note that this class already correctly implements the difference between
+ * a const_iterator and a normal iterator, i.e. a const ForwardIterator conforms
+ * as a const_iterator, and a non-const ForwardIterator conforms as a non-const
+ * iterator. Therefore, when implementing this class, make sure that you
+ * flag any fields that can be changed (such as indices or pointers to the
+ * current item) as <code>mutable</code>. <p>
+ * In order for your own types to be correctly identified as a ForwardIterator,
+ * please use the <code>S_FORWARD_ITERATOR(</code><i>iterator-name, type-name,
+ * object-to-iterate-over</i><code>)</code>
+ */
 template<class T, class IteratedObject>
-class ForwardIterator {
+class ForwardIterator : public Object {
 public:
     typedef std::forward_iterator_tag iterator_category;
     typedef T value_type;
@@ -194,13 +208,56 @@ public:
 
 public:
     // Overridable functions
+    /**
+     * <b>OVERRIDE THIS METHOD</b> Create the iterator object. A boolean is
+     * passed to tell if this iterator pointed to the beginning or the end of
+     * the class (such that internal data pointers can be properly set up), and
+     * the object this iterator will be iterating over.
+     * @param begin <i>true</i> if this iterator points to the begin of the
+     * collection, <i>false</i> if it points to the end.
+     * @param obj The object this iterator will iterate over.
+     */
     virtual void construct(bool begin, IteratedObject* obj) const = 0;
+    /**
+     * <b>OVERRIDE THIS METHOD</b> Returns a pointer to the object the iterator
+     * is currnetly pointing at. Note that no beyond-the-end checking needs
+     * to be done, this is all done automagically for you.
+     * @return The object this iterator is currently pointing at.
+     */
     virtual pointer current() const = 0;
+    /**
+     * <b>OVERRIDE THIS METHOD</b> Sets the iterator one place forward. Note
+     * that no beyond-the-end checking needs to be done, this is all done
+     * automagically for you.
+     */
     virtual void next() const = 0;
+    /**
+     * <b>OVERRIDE THIS METHOD</b> Tells wheter there are any objects left
+     * in the collection. This method should not take the past-the-end item into
+     * account.
+     * @return <i>true</i> true if there are any next items, <i>false<i> if
+     * there are no more items left.
+     */
     virtual bool hasNext() const = 0;
-    virtual bool equals() const = 0;
-    virtual void copyFrom(ForwardIterator<T, IteratedObject>&) const = 0;
-    virtual const IteratedObject* iteratedObject() const = 0;
+    /**
+     * <b>OVERRIDE THIS METHOD</b> Tells wheter this Iterator is equal to any
+     * other Iterator over the same type of collection.
+     * @param other An other ForwardIterator to compare this one against.
+     * @return <i>true</i> iff the two iterators are completely equal (i.e.
+     * they iteratate over the same collection and currently point to the same
+     * object), false otherwise.
+     */
+    virtual bool equals(const ForwardIterator<T, IteratedObject>& other) const = 0;
+    /**
+     * <b>OVERRIDE THIS METHOD</b> Copies this iterator's fields from an other
+     * ForwardIterator over the same type of collection, such that
+     * <code>this->equals(other)</code> is <i>true</i>
+     * @param other An other Iterator to copy the current one from.
+     */
+    virtual void copyFrom(ForwardIterator<T, IteratedObject>& other) const = 0;
+    /**
+     * Do not use or modify!
+     */
     mutable unsigned char _end_reached_;
 };
 
@@ -387,43 +444,36 @@ RandomAccessIterator<T, IteratedObject> operator+
 }
 
 /**
- * Iterator provides a transparant interface for iterating over collections.
- * Each @c Iterable should have a specific implementation of this class. It is
- * not required to implement all methods of this class.
- * <p>
- * A <code>const</code> @c Iterator should allow <code>const</code> access to
- * items in the collection, but must not allow modification of those items.
- * A non-<code>const</code> @c Iterator should allow both access and
- * modification of the items. In order to comply to this behavior, it may
- * be necessary to declare one or more fields as <code>mutable</code>.
- * <p>
- * This class is used implicitly by @c sforeach(), and therefore an
- * implementation of this class is required for each @c Iterable that needs
- * to be able to being iterated over by @c sforeach() .
+ * SylphIterator provides a easier-to-use wrapper around STL iterators. The
+ * interface of a SylphIterator is similar to a Java-style iterator, but it is
+ * backed by a STL iterator and can therefore be used for any class supporitng
+ * STL iterators. <p>
+ * To create a Sylph-style iterator for a certian class, use the <code>
+ * S_CREATE_SYLPH_ITERATOR(</code><i>class-name</i><code>)</code> macro.
  */
 template<class Iter>
 class SylphIterator : public virtual Object {
 public:
 
     /**
-     * Creates a new Iterator from an Iterable. An Iterator can either be
+     * Creates a new Iterator from an STL-iterator. An Iterator can either be
      * constructed explicitly with this constructor, in which case the correct
      * type of Iterator for the particular collection needs to be known, or
      * through Iterable::iterator() or Iterable::mutableIterator() .
-     * <p>The default implementation does nothing.
      * @param it The iterable to iterate over.
      */
     inline SylphIterator(Iter & it) : itr(it) {
     }
 
+    /**
+     * Destructor. This destructor does nothing.
+     */
     inline virtual ~SylphIterator() {
     }
 
     /**
      * Checks if this iterator has any more entries in forward direction.
      * @return <i>true</i> if there are more entries, <i>false</i> otherwise.
-     * @note You are not required to override this method if this Iterator
-     * cannot iterate forward.
      */
     virtual bool hasNext() const {
         return itr.hasNext();
@@ -433,8 +483,6 @@ public:
      * one place forward.
      * @throw Exception if there are no more entries.
      * @return The next entry
-     * @note You are not required to override this method if this Iterator
-     * cannot iterator forward.
      */
     virtual const typename Iter::reference next() const {
         Iter::reference toReturn = *itr;
@@ -444,8 +492,8 @@ public:
     /**
      * Checks if this iterator has any more entries in backward direction.
      * @return <i>true</i> if there are more entries, <i>false</i> otherwise.
-     * @note You are not required to override this method if this Iterator
-     * cannot iterate backward.
+     * @note This requires that the backing iterator is a bidirectional
+     * iterator.
      */
     virtual bool hasPrevious() const {
         return itr.hasPrevious();
@@ -455,8 +503,8 @@ public:
      * one place backward.
      * @throw Exception if there are no more entries.
      * @return The previous entry
-     * @note You are not required to override this method if this Iterator
-     * cannot iterate backward.
+     * @note This requires that the backing iterator is a bidirectional
+     * iterator.
      */
     virtual const typename Iter::reference previous() const {
         --itr;
@@ -467,8 +515,8 @@ public:
      * Moves the Iterator to the place "before" the first item, that is,
      * it gives the pointer in the iterator such a value that hasPrevious
      * returns false.
-     * @note You are not required to override this method if this Iterator
-     * cannot iterate backward.
+     * @note This requires that the backing iterator is a bidirectional
+     * iterator.
      */
     virtual void front() const {
         while(itr.hasPrevious()) --itr;
@@ -481,8 +529,6 @@ public:
      * <p> This method is useful for backward iterating, i.e.
      * <pre>Iterator it = coll.getIterator(); // normal 'forward' iterator
      * it.back(); // ready for backward iteration </pre>
-     * @note You are not required to override this method if this Iterator
-     * cannot iterate forward
      */
     virtual void back() const {
         while(itr.hasNext()) ++itr;
@@ -492,8 +538,8 @@ public:
      * Returns the next index of the Iterable in the forward direction.
      * @throw Exception if there are no more entries.
      * @return The next index in the Iterable
-     * @note You are not required to override this method if this Iterator
-     * cannot iterate forward; or if the Iterable is unordered.
+     * @note This method requires the backing iterator to be a random-access
+     * iterator.
      */
     virtual std::idx_t nextIndex() const {
         return itr.currentIndex();
@@ -503,8 +549,8 @@ public:
      * Returns the next index of the Iterable in the backward direction.
      * @throw Exception if there are no more entries.
      * @return The previous index in the Iterable
-     * @note You are not required to override this method if this Iterator
-     * cannot iterate backward; or if the Iterable is unordered.
+     * @note This method requires the backing iterator to be a random-access
+     * iterator.
      */
     virtual std::idx_t previousIndex() const {
         return itr.currentIndex() - 1;
@@ -514,8 +560,6 @@ public:
      * Replaces the last item returned by next() or previous() with the given
      * item
      * @param t The item to replace the last returned item with.
-     * @note You are not required to override this method if the collection
-     * does not support replacing.
      */
     virtual void set(typename Iter::reference t) {
         *itr = t;
@@ -536,7 +580,8 @@ public:
     }
 
     /**
-     * Synoynmous for next()
+     * Synoynmous for next().
+     * @note No copy of this iterator is made.
      */
     const typename Iter::reference operator++(int) const {
         return next();
@@ -544,6 +589,7 @@ public:
 
     /**
      * Synonymous for previous()
+     * @note No copy is of this iterator is made.
      */
     const typename Iter::reference operator--(int) const {
         return previous();
@@ -552,7 +598,6 @@ private:
     Iter itr;
 };
 
-// todo
 #define S_CREATE_SYLPH_ITERATOR(Class) \
 typedef SylphIterator< Class##::iterator > Class##Iterator; \
 template<class T> \
