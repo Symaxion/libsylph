@@ -29,33 +29,80 @@
 <p>
 <code>#include &lt;<a class="el" href="_object_8h-source.html">Sylph/Core/Object.h</a>&gt;</code>
 <p>
-Inherited by Sylph::HashMap&lt; K, V, H &gt;<code> [virtual]</code>, Sylph::HashMap&lt; Key, Value &gt;<code> [virtual]</code>, Sylph::HashMap&lt; String, Any &gt;<code> [virtual]</code>, <a class="el" href="class_sylph_1_1_iterable.html">Sylph::Iterable&lt; byte &gt;</a><code> [virtual]</code>, <a class="el" href="class_sylph_1_1_iterable.html">Sylph::Iterable&lt; HashEntry&lt; K, V * &gt; &gt;</a><code> [virtual]</code>, <a class="el" href="class_sylph_1_1_iterable.html">Sylph::Iterable&lt; HashEntry&lt; Key, Value &gt; * &gt;</a><code> [virtual]</code>, <a class="el" href="class_sylph_1_1_iterable.html">Sylph::Iterable&lt; K &gt;</a><code> [virtual]</code>, <a class="el" href="class_sylph_1_1_iterable.html">Sylph::Iterable&lt; String &gt;</a><code> [virtual]</code>, <a class="el" href="class_sylph_1_1_iterable.html">Sylph::Iterable&lt; T * &gt;</a><code> [virtual]</code>, <a class="el" href="class_sylph_1_1_iterable.html">Sylph::Iterable&lt; T &gt;</a><code> [virtual]</code>, <a class="el" href="class_sylph_1_1_iterable.html">Sylph::Iterable&lt; wchar_t &gt;</a><code> [virtual]</code>, <a class="el" href="class_sylph_1_1_iterator.html">Sylph::Iterator&lt; T &gt;</a><code> [virtual]</code>, Sylph::Any<code> [virtual]</code>, Sylph::Application, Sylph::ByteBuffer<code> [virtual]</code>, Sylph::Deserializer, Sylph::Exception<code> [virtual]</code>, Sylph::Hashable<code> [virtual]</code>, Sylph::HashAssn&lt; K, V, H &gt;, Sylph::HashEntry&lt; Key, Value &gt;<code> [virtual]</code>, Sylph::HashMap&lt; _key, _value, _hash, _equals &gt;<code> [virtual]</code>, Sylph::HashPointer&lt; Key, Value &gt;<code> [virtual]</code>, Sylph::InputStream<code> [virtual]</code>, <a class="el" href="class_sylph_1_1_iterable.html">Sylph::Iterable&lt; T &gt;</a><code> [virtual]</code>, <a class="el" href="class_sylph_1_1_iterator.html">Sylph::Iterator&lt; T &gt;</a><code> [virtual]</code>, Sylph::OutputStream<code> [virtual]</code>, Sylph::Random<code> [virtual]</code>, Sylph::SChar<code> [virtual]</code>, Sylph::SerializedObject, Sylph::Serializer&lt; _type &gt;<code> [virtual]</code>, Sylph::Serializer&lt; S_Array &gt;<code> [virtual]</code>, Sylph::Serializer&lt; S_Dictionary &gt;<code> [virtual]</code>, and Sylph::Serializer&lt; S_Singleton &gt;<code> [virtual]</code>.
+Inherited by <a class="el" href="class_sylph_1_1_array__base.html">Sylph::Array_base&lt; byte &gt;</a><code> [virtual]</code>, <a class="el" href="class_sylph_1_1_array__base.html">Sylph::Array_base&lt; EntryPtr &gt;</a><code> [virtual]</code>, <a class="el" href="class_sylph_1_1_array__base.html">Sylph::Array_base&lt; String &gt;</a><code> [virtual]</code>, <a class="el" href="class_sylph_1_1_array__base.html">Sylph::Array_base&lt; T &gt;</a><code> [virtual]</code>, <a class="el" href="class_sylph_1_1_array__base.html">Sylph::Array_base&lt; uchar &gt;</a><code> [virtual]</code>, <a class="el" href="class_sylph_1_1_forward_iterator.html">Sylph::ForwardIterator&lt; Entry, HashMap &gt;</a>, <a class="el" href="class_sylph_1_1_forward_iterator.html">Sylph::ForwardIterator&lt; T, Array&lt; T &gt; &gt;</a>, <a class="el" href="class_sylph_1_1_forward_iterator.html">Sylph::ForwardIterator&lt; T, IteratedObject &gt;</a>, <a class="el" href="class_sylph_1_1_forward_iterator.html">Sylph::ForwardIterator&lt; T, Vector&lt; T &gt; &gt;</a>, Sylph::Any<code> [virtual]</code>, Sylph::Application, <a class="el" href="class_sylph_1_1_array__base.html">Sylph::Array_base&lt; T &gt;</a><code> [virtual]</code>, Sylph::ByteBuffer<code> [virtual]</code>, <a class="el" href="class_sylph_1_1_forward_iterator.html">Sylph::ForwardIterator&lt; T, IteratedObject &gt;</a>, Sylph::Hashable<code> [virtual]</code>, Sylph::HashMap&lt; key_, value_, hash_, equals_ &gt;<code> [virtual]</code>, Sylph::HashMap&lt; key_, value_, hash_, equals_ &gt;::HashMap::Entry<code> [virtual]</code>, Sylph::HashMap&lt; key_, value_, hash_, equals_ &gt;::HashMap::Pointer<code> [virtual]</code>, Sylph::InputStream<code> [virtual]</code>, Sylph::OutputStream<code> [virtual]</code>, Sylph::PrintWriter<code> [virtual]</code>, Sylph::Random<code> [virtual]</code>, Sylph::StringBuffer<code> [virtual]</code>, <a class="el" href="class_sylph_1_1_sylph_iterator.html">Sylph::SylphIterator&lt; Iter &gt;</a><code> [virtual]</code>, and Sylph::UncaughtExceptionHandler.
 <p>
 
 <p>
 <a href="class_sylph_1_1_object-members.html">List of all members.</a><table border="0" cellpadding="0" cellspacing="0">
 <tr><td></td></tr>
-<tr><td colspan="2"><br><h2>Public Types</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">enum &nbsp;</td><td class="memItemRight" valign="bottom"><b>ObjectType</b> { <b>Normal</b>, 
-<b>Wrapper</b>, 
-<b>Serialized</b>
- }</td></tr>
-
 <tr><td colspan="2"><br><h2>Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="b26620ef36aa894a1800e4c3bf1e941b"></a><!-- doxytag: member="Sylph::Object::type" ref="b26620ef36aa894a1800e4c3bf1e941b" args="()" -->
-virtual ObjectType&nbsp;</td><td class="memItemRight" valign="bottom"><b>type</b> ()</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sylph_1_1_object.html#66812b0c01ee148a7193fecf9c005597">serialize</a> (SerializationBuffer &amp;buf) const </td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="760ed1ae56164aadace17926b2773e25"></a><!-- doxytag: member="Sylph::Object::serialize" ref="760ed1ae56164aadace17926b2773e25" args="(SerializationBuffer &amp;) const " -->
-virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><b>serialize</b> (SerializationBuffer &amp;) const </td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Tries to serialize this object to the given SerializationBuffer.  <a href="#66812b0c01ee148a7193fecf9c005597"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sylph_1_1_object.html#8c687ff464f8a0b5f4878571eec7ffa0">deserialize</a> (DeserializationBuffer &amp;buf)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="anchor" name="5d45ebfddc5de645ed470790dc2f6013"></a><!-- doxytag: member="Sylph::Object::deserialize" ref="5d45ebfddc5de645ed470790dc2f6013" args="(SerializationBuffer &amp;)" -->
-virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><b>deserialize</b> (SerializationBuffer &amp;)</td></tr>
-
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Tries to deserialize this object from the giver DeserializationBuffer.  <a href="#8c687ff464f8a0b5f4878571eec7ffa0"></a><br></td></tr>
 </table>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
 The root of all classes. 
 <p>
-This class contains the overloaded new and delete operators. All classes in LibSylph extend from this class. If you want your class to communicate with LibSylph, or just if you want to let LibSylph's garbage collector manage dynamic allocation of your class, you should derive from <a class="el" href="class_sylph_1_1_object.html" title="The root of all classes.">Object</a>. </div>
+This class contains the overloaded new and delete operators that use the builtin garbage collection. (Almost) all classes in LibSylph inherit from this class. If you want your class to communicate with certain LibSylph features, or just if you want to let LibSylph's garbage collector manage dynamic allocation of your class, you should derive from <a class="el" href="class_sylph_1_1_object.html" title="The root of all classes.">Object</a>.<p>
+Note that arrays of Objects are <b>not</b> garbage collected. Instead, use <a class="el" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Sylph::Array</a> if you want a garbage collected, safe <a class="el" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a>. <hr><h2>Member Function Documentation</h2>
+<a class="anchor" name="8c687ff464f8a0b5f4878571eec7ffa0"></a><!-- doxytag: member="Sylph::Object::deserialize" ref="8c687ff464f8a0b5f4878571eec7ffa0" args="(DeserializationBuffer &amp;buf)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void Sylph::Object::deserialize           </td>
+          <td>(</td>
+          <td class="paramtype">DeserializationBuffer &amp;&nbsp;</td>
+          <td class="paramname"> <em>buf</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Tries to deserialize this object from the giver DeserializationBuffer. 
+<p>
+The default implmementation does nothing. <dl compact><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>buf</em>&nbsp;</td><td>a Buffer to deserialize from. </td></tr>
+  </table>
+</dl>
+
+</div>
+</div><p>
+<a class="anchor" name="66812b0c01ee148a7193fecf9c005597"></a><!-- doxytag: member="Sylph::Object::serialize" ref="66812b0c01ee148a7193fecf9c005597" args="(SerializationBuffer &amp;buf) const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual void Sylph::Object::serialize           </td>
+          <td>(</td>
+          <td class="paramtype">SerializationBuffer &amp;&nbsp;</td>
+          <td class="paramname"> <em>buf</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td> const<code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Tries to serialize this object to the given SerializationBuffer. 
+<p>
+The default implementation does nothing. <dl compact><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>buf</em>&nbsp;</td><td>a Buffer to serialize to. </td></tr>
+  </table>
+</dl>
+
+</div>
+</div><p>
+</div>
 <hr size="1" class="unhidden"><address style="text-align: right;"><small>
 Documentation for LibSylph generated by&nbsp;<a href="http://www.doxygen.org/index.html">Doxygen</a> 1.5.8</small></address>
 </body>

@@ -10,6 +10,8 @@
 
 #include "Object.h"
 #include <cstdint>
+#define __STDC_FORMAT_MACROS
+#include <cinttypes>
 
 SYLPH_BEGIN_NAMESPACE
 SYLPH_PUBLIC
@@ -24,7 +26,13 @@ typedef uint16_t sushort;
 typedef uint32_t suint;
 typedef uint64_t sulong;
 
-// TODO distinction 32/64 bits platforms
+#define S_FMT_S PRIi16
+#define S_FMT_US PRIu16
+#define S_FMT_I PRIi32
+#define S_FMT_UI PRIu32
+#define S_FMT_L PRIi64
+#define S_FMT_UL PRIu64
+
 #ifdef __i386__
 typedef suint idx_t;
 typedef sint sidx_t;

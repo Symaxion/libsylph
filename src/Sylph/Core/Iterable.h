@@ -11,14 +11,6 @@
 #include "Object.h"
 #include "Iterator.h"
 
-/*< rev Object-1
- *  rev Iterable-1
- *  rev Exception-1
- *  rev String-1
- *  rev Hashable-1
- >*/
-
-
 SYLPH_BEGIN_NAMESPACE
 
 SYLPH_PUBLIC

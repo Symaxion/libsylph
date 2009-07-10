@@ -1,12 +1,15 @@
 #include "UncaughtExceptionHandler.h"
 
-SYLPH_START_NAMESPACE(Core)
-DefaultUncaughtExceptionHandler::handle(Exception& ex) const {
+SYLPH_BEGIN_NAMESPACE
+DefaultUncaughtExceptionHandler::handle(const Exception& ex) const {
+    //2do: add traceinfo
     thisapp->fail("Uncaught Exception: "+ex.name()+": "+ex.what());
 }
 
-DebugUncaughtExceptionHandler::handle(Exception& ex) const {
-    thisapp->fail("Uncaught Exception: "+ex.name()+": "+ex.what(), ex.file, ex.line);
+DebugUncaughtExceptionHandler::handle(const Exception& ex) const {
+    //2do: add traceinfo
+    thisapp->fail("Uncaught Exception: "+ex.name()+": "+ex.what(), ex._file,
+            ex._line);
 }
 
-SYLPH_END_NAMESPACE(Core)
+SYLPH_END_NAMESPACE
