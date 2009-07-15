@@ -1,14 +1,15 @@
 /*
- * File:   application.h
+ * File:   Application.h
  * Author: frank
  *
  * Created on 9 november 2008, 11:48
  */
 
-#ifndef _APPLICATION_H
-#define	_APPLICATION_H
+#ifndef APPLICATION_H_
+#define	APPLICATION_H_
 
 #include "Object.h"
+#include "Array.h"
 
 #include "../../Sylph.h"
 
@@ -19,6 +20,7 @@ SYLPH_BEGIN_NAMESPACE
 
 class ApplicationSelf;
 class String;
+class File;
 
 template<class T> class Array;
 
@@ -44,16 +46,9 @@ private:
 
 };
 
-ApplicationSelf * Application::self_app;
-
 class ApplicationSelf : public Application {
     friend class Application;
 public:
-
-    const Array<String> & arguments() {
-        return _arguments;
-    }
-
     const String appName() {
         return _appName;
     }
@@ -61,25 +56,24 @@ public:
     AppType appType();
 
     void fail(const String reason);
-    void fail(const String reason, const String file, int line);
+    void fail(const String reason, const String file, unsigned int line);
 
 
-    virtual const File * getBundle() = 0;
-    virtual const File * getResourceDir() = 0;
-    virtual const File * getPrefix() = 0;
+    virtual const File& getBundle() = 0;
+    virtual const File& getResourceDir() = 0;
+    virtual const File& getPrefix() = 0;
 
 protected:
     void _fail(const String appName, const String reason);
     void _fail(const String appName, const String reason,
-            const String file, int line);
+            const String file, unsigned int line);
 
 private:
     void _preconstruct();
-    Array<String> _arguments;
     String _appName;
     AppType _appType;
 
-    ApplicationSelf(int argc, char * argv[], char * apple[]) : _arguments(argv, argv + argc) {
+    ApplicationSelf(int argc, char * argv[], char * apple[]) {
         _preconstruct();
         construct(argc, argv, apple);
     }
@@ -90,5 +84,5 @@ private:
 
 SYLPH_END_NAMESPACE
 
-#endif	/* _APPLICATION_H */
+#endif	/* APPLICATION_H_ */
 

@@ -25,6 +25,7 @@ public:
 
     size_t length() const;
     void deleteSubstring(idx_t start, idx_t end);
+    void clear();
     const uchar& at(idx_t idx) const;
     uchar& at(idx_t idx);
 
@@ -41,8 +42,14 @@ public:
     StringBuffer& operator<<(double d);
     StringBuffer& operator<<(String s);
 
+    template<class T>
+    inline StringBuffer& operator+=(T t) {
+        return operator<<(t);
+    }
+
     String toString() const;
     operator String() const;
+    
 private:
     Array<uchar> buf;
     size_t _length;

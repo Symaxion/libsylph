@@ -12,34 +12,47 @@
 #include "../Core/Object.h"
 #include "../Core/Primitives.h"
 #include "../Core/Array.h"
+#include "../Core/BoolConvertible.h"
 
 SYLPH_BEGIN_NAMESPACE
 class ByteBuffer;
 class String;
 SYLPH_PUBLIC
 
-class InputStream : public virtual Object {
+class InputStream : public virtual BoolConvertible<InputStream> {
 public:
     InputStream() : closed(false) {}
+    virtual ~InputStream();
 
-    virtual fsize_t available() = 0;
-    virtual void close() { closed = false }
-    virtual bool eof() = 0;
-    virtual void flush() = 0;
-    virtual bool markSupported() { return false; }
-    virtual void mark(sidx_t) = 0;
-    virtual sidx_t skip(sidx_t) = 0;
+    virtual fsize_t available() const = 0;
+    virtual void close() { closed = true; }
+    virtual void read(byte& b) {
+        return operator>>(b);
+    }
+    virtual fssize_t read(Array<byte>& b, off_t offset = 0, size_t len = 0) {
+        if(!len) len = b.length;
+        if(offset + len > b.length) sthrow(ArrayException, "Index out of bounds");
+        if(eof()) return -1;
+        fssize_t actuallyRead = 0;
+        for(idx_t i = offset; i < len; i++) {
+            if(eof()) break;
+            operator>>(b[i]);
+            actuallyRead++;
+        }
+        return actuallyRead;
+    }
+    virtual bool eof() const = 0;
+    virtual bool markSupported() const { return false; }
+    virtual void mark(fsize_t) = 0;
+    virtual fsize_t skip(fsize_t) = 0;
     virtual void reset() = 0;
 
     virtual InputStream& operator>>(byte&) = 0;
     virtual InputStream& operator>>(Array<byte>& b) {
-        for(idx_t i = 0; i < b.length; i++) {
-            *this >> b[i];
-        }
+        read(b);
+        return b;
     }
-    virtual InputStream& operator>>(ByteBuffer& buf);
-    virtual InputStream& operator>>(String&) = 0;
-    operator bool() { return eof() && !closed; }
+    bool toBool() const { return eof() && !closed; }
 protected:
     bool closed;
 };

@@ -1,4 +1,5 @@
 #include "Application.h"
+#include "String.h"
 
 #include <iostream>
 #include <cstdlib>
@@ -13,6 +14,8 @@
 
 
 SYLPH_BEGIN_NAMESPACE
+
+ApplicationSelf * Application::self_app;
 
     Application::Application() {
 
@@ -41,6 +44,7 @@ SYLPH_BEGIN_NAMESPACE
             default:
                 std::cout << "LibSylph error: Unknown App Type! "<< "@"
                          << __FILE__<<":"<<__LINE__ << std::endl;
+                exit(1);
         }
         self_app->_appType = type;
     }
@@ -56,18 +60,19 @@ SYLPH_BEGIN_NAMESPACE
 
     ApplicationSelf::~ApplicationSelf() {}
 
-    void ApplicationSelf::fail(const string & reason) {
+    void ApplicationSelf::fail(const String reason) {
         _fail(appName, reason);
     }
-    void ApplicationSelf::fail(const string & reason, const string & file, int line) {
+    void ApplicationSelf::fail(const String reason, const String file,
+            unsigned int line) {
         _fail(appName, reason, file, line);
     }
-    void ApplicationSelf::_fail(const string & appName, const string & reason) {
+    void ApplicationSelf::_fail(const String appName, const String reason) {
         std::cout << appName <<" error: " << reason << std::endl;
         exit(1);
     }
-    void ApplicationSelf::_fail(const string & appName, const string & reason,
-                const string & file, int line) {
+    void ApplicationSelf::_fail(const String appName, const String reason,
+                const String file, unsigned int line) {
         std::cout << appName <<" error: " << reason << "@" << file << ":" <<
            line << std::endl;
     }

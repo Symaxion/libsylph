@@ -2,14 +2,31 @@
 
 SYLPH_BEGIN_NAMESPACE
 DefaultUncaughtExceptionHandler::handle(const Exception& ex) const {
-    //2do: add traceinfo
-    thisapp->fail("Uncaught Exception: "+ex.name()+": "+ex.what());
+    StringBuffer buf;
+    buf << "Uncaught Exception: "<<ex.name()<<": "<<ex.what()<<'\n';
+    if(ex.tracemsg != NULL) {
+        buf << "Trace messages: \n";
+        Exception::TraceMessage * msg = ex.tracemsg;
+        while(msg->next != NULL) {
+            buf << '\t' << String(msg.message) << '\n';
+            msg = msg->next;
+        }
+    }
+    thisapp->fail(buf);
 }
 
 DebugUncaughtExceptionHandler::handle(const Exception& ex) const {
-    //2do: add traceinfo
-    thisapp->fail("Uncaught Exception: "+ex.name()+": "+ex.what(), ex._file,
-            ex._line);
+    StringBuffer buf;
+    buf << "Uncaught Exception: "<<ex.name()<<": "<<ex.what()<<'\n';
+    if(ex.tracemsg != NULL) {
+        buf << "Trace messages: \n";
+        Exception::TraceMessage * msg = ex.tracemsg;
+        while(msg->next != NULL) {
+            buf << '\t' << String(msg.message) << '\n';
+            msg = msg->next;
+        }
+    }
+    thisapp->fail(buf, ex._file, ex._line);
 }
 
 SYLPH_END_NAMESPACE
