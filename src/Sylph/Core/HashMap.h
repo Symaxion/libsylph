@@ -15,7 +15,7 @@
 
 #include "Array.h"
 #include "Collection.h"
-#include "Ptr.h"
+#include "PointerManager.h"
 
 #include <cmath>
 #include <initializer_list>
@@ -23,7 +23,7 @@
 #ifdef SYLPH_DOXYGEN
 #define SYLPH_HASHMAP_RETURN_T(type) type
 #else
-#define SYLPH_HASHMAP_RETURN_T(type) HashPointer
+#define SYLPH_HASHMAP_RETURN_T(type) Pointer
 #endif
 
 SYLPH_BEGIN_NAMESPACE
@@ -161,25 +161,18 @@ public:
 
 public:
 
-    explicit HashMap(std::size_t initialCapacity = 11, float loadFactor = .75f,
-            HashFunction h = Hash<Key>, EqualsFunction e = Equals<Key>) {
-        this->loadFactor = loadFactor;
-        this->_size = 0;
-        this->threshold = initialCapacity * loadFactor;
-        this->buckets = new Array<EntryPtr > (initialCapacity);
-        for (int x = 0; x < buckets.length; x++) {
-            buckets[x] = NULL;
-        }
-        hashf = h;
-        equf = e;
+    explicit HashMap(std::size_t initialCapacity = 11, float _loadFactor = .75f,
+            HashFunction h = Hash<Key>, EqualsFunction e = Equals<Key>)
+            : loadFactor(_loadFactor), _size(0),buckets(initialCapacity),
+            threshold(initialCapacity*loadFactor), hashf(h), equf(e),
+            pm(buckets) {
     }
 
-    HashMap(const HashMap<Key, Value, HashFunction, EqualsFunction> & orig) {
-        this->loadFactor = orig.loadFactor;
-        this->_size = orig._size;
-        this->threshold = orig.threshold;
-        this->buckets = new Array<EntryPtr > (orig.buckets->length);
-        arraycopy(*(orig.buckets), 0, *buckets, 0, orig.buckets->length);
+    HashMap(const HashMap<Key, Value, HashFunction, EqualsFunction> & orig)
+            : loadFactor(orig.loadFactor), _size(orig._size),
+            threshold(orig.threshold), buckets(orig.buckets.length),
+            pm(buckets) {
+        arraycopy(orig.buckets, 0, buckets, 0, orig.buckets.length);
     }
 
     HashMap(const EntryList & elist) : HashMap() {
@@ -189,15 +182,12 @@ public:
     }
 
     virtual ~HashMap() {
-        delete this->buckets;
     }
 
     void clear() {
-        delete buckets;
-
         threshold = loadFactor * 11;
         _size = 0;
-        buckets = new Array<EntryPtr > (11);
+        buckets.clear();
 
     }
 
@@ -315,7 +305,7 @@ public:
     }
 
     HashMap & operator<<(const EntryList& elist) {
-        for (EntryPair * ptr = elist.begin(); ptr != elist.end(); ptr++) {
+        for (EntryPair * ptr = elist.begin(); ptr != elist.end(); ++ptr) {
             put(ptr->first, ptr->second);
         }
         return *this;
@@ -323,7 +313,8 @@ public:
 
 private:
     std::size_t _size;
-    Array<EntryPtr> * buckets;
+    Array<EntryPtr> buckets;
+    PointerManager pm;
     std::size_t threshold;
     float loadFactor;
     HashFunction hashf;

@@ -5,8 +5,8 @@
  * Created on 17 januari 2009, 15:14
  */
 
-#ifndef _SYLPH_H
-#define	_SYLPH_H
+#ifndef SYLPH_H_
+#define	SYLPH_H_
 
 #include "Sylph/OS/OS.h"
 #include "Sylph/Core/Application.h"
@@ -76,5 +76,5 @@ static inline void SylphInit(int argc, char * argv[], char * apple[]) {
 int SylphMain(Sylph::Array<Sylph::String> & argv);
 #endif
 
-#endif	/* _SYLPH_H */
+#endif	/* SYLPH_H_ */
 

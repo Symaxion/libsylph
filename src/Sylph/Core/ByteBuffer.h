@@ -9,79 +9,74 @@
 #define	BYTEBUFFER_H_
 
 #include "Common.h"
+#include "../IO/InputStream.h"
+#include "../IO/OutputStream.h"
 
 SYLPH_BEGIN_NAMESPACE
 SYLPH_PUBLIC
 
-class ByteBuffer : public virtual Object {
+class ByteBuffer : public InputStream, public OutputStream {
+    friend OutputStream& operator<<(const ByteBuffer&);
+    friend InputStream& operator>>(const ByteBuffer&);
 public:
     enum Traits {
-        BB_CLOSED = 0x00,
-        BB_READ = 0x01,
-        BB_WRITE = 0x02
+        Closed = 0x00,
+        Read = 0x01,
+        Write = 0x02,
+        ReadWrite = 0x03,
+        RW = ReadWrite
     };
-    ByteBuffer(Traits traits);
+    ByteBuffer(Traits traits = 0x03, size_t bufsize = 16);
     ByteBuffer(const Array<byte> & ar);
-    ByteBuffer(const byte ar[]);
     ByteBuffer(const ByteBuffer& orig);
     virtual ~ByteBuffer();
 
     // common methods
     
+    fsize_t available();
+    void close();
+    bool eof();
+    bool markSupported() { return true; }
+    void mark(fsize_t);
+    fsize_t skip(fsize_t);
     void reset();
-    void clear();
-    void skip(sidx_t i);
-    void mark(idx_t i);
     size_t size();
-    idx_t position();
-    idx_t available();
+    void clear();
     
     // traits modifiers
     
     void setTraits(Traits traits);
-    
-    ByteBuffer& operator>>(byte b);
-    ByteBuffer& operator>>(sint i);
-    ByteBuffer& operator>>(slong l);
-    
-    ByteBuffer& operator>>(Array<byte> & b);
-    ByteBuffer& operator>>(Array<sint> & i);
-    ByteBuffer& operator>>(Array<slong> & l);
-    
-    // write methods and operators
+
+    // Read methods
+    ByteBuffer& operator>>(byte& b);
+
+    // Write methods and operators
+    ByteBuffer& operator<<(const byte& b);
 
     ByteBuffer& fromString(const String s);
-
-    ByteBuffer& operator<<(const byte b);
-    ByteBuffer& operator<<(const sint i);
-    ByteBuffer& operator<<(const slong l);
-
-    ByteBuffer& operator<<(const byte b[]);
-    ByteBuffer& operator<<(const sint i[]);
-    ByteBuffer& operator<<(const slong l[]);
-
-    ByteBuffer& operator<<(const Array<byte> & b);
-    ByteBuffer& operator<<(const Array<sint> & i);
-    ByteBuffer& operator<<(const Array<slong> & l);
-
-    ByteBuffer& operator<<(const String s);
-    ByteBuffer& operator<<(const ByteBuffer& buf);
 
     // Operators:
     ByteBuffer& operator=(const ByteBuffer & rhs);
 
-    // 'friendly' operators:
-
-
     // Convertors:
+    
+    Array<byte> toArray();
+    const Array<byte> toArray() const;
 
     operator Array<byte>();
     operator const Array<byte>() const;
 private:
+    void ensureCapacity(size_t capacity);
     Array<byte> * _array;
     idx_t _pos;
+    size_t _size;
     Traits _traits;
+    idx_t _mark;
+    size_t _markExpires;
 };
+
+OutputStream& operator<<(OutputStream&, const ByteBuffer&);
+InputStream& operator>>(const InputStream&, ByteBuffer&);
 
 SYLPH_END_NAMESPACE
 

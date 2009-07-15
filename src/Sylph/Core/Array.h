@@ -32,39 +32,50 @@ template<class T>
 class Array_base : public virtual Object {
     friend class Array<T>;
 public:
+
     class iterator : public RandomAccessIterator<T, Array<T> > {
     public:
-        S_RANDOM_ACCESS_ITERATOR(iterator,T, Array<T>)
+
+        S_RANDOM_ACCESS_ITERATOR(iterator, T, Array<T>)
         void construct(bool begin, Array<T>* obj) {
             _obj = obj;
             _currentIndex = begin ? 0 : _obj->length;
         }
+
         bool equals(iterator& other) {
             return _currentIndex == other._currentIndex &&
                     _obj == other._obj;
         }
+
         void copyFrom(iterator& other) {
             _currentIndex = other._currentIndex;
             _obj = other._obj;
         }
+
         pointer current() {
             return *_obj[_currentIndex];
         }
+
         bool hasNext() {
             return _obj->length < _currentIndex;
         }
+
         void next() {
             _currentIndex++;
         }
+
         bool hasPrevious() {
             return _currentIndex >= 0;
         }
+
         void previous() {
             currentIndex--;
         }
+
         idx_t currentIndex() {
             return _currentIndex;
         }
+
         size_t length() {
             return _obj->length;
         }
@@ -87,6 +98,7 @@ public:
      * E.g if array.length == 5, then the higest entry is array[4]
      */
     const int & length;
+
     /**
      * Creates an Array<T> from a pointer to T and a length. The new array will
      * have the length specified in <code>length</code>. The original array will
@@ -150,7 +162,8 @@ public:
         this->_length = other.data->_length;
         data->refcount++;
     }
-   /**
+
+    /**
      * Creates an array from a range. The following syntax
      * <pre> Array<int>(range(X, Y)); </pre>
      * is just shorthand for
@@ -162,12 +175,13 @@ public:
      * @param ran The range describing the contents of the array.
      */
     Array_base(const basic_range<T> & ran) : _length(ran.last() - ran.first()),
-            length(_length) {
+    length(_length) {
         data = new Data(_length);
         data->_carray = (T*) calloc(_length, sizeof (T));
         idx_t idx = 0;
         for (T x = ran.first(); x < ran.last(); x++) {
-            *this[idx] = x; idx++;
+            *this[idx] = x;
+            idx++;
         }
     }
 
@@ -209,7 +223,7 @@ public:
      */
     Array_base<T> copy() {
         Array_base<T> toReturn(length);
-        arraycopy(*this,0,toReturn,0,length);
+        arraycopy(*this, 0, toReturn, 0, length);
         return toReturn;
     }
 
@@ -224,13 +238,13 @@ public:
     Array_base<T> filter(FilterFunction func, Any& clientData) {
         // I'm terribly sorry but we'll need to iterate twice over the Array...
         size_t newlength;
-        for(idx_t i = 0; i < length; i++) {
-            if(func(*this[i],clientData)) newlength++;
+        for (idx_t i = 0; i < length; i++) {
+            if (func(*this[i], clientData)) newlength++;
         }
         Array<T> toReturn(newlength);
         idx_t curpos = 0;
-        for(idx_t i = 0; i < length; i++) {
-            if(func(*this[i],clientData)) {
+        for (idx_t i = 0; i < length; i++) {
+            if (func(*this[i], clientData)) {
                 toReturn[curpos] = *this[i];
                 curpos++;
             }
@@ -238,6 +252,14 @@ public:
         return toReturn;
     }
 
+    /**
+     * Sets every entry in the array to the object returned by that classes'
+     * default constructor.
+     */
+    void clear() {
+        delete this->data->_carray;
+        this->data->_carray = new T[this->data->_length];
+    }
     /**
      * Swaps the data pointer of this Array with the other Array. The refcount
      * for the current data pointer gets decreased by 1, the refcount for the
@@ -322,6 +344,7 @@ public:
 protected:
 
     struct Data {
+
         explicit Data(size_t length) : Data::_length(length), refcount(1) {
 
         }
@@ -360,7 +383,9 @@ public:
      * internal C array is allocated to have the specified length.
      * @param len The length of the new Array.
      */
-    explicit Array(std::size_t len) : Array_base<T>(len) {}
+    explicit Array(std::size_t len) : Array_base<T>(len) {
+    }
+
     /**
      * Creates an Array from an intializer list. This constructor allows the
      * easier, more familiar syntax of Array creation, but requires C++0x. Using
@@ -371,7 +396,8 @@ public:
      * list, and all data is copied into a newly allocated C array.
      * @param il The initializer_list used to create the array.
      */
-    Array(const std::initializer_list<T> & il) : Array_base<T>(il) {}
+    Array(const std::initializer_list<T> & il) : Array_base<T>(il) {
+    }
 
     /**
      * Creates an Array from an existing C-style array. Note that you can only
@@ -384,7 +410,7 @@ public:
      * the original array. The original array remains unmodified.
      * @param array A traditional, C-style array to create this Array from.
      */
-    Array(const T array[]) : Array_base<T>(array){
+    Array(const T array[]) : Array_base<T>(array) {
     }
 
     /**
@@ -428,86 +454,7 @@ public:
      * Destructor. Reduces the reference count by 1. If the reference count
      * reaches 0, the internal backing data will be destroyed.
      */
-    virtual ~Array() {}
-};
-
-/**
- * Specialisation of the Array class for pointers. This class allows easier use
- * of arrays-of-pointers, as it is overloaded to take ownership of the pointers.
- * This makes creation (and deletion) of arrays-of-pointers easier, as no
- * explicit deletion of an Array's contents is required.
- */
-template <class T>
-class Array<T*> : public Array_base<T> {
-public:
-    /**
-     * Creates an Array with the specified length. A new instance of the
-     * reference counted data is created, its reference count set to 1 and the
-     * internal C array is allocated to have the specified length.
-     * @param len The length of the new Array.
-     */
-    explicit Array<T*>(std::size_t len) : Array_base<T>(len) {}
-    /**
-     * Creates an Array from an intializer list. This constructor allows the
-     * easier, more familiar syntax of Array creation, but requires C++0x. Using
-     * this constructor, arrays can be initialized as following:
-     * <pre>Array<int> myarr = {5,4,7,9};</pre>
-     * A new instance of the reference counted data is created, the reference
-     * count is set to 1, the length is set to the length of the intializer
-     * list, and all data is copied into a newly allocated C array.
-     * @param il The initializer_list used to create the array.
-     */
-    Array<T*>(const std::initializer_list<T> & il) : Array_base<T*>(il) {}
-
-    /**
-     * Creates an Array from an existing C-style array. Note that you can only
-     * pass a true array, i.e. you cannot pass a pointer that acts as an array.
-     * If you only have a pointer, you'll have to initialize using
-     * Array::fromPointer(size_t, length) . <p>
-     * A new instance of the reference counted data is created, the reference
-     * count is set to 1, the length is set to the length of the Array, all
-     * data is copied into a newly allocated C array with the same length as
-     * the original array. The original array remains unmodified.<p>
-     * The Array will assume ownership over any pointers in the original Array.
-     * @param array A traditional, C-style array to create this Array from.
-     */
-    Array<T*>(const T* array[]) : Array_base<T*>(array){
-    }
-    /**
-     * Creates an Array from another instance of the Array class. The data is
-     * not copied, instead, the pointer to the refernce counted data will be
-     * set to the reference counted data of the other Array, and the reference
-     * count will increase by 1. Other fields of the reference counted data
-     * remain unmodified.
-     * @param other An other Array from which to use the reference counted data.
-     */
-    Array<T*>(const Array<T*> & other) : Array_base<T*>(other) {
-    }
-
-    /**
-     * Creates an Array from a single pointer. This is useful for implicit
-     * conversions, as it allows a single pointer to a class to be passed as
-     * an Array of pointers to class with length 1. <p>
-     * A new instance of the reference counted data is created, the reference
-     * count set to 1, the length is set to 1, and a new C-style array with
-     * length 1 is allocated. The pointer is copied into this array, the original
-     * pointer remains unmodified.<p>
-     * The Array will assume ownership over this pointer.
-     * @param t An object to create a length-1 array from.
-     */
-    Array(const T* t) : Array_base<T*>(1) {
-        *this[0] = t;
-    }
-
-    /**
-     * Destructor. Reduces the reference count by 1. If the reference count
-     * reaches zero, the internal backing data will be deleted. All pointers
-     * in the backing array will be deleted as well.
-     */
-    virtual ~Array<T*>() {
-        for(idx_t i = 0; i < length; i++) {
-            delete *this[i];
-        }
+    virtual ~Array() {
     }
 };
 

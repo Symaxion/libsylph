@@ -22,6 +22,8 @@
           <itemPath>src/Sylph/Core/Application.h</itemPath>
           <itemPath>src/Sylph/Core/Array.cpp</itemPath>
           <itemPath>src/Sylph/Core/Array.h</itemPath>
+          <itemPath>src/Sylph/Core/BoolConvertible.h</itemPath>
+          <itemPath>src/Sylph/Core/ByteBuffer.cpp</itemPath>
           <itemPath>src/Sylph/Core/ByteBuffer.h</itemPath>
           <itemPath>src/Sylph/Core/Collection.h</itemPath>
           <itemPath>src/Sylph/Core/Common.h</itemPath>
@@ -38,12 +40,14 @@
           <itemPath>src/Sylph/Core/Iterator.h</itemPath>
           <itemPath>src/Sylph/Core/Object.cpp</itemPath>
           <itemPath>src/Sylph/Core/Object.h</itemPath>
+          <itemPath>src/Sylph/Core/PointerManager.h</itemPath>
           <itemPath>src/Sylph/Core/Primitives.h</itemPath>
           <itemPath>src/Sylph/Core/Ptr.h</itemPath>
           <itemPath>src/Sylph/Core/Random.h</itemPath>
           <itemPath>src/Sylph/Core/Range.h</itemPath>
           <itemPath>src/Sylph/Core/String.cpp</itemPath>
           <itemPath>src/Sylph/Core/String.h</itemPath>
+          <itemPath>src/Sylph/Core/StringBuffer.cpp</itemPath>
           <itemPath>src/Sylph/Core/StringBuffer.h</itemPath>
           <itemPath>src/Sylph/Core/UncaughtExceptionHandler.cpp</itemPath>
           <itemPath>src/Sylph/Core/UncaughtExceptionHandler.h</itemPath>
@@ -57,6 +61,7 @@
           <itemPath>src/Sylph/IO/BufferedOutputStream.h</itemPath>
           <itemPath>src/Sylph/IO/InputStream.h</itemPath>
           <itemPath>src/Sylph/IO/OutputStream.h</itemPath>
+          <itemPath>src/Sylph/IO/PrintWriter.cpp</itemPath>
           <itemPath>src/Sylph/IO/PrintWriter.h</itemPath>
           <itemPath>src/Sylph/IO/ScanReader.h</itemPath>
         </logicalFolder>

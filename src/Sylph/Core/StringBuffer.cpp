@@ -3,7 +3,8 @@
 #include "Util.h"
 
 SYLPH_BEGIN_NAMESPACE
-StringBuffer::StringBuffer(const String s) : _length(0), buf(s.length()+16) {
+StringBuffer::StringBuffer(const String s) : _length(s.length()),
+        buf(s.length()+16) {
 }
 
 StringBuffer::~StringBuffer() {
@@ -21,6 +22,11 @@ void StringBuffer::deleteSubstring(idx_t start, idx_t end) {
 
     arraycopy(buf,end,buf,start,end-start);
     _length -= (end-start);
+}
+
+void StringBuffer::clear() {
+    buf = Array<uchar>(16);
+    _length(0);
 }
 
 const uchar& StringBuffer::at(idx_t idx) const {

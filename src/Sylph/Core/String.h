@@ -12,14 +12,10 @@
 #include "Comparable.h"
 #include "Primitives.h"
 #include "Hashable.h"
+#include "BoolConvertible.h"
 
 #include <cstdint>
 #include <string>
-
-/*< rev Object-1
- *  rev Hashable-1
- *  rev String-1
- >*/
 
 class QString;
 
@@ -41,10 +37,10 @@ typedef std::uint16_t uchar;
 
 static Array<uchar> spacechars = {' ','\n','\r','\f','\t','\013'};
 
-class SYLPH_STRING_CLASS : public Hashable {
+class SYLPH_STRING_CLASS : public Hashable, 
+        public BoolConvertible<SYLPH_STRING_CLASS> {
     friend bool operator==(const String lhs, const String rhs);
     friend bool operator<(const String lhs, const String rhs);
-    friend String operator+=(const String lhs, const String rhs);
     friend String operator+(const String lhs, const String rhs);
     //friend String operator%(const String lhs, const String rhs);
     friend String operator&(const String lhs, const String(*rhs)(String));
@@ -58,7 +54,7 @@ public:
     SYLPH_STRING_CLASS(const Array<char> orig);
     SYLPH_STRING_CLASS(const Array<uchar> orig);
     SYLPH_STRING_CLASS(const std::string & orig);
-    SYLPH_STRING_CLASS(const QString orig);
+    SYLPH_STRING_CLASS(const QString & orig);
     SYLPH_STRING_CLASS(const String & orig);
     SYLPH_STRING_CLASS(const char c);
     SYLPH_STRING_CLASS(const bool b);
@@ -92,8 +88,6 @@ public:
     sidx_t lastIndexOf(const String substr) const;
     sidx_t lastIndexOf(const String substr, idx_t start) const;
 
-    Array<String> split(Array<String> s = spacechars) const;
-
     String copy() const;
     bool merge(String other) const;
     int hashCode() const;
@@ -110,10 +104,16 @@ public:
     sulong ulongValue() const;
     float floatValue() const;
     double doubleValue() const;
+
+    inline bool toBool() {
+        return *this != "";
+    }
     
-    String operator=(const char * orig) const;
-    String operator=(const std::string & orig) const;
-    String operator=(const String orig) const;
+    String& operator=(const char * orig) const;
+    String& operator=(const std::string & orig) const;
+    String& operator=(const String orig) const;
+
+    String& operator+=(const String rhs) const;
 
     operator const char *() const;
     operator std::string() const;
@@ -131,13 +131,12 @@ private:
 
 bool operator==(const String lhs, const String rhs);
 bool operator<(const String lhs, const String rhs);
-String operator+=(const String lhs, const String rhs);
 String operator+(const String lhs, const String rhs);
 //String operator%(const String lhs, const String rhs);
 String operator&(const String lhs, const String(*rhs)(String));
 String operator&(const String(*lhs)(String), const String rhs);
 String operator*(const String lhs, const std::size_t len);
-String operator<<(std::ostream& lhs, const String rhs);
+std::ostream& operator<<(std::ostream& lhs, const String rhs);
 
 String tr(String rhs);
 String lc(String rhs);
