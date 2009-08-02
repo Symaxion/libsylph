@@ -5,33 +5,117 @@
 
 #include <string>
 
-SYLPH_START_NAMESPACE(OS)
+SYLPH_BEGIN_NAMESPACE
 
-namespace SC = Sylph::Core;
-
-void MacOSAppSelf::construct(int argc, char * argv[], char * apple[]) {
-    _me = new SC::File(apple[0]);
+MacOSAppSelf::MacOSAppSelf(int argc, char * argv[], char * apple[]) {
+    _location= File(apple[0]);
 }
 
-const SC::File * MacOSAppSelf::getBundle() {
-    if (_bundle == NULL) {
-        _bundle = new SC::File(_me->getParent().getParent().getParent());
-    }
-    return _bundle;
+const File& MacOSAppSelf::bundle() {
+    static File f = File(_location).parent().parent().parent();
+    return f;
 }
 
-const SC::File * MacOSAppSelf::getPrefix() {
-    if (_prefix == NULL) {
-        _prefix = new SC::File(getBundle(),"Contents");
-    }
-    return _prefix;
+const File& MacOSAppSelf::resourceDir() {
+    static File f = bundle() / "Contents/Resources";
+    return f;
 }
 
-const SC::File * MacOSAppSelf::getResourceDir() {
-    if (_resourcedir == NULL) {
-        _resourcedir = new SC::File(getBundle(), "Resources");
-    }
-    return _resourcedir;
+const File& MacOSAppSelf::resource(String rsc) {
+    return resourceDir() / rsc;
 }
 
-SYLPH_END_NAMESPACE(OS)
+const File& MacOSAppSelf::libraryDir() {
+    static File f = bundle() / "Contents/Frameworks";
+    return f;
+}
+
+const File& MacOSAppSelf::pluginDir() {
+    static File f = bundle() / "Contents/Plugins";
+    return f;
+}
+
+const File& MacOSAppSelf::plugindisabledDir() {
+    static File f = bundle() / "Contents/Plugins-Disabled";
+    return f;
+}
+
+const File& MacOSAppSelf::systemLibraryDir() {
+    static File f = "/Library";
+    return f;
+}
+
+const File& MacOSAppSelf::systemSettings() {
+    static File f = "/Library/Preferences/" + appName() + ".prp";
+    return f;
+}
+
+const File& MacOSAppSelf::systemSettingsDir() {
+    static File f = "/Library/Preferences";
+    return f;
+}
+
+const File& MacOSAppSelf::systemPluginDir() {
+    static File f = systemResource("Plugins");
+    return f;
+}
+
+const File& MacOSAppSelf::systemPluginDisabledDir() {
+    static File f = systemResource("Plugins-Disabled");
+    return f;
+}
+
+const File& MacOSAppSelf::systemResourceDir() {
+    static File f = "/Library/Application Support/"+appName();
+    return f;
+}
+
+const File& MacOSAppSelf::systemResource(String rsc) {
+    return systemResourceDir() / rsc;
+}
+
+const File& MacOSAppSelf::userHome() {
+    static File f = getpwuid(geteuid())->pw_name;
+    return f;
+}
+
+const File& MacOSAppSelf::userLibraryDir() {
+    static File f = userHome() / "Library";
+    return f;
+}
+
+const File& MacOSAppSelf::userSettings() {
+    static File f = userLibraryDir() / "Preferences/"+appName() + ".prp";
+    return f;
+}
+
+const File& MacOSAppSelf::userSettingsDir() {
+    static File f = userLibraryDir() / "Preferences";
+    return f;
+}
+
+const File& MacOSAppSelf::userPluginDir() {
+    static File f = userResource("Plugins");
+    return f;
+}
+
+const File& MacOSAppSelf::userPluginDisabledDir() {
+    static File f = userResource("Plugins-Disabled");
+    return f;
+}
+
+const File& MacOSAppSelf::userResourceDir() {
+    static File f = userLibraryDir() / "Application Support/" + appName();
+    return f;
+}
+
+const File& MacOSAppSelf::userResource(String rsc) {
+    return userResourceDir() / rsc;
+}
+
+const File& MacOSAppSelf::prefix() {
+    static File f = File(_location).parent().parent();
+    return f;
+}
+
+SYLPH_END_NAMESPACE

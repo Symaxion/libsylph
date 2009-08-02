@@ -1,6 +1,19 @@
 /*
- * File:   exception.h
- * Author: frank
+ * LibSylph Class Library
+ * Copyright (C) 2009 Frank "SeySayux" Erens <seysayux@gmail.com>
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the LibSylph Pulbic License as published
+ * by the LibSylph Developers; either version 1.0 of the License, or
+ * (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the LibSylph
+ * Public License for more details.
+ *
+ * You should have received a copy of the LibSylph Public License
+ * along with this Library, if not, contact the LibSylph Developers.
  *
  * Created on 14 november 2008, 8:07
  */
@@ -144,7 +157,7 @@ class Class : public ::Sylph::Exception { \
 public: \
     Class(const char * r = "", const char * f = "unknown", \
             const unsigned int l = 0) \
-    throw () : _reason(r), _file(f), _line(l) { \
+    throw () : ::Sylph::Exception(r,f,l) { \
     } \
     virtual const char* name() const throw() {\
         return #Class ; \

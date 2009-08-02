@@ -1,5 +1,6 @@
 #include "Application.h"
 #include "String.h"
+#include "File.h"
 
 #include <iostream>
 #include <cstdlib>
@@ -10,7 +11,7 @@
 #include "../OS/LinuxFHSAppSelf.h"
 #include "../OS/MacOSAppSelf.h"
 #include "../OS/MacOSFHSAppSelf.h"
-#include "../OS/WindowsAppSelf.h"
+//#include "../OS/WindowsAppSelf.h"
 
 
 SYLPH_BEGIN_NAMESPACE
@@ -38,9 +39,9 @@ ApplicationSelf * Application::self_app;
             case S_APPTYPE_MACOS_FHS:
                 self_app = new MacOSFHSAppSelf(argc,argv,apple);
                 break;
-            case S_APPTYPE_WINDOWS:
-                self_app = new WindowsAppSelf(argc,argv);
-                break;
+//            case S_APPTYPE_WINDOWS:
+//                self_app = new WindowsAppSelf(argc,argv);
+//                break;
             default:
                 std::cout << "LibSylph error: Unknown App Type! "<< "@"
                          << __FILE__<<":"<<__LINE__ << std::endl;

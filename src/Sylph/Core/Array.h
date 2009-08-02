@@ -1,6 +1,19 @@
-/* 
- * File:   Array.h
- * Author: frank
+/*
+ * LibSylph Class Library
+ * Copyright (C) 2009 Frank "SeySayux" Erens <seysayux@gmail.com>
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the LibSylph Pulbic License as published
+ * by the LibSylph Developers; either version 1.0 of the License, or
+ * (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the LibSylph
+ * Public License for more details.
+ *
+ * You should have received a copy of the LibSylph Public License
+ * along with this Library, if not, contact the LibSylph Developers.
  *
  * Created on 8 februari 2009, 14:18
  */
@@ -13,7 +26,6 @@
 #include "Comparable.h"
 #include "Exception.h"
 #include "Range.h"
-#include "Util.h"
 #include "Primitives.h"
 
 #include <algorithm>
@@ -21,8 +33,16 @@
 
 SYLPH_BEGIN_NAMESPACE
 class Any;
+template<class T> class Array;
 
 SYLPH_PUBLIC
+
+namespace z86E9RpL {
+    template <typename T, std::size_t N>
+    std::size_t carraysize(T(&)[N]) {
+        return N;
+    }
+}
 
 /**
  * Array_base provides a base class for the specialisations of Array.
@@ -33,55 +53,55 @@ class Array_base : public virtual Object {
     friend class Array<T>;
 public:
 
-    class iterator : public RandomAccessIterator<T, Array<T> > {
+    class iterator : public RandomAccessIterator<T, Array_base<T> > {
     public:
 
-        S_RANDOM_ACCESS_ITERATOR(iterator, T, Array<T>)
-        void construct(bool begin, Array<T>* obj) {
+        S_RANDOM_ACCESS_ITERATOR(iterator, T, Array_base<T>)
+        void construct(bool begin, Array_base<T>* obj) const {
             _obj = obj;
             _currentIndex = begin ? 0 : _obj->length;
         }
 
-        bool equals(iterator& other) {
+        virtual bool operator==(const iterator& other) const {
             return _currentIndex == other._currentIndex &&
-                    _obj == other._obj;
+                    _obj == other._obj && super::operator==(other);
         }
 
-        void copyFrom(iterator& other) {
+        void copyFrom(const iterator& other) const {
             _currentIndex = other._currentIndex;
             _obj = other._obj;
         }
 
-        pointer current() {
-            return *_obj[_currentIndex];
+        typename super::reference current() const {
+            return _obj[_currentIndex];
         }
 
-        bool hasNext() {
+        bool hasNext() const {
             return _obj->length < _currentIndex;
         }
 
-        void next() {
+        void next() const {
             _currentIndex++;
         }
 
-        bool hasPrevious() {
+        bool hasPrevious() const {
             return _currentIndex >= 0;
         }
 
-        void previous() {
+        void previous() const {
             currentIndex--;
         }
 
-        idx_t currentIndex() {
+        idx_t currentIndex() const {
             return _currentIndex;
         }
 
-        size_t length() {
+        size_t length() const {
             return _obj->length;
         }
     private:
         mutable idx_t _currentIndex;
-        Array<T>* _obj;
+        Array_base<T>* _obj;
     };
     S_ITERABLE(T)
 public:
@@ -135,7 +155,9 @@ public:
     Array_base(const std::initializer_list<T> & il) : _length(il.size()), length(_length) {
         data = new Data(_length);
         data->_carray = (T*) calloc(il.size(), sizeof (T));
-        carraycopy(il.begin(), 0, data->_carray, 0, il.size());
+        for (idx_t i = 0; i < il.size(); i++) {
+            data->_carray[i] = il.begin()[i];
+        }
     }
 
     /**
@@ -145,10 +167,13 @@ public:
      * reference counted data is created, its refcount set to 1.
      * @param array the c-style array
      */
-    Array_base(const T array[]) : _length(carraysize(array)), length(_length) {
+    Array_base(const T array[]) : _length(z86E9RpL::carraysize(array)),
+        length(_length) {
         data = new Data(_length);
         data->_carray = (T*) calloc(_length, sizeof (T));
-        carraycopy(array, 0, data->_carray, 0, _length);
+        for (idx_t i = 0; i < _length; i++) {
+            data->_carray[i] = array[i];
+        }
     }
 
     /**
@@ -223,7 +248,9 @@ public:
      */
     Array_base<T> copy() {
         Array_base<T> toReturn(length);
-        arraycopy(*this, 0, toReturn, 0, length);
+        for(idx_t i = 0; i < length; i++) {
+            toReturn[i] = *this[i];
+        }
         return toReturn;
     }
 
@@ -260,6 +287,7 @@ public:
         delete this->data->_carray;
         this->data->_carray = new T[this->data->_length];
     }
+
     /**
      * Swaps the data pointer of this Array with the other Array. The refcount
      * for the current data pointer gets decreased by 1, the refcount for the
@@ -376,6 +404,8 @@ protected:
 template <class T>
 class Array : public Array_base<T> {
 public:
+    using Array_base<T>::iterator;
+public:
 
     /**
      * Creates an Array with the specified length. A new instance of the
@@ -458,10 +488,6 @@ public:
     }
 };
 
-/**
- * Sylph style iterator for Array.
- */
-S_CREATE_SYLPH_ITERATOR(Array)
 
 /**
  * Compares the two Arrays on equality. To Arrays compare equal when their

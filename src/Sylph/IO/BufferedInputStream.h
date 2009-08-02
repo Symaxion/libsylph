@@ -1,6 +1,19 @@
-/* 
- * File:   BufferedInputStream.h
- * Author: Frank "SeySayux" Erens <seysayux@gmail.com>
+/*
+ * LibSylph Class Library
+ * Copyright (C) 2009 Frank "SeySayux" Erens <seysayux@gmail.com>
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the LibSylph Pulbic License as published
+ * by the LibSylph Developers; either version 1.0 of the License, or
+ * (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the LibSylph
+ * Public License for more details.
+ *
+ * You should have received a copy of the LibSylph Public License
+ * along with this Library, if not, contact the LibSylph Developers.
  *
  * Created on 30 juni 2009, 12:07
  */
@@ -9,18 +22,32 @@
 #define	BUFFEREDINPUTSTREAM_H_
 
 #include "InputStream.h"
+#include "../Core/Primitives.h"
 
 SYLPH_BEGIN_NAMESPACE
 SYLPH_PUBLIC
 class BufferedInputStream : public InputStream {
 public:
-    BufferedInputStream(const InputStream& _orig, size_t bufsize = 1024) :
-        orig(_orig), buffer(bufsize) {}
-    virtual ~BufferedOutputStream();
+    BufferedInputStream(const InputStream& _orig, size_t bufsize = 1024);
+    virtual ~BufferedInputStream();
+
+    fsize_t available() const = 0;
+    bool eof() const = 0;
+    bool markSupported() const { return true; }
+    void mark(fsize_t) = 0;
+    fsize_t skip(fsize_t) = 0;
+    void reset() = 0;
+
+    InputStream& operator>>(byte&) = 0;
 
 private:
+    void readNext();
     InputStream& orig;
     Array<byte> buffer;
+    size_t used;
+    idx_t currentIdx;
+    idx_t markpos;
+    idx_t marklen;
 };
 SYLPH_END_NAMESPACE
 

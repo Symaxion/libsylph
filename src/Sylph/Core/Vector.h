@@ -1,6 +1,19 @@
 /*
- * File:   vector.h
- * Author: frank
+ * LibSylph Class Library
+ * Copyright (C) 2009 Frank "SeySayux" Erens <seysayux@gmail.com>
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the LibSylph Pulbic License as published
+ * by the LibSylph Developers; either version 1.0 of the License, or
+ * (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the LibSylph
+ * Public License for more details.
+ *
+ * You should have received a copy of the LibSylph Public License
+ * along with this Library, if not, contact the LibSylph Developers.
  *
  * Created on 6 december 2008, 12:07
  */
@@ -32,37 +45,37 @@ public:
     class iterator : public RandomAccessIterator<T, Vector<T> > {
     public:
         S_RANDOM_ACCESS_ITERATOR(iterator,T,Vector<T>)
-        void construct(bool begin, Vector<T>* obj) {
+        void construct(bool begin, Vector<T>* obj) const {
             _obj = obj;
             _currentIndex = begin ? 0 : _obj->size();
         }
-        bool equals(iterator& other) {
+        bool operator==(const iterator& other) const {
             return _currentIndex == other._currentIndex &&
-                    _obj == other._obj;
+                    _obj == other._obj && super::operator==(other);
         }
-        void copyFrom(iterator& other) {
+        void copyFrom(iterator& other) const {
             _currentIndex = other._currentIndex;
             _obj = other._obj;
         }
-        pointer current() {
-            return *_obj[_currentIndex];
+        reference current() const {
+            return _obj[_currentIndex];
         }
-        bool hasNext() {
+        bool hasNext() const {
             return _obj->size() < _currentIndex;
         }
-        void next() {
+        void next() const {
             _currentIndex++;
         }
-        bool hasPrevious() {
+        bool hasPrevious() const {
             return _currentIndex >= 0;
         }
-        void previous() {
+        void previous() const {
             currentIndex--;
         }
-        idx_t currentIndex() {
+        idx_t currentIndex() const {
             return _currentIndex;
         }
-        size_t length() {
+        size_t length() const {
             return _obj->size();
         }
     private:
@@ -357,14 +370,13 @@ public:
     Vector<T*> deepCopy() const {
         Vector<T*> toReturn;
 
-        for(typename Vector<T*>::Iterator it = this->getIterator(); it->hasNext();) {
-            toReturn.push(new T(*it.next()));
+        for(typename Vector<T*>::iterator it = this->begin(); 
+                it != this->end(); ++it) {
+            toReturn.push(new T(*it));
         }
         return toReturn;
     }
 };
-
-S_CREATE_SYLPH_ITERATOR(Vector)
 
 SYLPH_END_NAMESPACE
 #endif	/* VECTOR_H_ */

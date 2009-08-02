@@ -112,7 +112,7 @@ PrintWriter& flush(PrintWriter& pw) {
 }
 
 PrintWriter& endl(PrintWriter& pw) {
-    return pw << S_NEWLINE_CHAR << flush;
+    return pw << '\n' << flush;
 }
 
 PrintWriter& ends(PrintWriter& pw) {

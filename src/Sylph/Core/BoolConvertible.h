@@ -1,6 +1,19 @@
-/* 
- * File:   BoolConvertible.h
- * Author: Frank "SeySayux" Erens <seysayux@gmail.com>
+/*
+ * LibSylph Class Library
+ * Copyright (C) 2009 Frank "SeySayux" Erens <seysayux@gmail.com>
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the LibSylph Pulbic License as published
+ * by the LibSylph Developers; either version 1.0 of the License, or
+ * (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the LibSylph
+ * Public License for more details.
+ *
+ * You should have received a copy of the LibSylph Public License
+ * along with this Library, if not, contact the LibSylph Developers.
  *
  * Created on 12 juli 2009, 19:44
  */
@@ -34,12 +47,14 @@ protected:
     }
 };
 
-template <typename T = void> class BoolConvertible : public BoolConvertible_base {
+template <typename T = void>
+class BoolConvertible : public BoolConvertible_base {
 public:
 
     operator bool_type() const {
         return (static_cast<const T*> (this))->toBool()
-                ? &BoolConvertible_base::this_type_does_not_support_comparisons : 0;
+                ? &BoolConvertible::this_type_does_not_support_comparisons
+                : 0;
     }
 protected:
 
@@ -47,17 +62,18 @@ protected:
     }
 };
 
-template<> class BoolConvertible<void> : public BoolConvertible_base {
+template<>
+class BoolConvertible<void> : public BoolConvertible_base {
 public:
 
     operator bool_type() const {
         return toBool() == true ?
-                &BoolConvertible_base::this_type_does_not_support_comparisons : 0;
+                &BoolConvertible::this_type_does_not_support_comparisons : 0;
     }
 protected:
     virtual bool toBool() const = 0;
 
-    virtual ~safe_bool() {
+    virtual ~BoolConvertible() {
     }
 };
 
