@@ -1,17 +1,31 @@
-/* 
- * File:   Iterator.h
- * Author: frank
+/*
+ * LibSylph Class Library
+ * Copyright (C) 2009 Frank "SeySayux" Erens <seysayux@gmail.com>
  *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the LibSylph Pulbic License as published
+ * by the LibSylph Developers; either version 1.0 of the License, or
+ * (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the LibSylph
+ * Public License for more details.
+ *
+ * You should have received a copy of the LibSylph Public License
+ * along with this Library, if not, contact the LibSylph Developers.
+ * 
  * Created on 6 december 2008, 17:16
  */
 
-#ifndef _ITERATOR_H
-#define	_ITERATOR_H
+#ifndef ITERATOR_H_
+#define	ITERATOR_H_
 
 #include "Object.h"
 #include "Exception.h"
 #include "Iterable.h"
 #include <iterator>
+//#include "Foreach.h" -- this line is at the bottom of the file ;)
 
 SYLPH_BEGIN_NAMESPACE
 SYLPH_PUBLIC
@@ -26,8 +40,9 @@ enum itr_end_t {
 
 
 #define S_FORWARD_ITERATOR(self,type,object) \
+    typedef ForwardIterator<type,object> super; \
     self() : ::Sylph::ForwardIterator<type,object>(){ \
-        construct(false,null); \
+        construct(false,NULL); \
     } \
     self(itr_begin_t t, object* obj) : \
       ::Sylph::ForwardIterator<type,object>(t,obj) { \
@@ -37,13 +52,14 @@ enum itr_end_t {
       ::Sylph::ForwardIterator<type,object>(t,obj) { \
         construct(false, obj); \
     } \
-    self(self<type,object>& other) : \
+    self(self& other) : \
      ::Sylph::ForwardIterator<type,object>(other) \
     { copyFrom(other); }
 
 #define S_BIDIRECTIONAL_ITERATOR(self,type,object) \
+    typedef BidirectionalIterator<type,object> super; \
     self() : ::Sylph::BidirectionalIterator<type,object>(){ \
-        construct(false,null); \
+        construct(false,NULL); \
     } \
     self(itr_begin_t t, object* obj) : \
       ::Sylph::BidirectionalIterator<type,object>(t,obj) { \
@@ -53,13 +69,14 @@ enum itr_end_t {
       ::Sylph::BidirectionalIterator<type,object>(t,obj) { \
         construct(false, obj); \
     } \
-    self(self<type,object>& other) : \
+    self(self& other) : \
      ::Sylph::BidirectionalIterator<type,object>(other) \
     { copyFrom(other); }
 
 #define S_RANDOM_ACCESS_ITERATOR(self,type,object) \
+    typedef RandomAccessIterator<type,object> super; \
     self() : ::Sylph::RandomAccessIterator<type,object>(){ \
-        construct(false,null); \
+        construct(false,NULL); \
     } \
     self(itr_begin_t t, object* obj) : \
       ::Sylph::RandomAccessIterator<type,object>(t,obj) { \
@@ -69,10 +86,11 @@ enum itr_end_t {
       ::Sylph::RandomAccessIterator<type,object>(t,obj) { \
         construct(false, obj); \
     } \
-    self(self<type,object>& other) : \
+    self(self& other) : \
      ::Sylph::RandomAccessIterator<type,object>(other) \
     { copyFrom(other); }
 
+S_CREATE_EXCEPTION(IteratorException);
 
 /**
  * Facade used to simplify usage of forward iterators. This class provides
@@ -88,7 +106,7 @@ enum itr_end_t {
  * please use the <code>S_FORWARD_ITERATOR(</code><i>iterator-name, type-name,
  * object-to-iterate-over</i><code>)</code>
  */
-template<class T, class IteratedObject>
+template<class T, class I>
 class ForwardIterator : public Object {
 public:
     typedef std::forward_iterator_tag iterator_category;
@@ -96,6 +114,7 @@ public:
     typedef ptrdiff_t difference_type;
     typedef T* pointer;
     typedef T& reference;
+    typedef ForwardIterator<T, I> self_type;
 public:
     // Implementation of the required functions in terms of the overridable
     // functions
@@ -103,13 +122,13 @@ public:
     ForwardIterator() : _end_reached_(0) {
     }
 
-    ForwardIterator(itr_begin_t, IteratedObject* obj) : _end_reached_(0) {
+    ForwardIterator(itr_begin_t, I* obj) : _end_reached_(0) {
     }
 
-    ForwardIterator(itr_end_t, IteratedObject* obj) : _end_reached_(2) {
+    ForwardIterator(itr_end_t, I* obj) : _end_reached_(2) {
     }
 
-    ForwardIterator(ForwardIterator<T, IteratedObject>& other) :
+    ForwardIterator(ForwardIterator<T, I>& other) :
     _end_reached_(other._end_reached_) {
         copyFrom(other);
     }
@@ -141,7 +160,7 @@ public:
         return current();
     }
 
-    const ForwardIterator<T, IteratedObject> & operator++() const {
+    const ForwardIterator<T, I> & operator++() const {
         if (_end_reached_ == 2) sthrow(IteratorException, "End of iterator");
         else if (_end_reached_ == 1) {
             _end_reached_ = 2;
@@ -153,7 +172,7 @@ public:
         }
     }
 
-    ForwardIterator<T, IteratedObject> & operator++() {
+    ForwardIterator<T, I> & operator++() {
         if (_end_reached_ == 2) sthrow(IteratorException, "End of iterator");
         else if (_end_reached_ == 1) {
             _end_reached_ = 2;
@@ -165,21 +184,8 @@ public:
         }
     }
 
-    const ForwardIterator<T, IteratedObject> operator++(int) const {
-        ForwardIterator<T, IteratedObject> toReturn(*this);
-        if (_end_reached_ == 2) sthrow(IteratorException, "End of iterator");
-        else if (_end_reached_ == 1) {
-            _end_reached_ = 2;
-            return toReturn;
-        } else {
-            next();
-            if (!hasNext()) _end_reached_ = 1;
-            return *toReturn;
-        }
-    }
-
-    ForwardIterator<T, IteratedObject> operator++(int) {
-        ForwardIterator<T, IteratedObject> toReturn(*this);
+    const ForwardIterator<T, I> operator++(int) const {
+        ForwardIterator<T, I> toReturn(*this);
         if (_end_reached_ == 2) sthrow(IteratorException, "End of iterator");
         else if (_end_reached_ == 1) {
             _end_reached_ = 2;
@@ -191,18 +197,31 @@ public:
         }
     }
 
-    ForwardIterator<T, IteratedObject> & operator=
-            (const ForwardIterator<T, IteratedObject>& other) {
+    ForwardIterator<T, I> operator++(int) {
+        ForwardIterator<T, I> toReturn(*this);
+        if (_end_reached_ == 2) sthrow(IteratorException, "End of iterator");
+        else if (_end_reached_ == 1) {
+            _end_reached_ = 2;
+            return toReturn;
+        } else {
+            next();
+            if (!hasNext()) _end_reached_ = 1;
+            return *toReturn;
+        }
+    }
+
+    ForwardIterator<T, I> & operator=
+            (const ForwardIterator<T, I>& other) {
         copyFrom(other);
         _end_reached_ = other._end_reached_;
         return *this;
     }
 
-    virtual bool operator==(const ForwardIterator<T, IteratedObject>& other) const {
-        return (_end_reached_ == other._end_reached_) && equals(other);
+    virtual bool operator==(const ForwardIterator<T, I>& other) const {
+        return (_end_reached_ == other._end_reached_);
     }
 
-    bool operator!=(const ForwardIterator<T, IteratedObject>& other) const {
+    bool operator!=(const ForwardIterator<T, I>& other) const {
         return !(*this == other);
     }
 
@@ -217,14 +236,14 @@ public:
      * collection, <i>false</i> if it points to the end.
      * @param obj The object this iterator will iterate over.
      */
-    virtual void construct(bool begin, IteratedObject* obj) const = 0;
+    virtual void construct(bool begin, I* obj) const = 0;
     /**
-     * <b>OVERRIDE THIS METHOD</b> Returns a pointer to the object the iterator
-     * is currnetly pointing at. Note that no beyond-the-end checking needs
+     * <b>OVERRIDE THIS METHOD</b> Returns a reference to the object the iterator
+     * is currently pointing at. Note that no beyond-the-end checking needs
      * to be done, this is all done automagically for you.
      * @return The object this iterator is currently pointing at.
      */
-    virtual pointer current() const = 0;
+    virtual reference current() const = 0;
     /**
      * <b>OVERRIDE THIS METHOD</b> Sets the iterator one place forward. Note
      * that no beyond-the-end checking needs to be done, this is all done
@@ -240,138 +259,139 @@ public:
      */
     virtual bool hasNext() const = 0;
     /**
-     * <b>OVERRIDE THIS METHOD</b> Tells wheter this Iterator is equal to any
-     * other Iterator over the same type of collection.
-     * @param other An other ForwardIterator to compare this one against.
-     * @return <i>true</i> iff the two iterators are completely equal (i.e.
-     * they iteratate over the same collection and currently point to the same
-     * object), false otherwise.
-     */
-    virtual bool equals(const ForwardIterator<T, IteratedObject>& other) const = 0;
-    /**
      * <b>OVERRIDE THIS METHOD</b> Copies this iterator's fields from an other
      * ForwardIterator over the same type of collection, such that
      * <code>this->equals(other)</code> is <i>true</i>
      * @param other An other Iterator to copy the current one from.
      */
-    virtual void copyFrom(ForwardIterator<T, IteratedObject>& other) const = 0;
+    virtual void copyFrom(ForwardIterator<T, I>& other) const = 0;
     /**
      * Do not use or modify!
      */
     mutable unsigned char _end_reached_;
 };
 
-template<class T, class IteratedObject>
-class BidirectionalIterator : public ForwardIterator<T, IteratedObject> {
+template<class T, class I>
+class BidirectionalIterator : public ForwardIterator<T, I> {
 public:
     typedef std::bidirectional_iterator_tag iterator_category;
+    typedef ForwardIterator<T, I> super;
+    typedef BidirectionalIterator<T, I> self_type;
 public:
 
-    BidirectionalIterator() : _end_reached_(0) {
+    BidirectionalIterator() : ForwardIterator<T, I>() {
     }
 
-    BidirectionalIterator(itr_begin_t, IteratedObject* obj) : _end_reached_(0) {
+    BidirectionalIterator(itr_begin_t, I* obj) :
+            ForwardIterator<T,I>() {
     }
 
-    BidirectionalIterator(itr_end_t, IteratedObject* obj) : _end_reached_(2) {
+    BidirectionalIterator(itr_end_t, I* obj) :
+            ForwardIterator<T,I>() {
     }
 
-    BidirectionalIterator(BidirectionalIterator<T, IteratedObject>& other) :
-    _end_reached_(other._end_reached_) {
+    BidirectionalIterator(BidirectionalIterator<T, I>& other) :
+            ForwardIterator<T,I>() {
         copyFrom(other);
     }
 
-    BidirectionalIterator<T, IteratedObject> & operator--() {
-        if (_end_reached_ == 2) {
-            _end_reached_ = 1;
+    BidirectionalIterator<T, I> & operator--() {
+        if (ForwardIterator<T,I>::_end_reached_ == 2) {
+            ForwardIterator<T,I>::_end_reached_ = 1;
             return *this;
         } else if (!hasPrevious()) {
             sthrow(IteratorException, "Begin of iterator");
         } else {
-            if (_end_reached_ == 1) _end_reached_ = 0;
+            if (ForwardIterator<T,I>::_end_reached_ == 1)
+                ForwardIterator<T,I>::_end_reached_ = 0;
             previous();
             return *this;
         }
     }
 
-    const BidirectionalIterator<T, IteratedObject> & operator--() const {
-        if (_end_reached_ == 2) {
-            _end_reached_ = 1;
+    const BidirectionalIterator<T, I> & operator--() const {
+        if (ForwardIterator<T,I>::_end_reached_ == 2) {
+            ForwardIterator<T,I>::_end_reached_ = 1;
             return *this;
         } else if (!hasPrevious()) {
             sthrow(IteratorException, "Begin of iterator");
         } else {
-            if (_end_reached_ == 1) _end_reached_ = 0;
+            if (ForwardIterator<T,I>::_end_reached_ == 1)
+                ForwardIterator<T,I>::_end_reached_ = 0;
             previous();
             return *this;
         }
     }
 
-    BidirectionalIterator<T, IteratedObject> operator--(int) {
+    BidirectionalIterator<T, I> operator--(int) {
         BidirectionalIterator toReturn(*this);
-        if (_end_reached_ == 2) {
-            _end_reached_ = 1;
+        if (ForwardIterator<T,I>::_end_reached_ == 2) {
+            ForwardIterator<T,I>::_end_reached_ = 1;
             return *toReturn;
         } else if (!hasPrevious()) {
             sthrow(IteratorException, "Begin of iterator");
         } else {
-            if (_end_reached_ == 1) _end_reached_ = 0;
+            if (ForwardIterator<T,I>::_end_reached_ == 1)
+                ForwardIterator<T,I>::_end_reached_ = 0;
             previous();
             return *toReturn;
         }
     }
 
-    const BidirectionalIterator<T, IteratedObject> operator--(int) const {
+    const BidirectionalIterator<T, I> operator--(int) const {
         BidirectionalIterator toReturn(*this);
-        if (_end_reached_ == 2) {
-            _end_reached_ = 1;
+        if (ForwardIterator<T,I>::_end_reached_ == 2) {
+            ForwardIterator<T,I>::_end_reached_ = 1;
             return *toReturn;
         } else if (!hasPrevious()) {
             sthrow(IteratorException, "Begin of iterator");
         } else {
-            if (_end_reached_ == 1) _end_reached_ = 0;
+            if (ForwardIterator<T,I>::_end_reached_ == 1)
+                ForwardIterator<T,I>::_end_reached_ = 0;
             previous();
             return *toReturn;
         }
     }
 
-    bool operator==(const BidirectionalIterator<T, IteratedObject>& other) const {
-        return ((_end_reached_ == other._end_reached_) ||
-                (hasPrevious() == other.hasPrevious())) && equals(other);
+    virtual bool operator==(const BidirectionalIterator<T, I>& other) const {
+        return ((ForwardIterator<T,I>::_end_reached_ == other._end_reached_) ||
+                (hasPrevious() == other.hasPrevious()));
     }
 public:
     virtual bool hasPrevious() const = 0;
     virtual void previous() const = 0;
 };
 
-template<class T, class IteratedObject>
-class RandomAccessIterator : public BidirectionalIterator<T, IteratedObject> {
+template<class T, class I>
+class RandomAccessIterator : public BidirectionalIterator<T, I> {
 public:
     typedef std::random_access_iterator_tag iterator_category;
+    typedef BidirectionalIterator<T, I> super;
+    typedef RandomAccessIterator<T, I> self_type;
 public:
 
-    RandomAccessIterator() : _end_reached_(0) {
+    RandomAccessIterator() : super() {
     }
 
-    RandomAccessIterator(itr_begin_t, IteratedObject* obj) : _end_reached_(0) {
+    RandomAccessIterator(itr_begin_t, I* obj) : super() {
     }
 
-    RandomAccessIterator(itr_end_t, IteratedObject* obj) : _end_reached_(2) {
+    RandomAccessIterator(itr_end_t, I* obj) : super() {
     }
 
-    RandomAccessIterator(BidirectionalIterator<T, IteratedObject>& other) :
-    _end_reached_(other._end_reached_) {
+    RandomAccessIterator(BidirectionalIterator<T, I>& other) :
+            super() {
         copyFrom(other);
     }
 
-    RandomAccessIterator<T, IteratedObject> & operator+=(unsigned int i) {
+    RandomAccessIterator<T, I> & operator+=(unsigned int i) {
         ptrdiff_t diff = i;
         if (i >= 0) while (diff--) ++(*this);
         else while (diff++) --(*this);
         return *this;
     }
 
-    const RandomAccessIterator<T, IteratedObject> & operator+=
+    const RandomAccessIterator<T, I> & operator+=
             (unsigned int i) const {
         ptrdiff_t diff = i;
         if (i >= 0) while (diff--) ++(*this);
@@ -379,55 +399,55 @@ public:
         return *this;
     }
 
-    RandomAccessIterator<T, IteratedObject> & operator-=(unsigned int i) {
+    RandomAccessIterator<T, I> & operator-=(unsigned int i) {
         return *this += -i;
     }
 
-    const RandomAccessIterator<T, IteratedObject> & operator-=
+    const RandomAccessIterator<T, I> & operator-=
             (unsigned int i) const {
         return *this += -i;
     }
 
-    const RandomAccessIterator<T, IteratedObject> operator+
-    (unsigned int i) const {
-        RandomAccessIterator<T, IteratedObject> toReturn(*this);
+    const RandomAccessIterator<T, I> operator+
+            (unsigned int i) const {
+        RandomAccessIterator<T, I> toReturn(*this);
         return toReturn += i;
     }
 
-    RandomAccessIterator<T, IteratedObject> operator-(unsigned int i) {
+    RandomAccessIterator<T, I> operator-(unsigned int i) {
         return *this + -i;
     }
 
-    ptrdiff_t operator-(const RandomAccessIterator<T, IteratedObject>&
+    ptrdiff_t operator-(const RandomAccessIterator<T, I>&
             other) const {
         if (*this > other) return this->currentIndex() - other.currentIndex();
         else return other.currentIndex() - this->currentIndex();
     }
 
-    const reference operator[](unsigned int offset) const {
+    const typename super::reference operator[](unsigned int offset) const {
         return *(*this +offset);
     }
 
-    reference operator[](unsigned int offset) {
+    typename super::reference operator[](unsigned int offset) {
         return *(*this +offset);
     }
 
-    bool operator>(const RandomAccessIterator<T, IteratedObject>&
+    bool operator>(const RandomAccessIterator<T, I>&
             other) const {
         return this->currentIndex() > other.currentIndex();
     }
 
-    bool operator<(const RandomAccessIterator<T, IteratedObject>&
+    bool operator<(const RandomAccessIterator<T, I>&
             other) const {
         return this->currentIndex() < other.currentIndex();
     }
 
-    bool operator>=(const RandomAccessIterator<T, IteratedObject>&
+    bool operator>=(const RandomAccessIterator<T, I>&
             other) const {
         return this->currentIndex() >= other.currentIndex();
     }
 
-    bool operator<=(const RandomAccessIterator<T, IteratedObject>&
+    bool operator<=(const RandomAccessIterator<T, I>&
             other) const {
         return this->currentIndex() <= other.currentIndex();
     }
@@ -437,9 +457,9 @@ public:
     virtual size_t length() = 0;
 };
 
-template<T, IteratedObject>
-RandomAccessIterator<T, IteratedObject> operator+
-    (unsigned int i, const RandomAccessIterator<T, IteratedObject> itr) {
+template<class T, class I>
+RandomAccessIterator<T, I> operator+
+    (unsigned int i, const RandomAccessIterator<T, I> itr) {
     return itr+i;
 }
 
@@ -448,8 +468,6 @@ RandomAccessIterator<T, IteratedObject> operator+
  * interface of a SylphIterator is similar to a Java-style iterator, but it is
  * backed by a STL iterator and can therefore be used for any class supporitng
  * STL iterators. <p>
- * To create a Sylph-style iterator for a certian class, use the <code>
- * S_CREATE_SYLPH_ITERATOR(</code><i>class-name</i><code>)</code> macro.
  */
 template<class Iter>
 class SylphIterator : public virtual Object {
@@ -485,7 +503,7 @@ public:
      * @return The next entry
      */
     virtual const typename Iter::reference next() const {
-        Iter::reference toReturn = *itr;
+        typename Iter::reference toReturn = *itr;
         ++itr;
         return toReturn;
     }
@@ -598,58 +616,22 @@ private:
     Iter itr;
 };
 
-#define S_CREATE_SYLPH_ITERATOR(Class) \
-typedef SylphIterator< Class##::iterator > Class##Iterator; \
-template<class T> \
-const Class##Iterator Class##<T>::getIterator() { \
-    return Class##Iterator(this->begin()); \
-}\
-template<class T>\
-Class##Iterator Class##<T>::getMutableIterator() { \
-    return Class##Iterator(this->begin()); \
+template<class Collection>
+const SylphIterator<typename Collection::const_iterator> SylphItr(
+        const Collection& col) {
+    return SylphIterator<typename Collection::const_iterator>(col.begin());
+}
+
+template<class Collection>
+SylphIterator<typename Collection::iterator> SylphMitr(Collection & col) {
+    return SylphIterator<typename Collection::iterator>(col.begin());
 }
 
 
 SYLPH_END_NAMESPACE
 
-// note : there is a reason why the name is so strange -- do not use directly!
+// Previously defined here, now defined elsewhere
+#include "Foreach.h"
 
-struct s_foreach_container_base_7tQmTc4i {
-};
-
-template<class T>
-class s_foreach_container_fjAk8tb1 : public s_foreach_container_base_7tQmTc4i {
-public:
-
-    inline s_foreach_container_fjAk8tb1(const T& t) : c(t), brk(0), i(c) {
-    };
-    const T c;
-    mutable int brk;
-    typename T::Iterator i;
-
-    inline bool condition() const {
-        return (!brk++ && i.hasNext());
-    }
-};
-
-template<class T>
-inline s_foreach_container_base_7tQmTc4i s_foreach_container_new(const T & t) {
-    return s_foreach_container_fjAk8tb1<T > (t);
-}
-
-template<class T>
-inline s_foreach_container_fjAk8tb1<T> * sf_cast(
-const s_foreach_container_base_7tQmTc4i& bas, const T&) {
-    return static_cast<s_foreach_container_fjAk8tb1<T> > (bas);
-}
-
-#define sforeach(variable,container) \
-for (s_foreach_container_base_7tQmTc4i & _container_ = \
-         s_foreach_container_new(container); \
-         sf_cast(_container_,container)->condition(); )               \
-        for (variable = sf_cast(_container_, container)->i++; \
-         sf_cast(_container_, container)->brk; \
-             --sf_cast(_container_, container)->brk)
-
-#endif	/* _ITERATOR_H */
+#endif	/* ITERATOR_H_ */
 

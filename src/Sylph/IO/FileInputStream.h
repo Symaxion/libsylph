@@ -15,26 +15,20 @@
  * You should have received a copy of the LibSylph Public License
  * along with this Library, if not, contact the LibSylph Developers.
  *
- * Created on 19 december 2008, 14:46
+ * Created on 22 juli 2009, 17:01
  */
 
-#ifndef _HASHABLE_H
-#define	_HASHABLE_H
+#ifndef FILEINPUTSTREAM_H_
+#define	FILEINPUTSTREAM_H_
 
-#include "Object.h"
-#include "Primitives.h"
-
-/*< rev Object-1
- *  rev Hashable-1
- */
+#include "InputStream.h"
 
 SYLPH_BEGIN_NAMESPACE
 SYLPH_PUBLIC
-class Hashable : public virtual Object {
-public:
-    virtual sint hashCode() const = 0;
+class FileInputStream : public InputStream {
+    // 2do
 };
 SYLPH_END_NAMESPACE
 
-#endif	/* _HASHABLE_H */
+#endif	/* FILEINPUTSTREAM_H_ */
 

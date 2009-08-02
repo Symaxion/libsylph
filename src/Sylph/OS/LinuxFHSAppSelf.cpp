@@ -1,14 +1,11 @@
 #include "LinuxFHSAppSelf.h"
+#include "Sylph/Core/File.h"
 
 #include <binreloc.h>
 
-#include <string>
+SYLPH_BEGIN_NAMESPACE
 
-SYLPH_START_NAMESPACE(OS)
-
-namespace SC = Sylph::Core;
-
-void LinuxFHSAppSelf::construct(int argc, char * argv[], char * apple[]) {
+LinuxFHSAppSelf::LinuxFHSAppSelf(int argc, char * argv[]) {
     // First, make binreloc work...
     BrInitError error;
 
@@ -21,22 +18,105 @@ void LinuxFHSAppSelf::construct(int argc, char * argv[], char * apple[]) {
 
 }
 
-const SC::File * LinuxFHSAppSelf::getBundle() {
-    return NULL;
+const File& LinuxFHSAppSelf::bundle() {
+    return prefix();
 }
 
-const SC::File * LinuxFHSAppSelf::getPrefix() {
-    if (_prefix == NULL) {
-        _prefix = new SC::File(br_find_prefix(""));
-    }
-    return _prefix;
+const File& LinuxFHSAppSelf::resourceDir() {
+    static File f = prefix() / "share" / appName();
+    return f;
 }
 
-const SC::File * LinuxFHSAppSelf::getResourceDir() {
-    if (_resourcedir == NULL) {
-        _resourcedir = new SC::File(br_find_data_dir(""));
-    }
-    return _resourcedir;
+const File& LinuxFHSAppSelf::resource(String rsc) {
+    return resourceDir() / rsc;
 }
 
-SYLPH_END_NAMESPACE(OS)
+const File& LinuxFHSAppSelf::libraryDir() {
+    static File f = prefix() / "lib";
+    return f;
+}
+
+const File& LinuxFHSAppSelf::pluginDir() {
+    static File f = prefix() / "lib" / appName() / "plugins";
+    return f;
+}
+
+const File& LinuxFHSAppSelf::plugindisabledDir() {
+    static File f = prefix() / "lib" / appName() / "plugins-disabled";
+}
+
+const File& LinuxFHSAppSelf::systemLibraryDir() {
+    return libraryDir();
+}
+
+const File& LinuxFHSAppSelf::systemSettings() {
+    static File f = systemSettingsDir() / (appName() + ".conf");
+    return f;
+}
+
+const File& LinuxFHSAppSelf::systemSettingsDir() {
+    static File f = "/etc/" + appName() + ".d";
+    return f;
+}
+
+const File& LinuxFHSAppSelf::systemPluginDir() {
+    return pluginDir();
+}
+
+const File& LinuxFHSAppSelf::systemPluginDisabledDir() {
+    return plugindisabledDir();
+}
+
+const File& LinuxFHSAppSelf::systemResourceDir() {
+    return resourceDir();
+}
+
+const File& LinuxFHSAppSelf::systemResource(String rsc) {
+    return resource(rsc);
+}
+
+const File& LinuxFHSAppSelf::userHome() {
+    static File f = getpwuid(geteuid())->pw_name;
+    return f;
+}
+
+const File& LinuxFHSAppSelf::userLibraryDir() {
+    static File f = userHome() / ".local/lib";
+    return f;
+}
+
+const File& LinuxFHSAppSelf::userSettings() {
+    static File f = userSettingsDir() / (appName()+".conf");
+    return f;
+}
+
+const File& LinuxFHSAppSelf::userSettingsDir() {
+    static File f = userHome() / ".config" / appName();
+    return f;
+}
+
+const File& LinuxFHSAppSelf::userPluginDir() {
+    static File f = userLibraryDir() / appName() / "plugins";
+    return f;
+}
+
+const File& LinuxFHSAppSelf::userPluginDisabledDir() {
+    static File f = userLibraryDir() / appName() / "plugins-disabled";
+    return f;
+}
+
+const File& LinuxFHSAppSelf::userResourceDir() {
+    static File f = userHome() / ".local/share";
+    return f;
+}
+
+const File& LinuxFHSAppSelf::userResource(String rsc) {
+    return userResourceDir() / rsc;
+}
+
+const File& LinuxFHSAppSelf::prefix() {
+    File f = File(_location).parent().parent();
+    return f;
+}
+
+SYLPH_END_NAMESPACE

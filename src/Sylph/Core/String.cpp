@@ -505,10 +505,6 @@ std::ostream & operator<<(std::ostream& lhs, const String rhs) {
     return lhs << rhs.utf8();
 }
 
-String tr(String rhs) {
-    //2do
-}
-
 String lc(String rhs) {
     return rhs.toLowerCase();
 }

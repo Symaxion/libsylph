@@ -1,8 +1,21 @@
 /*
- * String.h
+ * LibSylph Class Library
+ * Copyright (C) 2009 Frank "SeySayux" Erens <seysayux@gmail.com>
  *
- *  Created on: 26-nov-2008
- *      Author: frank
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the LibSylph Pulbic License as published
+ * by the LibSylph Developers; either version 1.0 of the License, or
+ * (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the LibSylph
+ * Public License for more details.
+ *
+ * You should have received a copy of the LibSylph Public License
+ * along with this Library, if not, contact the LibSylph Developers.
+ *
+ * Created on: 26 november 2008
  */
 
 #ifndef STRING_H_
@@ -13,6 +26,9 @@
 #include "Primitives.h"
 #include "Hashable.h"
 #include "BoolConvertible.h"
+
+// for convenience
+#include "I18N.h"
 
 #include <cstdint>
 #include <string>
@@ -46,7 +62,7 @@ class SYLPH_STRING_CLASS : public Hashable,
     friend String operator&(const String lhs, const String(*rhs)(String));
     friend String operator&(const String(*lhs)(String), const String rhs);
     friend String operator*(const String lhs, const std::size_t len);
-    friend String operator<<(std::ostream& lhs, const String rhs);
+    friend std::ostream& operator<<(std::ostream& lhs, const String rhs);
 
 public:
     SYLPH_STRING_CLASS();
@@ -138,7 +154,6 @@ String operator&(const String(*lhs)(String), const String rhs);
 String operator*(const String lhs, const std::size_t len);
 std::ostream& operator<<(std::ostream& lhs, const String rhs);
 
-String tr(String rhs);
 String lc(String rhs);
 String uc(String rhs);
 String t(String rhs);

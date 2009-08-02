@@ -1,34 +1,115 @@
-#include "MacOSAppSelf.h"
+#include "MacOSFHSAppSelf.h"
 #include "Sylph/Core/File.h"
 
 #include <binreloc.h>
 
 #include <string>
 
-SYLPH_START_NAMESPACE(OS)
+SYLPH_BEGIN_NAMESPACE
 
-namespace SC = Sylph::Core;
-
-void MacOSFHSAppSelf::construct(int argc, char * argv[], char * apple[]) {
-    _me = new SC::File(apple[0]);
+MacOSFHSAppSelf::MacOSFHSAppSelf(int argc, char * argv[], char * apple[]) {
+    _location= File(apple[0]);
 }
 
-const SC::File * MacOSFHSAppSelf::getBundle() {
-    return NULL;
+const File& MacOSFHSAppSelf::bundle() {
+    return prefix();
 }
 
-const SC::File * MacOSFHSAppSelf::getPrefix() {
-    if (_prefix == NULL) {
-        _prefix = new SC::File(_me->getParent().getParent());
-    }
-    return _prefix;
+const File& MacOSFHSAppSelf::resourceDir() {
+    static File f = prefix() / "share" / appName();
+    return f;
 }
 
-const SC::File * MacOSFHSAppSelf::getResourceDir() {
-    if (_resourcedir == NULL) {
-        _resourcedir = new SC::File(getBundle(), "share");
-    }
-    return _resourcedir;
+const File& MacOSFHSAppSelf::resource(String rsc) {
+    return resourceDir() / rsc;
 }
 
-SYLPH_END_NAMESPACE(OS)
+const File& MacOSFHSAppSelf::libraryDir() {
+    static File f = prefix() / "lib";
+    return f;
+}
+
+const File& MacOSFHSAppSelf::pluginDir() {
+    static File f = prefix() / "lib" / appName() / "plugins";
+    return f;
+}
+
+const File& MacOSFHSAppSelf::plugindisabledDir() {
+    static File f = prefix() / "lib" / appName() / "plugins-disabled";
+}
+
+const File& MacOSFHSAppSelf::systemLibraryDir() {
+    return libraryDir();
+}
+
+const File& MacOSFHSAppSelf::systemSettings() {
+    static File f = systemSettingsDir() / (appName() + ".conf");
+    return f;
+}
+
+const File& MacOSFHSAppSelf::systemSettingsDir() {
+    static File f = "/etc/" + appName() + ".d";
+    return f;
+}
+
+const File& MacOSFHSAppSelf::systemPluginDir() {
+    return pluginDir();
+}
+
+const File& MacOSFHSAppSelf::systemPluginDisabledDir() {
+    return plugindisabledDir();
+}
+
+const File& MacOSFHSAppSelf::systemResourceDir() {
+    return resourceDir();
+}
+
+const File& MacOSFHSAppSelf::systemResource(String rsc) {
+    return resource(rsc);
+}
+
+const File& MacOSFHSAppSelf::userHome() {
+    static File f = getpwuid(geteuid())->pw_name;
+    return f;
+}
+
+const File& MacOSFHSAppSelf::userLibraryDir() {
+    static File f = userHome() / ".local/lib";
+    return f;
+}
+
+const File& MacOSFHSAppSelf::userSettings() {
+    static File f = userSettingsDir() / (appName()+".conf");
+    return f;
+}
+
+const File& MacOSFHSAppSelf::userSettingsDir() {
+    static File f = userHome() / ".config" / appName();
+    return f;
+}
+
+const File& MacOSFHSAppSelf::userPluginDir() {
+    static File f = userLibraryDir() / appName() / "plugins";
+    return f;
+}
+
+const File& MacOSFHSAppSelf::userPluginDisabledDir() {
+    static File f = userLibraryDir() / appName() / "plugins-disabled";
+    return f;
+}
+
+const File& MacOSFHSAppSelf::userResourceDir() {
+    static File f = userHome() / ".local/share";
+    return f;
+}
+
+const File& MacOSFHSAppSelf::userResource(String rsc) {
+    return userResourceDir() / rsc;
+}
+
+const File& MacOSFHSAppSelf::prefix() {
+    File f = File(_location).parent().parent();
+    return f;
+}
+
+SYLPH_END_NAMESPACE

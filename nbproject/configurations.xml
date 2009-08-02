@@ -2,7 +2,18 @@
 <configurationDescriptor version="62">
   <logicalFolder name="root" displayName="root" projectFiles="true">
     <logicalFolder name="f1" displayName="Other files" projectFiles="true">
+      <logicalFolder name="f1" displayName="binreloc" projectFiles="true">
+        <itemPath>deps/binreloc/CMakeLists.txt</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f3" displayName="gc" projectFiles="true">
+        <itemPath>deps/gc-cmake/CMakeLists.txt</itemPath>
+        <itemPath>deps/gc-cmake/build-gc.sh</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f2" displayName="src" projectFiles="true">
+        <itemPath>src/CMakeLists.txt</itemPath>
+      </logicalFolder>
       <itemPath>AUTHORS</itemPath>
+      <itemPath>CMakeLists.txt</itemPath>
       <itemPath>COPYING</itemPath>
       <itemPath>README</itemPath>
       <itemPath>developers.sh</itemPath>
@@ -12,12 +23,10 @@
                    projectFiles="true">
     </logicalFolder>
     <logicalFolder name="src" displayName="Sources" projectFiles="true">
-      <logicalFolder name="f1" displayName="csylph" projectFiles="true">
-        <itemPath>src/csylph/csylph.c</itemPath>
-      </logicalFolder>
       <logicalFolder name="Sylph" displayName="Sylph" projectFiles="true">
         <logicalFolder name="Core" displayName="Core" projectFiles="true">
           <itemPath>src/Sylph/Core/Any.h</itemPath>
+          <itemPath>src/Sylph/Core/AppType.h</itemPath>
           <itemPath>src/Sylph/Core/Application.cpp</itemPath>
           <itemPath>src/Sylph/Core/Application.h</itemPath>
           <itemPath>src/Sylph/Core/Array.cpp</itemPath>
@@ -32,10 +41,14 @@
           <itemPath>src/Sylph/Core/Dictionary.h</itemPath>
           <itemPath>src/Sylph/Core/Equals.h</itemPath>
           <itemPath>src/Sylph/Core/Exception.h</itemPath>
+          <itemPath>src/Sylph/Core/File.cpp</itemPath>
+          <itemPath>src/Sylph/Core/File.h</itemPath>
+          <itemPath>src/Sylph/Core/Foreach.h</itemPath>
           <itemPath>src/Sylph/Core/Hash.h</itemPath>
           <itemPath>src/Sylph/Core/HashMap.cpp</itemPath>
           <itemPath>src/Sylph/Core/HashMap.h</itemPath>
           <itemPath>src/Sylph/Core/Hashable.h</itemPath>
+          <itemPath>src/Sylph/Core/I18N.h</itemPath>
           <itemPath>src/Sylph/Core/Iterable.h</itemPath>
           <itemPath>src/Sylph/Core/Iterator.h</itemPath>
           <itemPath>src/Sylph/Core/Object.cpp</itemPath>
@@ -51,36 +64,38 @@
           <itemPath>src/Sylph/Core/StringBuffer.h</itemPath>
           <itemPath>src/Sylph/Core/UncaughtExceptionHandler.cpp</itemPath>
           <itemPath>src/Sylph/Core/UncaughtExceptionHandler.h</itemPath>
-          <itemPath>src/Sylph/Core/Util.cpp</itemPath>
           <itemPath>src/Sylph/Core/Util.h</itemPath>
           <itemPath>src/Sylph/Core/Vector.cpp</itemPath>
           <itemPath>src/Sylph/Core/Vector.h</itemPath>
         </logicalFolder>
         <logicalFolder name="f2" displayName="IO" projectFiles="true">
+          <itemPath>src/Sylph/IO/BufferedInputStream.cpp</itemPath>
           <itemPath>src/Sylph/IO/BufferedInputStream.h</itemPath>
+          <itemPath>src/Sylph/IO/BufferedOutputStream.cpp</itemPath>
           <itemPath>src/Sylph/IO/BufferedOutputStream.h</itemPath>
+          <itemPath>src/Sylph/IO/FileInputStream.h</itemPath>
           <itemPath>src/Sylph/IO/InputStream.h</itemPath>
           <itemPath>src/Sylph/IO/OutputStream.h</itemPath>
           <itemPath>src/Sylph/IO/PrintWriter.cpp</itemPath>
           <itemPath>src/Sylph/IO/PrintWriter.h</itemPath>
-          <itemPath>src/Sylph/IO/ScanReader.h</itemPath>
         </logicalFolder>
         <logicalFolder name="f1" displayName="OS" projectFiles="true">
           <itemPath>src/Sylph/OS/GuessOS.h</itemPath>
           <itemPath>src/Sylph/OS/LinuxBundleAppSelf.cpp</itemPath>
           <itemPath>src/Sylph/OS/LinuxBundleAppSelf.h</itemPath>
+          <itemPath>src/Sylph/OS/LinuxFHSAppSelf.cpp</itemPath>
           <itemPath>src/Sylph/OS/LinuxFHSAppSelf.h</itemPath>
+          <itemPath>src/Sylph/OS/MacOSAppSelf.cpp</itemPath>
           <itemPath>src/Sylph/OS/MacOSAppSelf.h</itemPath>
+          <itemPath>src/Sylph/OS/MacOSFHSAppSelf.cpp</itemPath>
           <itemPath>src/Sylph/OS/MacOSFHSAppSelf.h</itemPath>
           <itemPath>src/Sylph/OS/OS.h</itemPath>
-          <itemPath>src/Sylph/OS/WindowsAppSelf.h</itemPath>
         </logicalFolder>
         <logicalFolder name="f3" displayName="S11n" projectFiles="true">
         </logicalFolder>
       </logicalFolder>
       <itemPath>src/Sylph.cpp</itemPath>
       <itemPath>src/Sylph.h</itemPath>
-      <itemPath>src/csylph.h</itemPath>
     </logicalFolder>
     <logicalFolder name="f2" displayName="Test Cases" projectFiles="true">
       <itemPath>test/Arguments.cpp</itemPath>
