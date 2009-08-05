@@ -43,7 +43,7 @@ SYLPH_BEGIN_NAMESPACE
 
 template<class key_, class value_, class hash_ = sint(*)(key_), class equals_ = bool(*)(key_) >
 class HashMap : public virtual Object {
-private:
+public:
     class Entry;
 public:
     typedef key_ Key;
@@ -123,16 +123,18 @@ public:
         HashMap * map;
     };
 
-    class iterator : public ForwardIterator<Entry, HashMap> {
+    class iterator : public ForwardIterator<Entry, iterator> {
+        typedef ForwardIterator<Entry, iterator> super;
     public:
-        S_FORWARD_ITERATOR(iterator, Entry, HashMap)
-        void construct(bool begin, HashMap* obj) const {
-            map = obj;
-            if(begin) {
+
+        iterator(bool begin = false,
+                HashMap<key_,value_,hash_,equals_>* obj = NULL) : super(begin),
+        map(obj) {
+            if (begin) {
                 count = map.size();
                 idx = map.buckets->length;
                 currentPointer = *(map.buckets)[idx];
-                while(currentPointer == NULL) {
+                while (currentPointer == NULL) {
                     currentPointer = *(map.buckets)[--idx];
                 }
             } else {
@@ -141,24 +143,47 @@ public:
                 currentPointer = NULL;
             }
         }
-        reference current() const {
+
+        iterator(bool begin = false,
+                const HashMap<key_,value_,hash_,equals_>* obj = NULL) :
+                super(begin),
+                map(const_cast<HashMap<key_,value_,hash_,equals_>*>(obj)) {
+            if (begin) {
+                count = map.size();
+                idx = map.buckets->length;
+                currentPointer = *(map.buckets)[idx];
+                while (currentPointer == NULL) {
+                    currentPointer = *(map.buckets)[--idx];
+                }
+            } else {
+                count = 0;
+                idx = 0;
+                currentPointer = NULL;
+            }
+        }
+
+        typename super::reference current() const {
             return &currentPointer;
         }
+
         void next() const {
             currentPointer = currentPointer->next;
-            while(currentPointer == NULL) {
+            while (currentPointer == NULL) {
                 currentPointer = *(map.buckets)[--idx];
             }
         }
+
         bool hasNext() const {
             return count > 0;
         }
-        bool equals(iterator<Entry,HashMap>& other) const {
+
+        bool equals(iterator& other) const {
             return map == other.map && ((count == other.count && idx == other.idx
                     && currentPointer == other.currentPointer) || (count ==
                     other.count == 0));
         }
-        void copyFrom(iterator<Entry,HashMap>& other) const {
+
+        void copyFrom(iterator& other) const {
             map = other.map;
             count = other.count;
             idx = other.idx;
@@ -172,29 +197,34 @@ public:
 
     };
 
+    S_ITERABLE(Entry)
+
 public:
 
     explicit HashMap(std::size_t initialCapacity = 11, float _loadFactor = .75f,
             HashFunction h = Hash<Key>, EqualsFunction e = Equals<Key>)
-            : loadFactor(_loadFactor), _size(0),buckets(initialCapacity),
-            threshold(initialCapacity*loadFactor), hashf(h), equf(e),
-            pm(buckets) {
+    : loadFactor(_loadFactor), _size(0), buckets(initialCapacity),
+    threshold(initialCapacity*loadFactor), hashf(h), equf(e) {
     }
 
     HashMap(const HashMap<Key, Value, HashFunction, EqualsFunction> & orig)
-            : loadFactor(orig.loadFactor), _size(orig._size),
-            threshold(orig.threshold), buckets(orig.buckets.length),
-            pm(buckets) {
+    : loadFactor(orig.loadFactor), _size(orig._size),
+    threshold(orig.threshold), buckets(orig.buckets.length) {
         arraycopy(orig.buckets, 0, buckets, 0, orig.buckets.length);
     }
 
-    HashMap(const EntryList & elist) : HashMap() {
+    HashMap(const EntryList & elist) : loadFactor(.75f),
+    _size(0), buckets(11), threshold(11 * loadFactor),
+    hashf(Hash<Key>), equf(Equals<Key>) {
         for (EntryPair * ptr = elist.begin(); ptr != elist.end(); ptr++) {
             put(ptr->first, ptr->second);
         }
     }
 
     virtual ~HashMap() {
+        for (iterator it = begin(); it != end(); ++it) {
+            delete *it;
+        }
     }
 
     void clear() {
@@ -290,8 +320,8 @@ public:
 
     void putAll(const HashMap<Key, Value, HashFunction, EqualsFunction> & map) {
 
-        sforeach(EntryPtr ptr, map.entrySet()) {
-            this->put(ptr->key, ptr->value);
+        for(iterator it = map.begin(); it != map.end(); ++it) {
+            this->put((*it)->key, (*it)->value);
         }
     }
 

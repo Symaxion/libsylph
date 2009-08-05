@@ -62,11 +62,11 @@ ApplicationSelf * Application::self_app;
     ApplicationSelf::~ApplicationSelf() {}
 
     void ApplicationSelf::fail(const String reason) {
-        _fail(appName, reason);
+        _fail(appName(), reason);
     }
     void ApplicationSelf::fail(const String reason, const String file,
             unsigned int line) {
-        _fail(appName, reason, file, line);
+        _fail(appName(), reason, file, line);
     }
     void ApplicationSelf::_fail(const String appName, const String reason) {
         std::cout << appName <<" error: " << reason << std::endl;

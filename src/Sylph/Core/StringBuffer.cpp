@@ -12,7 +12,7 @@ StringBuffer::~StringBuffer() {
 }
 
 size_t StringBuffer::length() const {
-    return length;
+    return _length;
 }
 
 void StringBuffer::deleteSubstring(idx_t start, idx_t end) {
@@ -25,8 +25,8 @@ void StringBuffer::deleteSubstring(idx_t start, idx_t end) {
 }
 
 void StringBuffer::clear() {
-    buf = Array<uchar>(16);
-    _length(0);
+    buf = Array<uchar>((std::size_t)16);
+    _length = 0;
 }
 
 const uchar& StringBuffer::at(idx_t idx) const {

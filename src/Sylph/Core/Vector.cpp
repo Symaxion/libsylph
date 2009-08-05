@@ -6,6 +6,7 @@
  */
 
 #include "Vector.h"
+#include "String.h"
 
 SYLPH_BEGIN_NAMESPACE
 

@@ -24,11 +24,11 @@
 #include "Object.h"
 #include "Array.h"
 #include "Primitives.h"
+#include "String.h"
 
 SYLPH_BEGIN_NAMESPACE
 SYLPH_PUBLIC
 typedef uint16_t uchar;
-class String;
 
 class StringBuffer : public virtual Object {
 public:

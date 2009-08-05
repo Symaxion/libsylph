@@ -29,8 +29,8 @@ SYLPH_BEGIN_NAMESPACE
 SYLPH_PUBLIC
 
 class ByteBuffer : public InputStream, public OutputStream {
-    friend OutputStream& operator<<(const ByteBuffer&);
-    friend InputStream& operator>>(const ByteBuffer&);
+    friend OutputStream& operator<<(OutputStream&, ByteBuffer&);
+    friend InputStream& operator>>(InputStream&, ByteBuffer&);
 public:
     enum Traits {
         Closed = 0x00,
@@ -39,21 +39,21 @@ public:
         ReadWrite = 0x03,
         RW = ReadWrite
     };
-    ByteBuffer(Traits traits = 0x03, size_t bufsize = 16);
+    ByteBuffer(Traits traits = RW, size_t bufsize = 16);
     ByteBuffer(const Array<byte> & ar);
     ByteBuffer(const ByteBuffer& orig);
     virtual ~ByteBuffer();
 
     // common methods
     
-    fsize_t available();
+    fsize_t available() const;
     void close();
-    bool eof();
-    bool markSupported() { return true; }
+    bool eof() const;
+    bool markSupported() const { return true; }
     void mark(fsize_t);
     fsize_t skip(fsize_t);
     void reset();
-    size_t size();
+    size_t size() const;
     void clear();
     
     // traits modifiers
@@ -61,10 +61,10 @@ public:
     void setTraits(Traits traits);
 
     // Read methods
-    ByteBuffer& operator>>(byte& b);
+    InputStream& operator>>(byte& b);
 
     // Write methods and operators
-    ByteBuffer& operator<<(const byte& b);
+    OutputStream& operator<<(const byte b);
 
     ByteBuffer& fromString(const String s);
 
@@ -80,7 +80,7 @@ public:
     operator const Array<byte>() const;
 private:
     void ensureCapacity(size_t capacity);
-    Array<byte> * _array;
+    Array<byte> _array;
     idx_t _pos;
     size_t _size;
     Traits _traits;
@@ -88,8 +88,8 @@ private:
     size_t _markExpires;
 };
 
-OutputStream& operator<<(OutputStream&, const ByteBuffer&);
-InputStream& operator>>(const InputStream&, ByteBuffer&);
+OutputStream& operator<<(OutputStream&, ByteBuffer&);
+InputStream& operator>>(InputStream&, ByteBuffer&);
 
 SYLPH_END_NAMESPACE
 

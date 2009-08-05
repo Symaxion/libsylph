@@ -26,6 +26,7 @@
 #include "Primitives.h"
 #include "Hashable.h"
 #include "BoolConvertible.h"
+#include "Array.h"
 
 // for convenience
 #include "I18N.h"
@@ -36,8 +37,6 @@
 class QString;
 
 SYLPH_BEGIN_NAMESPACE
-
-template<class T> class Array;
 
 #ifndef SYLPH_DOXYGEN
 #define SYLPH_STRING_CLASS MutableString
@@ -108,10 +107,10 @@ public:
     bool merge(String other) const;
     int hashCode() const;
 
-    String fromHex(int,bool up);
-    String fromOct(int, bool up);
-    String fromSci(float, bool up);
-    String fromSci(double, bool up);
+    static String fromHex(int,bool up);
+    static String fromOct(int, bool up);
+    static String fromSci(float, bool up);
+    static String fromSci(double, bool up);
 
     bool boolValue() const;
     sint intValue() const;
@@ -121,7 +120,7 @@ public:
     float floatValue() const;
     double doubleValue() const;
 
-    inline bool toBool() {
+    inline bool toBool() const {
         return *this != "";
     }
     
@@ -146,6 +145,12 @@ private:
 };
 
 bool operator==(const String lhs, const String rhs);
+inline bool operator==(const String lhs, const char* rhs) {
+    return operator==(lhs,String(rhs));
+}
+inline bool operator==(const char* rhs, const String lhs) {
+    return operator==(String(rhs),lhs);
+}
 bool operator<(const String lhs, const String rhs);
 String operator+(const String lhs, const String rhs);
 //String operator%(const String lhs, const String rhs);

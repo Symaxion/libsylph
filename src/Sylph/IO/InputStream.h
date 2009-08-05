@@ -26,10 +26,9 @@
 #include "../Core/Primitives.h"
 #include "../Core/Array.h"
 #include "../Core/BoolConvertible.h"
+#include "../Core/String.h"
 
 SYLPH_BEGIN_NAMESPACE
-class ByteBuffer;
-class String;
 SYLPH_PUBLIC
 
 class InputStream : public virtual BoolConvertible<InputStream> {
@@ -40,7 +39,7 @@ public:
     virtual fsize_t available() const = 0;
     virtual void close() { closed = true; }
     virtual void read(byte& b) {
-        return operator>>(b);
+        operator>>(b);
     }
     virtual fssize_t read(Array<byte>& b, off_t offset = 0, size_t len = 0) {
         if(!len) len = b.length;
@@ -63,7 +62,7 @@ public:
     virtual InputStream& operator>>(byte&) = 0;
     virtual InputStream& operator>>(Array<byte>& b) {
         read(b);
-        return b;
+        return *this;
     }
     bool toBool() const { return eof() && !closed; }
 protected:

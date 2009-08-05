@@ -24,7 +24,6 @@
 #include "Object.h"
 SYLPH_BEGIN_NAMESPACE
 SYLPH_PUBLIC
-
 class PointerManager : public virtual Object {
 public:
     PointerManager() {}
@@ -33,11 +32,11 @@ public:
 
 template<class T>
 class PointerManagerImpl : public PointerManager {
-    typedef T::iterator itr;
+    typedef typename T::iterator itr;
 public:
     PointerManagerImpl(const T& t) : coll(&t) {}
     virtual ~PointerManagerImpl() {
-        for(itr::value_type t = coll.begin(); t != coll.end(); t++) {
+        for(typename itr::value_type t = coll.begin(); t != coll.end(); t++) {
             delete t;
         }
     }

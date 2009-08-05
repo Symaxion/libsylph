@@ -22,10 +22,10 @@
 #define	RANDOM_H_
 
 #include "Object.h"
+#include "String.h"
+#include "Primitives.h"
 
 SYLPH_BEGIN_NAMESPACE
-class String;
-typedef byte;
 class ByteBuffer;
 SYLPH_PUBLIC
 class Random : public virtual Object {

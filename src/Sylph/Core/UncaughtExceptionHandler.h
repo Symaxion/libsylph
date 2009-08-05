@@ -35,22 +35,24 @@ public:
     virtual ~UncaughtExceptionHandler() {}
     virtual void handle(const Exception & ex) const = 0;
 public:
+    static UncaughtExceptionHandler * handler;
+};
+
+struct DefaultUncaughtExceptionHandler : public UncaughtExceptionHandler {
+    void handle(const Exception & ex) const;
+};
+
+struct DebugUncaughtExceptionHandler : public UncaughtExceptionHandler {
+    void handle(const Exception & ex) const;
+};
+
 #ifdef SYLPH_DEBUG
-    static UncaughtExceptionHandler * handler = new DebugUncaughtExceptionHandler;
+    UncaughtExceptionHandler * UncaughtExceptionHandler::handler =
+            new DebugUncaughtExceptionHandler;
 #else
-    static UncaughtExceptionHandler * handler = new DefaultUncaughtExceptionHandler;
+    UncaughtExceptionHandler * UncaughtExceptionHandler::handler =
+            new DefaultUncaughtExceptionHandler;
 #endif
-};
-
-static UncaughtExceptionHandler UncaughtExceptionHandler::handler;
-
-class DefaultUncaughtExceptionHandler : public UncaughtExceptionHandler {
-    void handle(const Exception & ex) const;
-};
-
-class DebugUncaughtExceptionHandler : public UncaughtExceptionHandler {
-    void handle(const Exception & ex) const;
-};
 SYLPH_END_NAMESPACE
 
 #endif	/* _UNCAUGHTEXCEPTIONHANDLER_H */

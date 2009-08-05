@@ -1,5 +1,5 @@
 #include "LinuxBundleAppSelf.h"
-#include "Sylph/Core/File.h"
+#include "../Core/File.h"
 
 #include <binreloc.h>
 

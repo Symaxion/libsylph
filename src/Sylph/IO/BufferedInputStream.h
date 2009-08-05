@@ -28,17 +28,17 @@ SYLPH_BEGIN_NAMESPACE
 SYLPH_PUBLIC
 class BufferedInputStream : public InputStream {
 public:
-    BufferedInputStream(const InputStream& _orig, size_t bufsize = 1024);
+    BufferedInputStream(InputStream& _orig, size_t bufsize = 1024);
     virtual ~BufferedInputStream();
 
-    fsize_t available() const = 0;
-    bool eof() const = 0;
+    fsize_t available() const;
+    bool eof() const;
     bool markSupported() const { return true; }
-    void mark(fsize_t) = 0;
-    fsize_t skip(fsize_t) = 0;
-    void reset() = 0;
+    void mark(fsize_t);
+    fsize_t skip(fsize_t);
+    void reset();
 
-    InputStream& operator>>(byte&) = 0;
+    InputStream& operator>>(byte&);
 
 private:
     void readNext();

@@ -27,7 +27,7 @@ SYLPH_BEGIN_NAMESPACE
 SYLPH_PUBLIC
 class BufferedOutputStream : public OutputStream {
 public:
-    BufferedOutputStream(const OutputStream& _orig, size_t bufsize = 1024) :
+    BufferedOutputStream(OutputStream& _orig, size_t bufsize = 1024) :
         orig(_orig), buffer(bufsize), used(0) {}
     virtual ~BufferedOutputStream();
     void close();

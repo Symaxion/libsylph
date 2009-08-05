@@ -24,6 +24,7 @@
 #include "../Core/Application.h"
 
 SYLPH_BEGIN_NAMESPACE
+class File;
 
 class LinuxBundleAppSelf : public ApplicationSelf {
 public:

@@ -45,7 +45,7 @@ SYLPH_PUBLIC
  * @c ArrayException s if the underlying @c Array gets an out-of-bounds error.
  */
 template<class T>
-class Collection : public Hashable {
+class Collection {
 public:
     /**
      * A function that is used for filtering by the filter() method. This

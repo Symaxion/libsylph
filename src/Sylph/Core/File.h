@@ -44,37 +44,42 @@
 
 //----------------------------------------------------------------------------//
 
-
 SYLPH_BEGIN_NAMESPACE
 SYLPH_PUBLIC
 
 class File : public virtual Object {
 public:
-    class iterator : public BidirectionalIterator<String,File> {
-        S_BIDIRECTIONAL_ITERATOR(iterator,String,File)
+
+    class iterator : public BidirectionalIterator<String, iterator> {
+	friend class File;
     public:
-    void construct(bool begin, File* obj) const;
-    reference current() const {
-	return cur;
-    }
-    void next() const;
-    bool hasNext() const;
-    bool operator==(const iterator& other) const {
-	return file == other.file && cur == other.cur && pos == other.pos &&
-		super::operator==(other);
-    }
-    void copyFrom(iterator& other) const {
-	file = other.file;
-	cur = other.cur;
-	pos = other.pos;
-    }
-    bool hasPrevious() const;
-    void previous() const;
+        typedef BidirectionalIterator<String,iterator> super;
+        iterator(bool begin = false, const File* obj = NULL);
+        iterator(bool begin = false, File* obj = NULL);
+
+        reference current() const {
+            return cur;
+        }
+        void next() const;
+        bool hasNext() const;
+
+        bool equals(const iterator& other) const {
+            return file == other.file && cur == other.cur && pos == other.pos;
+        }
+
+        iterator(const iterator& other) {
+            file = other.file;
+            cur = other.cur;
+            pos = other.pos;
+        }
+        bool hasPrevious() const;
+        void previous() const;
     private:
         File * file;
-	String cur;
-	idx_t pos;
+        mutable MutableString cur;
+        mutable idx_t pos;
     };
+
     S_ITERABLE(String)
 public:
 
@@ -148,15 +153,8 @@ private:
 
 bool operator==(const File& lhs, const File& rhs);
 bool operator<(const File& lhs, const File& rhs);
-File& operator/(const File& rhs, const File& lhs);
+File & operator/(const File& rhs, const File& lhs);
 
-typedef SylphIterator<File::iterator> FileIterator;
-const FileIterator File::getIterator() const {
-    return FileIterator(this->begin());
-}
-FileIterator File::getMutableIterator() {
-    return FileIterator(this->begin());
-}
 SYLPH_END_NAMESPACE
 
 #endif	/* FILE_H_ */

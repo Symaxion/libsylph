@@ -34,11 +34,11 @@ public: \
 typedef type Type; \
 typedef const iterator const_iterator; \
 \
-    virtual iterator begin() { return iterator(::Sylph::itr_begin, *this); }\
-    virtual iterator end() { return iterator(::Sylph::itr_end, *this); }\
+    virtual iterator begin() { return iterator(true, this); }\
+    virtual iterator end() { return iterator(false, this); }\
 \
-    virtual iterator begin() const { return iterator(::Sylph::itr_begin, *this); }\
-    virtual iterator end() const { return iterator(::Sylph::itr_end, *this); }
+    virtual const_iterator begin() const { return iterator(true, this); }\
+    virtual const_iterator end() const { return iterator(false, this); }
 
 
 #endif	/* ITERABLE_H_ */

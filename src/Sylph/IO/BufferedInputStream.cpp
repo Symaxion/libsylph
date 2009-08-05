@@ -1,12 +1,13 @@
 #include "BufferedInputStream.h"
+#include <algorithm>
 
 SYLPH_BEGIN_NAMESPACE
 
-BufferedInputStream::BufferedInputStream(const InputStream& _orig, size_t
+BufferedInputStream::BufferedInputStream(InputStream& _orig, size_t
         bufsize) : orig(_orig), buffer(bufsize), used(0), currentIdx(0) {
     readNext();
 }
-virtual BufferedInputStream::~BufferedInputStream() {
+BufferedInputStream::~BufferedInputStream() {
 
 }
 
@@ -19,7 +20,7 @@ bool BufferedInputStream::eof() const {
 
 void BufferedInputStream::mark(fsize_t f) {
     markpos = currentIdx;
-    marklen = std::min(f, buffer.length - currentIdx)
+    marklen = std::min(int(f), int(buffer.length - currentIdx));
 }
 fsize_t BufferedInputStream::skip(fsize_t f) {
     byte b;
@@ -41,7 +42,7 @@ void BufferedInputStream::reset()  {
 
 InputStream & BufferedInputStream::operator>>(byte& b) {
     if(currentIdx == buffer.length) readNext();
-    b = orig[currentIdx];
+    b = buffer[currentIdx];
     if(marklen > 0) marklen--;
     else if(marklen == 0) markpos = 0;
 }
