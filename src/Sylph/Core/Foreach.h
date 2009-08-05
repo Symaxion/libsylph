@@ -53,22 +53,22 @@ inline foreach_container<T> foreach_container_create(const T& t) {
 
 template <typename T>
 inline const foreach_container<T>* foreach_cast(
-        const foreach_container_base *base, const T *) {
-    return static_cast<const foreach_container<T> *> (base);
+        const foreach_container_base& base, const T&) {
+    return static_cast<const foreach_container<T*> *> (base);
 }
 
 
 #define sforeach(variable, container) \
-for (const ::foreach_container_base &_container_ = ::foreach_container_create(\
-        container); ::foreach_cast(&_container_, true ? 0 : \
-        ::foreach_pointer(container))->condition(); ++::foreach_cast(&_container_, \
-        true ? 0 : ::foreach_pointer(container))->i) \
-    for (variable = *::foreach_cast(&_container_, true ? 0 : \
-            ::foreach_pointer(container))->i; ::foreach_container(&_container_, \
+for (const ::foreach_container_base &_container_ = \
+	::foreach_container_create(container); ::foreach_cast(_container_, \
+	true ? 0 : ::foreach_pointer(container))->condition(); \
+	++::foreach_cast(_container_, true ? 0 : \
+	::foreach_pointer(container))->i) \
+    for (variable = *::foreach_cast(_container_, true ? 0 : \
+            ::foreach_pointer(container))->i; ::foreach_cast(_container_, \
             true ? 0 : ::foreach_pointer(container))->brk; \
-            --::foreach_container(&_container_, true ? 0 : \
-            ::foreach_container(container))->brk)
-
+            --::foreach_cast(_container_, true ? 0 : \
+            ::foreach_cast(container))->brk)
 
 #endif	/* FOREACH_H_ */
 

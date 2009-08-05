@@ -28,11 +28,6 @@
 #include <typeinfo>
 
 SYLPH_BEGIN_NAMESPACE
-
-template<class T>
-class Array;
-class String;
-class Dictionary;
 SYLPH_PUBLIC
 
 /**
@@ -173,8 +168,8 @@ private:
  * successful, <code>NULL</code> otherwise.
  */
 template<class T> T * any_cast(Any & any) {
-    check_nullptr(any.contents);
-    if(any->type() != typeid(T)) return NULL;
+    check_nullptr(any.content);
+    if(any.type() != typeid(T)) return NULL;
     else return &(*(static_cast<Any::AnyContainer<T> *>(any.content))->held);
 }
 SYLPH_END_NAMESPACE

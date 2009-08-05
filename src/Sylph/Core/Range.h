@@ -37,8 +37,8 @@ public:
         _last = last;
     }
     inline virtual ~basic_range() {}
-    inline T first() { return _first; }
-    inline T last() { return _last; }
+    inline T first() const { return _first; }
+    inline T last() const { return _last; }
 private:
     T _first;
     T _last;

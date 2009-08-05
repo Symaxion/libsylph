@@ -30,66 +30,6 @@
 SYLPH_BEGIN_NAMESPACE
 SYLPH_PUBLIC
 
-enum itr_begin_t {
-    itr_begin
-};
-
-enum itr_end_t {
-    itr_end
-};
-
-
-#define S_FORWARD_ITERATOR(self,type,object) \
-    typedef ForwardIterator<type,object> super; \
-    self() : ::Sylph::ForwardIterator<type,object>(){ \
-        construct(false,NULL); \
-    } \
-    self(itr_begin_t t, object* obj) : \
-      ::Sylph::ForwardIterator<type,object>(t,obj) { \
-        construct(true, obj); \
-    } \
-    self(itr_end_t t, object* obj) : \
-      ::Sylph::ForwardIterator<type,object>(t,obj) { \
-        construct(false, obj); \
-    } \
-    self(self& other) : \
-     ::Sylph::ForwardIterator<type,object>(other) \
-    { copyFrom(other); }
-
-#define S_BIDIRECTIONAL_ITERATOR(self,type,object) \
-    typedef BidirectionalIterator<type,object> super; \
-    self() : ::Sylph::BidirectionalIterator<type,object>(){ \
-        construct(false,NULL); \
-    } \
-    self(itr_begin_t t, object* obj) : \
-      ::Sylph::BidirectionalIterator<type,object>(t,obj) { \
-        construct(true, obj); \
-    } \
-    self(itr_end_t t, object* obj) : \
-      ::Sylph::BidirectionalIterator<type,object>(t,obj) { \
-        construct(false, obj); \
-    } \
-    self(self& other) : \
-     ::Sylph::BidirectionalIterator<type,object>(other) \
-    { copyFrom(other); }
-
-#define S_RANDOM_ACCESS_ITERATOR(self,type,object) \
-    typedef RandomAccessIterator<type,object> super; \
-    self() : ::Sylph::RandomAccessIterator<type,object>(){ \
-        construct(false,NULL); \
-    } \
-    self(itr_begin_t t, object* obj) : \
-      ::Sylph::RandomAccessIterator<type,object>(t,obj) { \
-        construct(true, obj); \
-    } \
-    self(itr_end_t t, object* obj) : \
-      ::Sylph::RandomAccessIterator<type,object>(t,obj) { \
-        construct(false, obj); \
-    } \
-    self(self& other) : \
-     ::Sylph::RandomAccessIterator<type,object>(other) \
-    { copyFrom(other); }
-
 S_CREATE_EXCEPTION(IteratorException);
 
 /**
@@ -119,18 +59,11 @@ public:
     // Implementation of the required functions in terms of the overridable
     // functions
 
-    ForwardIterator() : _end_reached_(0) {
+    ForwardIterator(bool begin = false) : _end_reached_(begin ? 0 : 2) {
     }
 
-    ForwardIterator(itr_begin_t, I* obj) : _end_reached_(0) {
-    }
-
-    ForwardIterator(itr_end_t, I* obj) : _end_reached_(2) {
-    }
-
-    ForwardIterator(ForwardIterator<T, I>& other) :
+    ForwardIterator(const ForwardIterator<T, I>& other) :
     _end_reached_(other._end_reached_) {
-        copyFrom(other);
     }
 
     virtual ~ForwardIterator() {
@@ -160,45 +93,32 @@ public:
         return current();
     }
 
-    const ForwardIterator<T, I> & operator++() const {
+    const I & operator++() const {
         if (_end_reached_ == 2) sthrow(IteratorException, "End of iterator");
         else if (_end_reached_ == 1) {
             _end_reached_ = 2;
-            return *this;
+            return *static_cast<I*> (this);
         } else {
             next();
             if (!hasNext()) _end_reached_ = 1;
-            return *this;
+            return *static_cast<I*> (this);
         }
     }
 
-    ForwardIterator<T, I> & operator++() {
+    I & operator++() {
         if (_end_reached_ == 2) sthrow(IteratorException, "End of iterator");
         else if (_end_reached_ == 1) {
             _end_reached_ = 2;
-            return *this;
+            return *static_cast<I*> (this);
         } else {
             next();
             if (!hasNext()) _end_reached_ = 1;
-            return *this;
+            return *static_cast<I*> (this);
         }
     }
 
-    const ForwardIterator<T, I> operator++(int) const {
-        ForwardIterator<T, I> toReturn(*this);
-        if (_end_reached_ == 2) sthrow(IteratorException, "End of iterator");
-        else if (_end_reached_ == 1) {
-            _end_reached_ = 2;
-            return toReturn;
-        } else {
-            next();
-            if (!hasNext()) _end_reached_ = 1;
-            return *toReturn;
-        }
-    }
-
-    ForwardIterator<T, I> operator++(int) {
-        ForwardIterator<T, I> toReturn(*this);
+    const I operator++(int) const {
+        I toReturn(*static_cast<I*> (this));
         if (_end_reached_ == 2) sthrow(IteratorException, "End of iterator");
         else if (_end_reached_ == 1) {
             _end_reached_ = 2;
@@ -206,37 +126,36 @@ public:
         } else {
             next();
             if (!hasNext()) _end_reached_ = 1;
-            return *toReturn;
+            return toReturn;
         }
     }
 
-    ForwardIterator<T, I> & operator=
-            (const ForwardIterator<T, I>& other) {
-        copyFrom(other);
-        _end_reached_ = other._end_reached_;
-        return *this;
+    I operator++(int) {
+        I toReturn(*static_cast<I*> (this));
+        if (_end_reached_ == 2) sthrow(IteratorException, "End of iterator");
+        else if (_end_reached_ == 1) {
+            _end_reached_ = 2;
+            return toReturn;
+        } else {
+            next();
+            if (!hasNext()) _end_reached_ = 1;
+            return toReturn;
+        }
     }
 
-    virtual bool operator==(const ForwardIterator<T, I>& other) const {
-        return (_end_reached_ == other._end_reached_);
+    virtual bool operator==(const I& other) const {
+        return (_end_reached_ == other._end_reached_) && equals(other);
     }
 
     bool operator!=(const ForwardIterator<T, I>& other) const {
         return !(*this == other);
     }
+    void construct(bool begin, void* obj) {
+        construct(begin,obj);
+    }
 
 public:
     // Overridable functions
-    /**
-     * <b>OVERRIDE THIS METHOD</b> Create the iterator object. A boolean is
-     * passed to tell if this iterator pointed to the beginning or the end of
-     * the class (such that internal data pointers can be properly set up), and
-     * the object this iterator will be iterating over.
-     * @param begin <i>true</i> if this iterator points to the begin of the
-     * collection, <i>false</i> if it points to the end.
-     * @param obj The object this iterator will iterate over.
-     */
-    virtual void construct(bool begin, I* obj) const = 0;
     /**
      * <b>OVERRIDE THIS METHOD</b> Returns a reference to the object the iterator
      * is currently pointing at. Note that no beyond-the-end checking needs
@@ -259,12 +178,14 @@ public:
      */
     virtual bool hasNext() const = 0;
     /**
-     * <b>OVERRIDE THIS METHOD</b> Copies this iterator's fields from an other
-     * ForwardIterator over the same type of collection, such that
-     * <code>this->equals(other)</code> is <i>true</i>
-     * @param other An other Iterator to copy the current one from.
+     * <b>OVERRIDE THIS METHOD</b> Tells wheter this Iterator is equal to any
+     * other Iterator over the same type of collection.
+     * @param other An other ForwardIterator to compare this one against.
+     * @return <i>true</i> iff the two iterators are completely equal (i.e.
+     * they iteratate over the same collection and currently point to the same
+     * object), false otherwise.
      */
-    virtual void copyFrom(ForwardIterator<T, I>& other) const = 0;
+    virtual bool equals(const I& other) const = 0;
     /**
      * Do not use or modify!
      */
@@ -279,83 +200,75 @@ public:
     typedef BidirectionalIterator<T, I> self_type;
 public:
 
-    BidirectionalIterator() : ForwardIterator<T, I>() {
+    BidirectionalIterator(bool begin = false) : super(begin) {
     }
 
-    BidirectionalIterator(itr_begin_t, I* obj) :
-            ForwardIterator<T,I>() {
+    BidirectionalIterator(const BidirectionalIterator<T, I>& other) :
+    ForwardIterator<T, I>(other) {
     }
 
-    BidirectionalIterator(itr_end_t, I* obj) :
-            ForwardIterator<T,I>() {
+    I & operator--() {
+        if (ForwardIterator<T, I>::_end_reached_ == 2) {
+            ForwardIterator<T, I>::_end_reached_ = 1;
+            return *static_cast<I*> (this);
+        } else if (!hasPrevious()) {
+            sthrow(IteratorException, "Begin of iterator");
+        } else {
+            if (ForwardIterator<T, I>::_end_reached_ == 1)
+                ForwardIterator<T, I>::_end_reached_ = 0;
+            previous();
+            return *static_cast<I*> (this);
+        }
     }
 
-    BidirectionalIterator(BidirectionalIterator<T, I>& other) :
-            ForwardIterator<T,I>() {
-        copyFrom(other);
-    }
-
-    BidirectionalIterator<T, I> & operator--() {
-        if (ForwardIterator<T,I>::_end_reached_ == 2) {
-            ForwardIterator<T,I>::_end_reached_ = 1;
+    const I & operator--() const {
+        if (ForwardIterator<T, I>::_end_reached_ == 2) {
+            ForwardIterator<T, I>::_end_reached_ = 1;
             return *this;
         } else if (!hasPrevious()) {
             sthrow(IteratorException, "Begin of iterator");
         } else {
-            if (ForwardIterator<T,I>::_end_reached_ == 1)
-                ForwardIterator<T,I>::_end_reached_ = 0;
+            if (ForwardIterator<T, I>::_end_reached_ == 1)
+                ForwardIterator<T, I>::_end_reached_ = 0;
             previous();
-            return *this;
+            return *static_cast<I*> (this);
         }
     }
 
-    const BidirectionalIterator<T, I> & operator--() const {
-        if (ForwardIterator<T,I>::_end_reached_ == 2) {
-            ForwardIterator<T,I>::_end_reached_ = 1;
-            return *this;
+    I operator--(int) {
+        I toReturn(*static_cast<I*> (this));
+        if (ForwardIterator<T, I>::_end_reached_ == 2) {
+            ForwardIterator<T, I>::_end_reached_ = 1;
+            return toReturn;
         } else if (!hasPrevious()) {
             sthrow(IteratorException, "Begin of iterator");
         } else {
-            if (ForwardIterator<T,I>::_end_reached_ == 1)
-                ForwardIterator<T,I>::_end_reached_ = 0;
+            if (ForwardIterator<T, I>::_end_reached_ == 1)
+                ForwardIterator<T, I>::_end_reached_ = 0;
             previous();
-            return *this;
+            return toReturn;
         }
     }
 
-    BidirectionalIterator<T, I> operator--(int) {
-        BidirectionalIterator toReturn(*this);
-        if (ForwardIterator<T,I>::_end_reached_ == 2) {
-            ForwardIterator<T,I>::_end_reached_ = 1;
-            return *toReturn;
+    const I operator--(int) const {
+        I toReturn(*static_cast<I*> (this));
+        if (ForwardIterator<T, I>::_end_reached_ == 2) {
+            ForwardIterator<T, I>::_end_reached_ = 1;
+            return toReturn;
         } else if (!hasPrevious()) {
             sthrow(IteratorException, "Begin of iterator");
         } else {
-            if (ForwardIterator<T,I>::_end_reached_ == 1)
-                ForwardIterator<T,I>::_end_reached_ = 0;
+            if (ForwardIterator<T, I>::_end_reached_ == 1)
+                ForwardIterator<T, I>::_end_reached_ = 0;
             previous();
-            return *toReturn;
+            return toReturn;
         }
     }
 
-    const BidirectionalIterator<T, I> operator--(int) const {
-        BidirectionalIterator toReturn(*this);
-        if (ForwardIterator<T,I>::_end_reached_ == 2) {
-            ForwardIterator<T,I>::_end_reached_ = 1;
-            return *toReturn;
-        } else if (!hasPrevious()) {
-            sthrow(IteratorException, "Begin of iterator");
-        } else {
-            if (ForwardIterator<T,I>::_end_reached_ == 1)
-                ForwardIterator<T,I>::_end_reached_ = 0;
-            previous();
-            return *toReturn;
-        }
-    }
-
-    virtual bool operator==(const BidirectionalIterator<T, I>& other) const {
-        return ((ForwardIterator<T,I>::_end_reached_ == other._end_reached_) ||
-                (hasPrevious() == other.hasPrevious()));
+    virtual bool operator==(const I& other) const {
+        return ((super::_end_reached_ == other._end_reached_) ||
+                (hasPrevious() == other.hasPrevious()))
+                && super::operator==(other);
     }
 public:
     virtual bool hasPrevious() const = 0;
@@ -370,28 +283,20 @@ public:
     typedef RandomAccessIterator<T, I> self_type;
 public:
 
-    RandomAccessIterator() : super() {
+    RandomAccessIterator(bool begin = false) : super(begin) {}
+
+    RandomAccessIterator(const self_type& other) :
+		super(other) {
     }
 
-    RandomAccessIterator(itr_begin_t, I* obj) : super() {
-    }
-
-    RandomAccessIterator(itr_end_t, I* obj) : super() {
-    }
-
-    RandomAccessIterator(BidirectionalIterator<T, I>& other) :
-            super() {
-        copyFrom(other);
-    }
-
-    RandomAccessIterator<T, I> & operator+=(unsigned int i) {
+    I & operator+=(unsigned int i) {
         ptrdiff_t diff = i;
         if (i >= 0) while (diff--) ++(*this);
         else while (diff++) --(*this);
         return *this;
     }
 
-    const RandomAccessIterator<T, I> & operator+=
+    const I & operator+=
             (unsigned int i) const {
         ptrdiff_t diff = i;
         if (i >= 0) while (diff--) ++(*this);
@@ -399,27 +304,24 @@ public:
         return *this;
     }
 
-    RandomAccessIterator<T, I> & operator-=(unsigned int i) {
+    I & operator-=(unsigned int i) {
         return *this += -i;
     }
 
-    const RandomAccessIterator<T, I> & operator-=
-            (unsigned int i) const {
+    const I & operator-=(unsigned int i) const {
         return *this += -i;
     }
 
-    const RandomAccessIterator<T, I> operator+
-            (unsigned int i) const {
-        RandomAccessIterator<T, I> toReturn(*this);
+    const I operator+(unsigned int i) const {
+        I toReturn(*this);
         return toReturn += i;
     }
 
-    RandomAccessIterator<T, I> operator-(unsigned int i) {
+    I operator-(unsigned int i) {
         return *this + -i;
     }
 
-    ptrdiff_t operator-(const RandomAccessIterator<T, I>&
-            other) const {
+    ptrdiff_t operator-(const I& other) const {
         if (*this > other) return this->currentIndex() - other.currentIndex();
         else return other.currentIndex() - this->currentIndex();
     }
@@ -432,35 +334,32 @@ public:
         return *(*this +offset);
     }
 
-    bool operator>(const RandomAccessIterator<T, I>&
-            other) const {
+    bool operator>(const I& other) const {
         return this->currentIndex() > other.currentIndex();
     }
 
-    bool operator<(const RandomAccessIterator<T, I>&
-            other) const {
+    bool operator<(const I& other) const {
         return this->currentIndex() < other.currentIndex();
     }
 
-    bool operator>=(const RandomAccessIterator<T, I>&
-            other) const {
+    bool operator>=(const I& other) const {
+
         return this->currentIndex() >= other.currentIndex();
     }
 
-    bool operator<=(const RandomAccessIterator<T, I>&
-            other) const {
+    bool operator<=(const I& other) const {
         return this->currentIndex() <= other.currentIndex();
     }
 
 public:
-    virtual idx_t currentIndex() = 0;
-    virtual size_t length() = 0;
+    virtual idx_t currentIndex() const = 0;
+    virtual size_t length() const = 0;
 };
 
 template<class T, class I>
 RandomAccessIterator<T, I> operator+
-    (unsigned int i, const RandomAccessIterator<T, I> itr) {
-    return itr+i;
+(unsigned int i, const I itr) {
+    return itr + i;
 }
 
 /**
@@ -496,6 +395,7 @@ public:
     virtual bool hasNext() const {
         return itr.hasNext();
     }
+
     /**
      * Returns the next entry in the forward direction and moves the iterator
      * one place forward.
@@ -507,6 +407,7 @@ public:
         ++itr;
         return toReturn;
     }
+
     /**
      * Checks if this iterator has any more entries in backward direction.
      * @return <i>true</i> if there are more entries, <i>false</i> otherwise.
@@ -516,6 +417,7 @@ public:
     virtual bool hasPrevious() const {
         return itr.hasPrevious();
     }
+
     /**
      * Returns the next entry in the backward direction and moves the iterator
      * one place backward.
@@ -537,7 +439,7 @@ public:
      * iterator.
      */
     virtual void front() const {
-        while(itr.hasPrevious()) --itr;
+        while (itr.hasPrevious()) --itr;
     }
 
     /**
@@ -549,7 +451,7 @@ public:
      * it.back(); // ready for backward iteration </pre>
      */
     virtual void back() const {
-        while(itr.hasNext()) ++itr;
+        while (itr.hasNext()) ++itr;
     }
 
     /**
@@ -618,13 +520,13 @@ private:
 
 template<class Collection>
 const SylphIterator<typename Collection::const_iterator> SylphItr(
-        const Collection& col) {
-    return SylphIterator<typename Collection::const_iterator>(col.begin());
+const Collection& col) {
+    return SylphIterator<typename Collection::const_iterator > (col.begin());
 }
 
 template<class Collection>
 SylphIterator<typename Collection::iterator> SylphMitr(Collection & col) {
-    return SylphIterator<typename Collection::iterator>(col.begin());
+    return SylphIterator<typename Collection::iterator > (col.begin());
 }
 
 

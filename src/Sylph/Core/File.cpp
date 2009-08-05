@@ -18,10 +18,10 @@ idx_t filenamePos(const String str, idx_t endpos) {
 
 
     // case: "//"
-    if (endpos == 2 && str = "//") return 0;
+    if (endpos == 2 && str == "//") return 0;
 
     // case: ends in "/"
-    if (endpos && str.at(endpos - 1) == "/")
+    if (endpos && str.at(endpos - 1) == '/')
         return endpos - 1;
 
     // set pos to start of last element
@@ -115,7 +115,7 @@ sidx_t rootDirectoryStart(const String & s, size_t len) {
 bool isNonRootSlash(const String & str, idx_t pos) {
 
     if (str == "" || str.at(pos) != '/')
-        sthrow(IllegalArgumentException, "No / at pos!")
+        sthrow(IllegalArgumentException, "No / at pos!");
 
         // subsequent logic expects pos to be for leftmost slash of a set
         while (pos > 0 && str.at(pos - 1) == '/')
@@ -168,8 +168,8 @@ File File::parent() const {
 
 File File::relativePath() const {
     iterator itr(begin());
-    for (; itr.m_pos != m_path.size()
-            && (itr.m_name[0] == slash<path_type>::value
+    for (; itr.pos != path.length()
+            && (itr.cur.at(0) == '/'
 #ifdef SYLPH_OS_WINDOWS
             || itr.m_name[itr.m_name.size() - 1]
             == colon<path_type>::value
@@ -177,21 +177,18 @@ File File::relativePath() const {
             ); ++itr) {
     }
 
-    return File(path.substring(itr.m_pos));
+    return File(path.substring(itr.pos));
 }
 
 String File::rootName() const {
     iterator itr(begin());
 
-    return ( itr.m_pos != m_path.size()
+    return ( itr.pos != path.length()
             && (
-            (itr.m_name.size() > 1
-            && itr.m_name[0] == slash<path_type>::value
-            && itr.m_name[1] == slash<path_type>::value
+            (itr.cur.length() > 1 && itr.cur.startsWith("//")
             )
 #ifdef SYLPH_OS_WINDOWS
-            || itr.m_name[itr.m_name.size() - 1]
-            == colon<path_type>::value
+            || itr.cur.at(itr.m_name.size() - 1) == ':'
 #endif
             ))
             ? *itr
@@ -218,7 +215,7 @@ bool File::complete() const {
 }
 
 bool File::hasRootPath() const {
-    return rootPath() != "";
+    return rootPath().toString() != "";
 }
 
 bool File::hasRootName() const {
@@ -258,7 +255,7 @@ File& File::operator/=(const String next) {
         appendSeparatorIfNeeded();
     }
 
-    for (idx_t i = 0; i < next.length(); ++i) append(at(i));
+    for (idx_t i = 0; i < next.length(); ++i) append(next.at(i));
     return *this;
 }
 
@@ -351,14 +348,27 @@ const String File::nativeString() const {
 #endif
 }
 
-void File::iterator::construct(bool begin, File* obj) {
-    file = obj;
+File::iterator::iterator(bool begin, const File* obj)
+    : File::iterator::super(begin), file(const_cast<File*>(obj)) {
+
     if (begin) {
-        idx_t elementSize;
+        size_t elementSize;
         firstElement(file, pos, elementSize);
-        cur = obj->path.substring(pos, elementSize);
+        cur = file->path.substring(pos, elementSize);
     } else {
-        pos = obj->path.length();
+        pos = file->path.length();
+    }
+}
+
+File::iterator::iterator(bool begin, File* obj)
+    : File::iterator::super(begin), file(const_cast<File*>(obj)) {
+
+    if (begin) {
+        size_t elementSize;
+        firstElement(file, pos, elementSize);
+        cur = file->path.substring(pos, elementSize);
+    } else {
+        pos = file->path.length();
     }
 }
 

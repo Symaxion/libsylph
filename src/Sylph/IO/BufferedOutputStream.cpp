@@ -1,8 +1,8 @@
 #include "BufferedOutputStream.h"
-#include "Sylph/Core/Array.h"
+#include "../Core/Array.h"
 
 SYLPH_BEGIN_NAMESPACE
-virtual BufferedOutputStream::~BufferedOutputStream() {
+BufferedOutputStream::~BufferedOutputStream() {
 }
 
 void BufferedOutputStream::close() {

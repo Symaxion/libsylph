@@ -1,28 +1,29 @@
 #include "UncaughtExceptionHandler.h"
+#include "StringBuffer.h"
 
 SYLPH_BEGIN_NAMESPACE
-DefaultUncaughtExceptionHandler::handle(const Exception& ex) const {
+void DefaultUncaughtExceptionHandler::handle(const Exception& ex) const {
     StringBuffer buf;
     buf << "Uncaught Exception: "<<ex.name()<<": "<<ex.what()<<'\n';
     if(ex.tracemsg != NULL) {
         buf << "Trace messages: \n";
         Exception::TraceMessage * msg = ex.tracemsg;
         while(msg->next != NULL) {
-            buf << '\t' << String(msg.message) << '\n';
+            buf << '\t' << String(msg->message) << '\n';
             msg = msg->next;
         }
     }
     thisapp->fail(buf);
 }
 
-DebugUncaughtExceptionHandler::handle(const Exception& ex) const {
+void DebugUncaughtExceptionHandler::handle(const Exception& ex) const {
     StringBuffer buf;
     buf << "Uncaught Exception: "<<ex.name()<<": "<<ex.what()<<'\n';
     if(ex.tracemsg != NULL) {
         buf << "Trace messages: \n";
         Exception::TraceMessage * msg = ex.tracemsg;
         while(msg->next != NULL) {
-            buf << '\t' << String(msg.message) << '\n';
+            buf << '\t' << String(msg->message) << '\n';
             msg = msg->next;
         }
     }

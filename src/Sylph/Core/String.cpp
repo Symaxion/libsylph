@@ -9,8 +9,10 @@
 #include "Array.h"
 #include "Hash.h"
 #include "StringBuffer.h"
+#include "Util.h"
 
 #include <cctype>
+#include <cstring>
 
 #include <unicode/uchar.h>
 
@@ -22,16 +24,15 @@ ssc::ssc() {
 }
 
 ssc::ssc(const char * orig) {
-    fromUtf8(Array<char*>::fromPointer(strlen(orig) + 1, orig));
+    fromUtf8(orig);
 }
 
 ssc::ssc(const Array<char> orig) {
-    fromUtf8(orig);
+    fromUtf8(orig.carray());
 }
 
 ssc::ssc(const Array<uchar> orig) {
     strdata = new Data(0);
-    delete strdata->data;
     strdata->data = orig.copy();
 }
 
@@ -47,7 +48,8 @@ ssc::ssc(const String& orig) {
 }
 
 ssc::ssc(const char c) {
-    fromAscii(c);
+    strdata = new Data(1);
+    strdata->data[0] = c;
 }
 
 ssc::ssc(const bool b) {
@@ -102,16 +104,16 @@ ssc::ssc(const double d) {
     delete[] buf;
 }
 
-ssc::ssc() {
+ssc::~ssc() {
     strdata->refcount--;
     if (strdata->refcount == 0) delete strdata;
 }
 
 std::size_t ssc::length() const {
-    return strdata->data->length;
+    return strdata->data.length;
 }
 
-uchar ssc::at(std::size_t idx) const {
+const uchar ssc::at(std::size_t idx) const {
     return strdata->data[idx];
 }
 
@@ -175,7 +177,7 @@ String ssc::toUpperCase() const {
     return buf;
 }
 
-bool ssc::equalsIgnoreCase(const String other) {
+bool ssc::equalsIgnoreCase(const String other) const {
     return this->toLowerCase() == other.toLowerCase();
 }
 
@@ -242,7 +244,7 @@ sidx_t ssc::indexOf(const String substr, idx_t start) const {
             this->length() - idxexport - substr.length() : -1;
 }
 
-sidx_t ssc::lastIndexOf(const String substr) {
+sidx_t ssc::lastIndexOf(const String substr) const {
     return lastIndexOf(substr, length() - 1);
 }
 
@@ -279,46 +281,70 @@ bool ssc::merge(String other) const {
 }
 
 sint ssc::hashCode() const {
-    sint result = 1;
-    for (idx_t i = 0; i < length(); i++) {
-        result = 31 * result + Hash(this->at(i));
-    }
+   suint hash = 0;
+   suint x    = 0;
+   suint i    = 0;
+   uchar * b = strdata->data.carray();
+
+   for(i = 0; i < length(); b++, i++)
+   {
+      hash = (hash << 4) + (*b);
+      if((x = hash & 0xF0000000L) != 0)
+      {
+         hash ^= (x >> 24);
+      }
+      hash &= ~x;
+   }
+
+   return hash;
 }
 
 String ssc::fromHex(int i, bool up) {
     size_t tmplen = sizeof (i) * 5; // long enough, i presume?
     char * buf = new char[tmplen];
     sprintf(buf, up ? "%#X" : "%#x", i);
-    fromAscii(buf);
+    String toReturn;
+    delete toReturn.strdata;
+    toReturn.fromAscii(buf);
     delete[] buf;
+    return toReturn;
 }
 
 String ssc::fromOct(int i, bool up) {
     size_t tmplen = sizeof (i) * 5; // long enough, i presume?
     char * buf = new char[tmplen];
     sprintf(buf, up ? "%#O" : "%#o", i);
-    fromAscii(buf);
+    String toReturn;
+    delete toReturn.strdata;
+    toReturn.fromAscii(buf);
     delete[] buf;
+    return toReturn;
 }
 
 String ssc::fromSci(float f, bool up) {
     size_t tmplen = sizeof (f) * 10; // long enough, i presume?
     char * buf = new char[tmplen];
     sprintf(buf, up ? "%#E" : "%#e", f);
-    fromAscii(buf);
+    String toReturn;
+    delete toReturn.strdata;
+    toReturn.fromAscii(buf);
     delete[] buf;
+    return toReturn;
 }
 
 String ssc::fromSci(double d, bool up) {
     size_t tmplen = sizeof (d) * 10; // long enough, i presume?
     char * buf = new char[tmplen];
     sprintf(buf, up ? "%#E" : "%#e", d);
-    fromAscii(buf);
+    String toReturn;
+    delete toReturn.strdata;
+    toReturn.fromAscii(buf);
     delete[] buf;
+    return toReturn;
 }
 
 bool ssc::boolValue() const {
-    return *this&lc == "true";
+    return (*this&lc) == "true";
 }
 
 sint ssc::intValue() const {
@@ -357,19 +383,19 @@ double ssc::doubleValue() const {
     return d;
 }
 
-String ssc::operator=(const char * orig) const {
+String& ssc::operator=(const char * orig) const {
     strdata->refcount--;
     if (strdata->refcount == 0) delete strdata;
     fromUtf8(orig);
 }
 
-String ssc::operator=(const std::string & orig) const {
+String& ssc::operator=(const std::string & orig) const {
     strdata->refcount--;
     if (strdata->refcount == 0) delete strdata;
     fromAscii(orig.c_str());
 }
 
-String ssc::operator=(const String orig) const {
+String& ssc::operator=(const String orig) const {
     strdata->refcount--;
     if (strdata->refcount == 0) delete strdata;
     strdata = orig.strdata;
@@ -386,14 +412,14 @@ ssc::operator std::string() const {
 
 void ssc::fromAscii(const char* ascii) const {
     // no conversion required. Just plain ol' copy.
-    strdata = new Data(strlen(ascii));
-    for (idx_t i = 0; i < strlen(ascii); i++) {
+    strdata = new Data(std::strlen(ascii));
+    for (idx_t i = 0; i < std::strlen(ascii); i++) {
         strdata->data[i] = ascii[i];
     }
 }
 
 void ssc::fromUtf8(const char* unicode) const {
-    size_t len = strlen(unicode);
+    size_t len = std::strlen(unicode);
     StringBuffer buf;
     uchar current;
     byte bytecount = 0;
@@ -406,11 +432,11 @@ void ssc::fromUtf8(const char* unicode) const {
                 } else if ((unicode[i] | 0x1F) == 0xDF) {
                     // start of 2-byte char
                     bytecount = 1;
-                    uchar = (unicode[i] & 0x1F) << 6;
+                    current = (unicode[i] & 0x1F) << 6;
                 } else if ((unicode[i] | 0x0F) == 0xEF) {
                     // start of 3-byte char
                     bytecount = 2;
-                    uchar = (unicode[i] & 0x0F) << 12;
+                    current = (unicode[i] & 0x0F) << 12;
                 } else if ((unicode[i] | 0x07) == 0xF7) {
                     // start of 4-byte char, unsupported!
                     buf << 0xFFFD; // That's such a nice ? in a black diamond.
@@ -426,8 +452,8 @@ void ssc::fromUtf8(const char* unicode) const {
                     bytecount = 0;
                     buf << 0xFFFD;
                 } else {
-                    uchar +=(unicode[i] & 0xBF);
-                    buf << uchar;
+                    current +=(unicode[i] & 0xBF);
+                    buf << current;
                     bytecount = 0;
                 }
                 break;
@@ -438,7 +464,7 @@ void ssc::fromUtf8(const char* unicode) const {
                     bytecount = 0;
                     buf << 0xFFFD;
                 } else {
-                    uchar +=(unicode[i] & 0xBF) << 6;
+                    current +=(unicode[i] & 0xBF) << 6;
                     bytecount--;
                 }
                 break;
@@ -454,7 +480,7 @@ void ssc::fromUtf8(const char* unicode) const {
 
 bool operator==(const String lhs, const String rhs) {
     if (lhs.length() != rhs.length()) return false;
-    for (idx_t i = 0; i < lhs.length; i++) {
+    for (idx_t i = 0; i < lhs.length(); i++) {
         if (lhs.at(i) != rhs.at(i)) return false;
     }
     return true;
@@ -471,12 +497,12 @@ bool operator<(const String lhs, const String rhs) {
     return true;
 }
 
-String ssc::operator+=(const String rhs) const {
+String& ssc::operator+=(const String rhs) const {
     Data * newdata = new Data(length() + rhs.length());
-    arraycopy(strdata, 0, newdata, 0, length());
-    arraycopy(rhs.strdata, 0, newdata, length(), rhs.length());
-    strdata.refcount--;
-    if (strdata.refcount == 0) delete strdata;
+    arraycopy(strdata->data, 0, newdata->data, 0, length());
+    arraycopy(rhs.strdata->data, 0, newdata->data, length(), rhs.length());
+    strdata->refcount--;
+    if (strdata->refcount == 0) delete strdata;
     strdata = newdata;
     return *this;
 }

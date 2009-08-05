@@ -1,5 +1,5 @@
 #include "PrintWriter.h"
-#include "Sylph/Core/String.h"
+#include <cstring>
 
 SYLPH_BEGIN_NAMESPACE
 OutputStream& PrintWriter::outputStream() {
@@ -10,7 +10,7 @@ const OutputStream& PrintWriter::outputStream() const {
     return out;
 }
 
-bool PrintWriter::uppercase() {
+bool PrintWriter::uppercase() const {
     return _uc;
 }
 
@@ -19,7 +19,7 @@ void PrintWriter::setUppercase(bool uc) {
 }
 
 bool PrintWriter::toBool() const {
-    return out;
+    return out.toBool();
 }
 
 PrintWriter& PrintWriter::operator<<(bool b) {
@@ -27,7 +27,7 @@ PrintWriter& PrintWriter::operator<<(bool b) {
 }
 
 PrintWriter& PrintWriter::operator<<(char c) {
-    return operator<<(String(c))
+    return operator<<(String(c));
 }
 
 PrintWriter& PrintWriter::operator<<(sint i) {
@@ -95,8 +95,8 @@ PrintWriter& PrintWriter::operator<<(float f) {
 }
 
 PrintWriter& PrintWriter::operator<<(String s) {
-    char * toWrite = s.utf8();
-    for (idx_t i = 0; i <= strlen(toWrite); i++) {
+    const char * toWrite = s.utf8();
+    for (idx_t i = 0; i <= std::strlen(toWrite); i++) {
         out << toWrite[i];
     }
     return *this;
