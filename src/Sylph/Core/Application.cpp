@@ -16,7 +16,7 @@
 
 SYLPH_BEGIN_NAMESPACE
 
-ApplicationSelf * Application::self_app;
+ApplicationSelf * Application::self_app = 0;
 
     Application::Application() {
 
@@ -51,8 +51,8 @@ ApplicationSelf * Application::self_app;
     }
 
     void ApplicationSelf::_preconstruct() {
-        // First, do the GC stuff...
-        GC_INIT();
+        // can be used for preconstruction. Doesn't do anything yet (used for
+        // gc, but Object now handles this)
     }
 
     AppType ApplicationSelf::appType() {

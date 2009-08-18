@@ -2,6 +2,15 @@
 #include "StringBuffer.h"
 
 SYLPH_BEGIN_NAMESPACE
+
+#ifdef SYLPH_DEBUG
+    UncaughtExceptionHandler * UncaughtExceptionHandler::handler =
+            new DebugUncaughtExceptionHandler;
+#else
+    UncaughtExceptionHandler * UncaughtExceptionHandler::handler =
+            new DefaultUncaughtExceptionHandler;
+#endif
+    
 void DefaultUncaughtExceptionHandler::handle(const Exception& ex) const {
     StringBuffer buf;
     buf << "Uncaught Exception: "<<ex.name()<<": "<<ex.what()<<'\n';

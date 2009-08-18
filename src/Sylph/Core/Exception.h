@@ -170,6 +170,7 @@ public: \
  * ...
  */
 S_CREATE_EXCEPTION(ArrayException);
+S_CREATE_EXCEPTION(EncodingException);
 /**
  * A genreric Exception which gets thrown whenever something goes wrong in the
  * File class.

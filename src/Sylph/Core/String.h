@@ -38,13 +38,13 @@ class QString;
 
 SYLPH_BEGIN_NAMESPACE
 
-#ifndef SYLPH_DOXYGEN
-#define SYLPH_STRING_CLASS MutableString
-class MutableString;
-typedef const MutableString String;
-#else
+//#ifndef SYLPH_DOXYGEN
+//#define SYLPH_STRING_CLASS MutableString
+//class MutableString;
+//typedef const MutableString String;
+//#else
 #define SYLPH_STRING_CLASS String
-#endif
+//#endif
 
 SYLPH_PUBLIC
 
@@ -58,7 +58,7 @@ class SYLPH_STRING_CLASS : public Hashable,
     friend bool operator<(const String lhs, const String rhs);
     friend String operator+(const String lhs, const String rhs);
     //friend String operator%(const String lhs, const String rhs);
-    friend String operator&(const String lhs, const String(*rhs)(String));
+    friend String operator&(const String lhs, const String(*rhs)(const String));
     friend String operator&(const String(*lhs)(String), const String rhs);
     friend String operator*(const String lhs, const std::size_t len);
     friend std::ostream& operator<<(std::ostream& lhs, const String rhs);
@@ -124,23 +124,25 @@ public:
         return *this != "";
     }
     
-    String& operator=(const char * orig) const;
-    String& operator=(const std::string & orig) const;
-    String& operator=(const String orig) const;
+    const String& operator=(const char * orig) const;
+    const String& operator=(const std::string & orig) const;
+    const String& operator=(const String orig) const;
 
-    String& operator+=(const String rhs) const;
+    const String& operator+=(const String rhs) const;
 
     operator const char *() const;
     operator std::string() const;
 
-private:
+//private:
     void fromAscii(const char* ascii) const;
     void fromUtf8(const char* unicode) const;
-    mutable struct Data {
+    struct Data {
         Data(size_t len) : data(len),refcount(1) {}
+        virtual ~Data() {}
         Array<uchar> data;
-        std::size_t refcount;
-    } * strdata;
+        mutable std::size_t refcount;
+    };
+    mutable Data * strdata;
 
 };
 
@@ -154,14 +156,14 @@ inline bool operator==(const char* rhs, const String lhs) {
 bool operator<(const String lhs, const String rhs);
 String operator+(const String lhs, const String rhs);
 //String operator%(const String lhs, const String rhs);
-String operator&(const String lhs, const String(*rhs)(String));
-String operator&(const String(*lhs)(String), const String rhs);
+String operator&(const String lhs, String(*rhs)(const String));
+String operator&(String(*lhs)(const String), const String rhs);
 String operator*(const String lhs, const std::size_t len);
 std::ostream& operator<<(std::ostream& lhs, const String rhs);
 
-String lc(String rhs);
-String uc(String rhs);
-String t(String rhs);
+String lc(const String rhs);
+String uc(const String rhs);
+String t(const String rhs);
 
 SYLPH_END_NAMESPACE
 

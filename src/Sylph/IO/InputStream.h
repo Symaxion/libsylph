@@ -34,7 +34,7 @@ SYLPH_PUBLIC
 class InputStream : public virtual BoolConvertible<InputStream> {
 public:
     InputStream() : closed(false) {}
-    virtual ~InputStream();
+    virtual ~InputStream() {}
 
     virtual fsize_t available() const = 0;
     virtual void close() { closed = true; }

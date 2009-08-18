@@ -38,12 +38,13 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/Sylph/Core/String.o \
 	${OBJECTDIR}/test/Arguments.o \
 	${OBJECTDIR}/test/HelloWorld.o \
-	${OBJECTDIR}/src/Sylph.o \
+	${OBJECTDIR}/src/Sylph/IO/FileOutputStream.o \
 	${OBJECTDIR}/src/Sylph/Core/ByteBuffer.o \
 	${OBJECTDIR}/src/Sylph/IO/BufferedInputStream.o \
 	${OBJECTDIR}/src/Sylph/Core/Application.o \
 	${OBJECTDIR}/src/Sylph/OS/MacOSFHSAppSelf.o \
 	${OBJECTDIR}/src/Sylph/Core/Object.o \
+	${OBJECTDIR}/src/Sylph/IO/FileInputStream.o \
 	${OBJECTDIR}/src/Sylph/Core/Vector.o \
 	${OBJECTDIR}/src/Sylph/IO/BufferedOutputStream.o \
 	${OBJECTDIR}/src/Sylph/Core/File.o \
@@ -112,10 +113,10 @@ ${OBJECTDIR}/test/HelloWorld.o: nbproject/Makefile-${CND_CONF}.mk test/HelloWorl
 	${RM} $@.d
 	$(COMPILE.cc) -g -DSYLPH_DEBUG -D__GXX_EXPERIMENTAL_CXX0X__ -Isrc -Ideps/binreloc -Ideps/boost -Ideps/gc/include -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/test/HelloWorld.o test/HelloWorld.cpp
 
-${OBJECTDIR}/src/Sylph.o: nbproject/Makefile-${CND_CONF}.mk src/Sylph.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src
+${OBJECTDIR}/src/Sylph/IO/FileOutputStream.o: nbproject/Makefile-${CND_CONF}.mk src/Sylph/IO/FileOutputStream.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/Sylph/IO
 	${RM} $@.d
-	$(COMPILE.cc) -g -DSYLPH_DEBUG -D__GXX_EXPERIMENTAL_CXX0X__ -Isrc -Ideps/binreloc -Ideps/boost -Ideps/gc/include -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Sylph.o src/Sylph.cpp
+	$(COMPILE.cc) -g -DSYLPH_DEBUG -D__GXX_EXPERIMENTAL_CXX0X__ -Isrc -Ideps/binreloc -Ideps/boost -Ideps/gc/include -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Sylph/IO/FileOutputStream.o src/Sylph/IO/FileOutputStream.cpp
 
 ${OBJECTDIR}/src/Sylph/Core/ByteBuffer.o: nbproject/Makefile-${CND_CONF}.mk src/Sylph/Core/ByteBuffer.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/Sylph/Core
@@ -141,6 +142,11 @@ ${OBJECTDIR}/src/Sylph/Core/Object.o: nbproject/Makefile-${CND_CONF}.mk src/Sylp
 	${MKDIR} -p ${OBJECTDIR}/src/Sylph/Core
 	${RM} $@.d
 	$(COMPILE.cc) -g -DSYLPH_DEBUG -D__GXX_EXPERIMENTAL_CXX0X__ -Isrc -Ideps/binreloc -Ideps/boost -Ideps/gc/include -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Sylph/Core/Object.o src/Sylph/Core/Object.cpp
+
+${OBJECTDIR}/src/Sylph/IO/FileInputStream.o: nbproject/Makefile-${CND_CONF}.mk src/Sylph/IO/FileInputStream.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/Sylph/IO
+	${RM} $@.d
+	$(COMPILE.cc) -g -DSYLPH_DEBUG -D__GXX_EXPERIMENTAL_CXX0X__ -Isrc -Ideps/binreloc -Ideps/boost -Ideps/gc/include -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Sylph/IO/FileInputStream.o src/Sylph/IO/FileInputStream.cpp
 
 ${OBJECTDIR}/src/Sylph/Core/Vector.o: nbproject/Makefile-${CND_CONF}.mk src/Sylph/Core/Vector.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/Sylph/Core

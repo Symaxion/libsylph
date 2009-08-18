@@ -30,5 +30,4 @@ endif ( UNIX )
 set(SYLPH_ALL_DEPS ${SYLPH_LINK} intl icucore icuuc)
 
 add_subdirectory(deps/binreloc)
-add_subdirectory(deps/gc-cmake)
 add_subdirectory(src)

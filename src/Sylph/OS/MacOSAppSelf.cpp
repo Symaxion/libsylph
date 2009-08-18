@@ -1,14 +1,13 @@
 #include "MacOSAppSelf.h"
-#include "Sylph/Core/File.h"
-
-#include <binreloc.h>
+#include "../Core/File.h"
 
 #include <string>
+#include <pwd.h>
 
 SYLPH_BEGIN_NAMESPACE
 
 MacOSAppSelf::MacOSAppSelf(int argc, char * argv[], char * apple[]) {
-    _location= File(apple[0]);
+    _location= String(apple[0]);
 }
 
 const File& MacOSAppSelf::bundle() {
@@ -21,7 +20,7 @@ const File& MacOSAppSelf::resourceDir() {
     return f;
 }
 
-const File& MacOSAppSelf::resource(String rsc) {
+const File MacOSAppSelf::resource(String rsc) {
     return resourceDir() / rsc;
 }
 
@@ -70,12 +69,12 @@ const File& MacOSAppSelf::systemResourceDir() {
     return f;
 }
 
-const File& MacOSAppSelf::systemResource(String rsc) {
+const File MacOSAppSelf::systemResource(String rsc) {
     return systemResourceDir() / rsc;
 }
 
 const File& MacOSAppSelf::userHome() {
-    static File f = getpwuid(geteuid())->pw_name;
+    static File f = getpwuid(geteuid())->pw_dir;
     return f;
 }
 
@@ -85,7 +84,7 @@ const File& MacOSAppSelf::userLibraryDir() {
 }
 
 const File& MacOSAppSelf::userSettings() {
-    static File f = userLibraryDir() / "Preferences/"+appName() + ".prp";
+    static File f = userLibraryDir() / ("Preferences/"+appName() + ".prp");
     return f;
 }
 
@@ -105,11 +104,11 @@ const File& MacOSAppSelf::userPluginDisabledDir() {
 }
 
 const File& MacOSAppSelf::userResourceDir() {
-    static File f = userLibraryDir() / "Application Support/" + appName();
+    static File f = userLibraryDir() / ("Application Support/" + appName());
     return f;
 }
 
-const File& MacOSAppSelf::userResource(String rsc) {
+const File MacOSAppSelf::userResource(String rsc) {
     return userResourceDir() / rsc;
 }
 

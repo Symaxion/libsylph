@@ -73,7 +73,11 @@
           <itemPath>src/Sylph/IO/BufferedInputStream.h</itemPath>
           <itemPath>src/Sylph/IO/BufferedOutputStream.cpp</itemPath>
           <itemPath>src/Sylph/IO/BufferedOutputStream.h</itemPath>
+          <itemPath>src/Sylph/IO/FileIO.h</itemPath>
+          <itemPath>src/Sylph/IO/FileInputStream.cpp</itemPath>
           <itemPath>src/Sylph/IO/FileInputStream.h</itemPath>
+          <itemPath>src/Sylph/IO/FileOutputStream.cpp</itemPath>
+          <itemPath>src/Sylph/IO/FileOutputStream.h</itemPath>
           <itemPath>src/Sylph/IO/InputStream.h</itemPath>
           <itemPath>src/Sylph/IO/OutputStream.h</itemPath>
           <itemPath>src/Sylph/IO/PrintWriter.cpp</itemPath>
@@ -94,7 +98,6 @@
         <logicalFolder name="f3" displayName="S11n" projectFiles="true">
         </logicalFolder>
       </logicalFolder>
-      <itemPath>src/Sylph.cpp</itemPath>
       <itemPath>src/Sylph.h</itemPath>
     </logicalFolder>
     <logicalFolder name="f2" displayName="Test Cases" projectFiles="true">

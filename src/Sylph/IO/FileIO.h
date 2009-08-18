@@ -15,39 +15,26 @@
  * You should have received a copy of the LibSylph Public License
  * along with this Library, if not, contact the LibSylph Developers.
  *
- * Created on 12 februari 2009, 19:21
+ * Created on 7 augustus 2009, 13:21
  */
 
-#ifndef _UNCAUGHTEXCEPTIONHANDLER_H
-#define	_UNCAUGHTEXCEPTIONHANDLER_H
+#ifndef FILEIO_H_
+#define	FILEIO_H_
 
-#include "Object.h"
-#include "Exception.h"
-#include "Application.h"
+#include "../Core/Object.h"
 
 SYLPH_BEGIN_NAMESPACE
-
 SYLPH_PUBLIC
 
-class UncaughtExceptionHandler : public Object {
-public:
-    UncaughtExceptionHandler() {}
-    virtual ~UncaughtExceptionHandler() {}
-    virtual void handle(const Exception & ex) const = 0;
-public:
-    static UncaughtExceptionHandler * handler;
-};
-
-struct DefaultUncaughtExceptionHandler : public UncaughtExceptionHandler {
-    DefaultUncaughtExceptionHandler() {}
-    void handle(const Exception & ex) const;
-};
-
-struct DebugUncaughtExceptionHandler : public UncaughtExceptionHandler {
-    DebugUncaughtExceptionHandler() {}
-    void handle(const Exception & ex) const;
-};
+namespace IO {
+    enum IOType {
+        Normal = 0,
+        Text = Normal,
+        Append = 1,
+        Binary = 2
+    };
+}
 SYLPH_END_NAMESPACE
 
-#endif	/* _UNCAUGHTEXCEPTIONHANDLER_H */
+#endif	/* FILEIO_H_ */
 

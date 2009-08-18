@@ -75,7 +75,7 @@ public:
 
     virtual const File& bundle() = 0;
     virtual const File& resourceDir() = 0;
-    virtual const File& resource(String rsc) = 0;
+    virtual const File resource(String rsc) = 0;
     virtual const File& libraryDir() = 0;
     virtual const File& pluginDir() = 0;
     virtual const File& plugindisabledDir() = 0;
@@ -86,7 +86,7 @@ public:
     virtual const File& systemPluginDir() = 0;
     virtual const File& systemPluginDisabledDir() = 0;
     virtual const File& systemResourceDir() = 0;
-    virtual const File& systemResource(String rsc) = 0;
+    virtual const File systemResource(String rsc) = 0;
 
     virtual const File& userHome() = 0;
 
@@ -96,7 +96,7 @@ public:
     virtual const File& userPluginDir() = 0;
     virtual const File& userPluginDisabledDir() = 0;
     virtual const File& userResourceDir() = 0;
-    virtual const File& userResource(String rsc) = 0;
+    virtual const File userResource(String rsc) = 0;
 
     virtual const File& prefix() = 0;
 
