@@ -54,7 +54,9 @@ public:
     }
 
     virtual OutputStream& operator<<(const byte b) = 0;
-    OutputStream& operator<<(const Array<byte> b);
+    OutputStream& operator<<(const Array<byte> b) {
+        write(b);
+    }
 
     OutputStream & operator<<(OutputStream&(*f)(OutputStream&)) {
         return f(*this);
@@ -67,7 +69,10 @@ protected:
     bool closed;
 };
 
-OutputStream& flush(OutputStream& s);
+inline OutputStream& flush(OutputStream& s) {
+    s.flush();
+    return s;
+}
 
 
 SYLPH_END_NAMESPACE

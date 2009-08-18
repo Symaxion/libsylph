@@ -45,7 +45,7 @@ private:
 };
 
 template<class T>
-PointerManager manage(const T& t) {
+inline PointerManager manage(const T& t) {
     return PointerManagerImpl<T>(t);
 }
 

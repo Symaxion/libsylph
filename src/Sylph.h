@@ -27,20 +27,9 @@
 #include "Sylph/Core/String.h"
 #include "Sylph/Core/Common.h"
 #include "Sylph/Core/AppType.h"
+#include "Sylph/Core/UncaughtExceptionHandler.h"
 
-SYLPH_BEGIN_NAMESPACE
-    /**
-     * Creates a new (non-LibSylph) object using the LibSylph garbage
-     * collection. Example (using Qt):
-     * <pre>
-     * QPushButton but * = newgc<QPushButton>("Hello");
-     * </pre>
-     * The syntax is very similar to that of the normal new operator.
-     */
-     template<class T,class... Args> T * newgc(const Args...& args);
-     template<class T> void deletegc(const T * t);
-     template<class T> void cleanupgc(void *obj, void *displ);
-SYLPH_END_NAMESPACE
+#include <iostream>
 
 #ifndef SYLPH_NO_SYLPHMAIN
 #ifdef SYLPH_OS_MACOSX
@@ -51,8 +40,34 @@ int main(int argc, char * argv[]);
 static inline void SylphInit(int argc, char * argv[], char * apple[]) {
     Sylph::Application::init(argc, argv, apple, Sylph::APP_TYPE);
 }
-int SylphMain(Sylph::Array<Sylph::String> & argv);
+extern int SylphMain(Sylph::Array<Sylph::String> argv);
+
+#ifdef SYLPH_OS_MACOSX
+
+int main(int argc, char * argv[], char * envp[], char * apple[]) {
+    try {
+        SylphInit(argc, argv, apple);
+        Array<String> args(argc);
+        for(int i = 0; i < argc; ++i) {
+            args[i] = argv[i];
+        }
+        return SylphMain(args);
+    } catch (Sylph::Exception & ex) {
+        Sylph::UncaughtExceptionHandler::handler->handle(ex);
+    }
+}
+#else
+
+int main(int argc, char * argv[]) {
+    try {
+        SylphInit(argc, argv, NULL);
+        return SylphMain();
+    } catch (Sylph::Core::Exception & ex) {
+        Sylph::Core::UncaughtExceptionHandler::handler->handle(ex);
+    }
+}
 #endif
 
+#endif
 #endif	/* SYLPH_H_ */
 

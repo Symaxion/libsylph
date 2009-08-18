@@ -15,39 +15,37 @@
  * You should have received a copy of the LibSylph Public License
  * along with this Library, if not, contact the LibSylph Developers.
  *
- * Created on 12 februari 2009, 19:21
+ * Created on 6 augustus 2009, 17:26
  */
 
-#ifndef _UNCAUGHTEXCEPTIONHANDLER_H
-#define	_UNCAUGHTEXCEPTIONHANDLER_H
+#ifndef FILEOUTPUTSTREAM_H_
+#define	FILEOUTPUTSTREAM_H_
 
-#include "Object.h"
-#include "Exception.h"
-#include "Application.h"
+#include "OutputStream.h"
+#include "../Core/File.h"
+#include "FileIO.h"
+#include <cstdio>
 
 SYLPH_BEGIN_NAMESPACE
-
 SYLPH_PUBLIC
 
-class UncaughtExceptionHandler : public Object {
+class FileOutputStream : public OutputStream {
 public:
-    UncaughtExceptionHandler() {}
-    virtual ~UncaughtExceptionHandler() {}
-    virtual void handle(const Exception & ex) const = 0;
-public:
-    static UncaughtExceptionHandler * handler;
-};
 
-struct DefaultUncaughtExceptionHandler : public UncaughtExceptionHandler {
-    DefaultUncaughtExceptionHandler() {}
-    void handle(const Exception & ex) const;
-};
+    FileOutputStream(File& f, IO::IOType t = IO::Normal);
+    virtual ~FileOutputStream();
 
-struct DebugUncaughtExceptionHandler : public UncaughtExceptionHandler {
-    DebugUncaughtExceptionHandler() {}
-    void handle(const Exception & ex) const;
+    void write(const Array<byte> b, off_t off = 0, size_t len = 0);
+    void close();
+
+    void flush();
+
+    OutputStream & operator<<(const byte b);
+
+private:
+    FILE* fptr;
 };
 SYLPH_END_NAMESPACE
 
-#endif	/* _UNCAUGHTEXCEPTIONHANDLER_H */
+#endif	/* FILEOUTPUTSTREAM_H_ */
 

@@ -31,7 +31,7 @@ const File& LinuxBundleAppSelf::resourceDir() {
     return f;
 }
 
-const File& LinuxBundleAppSelf::resource(String rsc) {
+const File LinuxBundleAppSelf::resource(String rsc) {
     return resourceDir() / rsc;
 }
 
@@ -80,12 +80,12 @@ const File& LinuxBundleAppSelf::systemResourceDir() {
     return f;
 }
 
-const File& LinuxBundleAppSelf::systemResource(String rsc) {
+const File LinuxBundleAppSelf::systemResource(String rsc) {
     return systemResourceDir() / rsc;
 }
 
 const File& LinuxBundleAppSelf::userHome() {
-    static File f = getpwuid(geteuid())->pw_name;
+    static File f = getpwuid(geteuid())->pw_dir;
     return f;
 }
 
@@ -95,7 +95,7 @@ const File& LinuxBundleAppSelf::userLibraryDir() {
 }
 
 const File& LinuxBundleAppSelf::userSettings() {
-    static File f = userLibraryDir() / "Preferences/"+appName() + ".prp";
+    static File f = userLibraryDir() / ("Preferences/"+appName() + ".prp");
     return f;
 }
 
@@ -115,11 +115,11 @@ const File& LinuxBundleAppSelf::userPluginDisabledDir() {
 }
 
 const File& LinuxBundleAppSelf::userResourceDir() {
-    static File f = userLibraryDir() / "Application Support/" + appName();
+    static File f = userLibraryDir() / ("Application Support/" + appName());
     return f;
 }
 
-const File& LinuxBundleAppSelf::userResource(String rsc) {
+const File LinuxBundleAppSelf::userResource(String rsc) {
     return userResourceDir() / rsc;
 }
 

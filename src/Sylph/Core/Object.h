@@ -95,6 +95,7 @@ public:
 
 private:
     static void cleanup(void* obj, void* clientData);
+    static bool gc_inited;
 #endif
 public:
     /**
@@ -102,15 +103,26 @@ public:
      * default implementation does nothing.
      * @param buf a Buffer to serialize to.
      */
-    virtual void serialize(SerializationBuffer & buf) const;
+    virtual void serialize(SerializationBuffer & buf) const {}
     /**
      * Tries to deserialize this object from the giver DeserializationBuffer.
      * The default implmementation does nothing.
      * @param buf a Buffer to deserialize from.
      */
-    virtual void deserialize(DeserializationBuffer & buf);
+    virtual void deserialize(DeserializationBuffer & buf) {}
 };
 
+    /**
+     * Creates a new (non-LibSylph) object using the LibSylph garbage
+     * collection. Example (using Qt):
+     * <pre>
+     * QPushButton but * = newgc<QPushButton>("Hello");
+     * </pre>
+     * The syntax is very similar to that of the normal new operator.
+     */
+     template<class T,class... Args> T * newgc(const Args&... args);
+     template<class T> void deletegc(const T * t);
+     template<class T> void cleanupgc(void *obj, void *displ);
 SYLPH_END_NAMESPACE
 
 #endif	/* OBJECT_H_ */

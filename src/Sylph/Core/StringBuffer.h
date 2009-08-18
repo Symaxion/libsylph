@@ -54,6 +54,9 @@ public:
     StringBuffer& operator<<(float f);
     StringBuffer& operator<<(double d);
     StringBuffer& operator<<(String s);
+    StringBuffer& operator<<(const char* s) {
+        return operator<<(String(s));
+    }
 
     template<class T>
     inline StringBuffer& operator+=(T t) {

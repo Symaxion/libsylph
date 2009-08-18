@@ -117,7 +117,7 @@ void StringBuffer::ensureCapacity(std::size_t capacity) {
     if(buf.length > capacity) return;
 
     size_t newsize = buf.length;
-    while(newsize < capacity) newsize << 1;
+    while(newsize < capacity) newsize = newsize << 1;
     Array<uchar> newbuf(newsize);
     arraycopy(buf,0,newbuf,0,buf.length);
     buf = newbuf;

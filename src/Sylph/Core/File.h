@@ -76,7 +76,7 @@ public:
         void previous() const;
     private:
         File * file;
-        mutable MutableString cur;
+        mutable String cur;
         mutable idx_t pos;
     };
 
@@ -88,6 +88,9 @@ public:
 
     File(const String s) {
         operator/=(s);
+    }
+    File(const char* s) {
+        operator/=(String(s));
     }
 
     ~File() {
@@ -153,7 +156,9 @@ private:
 
 bool operator==(const File& lhs, const File& rhs);
 bool operator<(const File& lhs, const File& rhs);
-File & operator/(const File& rhs, const File& lhs);
+inline File operator/(const File& lhs, const File& rhs) {
+    return File(lhs) /= rhs;
+}
 
 SYLPH_END_NAMESPACE
 

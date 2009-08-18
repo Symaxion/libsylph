@@ -33,7 +33,7 @@ public:
 
     const File& bundle();
     const File& resourceDir();
-    const File& resource(String rsc);
+    const File resource(String rsc);
     const File& libraryDir();
     const File& pluginDir();
     const File& plugindisabledDir();
@@ -44,7 +44,7 @@ public:
     const File& systemPluginDir();
     const File& systemPluginDisabledDir();
     const File& systemResourceDir();
-    const File& systemResource(String rsc);
+    const File systemResource(String rsc);
 
     const File& userHome();
 
@@ -54,7 +54,7 @@ public:
     const File& userPluginDir();
     const File& userPluginDisabledDir();
     const File& userResourceDir();
-    const File& userResource(String rsc);
+    const File userResource(String rsc);
 
     const File& prefix();
 };

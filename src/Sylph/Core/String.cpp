@@ -16,6 +16,8 @@
 
 #include <unicode/uchar.h>
 
+#include <iostream>
+
 SYLPH_BEGIN_NAMESPACE
 #define ssc SYLPH_STRING_CLASS
 
@@ -106,7 +108,10 @@ ssc::ssc(const double d) {
 
 ssc::~ssc() {
     strdata->refcount--;
-    if (strdata->refcount == 0) delete strdata;
+    if (strdata->refcount == 0) {
+        delete strdata;
+        strdata = NULL;
+    }
 }
 
 std::size_t ssc::length() const {
@@ -133,7 +138,7 @@ const char * ssc::utf8() const {
     char * buf = new char[3*length()+1];
     size_t buflen = 0;
     for(idx_t i = 0; i < length(); i++) {
-        if(at(i) < 0x7F) {
+        if(at(i) <= 0x7F) {
             // ascii
             buf[buflen] = at(i);
             buflen++;
@@ -154,6 +159,7 @@ const char * ssc::utf8() const {
     // now copy it to the final buffer...
     char * final = new char[buflen+1];
     carraycopy(buf,0,final,0,buflen);
+    final[buflen] = 0;
     return final;
 }
 
@@ -383,19 +389,19 @@ double ssc::doubleValue() const {
     return d;
 }
 
-String& ssc::operator=(const char * orig) const {
+const String& ssc::operator=(const char * orig) const {
     strdata->refcount--;
     if (strdata->refcount == 0) delete strdata;
     fromUtf8(orig);
 }
 
-String& ssc::operator=(const std::string & orig) const {
+const String& ssc::operator=(const std::string & orig) const {
     strdata->refcount--;
     if (strdata->refcount == 0) delete strdata;
     fromAscii(orig.c_str());
 }
 
-String& ssc::operator=(const String orig) const {
+const String& ssc::operator=(const String orig) const {
     strdata->refcount--;
     if (strdata->refcount == 0) delete strdata;
     strdata = orig.strdata;
@@ -424,20 +430,21 @@ void ssc::fromUtf8(const char* unicode) const {
     uchar current;
     byte bytecount = 0;
     for (idx_t i = 0; i < len; i++) {
+        unsigned char univalue = static_cast<unsigned char>(unicode[i]);
         switch (bytecount) {
             case 0:
-                if (unicode[i] || 0x7F == 0x7F) {
+                if (univalue <= 0x7F) {
                     // ascii
-                    buf << unicode[i];
-                } else if ((unicode[i] | 0x1F) == 0xDF) {
+                    buf << univalue;
+                } else if ((univalue | 0x1F) == 0xDF) {
                     // start of 2-byte char
                     bytecount = 1;
-                    current = (unicode[i] & 0x1F) << 6;
-                } else if ((unicode[i] | 0x0F) == 0xEF) {
+                    current = (univalue & 0x1F) << 6;
+                } else if ((univalue | 0x0F) == 0xEF) {
                     // start of 3-byte char
                     bytecount = 2;
-                    current = (unicode[i] & 0x0F) << 12;
-                } else if ((unicode[i] | 0x07) == 0xF7) {
+                    current = (univalue & 0x0F) << 12;
+                } else if ((univalue | 0x07) == 0xF7) {
                     // start of 4-byte char, unsupported!
                     buf << 0xFFFD; // That's such a nice ? in a black diamond.
                     i+=3;
@@ -447,24 +454,24 @@ void ssc::fromUtf8(const char* unicode) const {
                 }
                 break;
             case 1:
-                if((unicode[i] | 0x3F) != 0xBF) {
+                if((univalue | 0x3F) != 0xBF) {
                     // invalid followup
                     bytecount = 0;
                     buf << 0xFFFD;
                 } else {
-                    current +=(unicode[i] & 0xBF);
+                    current +=(univalue & 0x3F);
                     buf << current;
                     bytecount = 0;
                 }
                 break;
             case 2: case 3:
-                if((unicode[i] | 0x3F) != 0xBF) {
+                if((univalue | 0x3F) != 0xBF) {
                     // invalid followup
                     i += bytecount -1;
                     bytecount = 0;
                     buf << 0xFFFD;
                 } else {
-                    current +=(unicode[i] & 0xBF) << 6;
+                    current +=(univalue & 0x3F) << 6;
                     bytecount--;
                 }
                 break;
@@ -475,7 +482,9 @@ void ssc::fromUtf8(const char* unicode) const {
 
         }
     }
-    *this = buf.toString();
+    String tmp = buf.toString();
+    strdata = tmp.strdata;
+    strdata->refcount++;
 }
 
 bool operator==(const String lhs, const String rhs) {
@@ -497,7 +506,7 @@ bool operator<(const String lhs, const String rhs) {
     return true;
 }
 
-String& ssc::operator+=(const String rhs) const {
+const String& ssc::operator+=(const String rhs) const {
     Data * newdata = new Data(length() + rhs.length());
     arraycopy(strdata->data, 0, newdata->data, 0, length());
     arraycopy(rhs.strdata->data, 0, newdata->data, length(), rhs.length());
@@ -511,11 +520,11 @@ String operator+(const String lhs, const String rhs) {
     return String(lhs) += rhs;
 }
 
-String operator&(const String lhs, const String(*rhs)(String)) {
+String operator&(const String lhs, String(*rhs)(const String)) {
     return rhs(lhs);
 }
 
-String operator&(const String(*lhs)(String), const String rhs) {
+String operator&(String(*lhs)(const String), const String rhs) {
     return lhs(rhs);
 }
 
@@ -531,15 +540,15 @@ std::ostream & operator<<(std::ostream& lhs, const String rhs) {
     return lhs << rhs.utf8();
 }
 
-String lc(String rhs) {
+String lc(const String rhs) {
     return rhs.toLowerCase();
 }
 
-String uc(String rhs) {
+String uc(const String rhs) {
     return rhs.toUpperCase();
 }
 
-String t(String rhs) {
+String t(const String rhs) {
     return rhs.trim();
 }
 

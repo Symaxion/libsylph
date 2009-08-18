@@ -22,11 +22,31 @@
 #define	FILEINPUTSTREAM_H_
 
 #include "InputStream.h"
+#include "FileIO.h"
+#include "../Core/File.h"
+
+#include <cstdio>
 
 SYLPH_BEGIN_NAMESPACE
 SYLPH_PUBLIC
 class FileInputStream : public InputStream {
-    // 2do
+public:
+    FileInputStream(File& f, IO::IOType t = IO::Normal);
+    virtual ~FileInputStream();
+
+    fsize_t available() const;
+    fssize_t read(Array<byte>& b, off_t offset = 0, size_t len = 0);
+    bool eof() const;
+    bool markSupported() const { return true; }
+    void mark(fsize_t);
+    fsize_t skip(fsize_t) = 0;
+    void reset();
+
+    InputStream& operator>>(byte&);
+private:
+    FILE * fptr;
+    fsize_t _mark;
+    fsize_t _markExpires;
 };
 SYLPH_END_NAMESPACE
 

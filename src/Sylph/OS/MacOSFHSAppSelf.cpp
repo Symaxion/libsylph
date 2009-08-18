@@ -1,14 +1,13 @@
 #include "MacOSFHSAppSelf.h"
-#include "Sylph/Core/File.h"
-
-#include <binreloc.h>
+#include "../Core/File.h"
 
 #include <string>
+#include <pwd.h>
 
 SYLPH_BEGIN_NAMESPACE
 
 MacOSFHSAppSelf::MacOSFHSAppSelf(int argc, char * argv[], char * apple[]) {
-    _location= File(apple[0]);
+    _location= String(apple[0]);
 }
 
 const File& MacOSFHSAppSelf::bundle() {
@@ -20,7 +19,7 @@ const File& MacOSFHSAppSelf::resourceDir() {
     return f;
 }
 
-const File& MacOSFHSAppSelf::resource(String rsc) {
+const File MacOSFHSAppSelf::resource(String rsc) {
     return resourceDir() / rsc;
 }
 
@@ -64,12 +63,12 @@ const File& MacOSFHSAppSelf::systemResourceDir() {
     return resourceDir();
 }
 
-const File& MacOSFHSAppSelf::systemResource(String rsc) {
+const File MacOSFHSAppSelf::systemResource(String rsc) {
     return resource(rsc);
 }
 
 const File& MacOSFHSAppSelf::userHome() {
-    static File f = getpwuid(geteuid())->pw_name;
+    static File f = getpwuid(geteuid())->pw_dir;
     return f;
 }
 
@@ -103,12 +102,12 @@ const File& MacOSFHSAppSelf::userResourceDir() {
     return f;
 }
 
-const File& MacOSFHSAppSelf::userResource(String rsc) {
+const File MacOSFHSAppSelf::userResource(String rsc) {
     return userResourceDir() / rsc;
 }
 
 const File& MacOSFHSAppSelf::prefix() {
-    File f = File(_location).parent().parent();
+    static File f = File(_location).parent().parent();
     return f;
 }
 

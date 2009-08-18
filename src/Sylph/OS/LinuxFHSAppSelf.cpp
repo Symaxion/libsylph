@@ -1,7 +1,9 @@
 #include "LinuxFHSAppSelf.h"
-#include "Sylph/Core/File.h"
+#include "../Core/File.h"
 
 #include <binreloc.h>
+
+#include <pwd.h>
 
 SYLPH_BEGIN_NAMESPACE
 
@@ -27,7 +29,7 @@ const File& LinuxFHSAppSelf::resourceDir() {
     return f;
 }
 
-const File& LinuxFHSAppSelf::resource(String rsc) {
+const File LinuxFHSAppSelf::resource(String rsc) {
     return resourceDir() / rsc;
 }
 
@@ -71,12 +73,12 @@ const File& LinuxFHSAppSelf::systemResourceDir() {
     return resourceDir();
 }
 
-const File& LinuxFHSAppSelf::systemResource(String rsc) {
+const File LinuxFHSAppSelf::systemResource(String rsc) {
     return resource(rsc);
 }
 
 const File& LinuxFHSAppSelf::userHome() {
-    static File f = getpwuid(geteuid())->pw_name;
+    static File f = getpwuid(geteuid())->pw_dir;
     return f;
 }
 
@@ -110,12 +112,12 @@ const File& LinuxFHSAppSelf::userResourceDir() {
     return f;
 }
 
-const File& LinuxFHSAppSelf::userResource(String rsc) {
+const File LinuxFHSAppSelf::userResource(String rsc) {
     return userResourceDir() / rsc;
 }
 
 const File& LinuxFHSAppSelf::prefix() {
-    File f = File(_location).parent().parent();
+    static File f = File(_location).parent().parent();
     return f;
 }
 

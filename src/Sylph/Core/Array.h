@@ -37,14 +37,6 @@ template<class T> class Array;
 
 SYLPH_PUBLIC
 
-        namespace z86E9RpL {
-
-    template <typename T, std::size_t N>
-    std::size_t carraysize(T(&)[N]) {
-        return N;
-    }
-}
-
 /**
  * Array provides a safe array. It works the same like a c-style array (not like
  * std::vector which can expand), but instead of overflowing, it throws an
@@ -60,6 +52,8 @@ SYLPH_PUBLIC
  */
 template<class T>
 class Array : public virtual Object {
+private:
+    size_t _length;
 public:
 
     class iterator : public RandomAccessIterator<T, iterator> {
@@ -131,7 +125,7 @@ public:
      * is 0-based, i.e. if length == N the highest entry in this array is N-1.
      * E.g if array.length == 5, then the higest entry is array[4]
      */
-    const int & length;
+    const size_t & length;
 
     /**
      * Creates an Array<T> from a pointer to T and a length. The new array will
@@ -188,7 +182,8 @@ public:
      * the original array. The original array remains unmodified.
      * @param array A traditional, C-style array to create this Array from.
      */
-    Array(const T array[]) : _length(z86E9RpL::carraysize(array)),
+    template<size_t N>
+    Array(const T(&array)[N]) : _length(N),
     length(_length) {
         data = new Data(_length);
         data->_carray = new T[_length];
@@ -256,7 +251,10 @@ public:
      */
     virtual ~Array() {
         data->refcount--;
-        if (!data->refcount) delete data;
+        if (!data->refcount) {
+            delete data;
+            data = NULL;
+        }
     }
 
     /**
@@ -355,8 +353,8 @@ public:
      * @throw ArrayException if <code>idx > length</code>
      */
     T & operator[](std::sidx_t idx) throw (Exception) {
-        if (abs(idx) < length) {
-            return idx > 0 ? data->_carray[idx] : data->_carray[length + idx];
+        if (size_t(abs(idx)) < length) {
+            return idx >= 0 ? data->_carray[idx] : data->_carray[length + idx];
         } else {
             sthrow(ArrayException, "Array overflow");
         }
@@ -371,7 +369,7 @@ public:
      */
     const T & operator[](std::sidx_t idx) const throw (Exception) {
         if (abs(idx) < length) {
-            return idx > 0 ? data->_carray[idx] : data->_carray[length + idx];
+            return idx >= 0 ? data->_carray[idx] : data->_carray[length + idx];
         } else {
             sthrow(ArrayException, "Array overflow");
         }
@@ -420,11 +418,10 @@ protected:
         virtual ~Data() {
             delete _carray;
         }
-        const int _length;
+        const size_t _length;
         T * _carray;
         suint refcount;
     } * data;
-    int _length;
 #endif
 };
 
