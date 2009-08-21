@@ -30,6 +30,7 @@
 
 #include <algorithm>
 #include <initializer_list>
+#include <iostream>
 
 SYLPH_BEGIN_NAMESPACE
 class Any;
@@ -85,7 +86,7 @@ public:
         }
 
         bool hasNext() const {
-            return _obj->length < _currentIndex;
+            return _currentIndex < _obj->length;
         }
 
         void next() const {
@@ -148,9 +149,8 @@ public:
      * internal C array is allocated to have the specified length.
      * @param len The length of the new Array.
      */
-    explicit Array(std::size_t len = 0) : _length(len), length(_length) {
-        data = new Data(len);
-        data->_carray = new T[length];
+    explicit Array(std::size_t len = 0) : _length(len), length(_length),
+            data(new Data(len)) {
     }
 
     /**
@@ -163,9 +163,8 @@ public:
      * list, and all data is copied into a newly allocated C array.
      * @param il The initializer_list used to create the array.
      */
-    Array(const std::initializer_list<T> & il) : _length(il.size()), length(_length) {
-        data = new Data(_length);
-        data->_carray = new T[il.size()];
+    Array(const std::initializer_list<T> & il) : _length(il.size()), 
+            length(_length), data(new Data(_length)) {
         for (idx_t i = 0; i < il.size(); i++) {
             data->_carray[i] = il.begin()[i];
         }
@@ -183,10 +182,7 @@ public:
      * @param array A traditional, C-style array to create this Array from.
      */
     template<size_t N>
-    Array(const T(&array)[N]) : _length(N),
-    length(_length) {
-        data = new Data(_length);
-        data->_carray = new T[_length];
+    Array(const T(&array)[N]) : _length(N), length(_length), data(new Data(N)) {
         for (idx_t i = 0; i < _length; i++) {
             data->_carray[i] = array[i];
         }
@@ -200,11 +196,8 @@ public:
      * remain unmodified.
      * @param other An other Array from which to use the reference counted data.
      */
-    Array(const Array<T> & other) : _length(other._length),
-    length(_length) {
-        if (this == &other) return;
-        this->data = other.data;
-        this->_length = other.data->_length;
+    Array(const Array<T> & other) : _length(other._length), length(_length),
+        data(other.data){
         data->refcount++;
     }
 
@@ -219,9 +212,7 @@ public:
      */
 
     Array(const basic_range<T> & ran) : _length(ran.last() - ran.first()),
-    length(_length) {
-        data = new Data(_length);
-        data->_carray = new T[_length];
+    length(_length), data(new Data(length)) {
         idx_t idx = 0;
         for (T x = ran.first(); x < ran.last(); x++) {
             *this[idx] = x;
@@ -239,9 +230,8 @@ public:
      * object remains unmodified.
      * @param t An object to create a length-1 array from.
      */
-    Array(const T& t) {
-        data = new Data(1);
-        data->_carray = new T[1];
+    explicit Array(const T& t) : _length(1), length(_length),
+            data(new Data(1)) {
         data->_carray[0] = t;
     }
 
@@ -353,7 +343,7 @@ public:
      * @throw ArrayException if <code>idx > length</code>
      */
     T & operator[](std::sidx_t idx) throw (Exception) {
-        if (size_t(abs(idx)) < length) {
+        if ((idx < (sidx_t)length) && (idx >= -(sidx_t)length)) {
             return idx >= 0 ? data->_carray[idx] : data->_carray[length + idx];
         } else {
             sthrow(ArrayException, "Array overflow");
@@ -368,7 +358,7 @@ public:
      * @throw ArrayException if <code>idx > length</code>
      */
     const T & operator[](std::sidx_t idx) const throw (Exception) {
-        if (abs(idx) < length) {
+        if ((idx < (sidx_t)length) && (idx >= -(sidx_t)length)) {
             return idx >= 0 ? data->_carray[idx] : data->_carray[length + idx];
         } else {
             sthrow(ArrayException, "Array overflow");
@@ -384,10 +374,10 @@ public:
      * @throw ArrayException if ran.last() > length
      */
     Array<T> operator[](const range & ran) throw (Exception) {
-        if (ran.first() < 0 || ran.last() > length)
+        if (ran.first() < 0 || ran.last() >= length)
             sthrow(ArrayException, "Array overflow");
 
-        Array<T> toReturn = Array<T>::fromPointer(ran.last() - ran.first(),
+        Array<T> toReturn = Array<T>::fromPointer((ran.last() - ran.first())+1,
                 data->_carray + ran.first());
         return toReturn;
     }
@@ -398,10 +388,10 @@ public:
      * @throw ArrayException if ran.last() > length
      */
     const Array<T> operator[](const range & ran) const throw (Exception) {
-        if (ran.first() < 0 || ran.last() > length)
+        if (ran.first() < 0 || ran.last() >= length)
             sthrow(ArrayException, "Array overflow");
 
-        Array<T> toReturn = Array<T>::fromPointer(ran.last() - ran.first(),
+        Array<T> toReturn = Array<T>::fromPointer((ran.last() - ran.first())+1,
                 data->_carray + ran.first());
         return toReturn;
     }
@@ -411,7 +401,8 @@ protected:
 
     struct Data {
 
-        explicit Data(size_t length) : _length(length), refcount(1) {
+        explicit Data(size_t length) : _length(length), 
+                 _carray(new T[length]()), refcount(1) {
 
         }
 
@@ -435,7 +426,7 @@ protected:
 template<class T>
 inline bool operator==(const Array<T>& lhs, const Array<T>& rhs) {
     return lhs.length == rhs.length ?
-            std::equal(lhs.carray[0], lhs.carray[lhs.length - 1], rhs[0]) : false;
+            std::equal(lhs.begin(), lhs.end(), lhs.begin()) : false;
 }
 
 /**
@@ -448,8 +439,8 @@ inline bool operator==(const Array<T>& lhs, const Array<T>& rhs) {
 template<class T>
 inline bool operator<(const Array<T>& lhs, const Array<T>& rhs) {
     return lhs.length == rhs.length ?
-            std::lexicographical_compare(lhs.carray[0], lhs.carray[lhs.length - 1],
-            rhs[0], rhs[rhs.length - 1]) : false;
+            std::lexicographical_compare(lhs.begin(), lhs.end(),
+            rhs.begin(), rhs.end()) : false;
 }
 
 SYLPH_END_NAMESPACE

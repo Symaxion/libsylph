@@ -84,7 +84,7 @@ public:
 
     Exception(const char * r = "", const char * f = "unknown",
             const unsigned int l = 0)
-    throw () : _reason(r), _file(f), _line(l) {
+    throw () : _reason(r), _file(f), _line(l), tracemsg(0) {
     }
 
     /**

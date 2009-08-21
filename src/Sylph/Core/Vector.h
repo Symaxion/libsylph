@@ -66,7 +66,7 @@ public:
         }
 
         bool hasNext() const {
-            return _obj->size() < _currentIndex;
+            return _currentIndex < _obj->size();
         }
 
         void next() const {
