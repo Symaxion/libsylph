@@ -71,25 +71,25 @@ public:
 
     reference operator*() {
         if (_end_reached_ == 2) sthrow(IteratorException,
-                "Tried to derefrence an beyond-end iterator");
+                "Tried to dereference an beyond-end iterator");
         return current();
     }
 
     const reference operator*() const {
         if (_end_reached_ == 2) sthrow(IteratorException,
-                "Tried to derefrence an beyond-end iterator");
+                "Tried to dereference an beyond-end iterator");
         return current();
     }
 
     reference operator->() {
         if (_end_reached_ == 2) sthrow(IteratorException,
-                "Tried to derefrence an beyond-end iterator");
+                "Tried to dereference an beyond-end iterator");
         return current();
     }
 
     const reference operator->() const {
         if (_end_reached_ == 2) sthrow(IteratorException,
-                "Tried to derefrence an beyond-end iterator");
+                "Tried to dereference an beyond-end iterator");
         return current();
     }
 
@@ -293,32 +293,31 @@ public:
         ptrdiff_t diff = i;
         if (i >= 0) while (diff--) ++(*this);
         else while (diff++) --(*this);
-        return *this;
+        return *static_cast<I*>(this);
     }
 
-    const I & operator+=
-            (unsigned int i) const {
+    const I & operator+=(unsigned int i) const {
         ptrdiff_t diff = i;
         if (i >= 0) while (diff--) ++(*this);
         else while (diff++) --(*this);
-        return *this;
+        return *static_cast<const I*>(this);
     }
 
     I & operator-=(unsigned int i) {
-        return *this += -i;
+        return *static_cast<I*>(&(*this += -i));
     }
 
     const I & operator-=(unsigned int i) const {
-        return *this += -i;
+        return &*static_cast<I*>(&(*this += -i));
     }
 
     const I operator+(unsigned int i) const {
-        I toReturn(*this);
+        I toReturn(*static_cast<const I*>(this));
         return toReturn += i;
     }
 
     I operator-(unsigned int i) {
-        return *this + -i;
+        return *static_cast<I*>(&(*this + -i));
     }
 
     ptrdiff_t operator-(const I& other) const {
@@ -357,8 +356,7 @@ public:
 };
 
 template<class T, class I>
-RandomAccessIterator<T, I> operator+
-(unsigned int i, const I itr) {
+I operator+(unsigned int i, const I itr) {
     return itr + i;
 }
 

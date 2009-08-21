@@ -31,3 +31,6 @@ set(SYLPH_ALL_DEPS ${SYLPH_LINK} intl icucore icuuc)
 
 add_subdirectory(deps/binreloc)
 add_subdirectory(src)
+add_subdirectory(test)
+
+install( FILES bin/sylphparams RUNTIME DESTINATION bin)
