@@ -8,25 +8,25 @@ log() {
     echo $@ >&2
 }
 
-do-svn() {
-    #prepare for SVN
-    cat > README-SVN << EOT
-You have checked out the current trunk from SVN. Code from SVN does not always
-compile or can be incomplete. It is possible that certain build
+do-git() {
+    #prepare for GIT
+    cat > README-GIT << EOT
+You have checked out the current master branch from Git. Code from Git does 
+not always compile or can be incomplete.
 EOT
     if [ "$1" == "compile" ]; then
-cat >> README-SVN << EOT
+cat >> README-GIT << EOT
 However, current code seems to compile. Be warned that it may still have many
 bugs, or can be simply incomplete. If you want to have working code, please
 check out the latest relase from the 'unstable' branch.
 EOT
     else
-    cat >> README-SVN << EOT
-SVN is currently known to be broken. Please check out the latest release from
+    cat >> README-GIT << EOT
+GIT is currently known to be broken. Please check out the latest release from
 the 'unstable' branch.
 EOT
     fi
-    cat >> README-SVN << EOT
+    cat >> README-GIT << EOT
 
 For instructions on building and installing, please see the README file in this
 directory. You might need to recreate the src/SourcesList.txt files. In order to
@@ -102,10 +102,10 @@ error() {
 }
 
 case "$1" in
-    svn)
+    git)
         case "$2" in
             compile|nocompile)
-              do-svn "$2"
+              do-git "$2"
               ;;
             *)
               error
