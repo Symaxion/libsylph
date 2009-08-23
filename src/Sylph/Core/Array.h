@@ -49,7 +49,8 @@ SYLPH_PUBLIC
  * and does not obstruct the workflow. <p>
  * Please note that most constructors copy the contents into the array, which
  * means that unless the type used is easy to copy, using the specialized
- * array-to-pointer ( Array<T*> ) is prefered.
+ * array-to-pointer ( Array<T*> ) is preferred.
+ * @tplreqs T CopyConstructible, DefaultConstructible, Assignable
  */
 template<class T>
 class Array : public virtual Object {
@@ -209,6 +210,7 @@ public:
      * count is set to 1, the length is set to <code>ran.last() - ran.first()
      * </code>, a new C-style array with this length will be allocated.
      * @param ran a range class that specifies the lower and upper boundaries.
+     * @tplreqs T operator++, LessThanComparable
      */
 
     Array(const basic_range<T> & ran) : _length(ran.last() - ran.first()),
@@ -422,6 +424,7 @@ protected:
  * same position in the other array.
  * @return <i>true</i> when the two arrays compare equal, <i>false</i>
  * otherwise.
+ * @tplregs T EqualityComparable
  */
 template<class T>
 inline bool operator==(const Array<T>& lhs, const Array<T>& rhs) {
@@ -440,6 +443,7 @@ inline bool operator==(const Array<T>& lhs, const Array<T>& rhs) {
  * position in the other array.
  * @return <i>true</i> when the first array compares less than the first,
  * <i>false</i> otherwise.
+ * @tplreqs T LessThanComparable
  */
 template<class T>
 inline bool operator<(const Array<T>& lhs, const Array<T>& rhs) {
