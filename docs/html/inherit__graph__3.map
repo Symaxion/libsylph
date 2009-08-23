@@ -1,8 +1,9 @@
-<area shape="rect" href="$class_sylph_1_1_exception.html" title="This class provides a ready-to-use interface for exception handling." alt="" coords="9,160,166,186">
-<area shape="rect" href="$class_sylph_1_1_array_exception.html" title="A generic Exception when an error occurs with an Array." alt="" coords="258,8,461,34">
-<area shape="rect" href="$class_sylph_1_1_file_exception.html" title="A genreric Exception which gets thrown whenever something goes wrong in the File..." alt="" coords="266,58,453,85">
-<area shape="rect" href="$class_sylph_1_1_illegal_argument_exception.html" title="Generic exception to flag an argument with an illegal state was passed to an function..." alt="" coords="216,109,504,136">
-<area shape="rect" href="$class_sylph_1_1_illegal_state_exception.html" title="Generic exception to flag that a method is not supported in the current state of..." alt="" coords="234,160,485,186">
-<area shape="rect" href="$class_sylph_1_1_i_o_exception.html" title="This is a generic exception for I/O errors." alt="" coords="273,210,446,237">
-<area shape="rect" href="$class_sylph_1_1_null_pointer_exception.html" title="This Exception gets thrown when a pointer to NULL is passed to a function or method..." alt="" coords="236,261,484,288">
-<area shape="rect" href="$class_sylph_1_1_serialization_exception.html" title="This Exception gets thrown if there is a problem with serializing or deserializing..." alt="" coords="230,312,489,338">
+<area shape="rect" href="$class_sylph_1_1_object.html" title="The root of all classes." alt="" coords="9,185,140,211">
+<area shape="rect" href="$class_sylph_1_1_forward_iterator.html" title="Sylph::ForwardIterator\&lt; Entry, iterator \&gt;" alt="" coords="192,7,552,34">
+<area shape="rect" href="$class_sylph_1_1_forward_iterator.html" title="Sylph::ForwardIterator\&lt; String, iterator \&gt;" alt="" coords="189,58,554,85">
+<area shape="rect" href="$class_sylph_1_1_forward_iterator.html" title="Sylph::ForwardIterator\&lt; T, I \&gt;" alt="" coords="238,109,505,135">
+<area shape="rect" href="$class_sylph_1_1_forward_iterator.html" title="Sylph::ForwardIterator\&lt; T, iterator \&gt;" alt="" coords="209,159,534,186">
+<area shape="rect" href="$class_sylph_1_1_any.html" title="Wrapper class for any kind of class." alt="" coords="317,210,426,237">
+<area shape="rect" href="$class_sylph_1_1_array.html" title="Array provides a safe array." alt="" coords="288,261,456,287">
+<area shape="rect" href="$class_sylph_1_1_forward_iterator.html" title="Facade used to simplify usage of forward iterators." alt="" coords="238,311,505,338">
+<area shape="rect" href="$class_sylph_1_1_sylph_iterator.html" title="SylphIterator provides a easier-to-use wrapper around STL iterators." alt="" coords="248,362,496,389">
