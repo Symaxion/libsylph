@@ -425,8 +425,13 @@ protected:
  */
 template<class T>
 inline bool operator==(const Array<T>& lhs, const Array<T>& rhs) {
-    return lhs.length == rhs.length ?
-            std::equal(lhs.begin(), lhs.end(), lhs.begin()) : false;
+    if(lhs.length == rhs.length) {
+        for(idx_t i = 0; i < lhs.length; i++) {
+            if(lhs[i] != rhs[i]) return false;
+        }
+        return true;
+    }
+    return false;
 }
 
 /**
@@ -438,9 +443,8 @@ inline bool operator==(const Array<T>& lhs, const Array<T>& rhs) {
  */
 template<class T>
 inline bool operator<(const Array<T>& lhs, const Array<T>& rhs) {
-    return lhs.length == rhs.length ?
-            std::lexicographical_compare(lhs.begin(), lhs.end(),
-            rhs.begin(), rhs.end()) : false;
+    return std::lexicographical_compare(&lhs[0], &lhs[lhs.length-1],
+            &rhs[0], &rhs[rhs.length-1]);
 }
 
 SYLPH_END_NAMESPACE
