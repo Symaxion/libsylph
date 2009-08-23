@@ -63,12 +63,12 @@ public:
 
         iterator(bool begin = false, Array<T>* obj = NULL)
         : super(begin), _obj(obj) {
-            _currentIndex = begin ? 0 : _obj->length;
+            _currentIndex = begin ? 0 : (_obj->length - 1);
         }
 
         iterator(bool begin = false, const Array<T>* obj = NULL)
         : super(begin), _obj(const_cast<Array<T>*> (obj)) {
-            _currentIndex = begin ? 0 : _obj->length;
+            _currentIndex = begin ? 0 : (_obj->length - 1);
         }
 
         bool equals(const iterator& other) const {
@@ -86,7 +86,7 @@ public:
         }
 
         bool hasNext() const {
-            return _currentIndex < _obj->length;
+            return _currentIndex < (_obj->length - 1);
         }
 
         void next() const {
