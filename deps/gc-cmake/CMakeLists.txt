@@ -1,1 +1,0 @@
-execute_process( COMMAND ./build-gc.sh )

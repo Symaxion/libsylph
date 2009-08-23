@@ -59,7 +59,7 @@ public:
     // Implementation of the required functions in terms of the overridable
     // functions
 
-    ForwardIterator(bool begin = false) : _end_reached_(begin ? 0 : 2) {
+    ForwardIterator(bool begin = false) : _end_reached_(!begin) {
     }
 
     ForwardIterator(const ForwardIterator<T, I>& other) :
@@ -70,75 +70,71 @@ public:
     }
 
     reference operator*() {
-        if (_end_reached_ == 2) sthrow(IteratorException,
+        if (_end_reached_) sthrow(IteratorException,
                 "Tried to dereference an beyond-end iterator");
         return current();
     }
 
     const reference operator*() const {
-        if (_end_reached_ == 2) sthrow(IteratorException,
+        if (_end_reached_) sthrow(IteratorException,
                 "Tried to dereference an beyond-end iterator");
         return current();
     }
 
     reference operator->() {
-        if (_end_reached_ == 2) sthrow(IteratorException,
+        if (_end_reached_) sthrow(IteratorException,
                 "Tried to dereference an beyond-end iterator");
         return current();
     }
 
     const reference operator->() const {
-        if (_end_reached_ == 2) sthrow(IteratorException,
+        if (_end_reached_) sthrow(IteratorException,
                 "Tried to dereference an beyond-end iterator");
         return current();
     }
 
     const I & operator++() const {
-        if (_end_reached_ == 2) sthrow(IteratorException, "End of iterator");
-        else if (_end_reached_ == 1) {
-            _end_reached_ = 2;
+        if (_end_reached_) sthrow(IteratorException, "End of iterator");
+        else if (!hasNext()) {
+            _end_reached_ = true;
             return *static_cast<I*> (this);
         } else {
             next();
-            if (!hasNext()) _end_reached_ = 1;
             return *static_cast<I*> (this);
         }
     }
 
     I & operator++() {
-        if (_end_reached_ == 2) sthrow(IteratorException, "End of iterator");
-        else if (_end_reached_ == 1) {
-            _end_reached_ = 2;
+        if (_end_reached_) sthrow(IteratorException, "End of iterator");
+        else if (!hasNext()) {
+            _end_reached_ = true;
             return *static_cast<I*> (this);
         } else {
             next();
-            if (!hasNext()) _end_reached_ = 1;
             return *static_cast<I*> (this);
         }
     }
 
     const I operator++(int) const {
         I toReturn(*static_cast<I*> (this));
-        if (_end_reached_ == 2) sthrow(IteratorException, "End of iterator");
-        else if (_end_reached_ == 1) {
-            _end_reached_ = 2;
+        if (_end_reached_) sthrow(IteratorException, "End of iterator");
+        else if (!hasNext()) {
+            _end_reached_ = true;
             return toReturn;
         } else {
             next();
-            if (!hasNext()) _end_reached_ = 1;
             return toReturn;
         }
     }
 
     I operator++(int) {
         I toReturn(*static_cast<I*> (this));
-        if (_end_reached_ == 2) sthrow(IteratorException, "End of iterator");
-        else if (_end_reached_ == 1) {
-            _end_reached_ = 2;
+        if (_end_reached_) sthrow(IteratorException, "End of iterator");
+        else if (!hasNext()) {
+            _end_reached_ = true;
             return toReturn;
         } else {
             next();
-            if (!hasNext()) _end_reached_ = 1;
             return toReturn;
         }
     }
@@ -189,7 +185,7 @@ public:
     /**
      * Do not use or modify!
      */
-    mutable unsigned char _end_reached_;
+    mutable bool _end_reached_;
 };
 
 template<class T, class I>
@@ -208,28 +204,24 @@ public:
     }
 
     I & operator--() {
-        if (ForwardIterator<T, I>::_end_reached_ == 2) {
-            ForwardIterator<T, I>::_end_reached_ = 1;
+        if (super::_end_reached_) {
+            super::_end_reached_ = false;
             return *static_cast<I*> (this);
         } else if (!hasPrevious()) {
             sthrow(IteratorException, "Begin of iterator");
         } else {
-            if (ForwardIterator<T, I>::_end_reached_ == 1)
-                ForwardIterator<T, I>::_end_reached_ = 0;
             previous();
             return *static_cast<I*> (this);
         }
     }
 
     const I & operator--() const {
-        if (ForwardIterator<T, I>::_end_reached_ == 2) {
-            ForwardIterator<T, I>::_end_reached_ = 1;
-            return *this;
+        if (super::_end_reached_) {
+            super::_end_reached_ = false;
+            return *static_cast<I*> (this);
         } else if (!hasPrevious()) {
             sthrow(IteratorException, "Begin of iterator");
         } else {
-            if (ForwardIterator<T, I>::_end_reached_ == 1)
-                ForwardIterator<T, I>::_end_reached_ = 0;
             previous();
             return *static_cast<I*> (this);
         }
@@ -237,14 +229,12 @@ public:
 
     I operator--(int) {
         I toReturn(*static_cast<I*> (this));
-        if (ForwardIterator<T, I>::_end_reached_ == 2) {
-            ForwardIterator<T, I>::_end_reached_ = 1;
+        if (super::_end_reached_) {
+            super::_end_reached_ = false;
             return toReturn;
         } else if (!hasPrevious()) {
             sthrow(IteratorException, "Begin of iterator");
         } else {
-            if (ForwardIterator<T, I>::_end_reached_ == 1)
-                ForwardIterator<T, I>::_end_reached_ = 0;
             previous();
             return toReturn;
         }
@@ -252,14 +242,12 @@ public:
 
     const I operator--(int) const {
         I toReturn(*static_cast<I*> (this));
-        if (ForwardIterator<T, I>::_end_reached_ == 2) {
-            ForwardIterator<T, I>::_end_reached_ = 1;
+        if (super::_end_reached_) {
+            super::_end_reached_ = false;
             return toReturn;
         } else if (!hasPrevious()) {
             sthrow(IteratorException, "Begin of iterator");
         } else {
-            if (ForwardIterator<T, I>::_end_reached_ == 1)
-                ForwardIterator<T, I>::_end_reached_ = 0;
             previous();
             return toReturn;
         }

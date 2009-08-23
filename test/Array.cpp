@@ -127,7 +127,6 @@ public:
         idx_t cur = 0;
         for(Array<int>::iterator it = arfilled1.begin();
                 it != arfilled1.end(); ++it) {
-                    std::cout << cur;
                     CPPUNIT_ASSERT(arfilled1[cur] == *it);
                     cur++;
                 }
