@@ -169,7 +169,7 @@ public:
      * <b>OVERRIDE THIS METHOD</b> Tells wheter there are any objects left
      * in the collection. This method should not take the past-the-end item into
      * account.
-     * @return <i>true</i> true if there are any next items, <i>false<i> if
+     * @return <i>true</i> true if there are any next items, <i>false</i> if
      * there are no more items left.
      */
     virtual bool hasNext() const = 0;

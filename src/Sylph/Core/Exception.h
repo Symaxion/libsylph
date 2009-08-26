@@ -47,9 +47,9 @@ SYLPH_BEGIN_NAMESPACE
  * enabled. Therefore one should prefer <code>sthrow()</code> over <code>
  * throw</code><p>
  * To create your own Exception class, use the 
- * <code>S_CREATE_EXCEPTION(</code><i>Name</i>)</code> macro. This will ensure
- * that everything that is required is in your exception.  A new class with name
- * '<i>Name</i>' will be created in the current scope. It extends
+ * <code>S_CREATE_EXCEPTION(</code><i>Name</i><code>)</code> macro. This will
+ * ensure that everything that is required is in your exception.  A new class
+ * with name '<i>Name</i>' will be created in the current scope. It extends
  * Sylph::Exception, therefore you can catch all exceptions created with this
  * macro through <code>catch(const Exception& ex)</code>. <p>
  * Two other macros are defined as well, namely @c strace and @c straced. These
@@ -77,9 +77,14 @@ public:
     /**
      * Creates a new Exception. You should not use this directly, instead, use
      * <code>sthrow()</code>
-     * @param r The reason why this Exception got thrown.
-     * @param f The file this Exception got thrown in.
-     * @param l The line number on which this Exception got thrown.
+     * @param r The reason why this Exception got thrown. This is the second
+     * parameter to @c sthrow().
+     * @param f The file this Exception got thrown in. This will automatically
+     * be filled in by @c sthrow() if the macro @c SYLPH_DEBUG is defined, else
+     * it defaults to the string "unknown".
+     * @param l The line number on which this Exception got thrown. This will
+     * automatically be filled in by @c sthrow() if the macro @c SYLPH_DEBUG is
+     * defined, else it defaults to 0.
      */
 
     Exception(const char * r = "", const char * f = "unknown",
@@ -88,7 +93,8 @@ public:
     }
 
     /**
-     * Default destructor. Deletes all trace info.
+     * Default destructor. Frees the memory used by the trace info. If this
+     * Exception contains to trace info, this destructor does nothing.
      */
     virtual ~Exception() throw () {
         TraceMessage * current = tracemsg;
@@ -101,7 +107,7 @@ public:
 
     /**
      * Returns the reason why this Exception was thrown, i.e.\ the second
-     * parameter to <code>sthrow()</code>
+     * parameter to <code>sthrow()</code>.
      * @return The reason why this Exception was thrown.
      */
     const char* what() const throw () {

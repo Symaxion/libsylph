@@ -424,7 +424,7 @@ protected:
  * same position in the other array.
  * @return <i>true</i> when the two arrays compare equal, <i>false</i>
  * otherwise.
- * @tplregs T EqualityComparable
+ * @tplreqs T EqualityComparable
  */
 template<class T>
 inline bool operator==(const Array<T>& lhs, const Array<T>& rhs) {

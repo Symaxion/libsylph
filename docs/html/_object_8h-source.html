@@ -90,18 +90,17 @@
 <a name="l00097"></a>00097     <span class="keyword">static</span> <span class="keywordtype">void</span> cleanup(<span class="keywordtype">void</span>* obj, <span class="keywordtype">void</span>* clientData);
 <a name="l00098"></a>00098     <span class="keyword">static</span> <span class="keywordtype">bool</span> gc_inited;
 <a name="l00099"></a>00099 <span class="preprocessor">#endif</span>
-<a name="l00100"></a>00100 <span class="preprocessor"></span><span class="keyword">public</span>:
-<a name="l00106"></a><a class="code" href="class_sylph_1_1_object.html#66812b0c01ee148a7193fecf9c005597">00106</a>     <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_sylph_1_1_object.html#66812b0c01ee148a7193fecf9c005597" title="Tries to serialize this object to the given SerializationBuffer.">serialize</a>(SerializationBuffer &amp; buf)<span class="keyword"> const </span>{}
-<a name="l00112"></a><a class="code" href="class_sylph_1_1_object.html#8c687ff464f8a0b5f4878571eec7ffa0">00112</a>     <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_sylph_1_1_object.html#8c687ff464f8a0b5f4878571eec7ffa0" title="Tries to deserialize this object from the giver DeserializationBuffer.">deserialize</a>(DeserializationBuffer &amp; buf) {}
-<a name="l00113"></a>00113 };
-<a name="l00114"></a>00114 
-<a name="l00123"></a>00123      <span class="keyword">template</span>&lt;<span class="keyword">class </span>T,<span class="keyword">class</span>... Args&gt; T * newgc(<span class="keyword">const</span> Args&amp;... args);
-<a name="l00124"></a>00124      <span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt; <span class="keywordtype">void</span> deletegc(<span class="keyword">const</span> T * t);
-<a name="l00125"></a>00125      <span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt; <span class="keywordtype">void</span> cleanupgc(<span class="keywordtype">void</span> *obj, <span class="keywordtype">void</span> *displ);
-<a name="l00126"></a>00126 SYLPH_END_NAMESPACE
+<a name="l00100"></a>00100 <span class="preprocessor"></span>};
+<a name="l00101"></a>00101 
+<a name="l00112"></a>00112 <span class="keyword">template</span>&lt;<span class="keyword">class </span>T, <span class="keyword">class</span>... Args&gt; T * <a class="code" href="namespace_sylph.html#63ddec6709f9855d2db98dc3ff22179b" title="Creates a new (non-LibSylph) object using the LibSylph garbage collection.">newgc</a>(<span class="keyword">const</span> Args&amp;... args);
+<a name="l00113"></a>00113 
+<a name="l00121"></a>00121 <span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt; <span class="keywordtype">void</span> <a class="code" href="namespace_sylph.html#bbcdc8958d6c7815a8bbb4e322a0eef7" title="Deletes a (non-LibSylph) object that was previously allocated with LibSylph newgc()...">deletegc</a>(<span class="keyword">const</span> T * t);
+<a name="l00122"></a>00122 <span class="comment">// Undocumented, do not use directly! </span>
+<a name="l00123"></a>00123 <span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt; <span class="keywordtype">void</span> cleanupgc(<span class="keywordtype">void</span> *obj, <span class="keywordtype">void</span> *displ);
+<a name="l00124"></a>00124 SYLPH_END_NAMESPACE
+<a name="l00125"></a>00125 
+<a name="l00126"></a>00126 <span class="preprocessor">#endif  </span><span class="comment">/* OBJECT_H_ */</span>
 <a name="l00127"></a>00127 
-<a name="l00128"></a>00128 <span class="preprocessor">#endif  </span><span class="comment">/* OBJECT_H_ */</span>
-<a name="l00129"></a>00129 
 </pre></div></div>
 <hr size="1" class="unhidden"><address style="text-align: right;"><small>
 Documentation for LibSylph by Doxygen

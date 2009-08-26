@@ -38,16 +38,60 @@ class File;
 template<class T> class Array;
 
 SYLPH_PUBLIC
+
+/**
+ * Class representing an application. An application is any file containing
+ * executable object code that can be directly invoked by the operating system
+ * through a well-defined entry point. Probably the most famous example is the
+ * @c thisapp instance of this class, a pointer to an Application object
+ * representing the application accessing the pointer.<p>
+ * It is not possible to directly instantiate an Application object. Future
+ * releases may contain functions to create Application objects and run the
+ * accompanying object code.
+ */
 class Application : public Object {
     friend class ApplicationSelf;
 public:
 
+    /**
+     * Returns the location of the file containing the object code of the
+     * application.<p>
+     * In case the application for which the location is requested is
+     * @c thisapp, he exact method used to determine the location is
+     * platform-dependant and may fail. In this case, the value is either set
+     * to an empty string or a garbage value. Depending on the implementation,
+     * an error may be raised as well during initialisation.
+     * @return the application's location.
+     */
     const String location() {
         return _location;
     }
 
     static ApplicationSelf * self_app;
 
+    /**
+     * Initialize the current application. This function will give the correct
+     * value to @c thisapp. Note that if you use int SylphMain(Array<String>)
+     * as the entry point for your application (the default), you do not need
+     * to call this function explicitly. Instead, it will be called for you
+     * before the SylphMain function. Depending on the implementation, this
+     * function may or may not set up other important resources.
+     * @param argc The number of arguments passed to the entry point designated
+     * by the platform.
+     * @param argv An array of C strings containing the arguments passed to
+     * the entry point designated by the platform. This array is expected to
+     * have a length of argc or more. If argc is larger than the actual length
+     * of argv, undefined behaviour may occur.
+     * @param apple The so-called 'apple-vector', an array of chars unique to
+     * the Mac OS X-platform. This array is used to determine the location of
+     * the binary solely on the Mac platform and is the fourth argument to the
+     * @c main entry function. On other platforms, this array may be substituted
+     * by a @c NULL pointer. Substituting this array on the Mac platform for
+     * anything else than the actual apple vector passed to the @c main function
+     * may lead to undefined behaviour.
+     * @param type An enumerated type representing the implementation to use
+     * for resource retrieval.
+     */
     static void init(int argc, char * argv[], char * apple[], AppType type);
 
 protected:
@@ -60,6 +104,13 @@ private:
 
 };
 
+/**
+ * An Application representing the currently running application. You cannot
+ * directly instantiate this class. You need to implement this classes' methods
+ * and use Application::init for correct initialisation. The constant @c thisapp
+ * is of the type ApplicationSelf. It contains some extra methods that are not
+ * available for ordinary applications.
+ */
 class ApplicationSelf : public Application {
     friend class Application;
 public:
@@ -67,6 +118,12 @@ public:
         return _appName;
     }
 
+    /**
+     * Returns an enumerated type representing the implementation used to back
+     * this ApplicationSelf. The returned value is set by Application::init.
+     * @return an enumeration corresponding to the implementation of
+     * ApplicationSelf used.
+     */
     AppType appType();
 
     void fail(const String reason);

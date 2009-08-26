@@ -84,7 +84,7 @@ public:
      * Gets the typeinfo of the data pointed to. The result returned is
      * compatible with the return value of the <code>typeid</code> operator,
      * which means that you can check if the Any can be casted to a type using
-     * its </code>typeid</code>. E.g:
+     * its <code>typeid</code>. E.g:
      * <pre>
      * if(myany.type() == typeid(int) {
      *     // safe to cast to int here
