@@ -104,6 +104,10 @@
 <tr><td class="memTemplItemLeft" nowrap align="right" valign="top">T *&nbsp;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_sylph.html#63ddec6709f9855d2db98dc3ff22179b">newgc</a> (const Args &amp;...args)</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Creates a new (non-LibSylph) object using the LibSylph garbage collection.  <a href="#63ddec6709f9855d2db98dc3ff22179b"></a><br></td></tr>
+<tr><td class="memTemplParams" nowrap colspan="2">template&lt;class T &gt; </td></tr>
+<tr><td class="memTemplItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_sylph.html#bbcdc8958d6c7815a8bbb4e322a0eef7">deletegc</a> (const T *t)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Deletes a (non-LibSylph) object that was previously allocated with LibSylph <code><a class="el" href="namespace_sylph.html#63ddec6709f9855d2db98dc3ff22179b" title="Creates a new (non-LibSylph) object using the LibSylph garbage collection.">newgc()</a></code>.  <a href="#bbcdc8958d6c7815a8bbb4e322a0eef7"></a><br></td></tr>
 </table>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
 The <a class="el" href="namespace_sylph.html" title="The Sylph namespace contains everything in LibSylph.">Sylph</a> namespace contains everything in LibSylph. 
@@ -213,6 +217,36 @@ This cast is completely safe, and either returns a correct pointer, or completel
 
 </div>
 </div><p>
+<a class="anchor" name="bbcdc8958d6c7815a8bbb4e322a0eef7"></a><!-- doxytag: member="Sylph::deletegc" ref="bbcdc8958d6c7815a8bbb4e322a0eef7" args="(const T *t)" -->
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void Sylph::deletegc           </td>
+          <td>(</td>
+          <td class="paramtype">const T *&nbsp;</td>
+          <td class="paramname"> <em>t</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Deletes a (non-LibSylph) object that was previously allocated with LibSylph <code><a class="el" href="namespace_sylph.html#63ddec6709f9855d2db98dc3ff22179b" title="Creates a new (non-LibSylph) object using the LibSylph garbage collection.">newgc()</a></code>. 
+<p>
+Altough explicit deletion is not required when using garbage collection, the function is provided anyways for your convenience. <dl compact><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>t</em>&nbsp;</td><td>pointer to a class previously allocated with <code>newgc</code> </td></tr>
+  </table>
+</dl>
+<dl class="user" compact><dt><b>Template requirements:</b></dt><dd><em>T</em> none </dd></dl>
+
+</div>
+</div><p>
 <a class="anchor" name="63ddec6709f9855d2db98dc3ff22179b"></a><!-- doxytag: member="Sylph::newgc" ref="63ddec6709f9855d2db98dc3ff22179b" args="(const Args &amp;...args)" -->
 <div class="memitem">
 <div class="memproto">
@@ -235,8 +269,10 @@ template&lt;class T , class... Args&gt; </div>
 Creates a new (non-LibSylph) object using the LibSylph garbage collection. 
 <p>
 Example (using Qt): <pre>
- QPushButton but * = newgc&lt;QPushButton&gt;("Hello");
- </pre> The syntax is very similar to that of the normal new operator. 
+ QPushButton * but = newgc&lt;QPushButton&gt;("Hello");
+ </pre> The syntax is very similar to that of the normal new operator. <dl class="user" compact><dt><b>Template requirements:</b></dt><dd><em>T</em> Constructible with <em>Args</em> </dd></dl>
+<dl class="user" compact><dt><b>Template requirements:</b></dt><dd><em>Args</em> none </dd></dl>
+
 </div>
 </div><p>
 <a class="anchor" name="049ea1ef37b015ca0292637e6d2e3ffa"></a><!-- doxytag: member="Sylph::operator&lt;" ref="049ea1ef37b015ca0292637e6d2e3ffa" args="(const Array&lt; T &gt; &amp;lhs, const Array&lt; T &gt; &amp;rhs)" -->
@@ -304,7 +340,8 @@ template&lt;class T &gt; </div>
 <p>
 Compares the two Arrays on equality. 
 <p>
-To Arrays compare equal when their lengths are identical and each of the items compare equal to the item on the same position in the other array. <dl class="return" compact><dt><b>Returns:</b></dt><dd><em>true</em> when the two arrays compare equal, <em>false</em> otherwise.  T EqualityComparable </dd></dl>
+To Arrays compare equal when their lengths are identical and each of the items compare equal to the item on the same position in the other array. <dl class="return" compact><dt><b>Returns:</b></dt><dd><em>true</em> when the two arrays compare equal, <em>false</em> otherwise. </dd></dl>
+<dl class="user" compact><dt><b>Template requirements:</b></dt><dd><em>T</em> EqualityComparable </dd></dl>
 
 </div>
 </div><p>

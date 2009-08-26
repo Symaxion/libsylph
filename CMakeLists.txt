@@ -27,7 +27,7 @@ set(SYLPH_LINK_DIR ${SYLPH_SOURCE_DIR}/deps/gc)
 set(SYLPH_LINK gc)
 endif ( UNIX )
 
-set(SYLPH_ALL_DEPS ${SYLPH_LINK} intl icucore icuuc)
+set(SYLPH_ALL_DEPS ${SYLPH_LINK} icuuc)
 
 add_subdirectory(deps/binreloc)
 add_subdirectory(src)

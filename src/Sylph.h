@@ -61,9 +61,13 @@ int main(int argc, char * argv[], char * envp[], char * apple[]) {
 int main(int argc, char * argv[]) {
     try {
         SylphInit(argc, argv, NULL);
-        return SylphMain();
-    } catch (Sylph::Core::Exception & ex) {
-        Sylph::Core::UncaughtExceptionHandler::handler->handle(ex);
+        Array<String> args(argc);
+        for(int i = 0; i < argc; ++i) {
+            args[i] = argv[i];
+        }
+        return SylphMain(args);
+    } catch (Sylph::Exception & ex) {
+        Sylph::UncaughtExceptionHandler::handler->handle(ex);
     }
 }
 #endif

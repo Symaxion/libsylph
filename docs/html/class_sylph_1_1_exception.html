@@ -65,7 +65,7 @@ Several macros are provided to make using this <a class="el" href="class_sylph_1
        // ...
      }
  }</pre> <code>sthrow</code> adds certain debug information, i.e. file and line numbers, if compilation with the debug flag (<code>-DSYLPH_DEBUG</code>) is enabled. Therefore one should prefer <code>sthrow()</code> over <code> throw</code><p>
-To create your own <a class="el" href="class_sylph_1_1_exception.html" title="This class provides a ready-to-use interface for exception handling.">Exception</a> class, use the <code>S_CREATE_EXCEPTION(</code><em>Name</em>) macro. This will ensure that everything that is required is in your exception. A new class with name '<em>Name</em>' will be created in the current scope. It extends <a class="el" href="class_sylph_1_1_exception.html" title="This class provides a ready-to-use interface for exception handling.">Sylph::Exception</a>, therefore you can catch all exceptions created with this macro through <code>catch(const Exception&amp; ex)</code>. <p>
+To create your own <a class="el" href="class_sylph_1_1_exception.html" title="This class provides a ready-to-use interface for exception handling.">Exception</a> class, use the <code>S_CREATE_EXCEPTION(</code><em>Name</em><code>)</code> macro. This will ensure that everything that is required is in your exception. A new class with name '<em>Name</em>' will be created in the current scope. It extends <a class="el" href="class_sylph_1_1_exception.html" title="This class provides a ready-to-use interface for exception handling.">Sylph::Exception</a>, therefore you can catch all exceptions created with this macro through <code>catch(const Exception&amp; ex)</code>. <p>
 Two other macros are defined as well, namely <code>strace</code> and <code>straced</code>. These allow you to add trace information to an <a class="el" href="class_sylph_1_1_exception.html" title="This class provides a ready-to-use interface for exception handling.">Exception</a> (i.e. the name of the current function). An example is given below: <pre>
  void foobar() {
      try {
@@ -110,9 +110,9 @@ Creates a new <a class="el" href="class_sylph_1_1_exception.html" title="This cl
 <p>
 You should not use this directly, instead, use <code>sthrow()</code> <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>r</em>&nbsp;</td><td>The reason why this <a class="el" href="class_sylph_1_1_exception.html" title="This class provides a ready-to-use interface for exception handling.">Exception</a> got thrown. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>f</em>&nbsp;</td><td>The file this <a class="el" href="class_sylph_1_1_exception.html" title="This class provides a ready-to-use interface for exception handling.">Exception</a> got thrown in. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>l</em>&nbsp;</td><td>The line number on which this <a class="el" href="class_sylph_1_1_exception.html" title="This class provides a ready-to-use interface for exception handling.">Exception</a> got thrown. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>r</em>&nbsp;</td><td>The reason why this <a class="el" href="class_sylph_1_1_exception.html" title="This class provides a ready-to-use interface for exception handling.">Exception</a> got thrown. This is the second parameter to <code>sthrow()</code>. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>f</em>&nbsp;</td><td>The file this <a class="el" href="class_sylph_1_1_exception.html" title="This class provides a ready-to-use interface for exception handling.">Exception</a> got thrown in. This will automatically be filled in by <code>sthrow()</code> if the macro <code>SYLPH_DEBUG</code> is defined, else it defaults to the string "unknown". </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>l</em>&nbsp;</td><td>The line number on which this <a class="el" href="class_sylph_1_1_exception.html" title="This class provides a ready-to-use interface for exception handling.">Exception</a> got thrown. This will automatically be filled in by <code>sthrow()</code> if the macro <code>SYLPH_DEBUG</code> is defined, else it defaults to 0. </td></tr>
   </table>
 </dl>
 
@@ -136,7 +136,7 @@ You should not use this directly, instead, use <code>sthrow()</code> <dl compact
 <p>
 Default destructor. 
 <p>
-Deletes all trace info. 
+Frees the memory used by the trace info. If this <a class="el" href="class_sylph_1_1_exception.html" title="This class provides a ready-to-use interface for exception handling.">Exception</a> contains to trace info, this destructor does nothing. 
 </div>
 </div><p>
 <hr><h2>Member Function Documentation</h2>
