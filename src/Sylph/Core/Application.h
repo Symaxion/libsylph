@@ -27,6 +27,8 @@
 
 #include "AppType.h"
 
+#include "../OS/GuessOS.h"
+
 
 #define thisapp ::Sylph::Application::self_app
 

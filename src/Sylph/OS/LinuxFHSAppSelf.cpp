@@ -1,6 +1,8 @@
 #include "LinuxFHSAppSelf.h"
 #include "../Core/File.h"
 
+#ifdef SYLPH_OS_LINUX
+
 #include <binreloc.h>
 
 #include <pwd.h>
@@ -122,3 +124,5 @@ const File& LinuxFHSAppSelf::prefix() {
 }
 
 SYLPH_END_NAMESPACE
+
+#endif // SYLPH_OS_LINUX

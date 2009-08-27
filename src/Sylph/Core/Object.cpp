@@ -21,7 +21,7 @@ bool Object::gc_inited = false;
 void* Object::operator new( size_t size) {
     if(SYLPH_UNLIKELY(!Object::gc_inited)) {
         GC_INIT();
-        Object::gc_inited = false;
+        Object::gc_inited = true;
     }
     void * toReturn = GC_MALLOC(size);
     if (!toReturn) throw std::bad_alloc();
@@ -31,7 +31,7 @@ void* Object::operator new( size_t size) {
 void* Object::operator new( size_t size, GCPlacement gcp) {
     if(SYLPH_UNLIKELY(!Object::gc_inited)) {
         GC_INIT();
-        Object::gc_inited = false;
+        Object::gc_inited = true;
     }
     void * toReturn;
     if (gcp == UseGC) toReturn = GC_MALLOC(size);
