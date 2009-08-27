@@ -1,6 +1,8 @@
 #include "MacOSFHSAppSelf.h"
 #include "../Core/File.h"
 
+#ifdef SYLPH_OS_MACOSX
+
 #include <string>
 #include <pwd.h>
 
@@ -112,3 +114,5 @@ const File& MacOSFHSAppSelf::prefix() {
 }
 
 SYLPH_END_NAMESPACE
+
+#endif // SYLPH_OS_MACOSX

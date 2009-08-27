@@ -27,23 +27,24 @@ ApplicationSelf * Application::self_app = 0;
     }
     void Application::init(int argc, char* argv[], char * apple[], AppType type) {
         switch(type) {
+            #ifdef SYLPH_OS_LINUX
             case S_APPTYPE_BUNDLE:
                 self_app = new LinuxBundleAppSelf(argc,argv);
                 break;
             case S_APPTYPE_FHS:
                 self_app = new LinuxFHSAppSelf(argc,argv);
                 break;
+            #endif
+            #ifdef SYLPH_OS_MACOSX
             case S_APPTYPE_MACOS:
                 self_app = new MacOSAppSelf(argc,argv,apple);
                 break;
             case S_APPTYPE_MACOS_FHS:
                 self_app = new MacOSFHSAppSelf(argc,argv,apple);
                 break;
-//            case S_APPTYPE_WINDOWS:
-//                self_app = new WindowsAppSelf(argc,argv);
-//                break;
+            #endif
             default:
-                std::cout << "LibSylph error: Unknown App Type! "<< "@"
+                std::cout << "LibSylph error: Unknown or unsupported App Type! "<< "@"
                          << __FILE__<<":"<<__LINE__ << std::endl;
                 exit(1);
         }

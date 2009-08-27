@@ -1,3 +1,5 @@
+####################################################################
+
      _             _       _______             _            _
     / /           / /     / _____/            / /          / /
    / /       _   / /__   / /____    _    _   / / _____    / /_
@@ -8,7 +10,7 @@
                                     / /     / /
                                    /_/     /_/
 
-############################################################
+###################################################################
 
   Table of Contents
 
@@ -58,15 +60,37 @@
 
     2.1 Compiling the source code
 
-        TODO CMake
-        Currently it is sufficient to run 'make'. This may or may not work. In
-        case it doesn't, don't blame me.
+        2.1.1 Dependancies
+             
+            LibSylph depends on boehm-gc,icu, and gettext. You need to have
+            these programs installed first. Please consult your operating
+            system vendor's manuals or look at our wiki.
+        
+       2.1.2 Building
+    
+            To build the source code, issue the following commands:
+   
+                 cmake .
+                 make
+
+            Please note you might need to explicitely specify the path to
+            a C++0x compiler by using -DCMAKE_CXX_COMPILER=/path/to/c++.
 
     2.2 Installing
 
-        TODO Cmake
-        No installation procedure is included at the moment. Just copy all
-        headers to /usr/include and the dynamic library file to /usr/lib.
+        To install LibSylph, issue the following command as root (or your
+        operating systems respective administrator account):
+ 
+              make install
+
+    2.3 Running the test suite
+ 
+        To run the test suite, issue the following command in the build
+        directory:
+ 
+             make test
+
+        This will build and run the entire test suite.
 
   3. Acknowledgements
 

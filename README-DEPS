@@ -1,3 +1,0 @@
-In order to build the dependancies of libsylph, run:
-./makedeps.sh
-./makedeps.sh clean
