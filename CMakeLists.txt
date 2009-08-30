@@ -3,7 +3,7 @@ project(SYLPH)
 
 macro (get_gcc_version version)
     if (CMAKE_COMPILER_IS_GNUCC)
-        exec_program( ${CMAKE_CXX_COMPILER} ARGS --version OUTPUT_VARIABLE output)
+        exec_program( /bin/sh ARGS-c 'echo "__GNUC__.__GNUC_MINOR__.__GNUC_PATCHLEVEL__" | ${CMAKE_CXX_COMPILER} -E - | grep "^[^#]" | tr -d " "' OUTPUT_VARIABLE output)
         string(REGEX REPLACE ".* ([0-9]\\.[0-9]\\.[0-9]) .*" "\\1" ${version} ${output})
     endif(CMAKE_COMPILER_IS_GNUCC)
 endmacro (get_gcc_version)
