@@ -70,7 +70,7 @@ static Array<uchar> spacechars = {' ', '\n', '\r', '\f', '\t', '\013'};
  * the sequence, for comparing strings, for searching strings, for extracting
  * substrings, and for creating a copy of a string with all characters
  * translated to uppercase or to lowercase. Case mapping relies heavily on the
- * information provided by the Unicode Consortium's Unicode 2.0 specification.
+ * information provided by the Unicode Consortium's Unicode 5.1 specification.
  * The specification's UnicodeData.txt and SpecialCasing.txt files are used
  * extensively to provide case mapping. For specific details, please refer
  * to the ICU library documentation.<p>
@@ -99,7 +99,7 @@ public:
     String();
     /**
      * Creates a String from a C-style string. The pointer passed must be a
-     * pointer to a null ('\0') terminated character array. The length is
+     * pointer to a null ('\0') terminated character array. The length
      * of the character array is deduced from the place of the null character.
      * Passing anything else than a null-terminated character array to this
      * constructor may result in undefined behaviour. <p>
@@ -115,27 +115,255 @@ public:
      */
     String(const char * orig);
 
+    /**
+     * Creates a String from an Array of uchars. The Array passed must not be
+     * null ('\0') terminated. The length of the String will be equal to the
+     * length of the Array.
+     * The data in the Array passed is expected to be encoded in UTF-16. The
+     * data is copied into the String without any checks applied<p>
+     * The original Array will not be modified. Please note that for
+     * construction of a 'mutable' string, StringBuffer is prefered.
+     * @param orig An Array containing the values to be copied into this string
+     */
     String(const Array<uchar> orig);
+    /**
+     * Creates a String from a std::string. This constructor takes the same
+     * effect as if you would have used <code>String(orig.c_str())</code> and is
+     * supplied for your convenience. The requirements are identical of to
+     * @c String::String(const char*). The original string will not be modified
+     * @param orig A standard library string to convert to a String.
+     */
     String(const std::string & orig);
+    /**
+     * Creates a String referring to the other String's data. This constructor
+     * will not make a full copy of the data contained by the original string,
+     * instead, it will take a copy of the pointer pointing to the actual
+     * data. Afterwards, the two Strings will be both sharing the same data.<p>
+     * If you do want a 1:1 copy of a String, please look at the String::copy()
+     * function.
+     * @param orig A string to share string data with.
+     */
     String(const String & orig);
-    String(const char c);
+    /**
+     * Creates a String from a single character. The length of the String will
+     * be 1. The character is copied into the String.
+     * @param c A character.
+     */
+    String(const uchar c);
+    /**
+     * Converts a bool into a String. If the specified boolean is true, then
+     * this String will be equal to "true", otherwise this String will be equal
+     * to "false". In other words, this constructor is equivalent to
+     * <pre>String s = b ? "true" : "false"; </pre>
+     * @param b A boolean.
+     */
     String(const bool b);
+
+    /**
+     * Converts a 32-bit signed integer to a String. The integer will be
+     * represented in base 10. If the integer is negative, an ASCII minus
+     * character ('-', U+002D) will be prepended to the value. If the value is
+     * not negative, no sign will be prepended. If integer is equal to 0, a
+     * single ASCII 0 will be used (U+0030). The String will match the regex
+     * @c (0|-?[1-9][0-9]+).
+     * @param i A 32-bit signed integer.
+     */
     String(const sint i);
+    /**
+     * Converts a 32-bit unsigned integer to a String. The integer will be
+     * represented in base 10. If integer is equal to 0, a  single ASCII 0 will
+     * be used (U+0030). The String will match the regex
+     * @c (0|[1-9][0-9]+).
+     * @param i A 32-bit unsigned integer.
+     */
     String(const suint i);
+    /**
+     * Converts a 64-bit signed integer to a String. The integer will be
+     * represented in base 10. If the integer is negative, an ASCII minus
+     * character ('-', U+002D) will be prepended to the value. If the value is
+     * not negative, no sign will be prepended. If integer is equal to 0, a
+     * single ASCII 0 will be used (U+0030). The String will match the regex
+     * @c (0|-?[1-9][0-9]+).
+     * @param i A 64-bit signed integer.
+     */
     String(const slong l);
+    /**
+     * Converts a 64-bit unsigned integer to a String. The integer will be
+     * represented in base 10. If integer is equal to 0, a  single ASCII 0 will
+     * be used (U+0030). The String will match the regex
+     * @c (0|[1-9][0-9]+).
+     * @param i A 64-bit unsigned integer.
+     */
     String(const sulong l);
+    /**
+     * Converts a floating point number to a String. The float will be
+     * represented in base 10. The exact conversion method is mentioned below.
+     * All characters are encoded in pure ASCII.
+     * <ul>
+     * <li>If this floating point number represents NaN (not a number) according
+     * to the IEEE 754 floating point standard, in other words, if it is equal
+     * to the result of the division 0.0/0.0, it will convert to the literal
+     * string @c "NaN".</li>
+     * <li>For all other values, a string composed of a sign character and a
+     * magnitude (absolute value) will be created. For a negative value, the
+     * minus sign ('-', U+002D) will be prepended. For a positive value, no
+     * sign will be prepended. The magnitude is composed as following:</li>
+     * <ul>
+     * <li>If the magnitude is infinity, i.e. if it is the result
+     * of a division of any non-zero value by zero, the literal string
+     * "Infinity" will be produced. In case of a negative infinity (produced if
+     * either one of the operands, but not both, are negative), as per the above
+     * rule the literal string "-Infinity" will be produced.</li>
+     * <li>If the magnitude is an integer, i.e. there is no decimal fraction,
+     * the actual conversion will be done by the integer conversion algorithm.
+     * </li>
+     * <li>If the magnitude is greater than or equal to 10<sup>-3</sup>, but
+     * less than 10<sup>7</sup> then it is represented as the integer part
+     * in decimal form with no leading zeroes, followed by a dot ('.', U+002E),
+     * followed by up to 8 digits representing the fractional part. No trailing
+     * zeroes will be put in the resulting string.</li>
+     * <li>If the magnitude is greater than or equal to 10<sup>7</sup>, or less
+     * than 10<sup>-3</sup>, the number will be represented in scientific
+     * notation. It is composed of a single significant digit, followed by an
+     * optional decimal fraction and an exponent. The decimal fraction consists
+     * of a dot ('.', U+002E) and up to 8 significant digits without trailing
+     * zeroes. The exponent is of the form @c eN, where N is a integer,
+     * optionally with a minus sign for a negative exponent.</li>
+     * </ul></li></ul><p>
+     * The resulting String will match the regex @c
+     * -?(Infinity|[0-9]*(\.[0-9]{7}[1-9])?(e-?[0-9]*)?) .
+     * @param f A floating point number to a String.
+     */
     String(const float f);
+    /**
+     * Converts a double-width floating point number to a String. The double
+     * will be represented in base 10. The exact conversion method is mentioned
+     * below. All characters are encoded in pure ASCII.
+     * <ul>
+     * <li>If this floating point number represents NaN (not a number) according
+     * to the IEEE 754 floating point standard, in other words, if it is equal
+     * to the result of the division 0.0/0.0, it will convert to the literal
+     * string @c "NaN".</li>
+     * <li>For all other values, a string composed of a sign character and a
+     * magnitude (absolute value) will be created. For a negative value, the
+     * minus sign ('-', U+002D) will be prepended. For a positive value, no
+     * sign will be prepended. The magnitude is composed as following:</li>
+     * <ul>
+     * <li>If the magnitude is infinity, i.e. if it is the result
+     * of a division of any non-zero value by zero, the literal string
+     * "Infinity" will be produced. In case of a negative infinity (produced if
+     * either one of the operands, but not both, are negative), as per the above
+     * rule the literal string "-Infinity" will be produced.</li>
+     * <li>If the magnitude is an integer, i.e. there is no decimal fraction,
+     * the actual conversion will be done by the integer conversion algorithm.
+     * </li>
+     * <li>If the magnitude is greater than or equal to 10<sup>-3</sup>, but
+     * less than 10<sup>7</sup> then it is represented as the integer part
+     * in decimal form with no leading zeroes, followed by a dot ('.', U+002E),
+     * followed by up to 16 digits representing the fractional part. No trailing
+     * zeroes will be put in the resulting string.</li>
+     * <li>If the magnitude is greater than or equal to 10<sup>7</sup>, or less
+     * than 10<sup>-3</sup>, the number will be represented in scientific
+     * notation. It is composed of a single significant digit, followed by an
+     * optional decimal fraction and an exponent. The decimal fraction consists
+     * of a dot ('.', U+002E) and up to 16 significant digits without trailing
+     * zeroes. The exponent is of the form @c eN, where N is a integer,
+     * optionally with a minus sign for a negative exponent.</li>
+     * </ul></li></ul><p>
+     * The resulting String will match the regex @c
+     * -?(Infinity|[0-9]*(\.[0-9]{15}[1-9])?(e-?[0-9]*)?) .
+     * @param d A double-width floating point number.
+     */
     String(const double d);
+    /**
+     * Default destructor. If this String is sharing data with any other
+     * Strings, it will not release this data until no Strings refer to this
+     * data anymore.
+     */
     virtual ~String();
 
+    /**
+     * Returns the length of this String. The length is equal to the amount of
+     * UTF-16 characters in this String. Therefore, the returned value is
+     * 1-based.
+     * @return The amount of characters in this String.
+     */
     std::size_t length() const;
+
+    /**
+     * Returns the character at the specified index. The index is 0-based and
+     * has a maximal value of length() - 1.
+     * @throw ArrayException if <code>idx > length() - 1</code>.
+     * @param idx the index of the character to return
+     * @return the character at the specified index, in UTF-16.
+     */
     const uchar at(std::size_t idx) const;
+
+    /**
+     * Converts the String to ASCII. The conversion algorithm goes as follows:
+     * <ul>
+     * <li>For every unicode character < U+007F, which can be represented in
+     * pure ASCII, the character is copied into the returned buffer</li>
+     * <li>Every other character will be replaced by a question mark literal
+     * ('?', U+003F) in the returned buffer.</li>
+     * </ul>
+     * The returned buffer is null-terminated, and does not contain excess
+     * space. It is not managed by LibSylph, you need to delete it yourself.
+     * Future versions may change this behaviour, and manage the buffer with
+     * LibSylph's garbage collector.
+     * @return A c-style string with pure ASCII characters only.
+     */
     const char * ascii() const;
+    /**
+     * Converts the String to UTF-8. This is the default conversion algorithm
+     * for implicit conversion to C string. Each UTF-16 character will be
+     * represented as its UTF-8 counterpart. The length of the returned buffer
+     * is in the best case (i.e. pure ASCII) <code>length() + 1</code>; in the
+     * worst case (i.e CJK or other high Unicode characters) it's
+     * <code>3 * length() + 1</code>.</p>
+     * The returned buffer is null-terminated, and does not contain excess
+     * space. It is not managed by LibSylph, you need to delete it yourself.
+     * Future versions may change this behaviour, and manage the buffer with
+     * LibSylph's garbage collector.
+     * @return A c-style Unicode string encoded in UTF-8.
+     */
     const char * utf8() const;
+
+    /**
+     * Returns an UTF-16 representation of this String. Because String uses
+     * UTF-16 internally, it will simply return a copy of the internal buffer.
+     * The returned value is not null-terminated. The length of the returned
+     * Array is equal to the length of the String. You cannot use this Array
+     * to modify the interal buffer directly, for that would make data sharing
+     * impossible (as all Strings that share data would be modified). Instead,
+     * use a StringBuffer or an Array<uchar>.
+     * @return An Array<uchar> with the UTF-16 encoded String in it.
+     */
     const Array<uchar> utf16() const;
 
+    /**
+     * Converts the String to lower case. The exact contents of the lower case
+     * string are dependant on the characters and the locale used, the resulting
+     * string may be shorter or longer than the original.
+     * @return A lower case version of this String
+     */
     String toLowerCase() const;
+
+    /**
+     * Converts the String to upper case. The exact contents of the upper case
+     * string are dependant on the characters and the locale used, the resulting
+     * string may be shorter or longer than the original.
+     * @return An upper case version of this String
+     */
     String toUpperCase() const;
+
+    /**
+     * Compares two strings ignoring differencies in case. This is the same as
+     * <code>s.toLowerCase() == t.toLowerCase()</code>.
+     * @param other A string to compare to
+     * @return @em true if both Strings are equal ignoring case, @em false
+     * otherwise.
+     */
     bool equalsIgnoreCase(const String other) const;
 
     bool endsWith(const String other) const;

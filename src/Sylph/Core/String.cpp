@@ -1,10 +1,3 @@
-/*
- * String.cpp
- *
- *  Created on: 26-nov-2008
- *      Author: SeySayux
- */
-
 #include "String.h"
 #include "Array.h"
 #include "Hash.h"
@@ -13,12 +6,195 @@
 
 #include <cctype>
 #include <cstring>
+#include <cmath>
+
+using std::isinf;
+using std::isnan;
 
 #include <unicode/uchar.h>
-
-#include <iostream>
+#include <unicode/ustring.h>
 
 SYLPH_BEGIN_NAMESPACE
+
+const char * float2string(float f) {
+    char * buf = new char[20];
+    idx_t idx = 0;
+    // first check if it we need no decimal dot...
+    if (int(f) == f) {
+        // no decimal dot. use conversion from int
+        delete[] buf;
+        return String(int(f));
+    } else {
+        // Decimal dot...
+
+        // first, get the integral part
+        const char * buf2 = String(int(f));
+        carraycopy(buf2, 0, buf, 0, strlen(buf2));
+        idx += strlen(buf2);
+        delete[] buf2;
+
+        // append a '.'
+        buf[idx] = '.';
+        idx++;
+
+        size_t copyto = 0;
+        char * buf3 = new char[8];
+
+        // now, get the decimal part
+        for (idx_t i = 0; i < 8; i++) {
+            f *= 10;
+            int j = f;
+            if (j != 0) copyto = i + 1;
+            buf3[i] = 0x30 + j;
+            idx++;
+        }
+        carraycopy(buf3, 0, buf, idx, copyto);
+        delete[] buf3;
+        idx += copyto;
+        buf[idx] = 0;
+        idx++;
+    }
+    return buf;
+}
+
+const char * float2stringe(float f, bool u) {
+    char * buf = new char[20];
+    // first get the stuff for before the dot...
+    idx_t idx = 0;
+    int numdigits = floor(log10(f));
+    f /= pow(10, numdigits);
+    buf[0] = 0x30 + int(f);
+    idx++;
+
+    size_t copyto = 0;
+    char * buf3 = new char[8];
+
+    // now, get the decimal part
+    for (idx_t i = 0; i < 8; i++) {
+        f *= 10;
+        int j = f;
+        if (j != 0) copyto = i + 1;
+        buf3[i] = 0x30 + j;
+        idx++;
+    }
+    if (copyto) {
+        buf[1] = '.';
+        idx++;
+        carraycopy(buf3, 0, buf, idx, copyto);
+        idx += copyto;
+    }
+    delete[] buf3;
+
+    // Nice, the 'e' part
+    buf[idx] = u ? 'E' : 'e';
+    idx++;
+
+    // hmm, that was lame... oh, but the exponent sounds cool!
+    if (numdigits > 0) {
+        buf[idx] = '+';
+        idx++;
+    } else if (numdigits < 0) {
+        buf[idx] = '-';
+        idx++;
+    }
+    const char * buf2 = String(abs(numdigits));
+    carraycopy(buf2, 0, buf, idx, strlen(buf2));
+    idx += strlen(buf2);
+    buf[idx] = 0;
+
+    return buf;
+}
+
+const char * double2string(double d) {
+    char * buf = new char[40];
+    idx_t idx = 0;
+    // first check if it we need no decimal dot...
+    if (int(d) == d) {
+        // no decimal dot. use conversion from int
+        delete[] buf;
+        return String(int(d));
+    } else {
+        // Decimal dot...
+
+        // first, get the integral part
+        const char * buf2 = String(int(d));
+        carraycopy(buf2, 0, buf, 0, strlen(buf2));
+        idx += strlen(buf2);
+        delete[] buf2;
+
+        // append a '.'
+        buf[idx] = '.';
+        idx++;
+
+        size_t copyto = 0;
+        char * buf3 = new char[16];
+
+        // now, get the decimal part
+        for (idx_t i = 0; i < 16; i++) {
+            d *= 10;
+            int j = d;
+            if (j != 0) copyto = i + 1;
+            buf3[i] = 0x30 + j;
+            idx++;
+        }
+        carraycopy(buf3, 0, buf, idx, copyto);
+        delete[] buf3;
+        idx += copyto;
+        buf[idx] = 0;
+        idx++;
+    }
+    return buf;
+}
+
+const char * double2stringe(double d, bool u) {
+    char * buf = new char[40];
+    // first get the stuff for before the dot...
+    idx_t idx = 0;
+    int numdigits = floor(log10(d));
+    d /= pow(10, numdigits);
+    buf[0] = 0x30 + int(d);
+    idx++;
+
+    size_t copyto = 0;
+    char * buf3 = new char[16];
+
+    // now, get the decimal part
+    for (idx_t i = 0; i < 16; i++) {
+        d *= 10;
+        int j = d;
+        if (j != 0) copyto = i + 1;
+        buf3[i] = 0x30 + j;
+        idx++;
+    }
+    if (copyto) {
+        buf[1] = '.';
+        idx++;
+        carraycopy(buf3, 0, buf, idx, copyto);
+        idx += copyto;
+    }
+    delete[] buf3;
+
+    // Nice, the 'e' part
+    buf[idx] = u ? 'E' : 'e';
+    idx++;
+
+    // hmm, that was lame... oh, but the exponent sounds cool!
+    if (numdigits > 0) {
+        buf[idx] = '+';
+        idx++;
+    } else if (numdigits < 0) {
+        buf[idx] = '-';
+        idx++;
+    }
+    const char * buf2 = String(abs(numdigits));
+    carraycopy(buf2, 0, buf, idx, strlen(buf2));
+    idx += strlen(buf2);
+    buf[idx] = 0;
+
+    return buf;
+}
+
+//////////////////////////////////////////////////////////////////////
 
 String::String() {
     strdata = new Data(0);
@@ -44,7 +220,7 @@ String::String(const String& orig) {
     this->strdata->refcount++;
 }
 
-String::String(const char c) {
+String::String(const uchar c) {
     strdata = new Data(1);
     strdata->data[0] = c;
 }
@@ -86,19 +262,47 @@ String::String(const sulong l) {
 }
 
 String::String(const float f) {
-    size_t tmplen = sizeof (f) * 10; // long enough, i presume?
-    char * buf = new char[tmplen];
-    sprintf(buf, "%f", f);
-    fromAscii(buf);
-    delete[] buf;
+    if (isinf(f)) {
+        if (copysign(1.0, f) == -1.0) {
+            fromAscii("-Infinity");
+        } else {
+            fromAscii("Infinity");
+        }
+    } else if (isnan(f)) {
+        fromAscii("NaN");
+    } else {
+        const char * buf;
+        if (f < 1e7f && f >= 1e-3f) {
+            buf = float2string(f);
+        } else {
+            buf = float2stringe(f, false);
+
+        }
+        fromAscii(buf);
+        delete[] buf;
+    }
 }
 
 String::String(const double d) {
-    size_t tmplen = sizeof (d) * 10; // long enough, i presume?
-    char * buf = new char[tmplen];
-    sprintf(buf, "%f", d);
-    fromAscii(buf);
-    delete[] buf;
+    if (isinf(d)) {
+        if (copysign(1.0, d) == -1.0) {
+            fromAscii("-Infinity");
+        } else {
+            fromAscii("Infinity");
+        }
+    } else if (isnan(d)) {
+        fromAscii("NaN");
+    } else {
+        const char * buf;
+        if (d < 1e7f && d >= 1e-3f) {
+            buf = double2string(d);
+        } else {
+            buf = double2stringe(d, false);
+
+        }
+        fromAscii(buf);
+        delete[] buf;
+    }
 }
 
 String::~String() {
@@ -119,9 +323,9 @@ const uchar String::at(std::size_t idx) const {
 
 const char * String::ascii() const {
     // all non-ascii chars will be converted to '?' literals.
-    char * buf = new char[length()+1];
-    for(idx_t i = 0; i < length(); i++) {
-        if(at(i) > 0x7F) buf[i] = '?';
+    char * buf = new char[length() + 1];
+    for (idx_t i = 0; i < length(); i++) {
+        if (at(i) > 0x7F) buf[i] = '?';
         else buf[i] = at(i);
     }
     return buf;
@@ -130,52 +334,59 @@ const char * String::ascii() const {
 const char * String::utf8() const {
     // In the best case, the the buffer need to be length()+1. In the worst
     // case, it's 3 * length() + 1. Always prepare for the worst ;)
-    char * buf = new char[3*length()+1];
+    char * buf = new char[3 * length() + 1];
     size_t buflen = 0;
-    for(idx_t i = 0; i < length(); i++) {
-        if(at(i) <= 0x7F) {
+    for (idx_t i = 0; i < length(); i++) {
+        if (at(i) <= 0x7F) {
             // ascii
             buf[buflen] = at(i);
             buflen++;
-        } else if(at(i) < 0x07FF) {
+        } else if (at(i) < 0x07FF) {
             // 2-byte
             buf[buflen] = 0xC0 | ((at(i) & 0x07C0) >> 6);
-            buf[buflen+1] = 0x80 | (at(i) & 0x3F);
+            buf[buflen + 1] = 0x80 | (at(i) & 0x3F);
             buflen += 2;
         } else {
             // 3-byte
             buf[buflen] = 0xE0 | ((at(i) & 0xF000) >> 12);
-            buf[buflen+1] = 0x80 | ((at(i) & 0x0FC0) >> 6);
-            buf[buflen+2] = 0x80 | (at(i) & 0x3F);
+            buf[buflen + 1] = 0x80 | ((at(i) & 0x0FC0) >> 6);
+            buf[buflen + 2] = 0x80 | (at(i) & 0x3F);
             buflen += 3;
         }
     }
 
     // now copy it to the final buffer...
-    char * final = new char[buflen+1];
-    carraycopy(buf,0,final,0,buflen);
+    char * final = new char[buflen + 1];
+    carraycopy(buf, 0, final, 0, buflen);
     final[buflen] = 0;
+    delete[] buf;
     return final;
 }
 
 const Array<uchar> String::utf16() const {
-    return strdata->data;
+    return strdata->data.copy();
 }
 
 String String::toLowerCase() const {
-    StringBuffer buf;
-    for(idx_t i = 0; i < length(); i++) {
-        buf << u_tolower(at(i));
-    }
-    return buf;
+    Array<uchar> dest(length() << 1);
+    UErrorCode error;
+    size_t newlength = u_strToLower(dest.carray(), dest.length,
+            strdata->data.carray(), length(), 0, &error);
+    // Todo: check for errors
+    Array<uchar> toReturn(newlength);
+    arraycopy(dest, 0, toReturn, 0, newlength);
+    return toReturn;
 }
 
 String String::toUpperCase() const {
-    StringBuffer buf;
-    for(idx_t i = 0; i < length(); i++) {
-        buf << u_toupper(at(i));
-    }
-    return buf;
+    Array<uchar> dest(length() << 1);
+    UErrorCode error;
+    size_t newlength = u_strToUpper(dest.carray(), dest.length,
+            strdata->data.carray(), length(), 0, &error);
+    // Todo: check for errors
+    Array<uchar> toReturn(newlength);
+    arraycopy(dest, 0, toReturn, 0, newlength);
+    return toReturn;
 }
 
 bool String::equalsIgnoreCase(const String other) const {
@@ -275,29 +486,26 @@ bool String::merge(String other) const {
     if (other != *this) return false;
     else {
         this->strdata->refcount += other.strdata->refcount;
-        delete other.strdata;
-        other.strdata = this->strdata;
+        other.strdata->data = this->strdata->data;
         return true;
     }
 }
 
 sint String::hashCode() const {
-   suint hash = 0;
-   suint x    = 0;
-   suint i    = 0;
-   uchar * b = strdata->data.carray();
+    suint hash = 0;
+    suint x = 0;
+    suint i = 0;
+    uchar * b = strdata->data.carray();
 
-   for(i = 0; i < length(); b++, i++)
-   {
-      hash = (hash << 4) + (*b);
-      if((x = hash & 0xF0000000L) != 0)
-      {
-         hash ^= (x >> 24);
-      }
-      hash &= ~x;
-   }
+    for (i = 0; i < length(); b++, i++) {
+        hash = (hash << 4) + (*b);
+        if ((x = hash & 0xF0000000L) != 0) {
+            hash ^= (x >> 24);
+        }
+        hash &= ~x;
+    }
 
-   return hash;
+    return hash;
 }
 
 String String::fromHex(int i, bool up) {
@@ -323,9 +531,8 @@ String String::fromOct(int i, bool up) {
 }
 
 String String::fromSci(float f, bool up) {
-    size_t tmplen = sizeof (f) * 10; // long enough, i presume?
-    char * buf = new char[tmplen];
-    sprintf(buf, up ? "%#E" : "%#e", f);
+    const char * buf;
+    buf = float2stringe(f,up);
     String toReturn;
     delete toReturn.strdata;
     toReturn.fromAscii(buf);
@@ -334,9 +541,8 @@ String String::fromSci(float f, bool up) {
 }
 
 String String::fromSci(double d, bool up) {
-    size_t tmplen = sizeof (d) * 10; // long enough, i presume?
-    char * buf = new char[tmplen];
-    sprintf(buf, up ? "%#E" : "%#e", d);
+    const char * buf;
+    buf = double2stringe(d,up);
     String toReturn;
     delete toReturn.strdata;
     toReturn.fromAscii(buf);
@@ -373,12 +579,18 @@ sulong String::ulongValue() const {
 }
 
 float String::floatValue() const {
+    if (*this == "NaN") return 0.0f / 0.0f;
+    else if (*this == "Infinity") return 1.0f / 0.0f;
+    else if (*this == "-Infinity") return -1.0f / 0.0f;
     float f = 0;
     sscanf(this->ascii(), "%f", &f);
     return f;
 }
 
 double String::doubleValue() const {
+    if (*this == "NaN") return 0.0 / 0.0;
+    else if (*this == "Infinity") return 1.0 / 0.0;
+    else if (*this == "-Infinity") return -1.0 / 0.0;
     double d = 0;
     sscanf(this->ascii(), "%lf", &d);
     return d;
@@ -425,7 +637,7 @@ void String::fromUtf8(const char* unicode) const {
     uchar current;
     byte bytecount = 0;
     for (idx_t i = 0; i < len; i++) {
-        unsigned char univalue = static_cast<unsigned char>(unicode[i]);
+        unsigned char univalue = static_cast<unsigned char> (unicode[i]);
         switch (bytecount) {
             case 0:
                 if (univalue <= 0x7F) {
@@ -442,31 +654,31 @@ void String::fromUtf8(const char* unicode) const {
                 } else if ((univalue | 0x07) == 0xF7) {
                     // start of 4-byte char, unsupported!
                     buf << 0xFFFD; // That's such a nice ? in a black diamond.
-                    i+=3;
+                    i += 3;
                 } else {
                     // invalid!
                     buf << 0xFFFD;
                 }
                 break;
             case 1:
-                if((univalue | 0x3F) != 0xBF) {
+                if ((univalue | 0x3F) != 0xBF) {
                     // invalid followup
                     bytecount = 0;
                     buf << 0xFFFD;
                 } else {
-                    current +=(univalue & 0x3F);
+                    current += (univalue & 0x3F);
                     buf << current;
                     bytecount = 0;
                 }
                 break;
             case 2: case 3:
-                if((univalue | 0x3F) != 0xBF) {
+                if ((univalue | 0x3F) != 0xBF) {
                     // invalid followup
-                    i += bytecount -1;
+                    i += bytecount - 1;
                     bytecount = 0;
                     buf << 0xFFFD;
                 } else {
-                    current +=(univalue & 0x3F) << 6;
+                    current += (univalue & 0x3F) << 6;
                     bytecount--;
                 }
                 break;
