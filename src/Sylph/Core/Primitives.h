@@ -46,6 +46,12 @@ typedef uint64_t sulong;
 #define S_FMT_L PRIi64
 #define S_FMT_UL PRIu64
 
+#define SIC(x) INT32_C(x)
+#define SUIC(x) UINT32_C(x)
+#define SLC(x) INT64_C(x)
+#define SULC(x) UINT64_C(x)
+
+
 #ifdef __i386__
 typedef suint idx_t;
 typedef sint sidx_t;
