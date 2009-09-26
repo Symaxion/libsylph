@@ -44,6 +44,25 @@
 SYLPH_BEGIN_NAMESPACE
 SYLPH_PUBLIC
 
+struct null {
+    null() {}
+    template<class T>
+    operator T*() const {
+	return 0;
+    }
+
+    template<class T>
+    operator T::*() const {
+	return 0;
+    }
+private:
+    null(const null&);
+    null& operator=(const null&);
+    void operator&() const;
+};
+
+static struct null null;
+
 class SerializationBuffer;
 class DeserializationBuffer;
 
