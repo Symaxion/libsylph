@@ -249,6 +249,14 @@ public:
         }
     }
 
+    const T& get(idx_t i) const {
+        return data->_carray[i];
+    }
+
+    void put(idx_t i, const T& t) {
+        data->_carray[i] = t;
+    }
+
     /**
      * Creates a copy of this array. The Array returned from this method is
      * an exact copy of this Array, such that ar == ar.copy() . The returned
