@@ -31,7 +31,7 @@ SYLPH_PUBLIC
  * When you want to use an alternative implementation of @c ApplicationSelf,
  * you can pass one of the elements of this enumeration as the definition
  * of the macro <code>APP_TYPE</code> to the compiler, e.g. for GCC:
- * <pre>g++ -o myapp -lSCore -DAPPTYPE=S_APPTYPE_FHS myapp.cpp</pre>
+ * <pre>g++ -o myapp -lSylph -DAPPTYPE=S_APPTYPE_FHS myapp.cpp</pre>
  * Note that this usage is not checked, i.e. with this command you can
  * compile perfectly on Mac %OS X or Windows, but <code>S_APPTYPE_FHS</code>
  * only works on Linux, but this error will not be reported. Therefore

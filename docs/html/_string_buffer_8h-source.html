@@ -48,7 +48,7 @@
 <a name="l00028"></a>00028 
 <a name="l00029"></a>00029 SYLPH_BEGIN_NAMESPACE
 <a name="l00030"></a>00030 SYLPH_PUBLIC
-<a name="l00031"></a>00031 <span class="keyword">typedef</span> uint16_t uchar;
+<a name="l00031"></a>00031 <span class="keyword">typedef</span> uint16_t <a class="code" href="namespace_sylph.html#12380d58a638ec489736d7b60963a34c" title="A integral type for storing an UTF-16 character.">uchar</a>;
 <a name="l00032"></a>00032 
 <a name="l00033"></a>00033 <span class="keyword">class </span>StringBuffer : <span class="keyword">public</span> <span class="keyword">virtual</span> Object {
 <a name="l00034"></a>00034 <span class="keyword">public</span>:
@@ -59,8 +59,8 @@
 <a name="l00039"></a>00039     <span class="keywordtype">size_t</span> length() <span class="keyword">const</span>;
 <a name="l00040"></a>00040     <span class="keywordtype">void</span> deleteSubstring(idx_t start, idx_t end);
 <a name="l00041"></a>00041     <span class="keywordtype">void</span> clear();
-<a name="l00042"></a>00042     <span class="keyword">const</span> uchar&amp; at(idx_t idx) <span class="keyword">const</span>;
-<a name="l00043"></a>00043     uchar&amp; at(idx_t idx);
+<a name="l00042"></a>00042     <span class="keyword">const</span> <a class="code" href="namespace_sylph.html#12380d58a638ec489736d7b60963a34c" title="A integral type for storing an UTF-16 character.">uchar</a>&amp; at(idx_t idx) <span class="keyword">const</span>;
+<a name="l00043"></a>00043     <a class="code" href="namespace_sylph.html#12380d58a638ec489736d7b60963a34c" title="A integral type for storing an UTF-16 character.">uchar</a>&amp; at(idx_t idx);
 <a name="l00044"></a>00044 
 <a name="l00045"></a>00045     StringBuffer&amp; operator&lt;&lt;(<span class="keywordtype">bool</span> b);
 <a name="l00046"></a>00046     StringBuffer&amp; operator&lt;&lt;(<span class="keywordtype">char</span> c);
@@ -93,7 +93,7 @@
 <a name="l00073"></a>00073 };
 <a name="l00074"></a>00074 SYLPH_END_NAMESPACE
 <a name="l00075"></a>00075 
-<a name="l00076"></a>00076 <span class="preprocessor">#endif  </span><span class="comment">/* STRINGBUFFER_H_ */</span>
+<a name="l00076"></a>00076 <span class="preprocessor">#endif </span><span class="comment">/* STRINGBUFFER_H_ */</span>
 <a name="l00077"></a>00077 
 </pre></div></div>
 <hr size="1" class="unhidden"><address style="text-align: right;"><small>

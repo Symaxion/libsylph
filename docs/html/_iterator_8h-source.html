@@ -149,7 +149,7 @@
 <a name="l00143"></a>00143         <span class="keywordflow">return</span> (_end_reached_ == other._end_reached_) &amp;&amp; equals(other);
 <a name="l00144"></a>00144     }
 <a name="l00145"></a>00145 
-<a name="l00146"></a>00146     <span class="keywordtype">bool</span> operator!=(<span class="keyword">const</span> <a class="code" href="class_sylph_1_1_forward_iterator.html">ForwardIterator&lt;T, I&gt;</a>&amp; other)<span class="keyword"> const </span>{
+<a name="l00146"></a>00146     <span class="keywordtype">bool</span> <a class="code" href="namespace_sylph.html#e0e899a2df3d9094e6692b2cdebde679" title="Short circuits the operator!= for BoolConvertibles.">operator!=</a>(<span class="keyword">const</span> <a class="code" href="class_sylph_1_1_forward_iterator.html">ForwardIterator&lt;T, I&gt;</a>&amp; other)<span class="keyword"> const </span>{
 <a name="l00147"></a>00147         <span class="keywordflow">return</span> !(*<span class="keyword">this</span> == other);
 <a name="l00148"></a>00148     }
 <a name="l00149"></a>00149     <span class="keywordtype">void</span> construct(<span class="keywordtype">bool</span> begin, <span class="keywordtype">void</span>* obj) {
@@ -251,7 +251,7 @@
 <a name="l00274"></a>00274     RandomAccessIterator(<span class="keywordtype">bool</span> begin = <span class="keyword">false</span>) : super(begin) {}
 <a name="l00275"></a>00275 
 <a name="l00276"></a>00276     RandomAccessIterator(<span class="keyword">const</span> self_type&amp; other) :
-<a name="l00277"></a>00277         super(other) {
+<a name="l00277"></a>00277   super(other) {
 <a name="l00278"></a>00278     }
 <a name="l00279"></a>00279 
 <a name="l00280"></a>00280     I &amp; operator+=(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> i) {
@@ -410,7 +410,7 @@
 <a name="l00521"></a>00521 <span class="comment">// Previously defined here, now defined elsewhere</span>
 <a name="l00522"></a>00522 <span class="preprocessor">#include "Foreach.h"</span>
 <a name="l00523"></a>00523 
-<a name="l00524"></a>00524 <span class="preprocessor">#endif  </span><span class="comment">/* ITERATOR_H_ */</span>
+<a name="l00524"></a>00524 <span class="preprocessor">#endif </span><span class="comment">/* ITERATOR_H_ */</span>
 <a name="l00525"></a>00525 
 </pre></div></div>
 <hr size="1" class="unhidden"><address style="text-align: right;"><small>

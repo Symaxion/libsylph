@@ -66,55 +66,61 @@
 <a name="l00046"></a>00046 <span class="preprocessor"></span><span class="preprocessor">#define S_FMT_L PRIi64</span>
 <a name="l00047"></a>00047 <span class="preprocessor"></span><span class="preprocessor">#define S_FMT_UL PRIu64</span>
 <a name="l00048"></a>00048 <span class="preprocessor"></span>
-<a name="l00049"></a>00049 <span class="preprocessor">#ifdef __i386__</span>
-<a name="l00050"></a>00050 <span class="preprocessor"></span><span class="keyword">typedef</span> suint idx_t;
-<a name="l00051"></a>00051 <span class="keyword">typedef</span> sint sidx_t;
-<a name="l00052"></a>00052 
-<a name="l00053"></a>00053 <span class="keyword">typedef</span> suint ptr_t;
-<a name="l00054"></a>00054 <span class="preprocessor">#elif defined(__x86_64__)</span>
-<a name="l00055"></a>00055 <span class="preprocessor"></span><span class="keyword">typedef</span> sulong idx_t;
-<a name="l00056"></a>00056 <span class="keyword">typedef</span> slong sidx_t;
-<a name="l00057"></a>00057 
-<a name="l00058"></a>00058 <span class="keyword">typedef</span> sulong ptr_t;
-<a name="l00059"></a>00059 <span class="preprocessor">#endif</span>
-<a name="l00060"></a>00060 <span class="preprocessor"></span>
-<a name="l00061"></a>00061 <span class="keyword">typedef</span> sulong fsize_t;
-<a name="l00062"></a>00062 <span class="keyword">typedef</span> slong fssize_t;
+<a name="l00049"></a>00049 <span class="preprocessor">#define SIC(x) INT32_C(x)</span>
+<a name="l00050"></a>00050 <span class="preprocessor"></span><span class="preprocessor">#define SUIC(x) UINT32_C(x)</span>
+<a name="l00051"></a>00051 <span class="preprocessor"></span><span class="preprocessor">#define SLC(x) INT64_C(x)</span>
+<a name="l00052"></a>00052 <span class="preprocessor"></span><span class="preprocessor">#define SULC(x) UINT64_C(x)</span>
+<a name="l00053"></a>00053 <span class="preprocessor"></span>
+<a name="l00054"></a>00054 
+<a name="l00055"></a>00055 <span class="preprocessor">#ifdef __i386__</span>
+<a name="l00056"></a>00056 <span class="preprocessor"></span><span class="keyword">typedef</span> suint idx_t;
+<a name="l00057"></a>00057 <span class="keyword">typedef</span> sint sidx_t;
+<a name="l00058"></a>00058 
+<a name="l00059"></a>00059 <span class="keyword">typedef</span> suint ptr_t;
+<a name="l00060"></a>00060 <span class="preprocessor">#elif defined(__x86_64__)</span>
+<a name="l00061"></a>00061 <span class="preprocessor"></span><span class="keyword">typedef</span> sulong idx_t;
+<a name="l00062"></a>00062 <span class="keyword">typedef</span> slong sidx_t;
 <a name="l00063"></a>00063 
-<a name="l00064"></a><a class="code" href="namespacestd.html">00064</a> <span class="keyword">namespace </span>std {
-<a name="l00065"></a>00065     using ::sidx_t;
-<a name="l00066"></a>00066     using ::idx_t;
-<a name="l00067"></a>00067     using ::fsize_t;
-<a name="l00068"></a>00068     using ::fssize_t;
-<a name="l00069"></a>00069     using ::ptr_t;
-<a name="l00070"></a>00070 }
-<a name="l00071"></a>00071 
-<a name="l00072"></a>00072 <span class="preprocessor">#ifndef SYLPH_LIKELY</span>
-<a name="l00073"></a>00073 <span class="preprocessor"></span><span class="preprocessor">    #if __GNUC__ - 0 &gt;= 3</span>
-<a name="l00074"></a>00074 <span class="preprocessor"></span><span class="preprocessor">        #define SYLPH_LIKELY(x) __builtin_expect(!!(x),1)</span>
-<a name="l00075"></a>00075 <span class="preprocessor"></span><span class="preprocessor">        #define SYLPH_UNLIKELY(x) __builtin_expect(!!(x),0)</span>
-<a name="l00076"></a>00076 <span class="preprocessor"></span><span class="preprocessor">    #else</span>
-<a name="l00077"></a>00077 <span class="preprocessor"></span><span class="preprocessor">        #define SYLPH_LIKELY(x) (x)</span>
-<a name="l00078"></a>00078 <span class="preprocessor"></span><span class="preprocessor">        #define SYLPH_UNLIKELY(x) (x)</span>
-<a name="l00079"></a>00079 <span class="preprocessor"></span><span class="preprocessor">    #endif</span>
-<a name="l00080"></a>00080 <span class="preprocessor"></span><span class="preprocessor">#endif</span>
-<a name="l00081"></a>00081 <span class="preprocessor"></span>
-<a name="l00082"></a>00082 
-<a name="l00083"></a>00083 <span class="preprocessor">#define SYLPH_SPECIALIZE(Class,Type) extern template class Class&lt;Type&gt;</span>
-<a name="l00084"></a>00084 <span class="preprocessor"></span>
-<a name="l00085"></a>00085 <span class="preprocessor">#define SYLPH_SPECIALIZE_PRIMS(Class) \</span>
-<a name="l00086"></a>00086 <span class="preprocessor">    SYLPH_SPECIALIZE(Class,byte); \</span>
-<a name="l00087"></a>00087 <span class="preprocessor">    SYLPH_SPECIALIZE(Class,sint); \</span>
-<a name="l00088"></a>00088 <span class="preprocessor">    SYLPH_SPECIALIZE(Class,suint); \</span>
-<a name="l00089"></a>00089 <span class="preprocessor">    SYLPH_SPECIALIZE(Class,slong); \</span>
-<a name="l00090"></a>00090 <span class="preprocessor">    SYLPH_SPECIALIZE(Class,sulong); \</span>
-<a name="l00091"></a>00091 <span class="preprocessor">    SYLPH_SPECIALIZE(Class,bool); \</span>
-<a name="l00092"></a>00092 <span class="preprocessor">    SYLPH_SPECIALIZE(Class,float); \</span>
-<a name="l00093"></a>00093 <span class="preprocessor">    SYLPH_SPECIALIZE(Class,double); \</span>
-<a name="l00094"></a>00094 <span class="preprocessor">    SYLPH_SPECIALIZE(Class,::Sylph::String)</span>
-<a name="l00095"></a>00095 <span class="preprocessor"></span>
-<a name="l00096"></a>00096 <span class="preprocessor">#endif  </span><span class="comment">/* PRIMITIVES_H_ */</span>
-<a name="l00097"></a>00097 
+<a name="l00064"></a>00064 <span class="keyword">typedef</span> sulong ptr_t;
+<a name="l00065"></a>00065 <span class="preprocessor">#endif</span>
+<a name="l00066"></a>00066 <span class="preprocessor"></span>
+<a name="l00067"></a>00067 <span class="keyword">typedef</span> sulong fsize_t;
+<a name="l00068"></a>00068 <span class="keyword">typedef</span> slong fssize_t;
+<a name="l00069"></a>00069 
+<a name="l00070"></a><a class="code" href="namespacestd.html">00070</a> <span class="keyword">namespace </span>std {
+<a name="l00071"></a>00071     using ::sidx_t;
+<a name="l00072"></a>00072     using ::idx_t;
+<a name="l00073"></a>00073     using ::fsize_t;
+<a name="l00074"></a>00074     using ::fssize_t;
+<a name="l00075"></a>00075     using ::ptr_t;
+<a name="l00076"></a>00076 }
+<a name="l00077"></a>00077 
+<a name="l00078"></a>00078 <span class="preprocessor">#ifndef SYLPH_LIKELY</span>
+<a name="l00079"></a>00079 <span class="preprocessor"></span><span class="preprocessor">    #if __GNUC__ - 0 &gt;= 3</span>
+<a name="l00080"></a>00080 <span class="preprocessor"></span><span class="preprocessor">        #define SYLPH_LIKELY(x) __builtin_expect(!!(x),1)</span>
+<a name="l00081"></a>00081 <span class="preprocessor"></span><span class="preprocessor">        #define SYLPH_UNLIKELY(x) __builtin_expect(!!(x),0)</span>
+<a name="l00082"></a>00082 <span class="preprocessor"></span><span class="preprocessor">    #else</span>
+<a name="l00083"></a>00083 <span class="preprocessor"></span><span class="preprocessor">        #define SYLPH_LIKELY(x) (x)</span>
+<a name="l00084"></a>00084 <span class="preprocessor"></span><span class="preprocessor">        #define SYLPH_UNLIKELY(x) (x)</span>
+<a name="l00085"></a>00085 <span class="preprocessor"></span><span class="preprocessor">    #endif</span>
+<a name="l00086"></a>00086 <span class="preprocessor"></span><span class="preprocessor">#endif</span>
+<a name="l00087"></a>00087 <span class="preprocessor"></span>
+<a name="l00088"></a>00088 
+<a name="l00089"></a>00089 <span class="preprocessor">#define SYLPH_SPECIALIZE(Class,Type) extern template class Class&lt;Type&gt;</span>
+<a name="l00090"></a>00090 <span class="preprocessor"></span>
+<a name="l00091"></a>00091 <span class="preprocessor">#define SYLPH_SPECIALIZE_PRIMS(Class) \</span>
+<a name="l00092"></a>00092 <span class="preprocessor">    SYLPH_SPECIALIZE(Class,byte); \</span>
+<a name="l00093"></a>00093 <span class="preprocessor">    SYLPH_SPECIALIZE(Class,sint); \</span>
+<a name="l00094"></a>00094 <span class="preprocessor">    SYLPH_SPECIALIZE(Class,suint); \</span>
+<a name="l00095"></a>00095 <span class="preprocessor">    SYLPH_SPECIALIZE(Class,slong); \</span>
+<a name="l00096"></a>00096 <span class="preprocessor">    SYLPH_SPECIALIZE(Class,sulong); \</span>
+<a name="l00097"></a>00097 <span class="preprocessor">    SYLPH_SPECIALIZE(Class,bool); \</span>
+<a name="l00098"></a>00098 <span class="preprocessor">    SYLPH_SPECIALIZE(Class,float); \</span>
+<a name="l00099"></a>00099 <span class="preprocessor">    SYLPH_SPECIALIZE(Class,double); \</span>
+<a name="l00100"></a>00100 <span class="preprocessor">    SYLPH_SPECIALIZE(Class,::Sylph::String)</span>
+<a name="l00101"></a>00101 <span class="preprocessor"></span>
+<a name="l00102"></a>00102 <span class="preprocessor">#endif </span><span class="comment">/* PRIMITIVES_H_ */</span>
+<a name="l00103"></a>00103 
 </pre></div></div>
 <hr size="1" class="unhidden"><address style="text-align: right;"><small>
 Documentation for LibSylph by Doxygen

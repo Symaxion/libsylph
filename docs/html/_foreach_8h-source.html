@@ -80,17 +80,17 @@
 <a name="l00060"></a>00060 
 <a name="l00061"></a>00061 <span class="preprocessor">#define sforeach(variable, container) \</span>
 <a name="l00062"></a>00062 <span class="preprocessor">for (const ::foreach_container_base &amp;_container_ = \</span>
-<a name="l00063"></a>00063 <span class="preprocessor">    ::foreach_container_create(container); ::foreach_cast(_container_, \</span>
-<a name="l00064"></a>00064 <span class="preprocessor">    true ? 0 : ::foreach_pointer(container))-&gt;condition(); \</span>
-<a name="l00065"></a>00065 <span class="preprocessor">    ++::foreach_cast(_container_, true ? 0 : \</span>
-<a name="l00066"></a>00066 <span class="preprocessor">    ::foreach_pointer(container))-&gt;i) \</span>
+<a name="l00063"></a>00063 <span class="preprocessor"> ::foreach_container_create(container); ::foreach_cast(_container_, \</span>
+<a name="l00064"></a>00064 <span class="preprocessor"> true ? 0 : ::foreach_pointer(container))-&gt;condition(); \</span>
+<a name="l00065"></a>00065 <span class="preprocessor"> ++::foreach_cast(_container_, true ? 0 : \</span>
+<a name="l00066"></a>00066 <span class="preprocessor"> ::foreach_pointer(container))-&gt;i) \</span>
 <a name="l00067"></a>00067 <span class="preprocessor">    for (variable = *::foreach_cast(_container_, true ? 0 : \</span>
 <a name="l00068"></a>00068 <span class="preprocessor">            ::foreach_pointer(container))-&gt;i; ::foreach_cast(_container_, \</span>
 <a name="l00069"></a>00069 <span class="preprocessor">            true ? 0 : ::foreach_pointer(container))-&gt;brk; \</span>
 <a name="l00070"></a>00070 <span class="preprocessor">            --::foreach_cast(_container_, true ? 0 : \</span>
 <a name="l00071"></a>00071 <span class="preprocessor">            ::foreach_cast(container))-&gt;brk)</span>
 <a name="l00072"></a>00072 <span class="preprocessor"></span>
-<a name="l00073"></a>00073 <span class="preprocessor">#endif  </span><span class="comment">/* FOREACH_H_ */</span>
+<a name="l00073"></a>00073 <span class="preprocessor">#endif </span><span class="comment">/* FOREACH_H_ */</span>
 <a name="l00074"></a>00074 
 </pre></div></div>
 <hr size="1" class="unhidden"><address style="text-align: right;"><small>

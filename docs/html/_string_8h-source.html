@@ -54,140 +54,149 @@
 <a name="l00034"></a>00034 <span class="preprocessor">#include &lt;cstdint&gt;</span>
 <a name="l00035"></a>00035 <span class="preprocessor">#include &lt;string&gt;</span>
 <a name="l00036"></a>00036 
-<a name="l00037"></a>00037 <span class="keyword">class </span>QString;
+<a name="l00037"></a>00037 SYLPH_BEGIN_NAMESPACE
 <a name="l00038"></a>00038 
-<a name="l00039"></a>00039 SYLPH_BEGIN_NAMESPACE
+<a name="l00039"></a>00039 SYLPH_PUBLIC
 <a name="l00040"></a>00040 
-<a name="l00041"></a>00041 <span class="comment">//#ifndef SYLPH_DOXYGEN</span>
-<a name="l00042"></a>00042 <span class="comment">//#define SYLPH_STRING_CLASS MutableString</span>
-<a name="l00043"></a>00043 <span class="comment">//class MutableString;</span>
-<a name="l00044"></a>00044 <span class="comment">//typedef const MutableString String;</span>
-<a name="l00045"></a>00045 <span class="comment">//#else</span>
-<a name="l00046"></a>00046 <span class="preprocessor">#define SYLPH_STRING_CLASS String</span>
-<a name="l00047"></a>00047 <span class="preprocessor"></span><span class="comment">//#endif</span>
-<a name="l00048"></a>00048 
-<a name="l00049"></a>00049 SYLPH_PUBLIC
-<a name="l00050"></a>00050 
-<a name="l00051"></a>00051 <span class="keyword">typedef</span> std::uint16_t uchar;
-<a name="l00052"></a>00052 
-<a name="l00053"></a>00053 <span class="keyword">static</span> Array&lt;uchar&gt; spacechars = {<span class="charliteral">' '</span>,<span class="charliteral">'\n'</span>,<span class="charliteral">'\r'</span>,<span class="charliteral">'\f'</span>,<span class="charliteral">'\t'</span>,<span class="charliteral">'\013'</span>};
-<a name="l00054"></a>00054 
-<a name="l00055"></a>00055 <span class="keyword">class </span>SYLPH_STRING_CLASS : <span class="keyword">public</span> Hashable, 
-<a name="l00056"></a>00056         <span class="keyword">public</span> BoolConvertible&lt;SYLPH_STRING_CLASS&gt; {
-<a name="l00057"></a>00057     <span class="keyword">friend</span> <span class="keywordtype">bool</span> <a class="code" href="namespace_sylph.html#10c329a0349416d794bedf8f67feb25f" title="Compares the two Arrays on equality.">operator==</a>(<span class="keyword">const</span> String lhs, <span class="keyword">const</span> String rhs);
-<a name="l00058"></a>00058     <span class="keyword">friend</span> <span class="keywordtype">bool</span> <a class="code" href="namespace_sylph.html#049ea1ef37b015ca0292637e6d2e3ffa" title="Compares the two Arrays.">operator&lt;</a>(<span class="keyword">const</span> String lhs, <span class="keyword">const</span> String rhs);
-<a name="l00059"></a>00059     <span class="keyword">friend</span> String operator+(<span class="keyword">const</span> String lhs, <span class="keyword">const</span> String rhs);
-<a name="l00060"></a>00060     <span class="comment">//friend String operator%(const String lhs, const String rhs);</span>
-<a name="l00061"></a>00061     <span class="keyword">friend</span> String operator&amp;(<span class="keyword">const</span> String lhs, <span class="keyword">const</span> String(*rhs)(<span class="keyword">const</span> String));
-<a name="l00062"></a>00062     <span class="keyword">friend</span> String operator&amp;(<span class="keyword">const</span> String(*lhs)(String), <span class="keyword">const</span> String rhs);
-<a name="l00063"></a>00063     <span class="keyword">friend</span> String operator*(<span class="keyword">const</span> String lhs, <span class="keyword">const</span> std::size_t len);
-<a name="l00064"></a>00064     <span class="keyword">friend</span> std::ostream&amp; operator&lt;&lt;(std::ostream&amp; lhs, <span class="keyword">const</span> String rhs);
-<a name="l00065"></a>00065 
-<a name="l00066"></a>00066 <span class="keyword">public</span>:
-<a name="l00067"></a>00067     SYLPH_STRING_CLASS();
-<a name="l00068"></a>00068     SYLPH_STRING_CLASS(<span class="keyword">const</span> <span class="keywordtype">char</span> * orig);
-<a name="l00069"></a>00069     SYLPH_STRING_CLASS(<span class="keyword">const</span> Array&lt;char&gt; orig);
-<a name="l00070"></a>00070     SYLPH_STRING_CLASS(<span class="keyword">const</span> Array&lt;uchar&gt; orig);
-<a name="l00071"></a>00071     SYLPH_STRING_CLASS(<span class="keyword">const</span> std::string &amp; orig);
-<a name="l00072"></a>00072     SYLPH_STRING_CLASS(<span class="keyword">const</span> QString &amp; orig);
-<a name="l00073"></a>00073     SYLPH_STRING_CLASS(<span class="keyword">const</span> String &amp; orig);
-<a name="l00074"></a>00074     SYLPH_STRING_CLASS(<span class="keyword">const</span> <span class="keywordtype">char</span> c);
-<a name="l00075"></a>00075     SYLPH_STRING_CLASS(<span class="keyword">const</span> <span class="keywordtype">bool</span> b);
-<a name="l00076"></a>00076     SYLPH_STRING_CLASS(<span class="keyword">const</span> sint i);
-<a name="l00077"></a>00077     SYLPH_STRING_CLASS(<span class="keyword">const</span> suint i);
-<a name="l00078"></a>00078     SYLPH_STRING_CLASS(<span class="keyword">const</span> slong l);
-<a name="l00079"></a>00079     SYLPH_STRING_CLASS(<span class="keyword">const</span> sulong l);
-<a name="l00080"></a>00080     SYLPH_STRING_CLASS(<span class="keyword">const</span> <span class="keywordtype">float</span> f);
-<a name="l00081"></a>00081     SYLPH_STRING_CLASS(<span class="keyword">const</span> <span class="keywordtype">double</span> d);
-<a name="l00082"></a>00082     <span class="keyword">virtual</span> ~SYLPH_STRING_CLASS();
-<a name="l00083"></a>00083 
-<a name="l00084"></a>00084     std::size_t length() <span class="keyword">const</span>;
-<a name="l00085"></a>00085     <span class="keyword">const</span> uchar at(std::size_t idx) <span class="keyword">const</span>;
-<a name="l00086"></a>00086     <span class="keyword">const</span> <span class="keywordtype">char</span> * ascii() <span class="keyword">const</span>;
-<a name="l00087"></a>00087     <span class="keyword">const</span> <span class="keywordtype">char</span> * utf8() <span class="keyword">const</span>;
-<a name="l00088"></a>00088     <span class="keyword">const</span> Array&lt;uchar&gt; utf16() <span class="keyword">const</span>;
-<a name="l00089"></a>00089 
-<a name="l00090"></a>00090     String toLowerCase() <span class="keyword">const</span>;
-<a name="l00091"></a>00091     String toUpperCase() <span class="keyword">const</span>;
-<a name="l00092"></a>00092     <span class="keywordtype">bool</span> equalsIgnoreCase(<span class="keyword">const</span> String other) <span class="keyword">const</span>;
-<a name="l00093"></a>00093 
-<a name="l00094"></a>00094     <span class="keywordtype">bool</span> endsWith(<span class="keyword">const</span> String other) <span class="keyword">const</span>;
-<a name="l00095"></a>00095     <span class="keywordtype">bool</span> startsWith(<span class="keyword">const</span> String other) <span class="keyword">const</span>;
-<a name="l00096"></a>00096     <span class="keywordtype">bool</span> contains(<span class="keyword">const</span> String other) <span class="keyword">const</span>;
-<a name="l00097"></a>00097 
-<a name="l00098"></a>00098     String trim() <span class="keyword">const</span>;
-<a name="l00099"></a>00099     String substring(std::idx_t begin) <span class="keyword">const</span>;
-<a name="l00100"></a>00100     String substring(std::idx_t begin, std::idx_t end) <span class="keyword">const</span>;
-<a name="l00101"></a>00101 
-<a name="l00102"></a>00102     sidx_t indexOf(<span class="keyword">const</span> String substr, idx_t start = 0) <span class="keyword">const</span>;
-<a name="l00103"></a>00103     sidx_t lastIndexOf(<span class="keyword">const</span> String substr) <span class="keyword">const</span>;
-<a name="l00104"></a>00104     sidx_t lastIndexOf(<span class="keyword">const</span> String substr, idx_t start) <span class="keyword">const</span>;
-<a name="l00105"></a>00105 
-<a name="l00106"></a>00106     String copy() <span class="keyword">const</span>;
-<a name="l00107"></a>00107     <span class="keywordtype">bool</span> merge(String other) <span class="keyword">const</span>;
-<a name="l00108"></a>00108     <span class="keywordtype">int</span> hashCode() <span class="keyword">const</span>;
-<a name="l00109"></a>00109 
-<a name="l00110"></a>00110     <span class="keyword">static</span> String fromHex(<span class="keywordtype">int</span>,<span class="keywordtype">bool</span> up);
-<a name="l00111"></a>00111     <span class="keyword">static</span> String fromOct(<span class="keywordtype">int</span>, <span class="keywordtype">bool</span> up);
-<a name="l00112"></a>00112     <span class="keyword">static</span> String fromSci(<span class="keywordtype">float</span>, <span class="keywordtype">bool</span> up);
-<a name="l00113"></a>00113     <span class="keyword">static</span> String fromSci(<span class="keywordtype">double</span>, <span class="keywordtype">bool</span> up);
-<a name="l00114"></a>00114 
-<a name="l00115"></a>00115     <span class="keywordtype">bool</span> boolValue() <span class="keyword">const</span>;
-<a name="l00116"></a>00116     sint intValue() <span class="keyword">const</span>;
-<a name="l00117"></a>00117     suint uintValue() <span class="keyword">const</span>;
-<a name="l00118"></a>00118     slong longValue() <span class="keyword">const</span>;
-<a name="l00119"></a>00119     sulong ulongValue() <span class="keyword">const</span>;
-<a name="l00120"></a>00120     <span class="keywordtype">float</span> floatValue() <span class="keyword">const</span>;
-<a name="l00121"></a>00121     <span class="keywordtype">double</span> doubleValue() <span class="keyword">const</span>;
-<a name="l00122"></a>00122 
-<a name="l00123"></a>00123     <span class="keyword">inline</span> <span class="keywordtype">bool</span> toBool()<span class="keyword"> const </span>{
-<a name="l00124"></a>00124         <span class="keywordflow">return</span> *<span class="keyword">this</span> != <span class="stringliteral">""</span>;
-<a name="l00125"></a>00125     }
-<a name="l00126"></a>00126     
-<a name="l00127"></a>00127     <span class="keyword">const</span> String&amp; operator=(<span class="keyword">const</span> <span class="keywordtype">char</span> * orig) <span class="keyword">const</span>;
-<a name="l00128"></a>00128     <span class="keyword">const</span> String&amp; operator=(<span class="keyword">const</span> std::string &amp; orig) <span class="keyword">const</span>;
-<a name="l00129"></a>00129     <span class="keyword">const</span> String&amp; operator=(<span class="keyword">const</span> String orig) <span class="keyword">const</span>;
-<a name="l00130"></a>00130 
-<a name="l00131"></a>00131     <span class="keyword">const</span> String&amp; operator+=(<span class="keyword">const</span> String rhs) <span class="keyword">const</span>;
-<a name="l00132"></a>00132 
-<a name="l00133"></a>00133     operator const char *() <span class="keyword">const</span>;
-<a name="l00134"></a>00134     operator std::string() <span class="keyword">const</span>;
-<a name="l00135"></a>00135 
-<a name="l00136"></a>00136 <span class="comment">//private:</span>
-<a name="l00137"></a>00137     <span class="keywordtype">void</span> fromAscii(<span class="keyword">const</span> <span class="keywordtype">char</span>* ascii) <span class="keyword">const</span>;
-<a name="l00138"></a>00138     <span class="keywordtype">void</span> fromUtf8(<span class="keyword">const</span> <span class="keywordtype">char</span>* unicode) <span class="keyword">const</span>;
-<a name="l00139"></a>00139     <span class="keyword">struct </span>Data {
-<a name="l00140"></a>00140         Data(<span class="keywordtype">size_t</span> len) : data(len),refcount(1) {}
-<a name="l00141"></a>00141         <span class="keyword">virtual</span> ~Data() {}
-<a name="l00142"></a>00142         Array&lt;uchar&gt; data;
-<a name="l00143"></a>00143         <span class="keyword">mutable</span> std::size_t refcount;
-<a name="l00144"></a>00144     };
-<a name="l00145"></a>00145     <span class="keyword">mutable</span> Data * strdata;
-<a name="l00146"></a>00146 
-<a name="l00147"></a>00147 };
-<a name="l00148"></a>00148 
-<a name="l00149"></a>00149 <span class="keywordtype">bool</span> <a class="code" href="namespace_sylph.html#10c329a0349416d794bedf8f67feb25f" title="Compares the two Arrays on equality.">operator==</a>(<span class="keyword">const</span> String lhs, <span class="keyword">const</span> String rhs);
-<a name="l00150"></a>00150 <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="namespace_sylph.html#10c329a0349416d794bedf8f67feb25f" title="Compares the two Arrays on equality.">operator==</a>(<span class="keyword">const</span> String lhs, <span class="keyword">const</span> <span class="keywordtype">char</span>* rhs) {
-<a name="l00151"></a>00151     <span class="keywordflow">return</span> <a class="code" href="namespace_sylph.html#10c329a0349416d794bedf8f67feb25f" title="Compares the two Arrays on equality.">operator==</a>(lhs,String(rhs));
-<a name="l00152"></a>00152 }
-<a name="l00153"></a>00153 <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="namespace_sylph.html#10c329a0349416d794bedf8f67feb25f" title="Compares the two Arrays on equality.">operator==</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* rhs, <span class="keyword">const</span> String lhs) {
-<a name="l00154"></a>00154     <span class="keywordflow">return</span> <a class="code" href="namespace_sylph.html#10c329a0349416d794bedf8f67feb25f" title="Compares the two Arrays on equality.">operator==</a>(String(rhs),lhs);
-<a name="l00155"></a>00155 }
-<a name="l00156"></a>00156 <span class="keywordtype">bool</span> <a class="code" href="namespace_sylph.html#049ea1ef37b015ca0292637e6d2e3ffa" title="Compares the two Arrays.">operator&lt;</a>(<span class="keyword">const</span> String lhs, <span class="keyword">const</span> String rhs);
-<a name="l00157"></a>00157 String operator+(<span class="keyword">const</span> String lhs, <span class="keyword">const</span> String rhs);
-<a name="l00158"></a>00158 <span class="comment">//String operator%(const String lhs, const String rhs);</span>
-<a name="l00159"></a>00159 String operator&amp;(<span class="keyword">const</span> String lhs, String(*rhs)(<span class="keyword">const</span> String));
-<a name="l00160"></a>00160 String operator&amp;(String(*lhs)(<span class="keyword">const</span> String), <span class="keyword">const</span> String rhs);
-<a name="l00161"></a>00161 String operator*(<span class="keyword">const</span> String lhs, <span class="keyword">const</span> std::size_t len);
-<a name="l00162"></a>00162 std::ostream&amp; operator&lt;&lt;(std::ostream&amp; lhs, <span class="keyword">const</span> String rhs);
-<a name="l00163"></a>00163 
-<a name="l00164"></a>00164 String lc(<span class="keyword">const</span> String rhs);
-<a name="l00165"></a>00165 String uc(<span class="keyword">const</span> String rhs);
-<a name="l00166"></a>00166 String t(<span class="keyword">const</span> String rhs);
-<a name="l00167"></a>00167 
-<a name="l00168"></a>00168 SYLPH_END_NAMESPACE
-<a name="l00169"></a>00169 
-<a name="l00170"></a>00170 <span class="preprocessor">#endif </span><span class="comment">/* STRING_H_ */</span>
+<a name="l00044"></a><a class="code" href="namespace_sylph.html#12380d58a638ec489736d7b60963a34c">00044</a> <span class="keyword">typedef</span> std::uint16_t <a class="code" href="namespace_sylph.html#12380d58a638ec489736d7b60963a34c" title="A integral type for storing an UTF-16 character.">uchar</a>;
+<a name="l00045"></a>00045 
+<a name="l00060"></a><a class="code" href="namespace_sylph.html#5aa3c7bde7827380a2a4012e43b1e901">00060</a> <span class="keyword">static</span> <a class="code" href="class_sylph_1_1_array.html">Array&lt;uchar&gt;</a> <a class="code" href="namespace_sylph.html#5aa3c7bde7827380a2a4012e43b1e901" title="This array contains the characters that are considered to be whitespace characters...">spacechars</a> = {<span class="charliteral">' '</span>, <span class="charliteral">'\n'</span>, <span class="charliteral">'\r'</span>, <span class="charliteral">'\f'</span>, <span class="charliteral">'\t'</span>, <span class="charliteral">'\013'</span>};
+<a name="l00061"></a>00061 
+<a name="l00081"></a><a class="code" href="class_sylph_1_1_string.html">00081</a> <span class="keyword">class </span><a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a> : <span class="keyword">public</span> <a class="code" href="class_sylph_1_1_hashable.html" title="Interface to indicate this object provides its own hashCode function.">Hashable</a>, <span class="keyword">public</span> <a class="code" href="class_sylph_1_1_bool_convertible.html" title="Implementation of the Safe Bool Idiom.">BoolConvertible</a>&lt;String&gt; {
+<a name="l00082"></a>00082     <span class="keyword">friend</span> <span class="keywordtype">bool</span> <a class="code" href="namespace_sylph.html#10c329a0349416d794bedf8f67feb25f" title="Compares the two Arrays on equality.">operator==</a>(<span class="keyword">const</span> <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a> lhs, <span class="keyword">const</span> <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a> rhs);
+<a name="l00083"></a>00083     <span class="keyword">friend</span> <span class="keywordtype">bool</span> <a class="code" href="namespace_sylph.html#049ea1ef37b015ca0292637e6d2e3ffa" title="Compares the two Arrays.">operator&lt;</a>(<span class="keyword">const</span> <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a> lhs, <span class="keyword">const</span> <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a> rhs);
+<a name="l00084"></a>00084     <span class="keyword">friend</span> <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a> operator+(<span class="keyword">const</span> <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a> lhs, <span class="keyword">const</span> <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a> rhs);
+<a name="l00085"></a>00085     <span class="comment">//friend String operator%(const String lhs, const String rhs);</span>
+<a name="l00086"></a>00086     <span class="keyword">friend</span> <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a> operator&amp;(<span class="keyword">const</span> <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a> lhs, <span class="keyword">const</span> <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a>(*rhs)(<span class="keyword">const</span> <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a>));
+<a name="l00087"></a>00087     <span class="keyword">friend</span> <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a> operator&amp;(<span class="keyword">const</span> <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a>(*lhs)(<a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a>), <span class="keyword">const</span> <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a> rhs);
+<a name="l00088"></a>00088     <span class="keyword">friend</span> <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a> operator*(<span class="keyword">const</span> <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a> lhs, <span class="keyword">const</span> std::size_t len);
+<a name="l00089"></a>00089     <span class="keyword">friend</span> std::ostream &amp; operator&lt;&lt;(std::ostream&amp; lhs, <span class="keyword">const</span> <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a> rhs);
+<a name="l00090"></a>00090 
+<a name="l00091"></a>00091 <span class="keyword">public</span>:
+<a name="l00099"></a>00099     <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a>();
+<a name="l00116"></a>00116     <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> * orig);
+<a name="l00117"></a>00117 
+<a name="l00128"></a>00128     <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a>(<span class="keyword">const</span> <a class="code" href="class_sylph_1_1_array.html">Array&lt;uchar&gt;</a> orig);
+<a name="l00136"></a>00136     <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a>(<span class="keyword">const</span> std::string &amp; orig);
+<a name="l00146"></a>00146     <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a>(<span class="keyword">const</span> <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a> &amp; orig);
+<a name="l00152"></a>00152     <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a>(<span class="keyword">const</span> <a class="code" href="namespace_sylph.html#12380d58a638ec489736d7b60963a34c" title="A integral type for storing an UTF-16 character.">uchar</a> c);
+<a name="l00160"></a>00160     <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a>(<span class="keyword">const</span> <span class="keywordtype">bool</span> b);
+<a name="l00161"></a>00161 
+<a name="l00171"></a>00171     <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a>(<span class="keyword">const</span> sint i);
+<a name="l00179"></a>00179     <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a>(<span class="keyword">const</span> suint i);
+<a name="l00189"></a>00189     <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a>(<span class="keyword">const</span> slong l);
+<a name="l00197"></a>00197     <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a>(<span class="keyword">const</span> sulong l);
+<a name="l00237"></a>00237     <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a>(<span class="keyword">const</span> <span class="keywordtype">float</span> f);
+<a name="l00277"></a>00277     <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a>(<span class="keyword">const</span> <span class="keywordtype">double</span> d);
+<a name="l00283"></a>00283     <span class="keyword">virtual</span> ~<a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a>();
+<a name="l00284"></a>00284 
+<a name="l00291"></a>00291     std::size_t length() <span class="keyword">const</span>;
+<a name="l00292"></a>00292 
+<a name="l00300"></a>00300     <span class="keyword">const</span> <a class="code" href="namespace_sylph.html#12380d58a638ec489736d7b60963a34c" title="A integral type for storing an UTF-16 character.">uchar</a> at(std::size_t idx) <span class="keyword">const</span>;
+<a name="l00301"></a>00301 
+<a name="l00316"></a>00316     <span class="keyword">const</span> <span class="keywordtype">char</span> * ascii() <span class="keyword">const</span>;
+<a name="l00330"></a>00330     <span class="keyword">const</span> <span class="keywordtype">char</span> * utf8() <span class="keyword">const</span>;
+<a name="l00331"></a>00331 
+<a name="l00342"></a>00342     <span class="keyword">const</span> <a class="code" href="class_sylph_1_1_array.html">Array&lt;uchar&gt;</a> utf16() <span class="keyword">const</span>;
+<a name="l00343"></a>00343 
+<a name="l00350"></a>00350     <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a> toLowerCase() <span class="keyword">const</span>;
+<a name="l00351"></a>00351 
+<a name="l00358"></a>00358     <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a> toUpperCase() <span class="keyword">const</span>;
+<a name="l00359"></a>00359 
+<a name="l00367"></a>00367     <span class="keywordtype">bool</span> equalsIgnoreCase(<span class="keyword">const</span> <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a> other) <span class="keyword">const</span>;
+<a name="l00368"></a>00368 
+<a name="l00374"></a>00374     <span class="keywordtype">bool</span> endsWith(<span class="keyword">const</span> <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a> other) <span class="keyword">const</span>;
+<a name="l00375"></a>00375 
+<a name="l00381"></a>00381     <span class="keywordtype">bool</span> startsWith(<span class="keyword">const</span> <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a> other) <span class="keyword">const</span>;
+<a name="l00382"></a>00382 
+<a name="l00388"></a>00388     <span class="keywordtype">bool</span> contains(<span class="keyword">const</span> <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a> other) <span class="keyword">const</span>;
+<a name="l00389"></a>00389 
+<a name="l00395"></a>00395     <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a> trim() <span class="keyword">const</span>;
+<a name="l00396"></a>00396 
+<a name="l00405"></a>00405     <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a> substring(std::idx_t begin) <span class="keyword">const</span>;
+<a name="l00406"></a>00406 
+<a name="l00418"></a>00418     <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a> substring(std::idx_t begin, std::idx_t end) <span class="keyword">const</span>;
+<a name="l00419"></a>00419 
+<a name="l00429"></a>00429     sidx_t indexOf(<span class="keyword">const</span> <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a> substr, idx_t start = 0) <span class="keyword">const</span>;
+<a name="l00430"></a>00430 
+<a name="l00438"></a>00438     sidx_t lastIndexOf(<span class="keyword">const</span> <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a> substr) <span class="keyword">const</span>;
+<a name="l00439"></a>00439 
+<a name="l00449"></a>00449     sidx_t lastIndexOf(<span class="keyword">const</span> <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a> substr, idx_t end) <span class="keyword">const</span>;
+<a name="l00450"></a>00450 
+<a name="l00451"></a>00451     <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a> copy() <span class="keyword">const</span>;
+<a name="l00452"></a>00452     <span class="keywordtype">bool</span> merge(<a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a> other) <span class="keyword">const</span>;
+<a name="l00453"></a>00453     <span class="keywordtype">int</span> hashCode() <span class="keyword">const</span>;
+<a name="l00454"></a>00454 
+<a name="l00455"></a>00455     <span class="keyword">static</span> <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a> fromHex(<span class="keywordtype">int</span>, <span class="keywordtype">bool</span> up);
+<a name="l00456"></a>00456     <span class="keyword">static</span> <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a> fromOct(<span class="keywordtype">int</span>, <span class="keywordtype">bool</span> up);
+<a name="l00457"></a>00457     <span class="keyword">static</span> <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a> fromSci(<span class="keywordtype">float</span>, <span class="keywordtype">bool</span> up);
+<a name="l00458"></a>00458     <span class="keyword">static</span> <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a> fromSci(<span class="keywordtype">double</span>, <span class="keywordtype">bool</span> up);
+<a name="l00459"></a>00459 
+<a name="l00460"></a>00460     <span class="keywordtype">bool</span> boolValue() <span class="keyword">const</span>;
+<a name="l00461"></a>00461     sint intValue() <span class="keyword">const</span>;
+<a name="l00462"></a>00462     suint uintValue() <span class="keyword">const</span>;
+<a name="l00463"></a>00463     slong longValue() <span class="keyword">const</span>;
+<a name="l00464"></a>00464     sulong ulongValue() <span class="keyword">const</span>;
+<a name="l00465"></a>00465     <span class="keywordtype">float</span> floatValue() <span class="keyword">const</span>;
+<a name="l00466"></a>00466     <span class="keywordtype">double</span> doubleValue() <span class="keyword">const</span>;
+<a name="l00467"></a>00467 
+<a name="l00468"></a>00468     <span class="keyword">inline</span> <span class="keywordtype">bool</span> toBool()<span class="keyword"> const </span>{
+<a name="l00469"></a>00469         <span class="keywordflow">return</span> *<span class="keyword">this</span> != <span class="stringliteral">""</span>;
+<a name="l00470"></a>00470     }
+<a name="l00471"></a>00471 
+<a name="l00472"></a>00472     <span class="keyword">const</span> <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a> &amp; operator=(<span class="keyword">const</span> <span class="keywordtype">char</span> * orig) <span class="keyword">const</span>;
+<a name="l00473"></a>00473     <span class="keyword">const</span> <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a> &amp; operator=(<span class="keyword">const</span> std::string &amp; orig) <span class="keyword">const</span>;
+<a name="l00474"></a>00474     <span class="keyword">const</span> <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a> &amp; operator=(<span class="keyword">const</span> <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a> orig) <span class="keyword">const</span>;
+<a name="l00475"></a>00475 
+<a name="l00476"></a>00476     <span class="keyword">const</span> <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a> &amp; operator+=(<span class="keyword">const</span> <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a> rhs) <span class="keyword">const</span>;
+<a name="l00477"></a>00477 
+<a name="l00478"></a>00478 
+<a name="l00486"></a>00486     operator const char *() <span class="keyword">const</span>;
+<a name="l00487"></a>00487 
+<a name="l00494"></a>00494     operator std::string() <span class="keyword">const</span>;
+<a name="l00495"></a>00495 
+<a name="l00496"></a>00496     <span class="keyword">private</span>:
+<a name="l00497"></a>00497     <span class="keywordtype">void</span> fromAscii(<span class="keyword">const</span> <span class="keywordtype">char</span>* ascii) <span class="keyword">const</span>;
+<a name="l00498"></a>00498     <span class="keywordtype">void</span> fromUtf8(<span class="keyword">const</span> <span class="keywordtype">char</span>* unicode) <span class="keyword">const</span>;
+<a name="l00499"></a>00499 
+<a name="l00500"></a>00500     <span class="keyword">struct </span>Data {
+<a name="l00501"></a>00501 
+<a name="l00502"></a>00502         Data(<span class="keywordtype">size_t</span> len) : data(len), refcount(1) {
+<a name="l00503"></a>00503         }
+<a name="l00504"></a>00504 
+<a name="l00505"></a>00505         <span class="keyword">virtual</span> ~Data() {
+<a name="l00506"></a>00506         }
+<a name="l00507"></a>00507         <a class="code" href="class_sylph_1_1_array.html">Array&lt;uchar&gt;</a> data;
+<a name="l00508"></a>00508         <span class="keyword">mutable</span> std::size_t refcount;
+<a name="l00509"></a>00509     };
+<a name="l00510"></a>00510     <span class="keyword">mutable</span> Data * strdata;
+<a name="l00511"></a>00511 
+<a name="l00512"></a>00512 };
+<a name="l00513"></a>00513 
+<a name="l00514"></a>00514 <span class="keywordtype">bool</span> <a class="code" href="namespace_sylph.html#10c329a0349416d794bedf8f67feb25f" title="Compares the two Arrays on equality.">operator==</a>(<span class="keyword">const</span> <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a> lhs, <span class="keyword">const</span> <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a> rhs);
+<a name="l00515"></a>00515 
+<a name="l00516"></a>00516 <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="namespace_sylph.html#10c329a0349416d794bedf8f67feb25f" title="Compares the two Arrays on equality.">operator==</a>(<span class="keyword">const</span> <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a> lhs, <span class="keyword">const</span> <span class="keywordtype">char</span>* rhs) {
+<a name="l00517"></a>00517     <span class="keywordflow">return</span> <a class="code" href="namespace_sylph.html#10c329a0349416d794bedf8f67feb25f" title="Compares the two Arrays on equality.">operator==</a>(lhs, <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a>(rhs));
+<a name="l00518"></a>00518 }
+<a name="l00519"></a>00519 
+<a name="l00520"></a>00520 <span class="keyword">inline</span> <span class="keywordtype">bool</span> operator==(<span class="keyword">const</span> <span class="keywordtype">char</span>* rhs, <span class="keyword">const</span> String lhs) {
+<a name="l00521"></a>00521     <span class="keywordflow">return</span> operator==(String(rhs), lhs);
+<a name="l00522"></a>00522 }
+<a name="l00523"></a>00523 <span class="keywordtype">bool</span> <a class="code" href="namespace_sylph.html#049ea1ef37b015ca0292637e6d2e3ffa" title="Compares the two Arrays.">operator&lt;</a>(<span class="keyword">const</span> String lhs, <span class="keyword">const</span> String rhs);
+<a name="l00524"></a>00524 String operator+(<span class="keyword">const</span> String lhs, <span class="keyword">const</span> String rhs);
+<a name="l00525"></a>00525 <span class="comment">//String operator%(const String lhs, const String rhs);</span>
+<a name="l00526"></a>00526 String operator&amp;(<span class="keyword">const</span> String lhs, String(*rhs)(<span class="keyword">const</span> String));
+<a name="l00527"></a>00527 String operator&amp;(String(*lhs)(<span class="keyword">const</span> String), <span class="keyword">const</span> String rhs);
+<a name="l00528"></a>00528 String operator*(<span class="keyword">const</span> String lhs, <span class="keyword">const</span> std::size_t len);
+<a name="l00529"></a>00529 std::ostream &amp; operator&lt;&lt;(std::ostream&amp; lhs, <span class="keyword">const</span> String rhs);
+<a name="l00530"></a>00530 
+<a name="l00531"></a>00531 String lc(<span class="keyword">const</span> String rhs);
+<a name="l00532"></a>00532 String uc(<span class="keyword">const</span> String rhs);
+<a name="l00533"></a>00533 String t(<span class="keyword">const</span> String rhs);
+<a name="l00534"></a>00534 
+<a name="l00535"></a>00535 SYLPH_END_NAMESPACE
+<a name="l00536"></a>00536 
+<a name="l00537"></a>00537 <span class="preprocessor">#endif </span><span class="comment">/* STRING_H_ */</span>
 </pre></div></div>
 <hr size="1" class="unhidden"><address style="text-align: right;"><small>
 Documentation for LibSylph by Doxygen

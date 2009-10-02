@@ -27,7 +27,14 @@
 
 SYLPH_BEGIN_NAMESPACE
 SYLPH_PUBLIC
-typedef HashMap<String,Any> Dictionary;
+/**
+ * A Dictionary is a HashMap that maps Strings to Anys. This typedef is provided
+ * because this is the most commonly used instance of a HashMap -- that is,
+ * String to T with Any a generic wrapper for any T. It is provided solely for
+ * convenience and currently does not have any special properties above a
+ * HashMap.
+ */
+typedef HashMap<String, Any> Dictionary;
 SYLPH_END_NAMESPACE
 
 #endif	/* _DICTIONARY_H */

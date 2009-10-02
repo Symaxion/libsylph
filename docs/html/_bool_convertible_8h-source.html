@@ -46,75 +46,75 @@
 <a name="l00026"></a>00026 SYLPH_BEGIN_NAMESPACE
 <a name="l00027"></a>00027 SYLPH_PUBLIC
 <a name="l00028"></a>00028 
-<a name="l00029"></a>00029 <span class="keyword">class </span>BoolConvertible_base : <span class="keyword">public</span> <span class="keyword">virtual</span> Object {
-<a name="l00030"></a>00030 <span class="keyword">protected</span>:
-<a name="l00031"></a>00031     <span class="keyword">typedef</span> void (BoolConvertible_base::*bool_type)() <span class="keyword">const</span>;
-<a name="l00032"></a>00032 
-<a name="l00033"></a>00033     <span class="keywordtype">void</span> this_type_does_not_support_comparisons()<span class="keyword"> const </span>{
-<a name="l00034"></a>00034     }
+<a name="l00032"></a><a class="code" href="class_sylph_1_1_bool_convertible__base.html">00032</a> <span class="keyword">class </span><a class="code" href="class_sylph_1_1_bool_convertible__base.html" title="Abstract base class for BoolConvertible.">BoolConvertible_base</a> : <span class="keyword">public</span> <span class="keyword">virtual</span> <a class="code" href="class_sylph_1_1_object.html" title="The root of all classes.">Object</a> {
+<a name="l00033"></a>00033 <span class="keyword">protected</span>:
+<a name="l00034"></a>00034     <span class="keyword">typedef</span> void (<a class="code" href="class_sylph_1_1_bool_convertible__base.html" title="Abstract base class for BoolConvertible.">BoolConvertible_base</a>::*bool_type)() <span class="keyword">const</span>;
 <a name="l00035"></a>00035 
-<a name="l00036"></a>00036     BoolConvertible_base() {
+<a name="l00036"></a>00036     <span class="keywordtype">void</span> this_type_does_not_support_comparisons()<span class="keyword"> const </span>{
 <a name="l00037"></a>00037     }
 <a name="l00038"></a>00038 
-<a name="l00039"></a>00039     BoolConvertible_base(<span class="keyword">const</span> BoolConvertible_base&amp;) {
+<a name="l00039"></a>00039     <a class="code" href="class_sylph_1_1_bool_convertible__base.html" title="Abstract base class for BoolConvertible.">BoolConvertible_base</a>() {
 <a name="l00040"></a>00040     }
 <a name="l00041"></a>00041 
-<a name="l00042"></a>00042     BoolConvertible_base &amp; operator=(<span class="keyword">const</span> BoolConvertible_base&amp;) {
-<a name="l00043"></a>00043         <span class="keywordflow">return</span> *<span class="keyword">this</span>;
-<a name="l00044"></a>00044     }
-<a name="l00045"></a>00045 
-<a name="l00046"></a>00046     ~BoolConvertible_base() {
+<a name="l00042"></a>00042     <a class="code" href="class_sylph_1_1_bool_convertible__base.html" title="Abstract base class for BoolConvertible.">BoolConvertible_base</a>(<span class="keyword">const</span> <a class="code" href="class_sylph_1_1_bool_convertible__base.html" title="Abstract base class for BoolConvertible.">BoolConvertible_base</a>&amp;) {
+<a name="l00043"></a>00043     }
+<a name="l00044"></a>00044 
+<a name="l00045"></a>00045     <a class="code" href="class_sylph_1_1_bool_convertible__base.html" title="Abstract base class for BoolConvertible.">BoolConvertible_base</a> &amp; operator=(<span class="keyword">const</span> <a class="code" href="class_sylph_1_1_bool_convertible__base.html" title="Abstract base class for BoolConvertible.">BoolConvertible_base</a>&amp;) {
+<a name="l00046"></a>00046         <span class="keywordflow">return</span> *<span class="keyword">this</span>;
 <a name="l00047"></a>00047     }
-<a name="l00048"></a>00048 };
-<a name="l00049"></a>00049 
-<a name="l00050"></a>00050 <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T = <span class="keywordtype">void</span>&gt;
-<a name="l00051"></a>00051 <span class="keyword">class </span>BoolConvertible : <span class="keyword">public</span> BoolConvertible_base {
-<a name="l00052"></a>00052 <span class="keyword">public</span>:
-<a name="l00053"></a>00053 
-<a name="l00054"></a>00054     operator bool_type()<span class="keyword"> const </span>{
-<a name="l00055"></a>00055         <span class="keywordflow">return</span> (static_cast&lt;const T*&gt; (<span class="keyword">this</span>))-&gt;toBool()
-<a name="l00056"></a>00056                 ? &amp;BoolConvertible::this_type_does_not_support_comparisons
-<a name="l00057"></a>00057                 : 0;
-<a name="l00058"></a>00058     }
-<a name="l00059"></a>00059 <span class="keyword">protected</span>:
-<a name="l00060"></a>00060 
-<a name="l00061"></a>00061     ~BoolConvertible() {
-<a name="l00062"></a>00062     }
-<a name="l00063"></a>00063 };
-<a name="l00064"></a>00064 
-<a name="l00065"></a>00065 <span class="keyword">template</span>&lt;&gt;
-<a name="l00066"></a>00066 <span class="keyword">class </span>BoolConvertible&lt;void&gt; : <span class="keyword">public</span> BoolConvertible_base {
-<a name="l00067"></a>00067 <span class="keyword">public</span>:
-<a name="l00068"></a>00068 
-<a name="l00069"></a>00069     operator bool_type()<span class="keyword"> const </span>{
-<a name="l00070"></a>00070         <span class="keywordflow">return</span> toBool() == <span class="keyword">true</span> ?
-<a name="l00071"></a>00071                 &amp;BoolConvertible::this_type_does_not_support_comparisons : 0;
+<a name="l00048"></a>00048 
+<a name="l00049"></a>00049     ~<a class="code" href="class_sylph_1_1_bool_convertible__base.html" title="Abstract base class for BoolConvertible.">BoolConvertible_base</a>() {
+<a name="l00050"></a>00050     }
+<a name="l00051"></a>00051 };
+<a name="l00052"></a>00052 
+<a name="l00060"></a>00060 <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T = <span class="keywordtype">void</span>&gt;
+<a name="l00061"></a><a class="code" href="class_sylph_1_1_bool_convertible.html">00061</a> <span class="keyword">class </span><a class="code" href="class_sylph_1_1_bool_convertible.html" title="Implementation of the Safe Bool Idiom.">BoolConvertible</a> : <span class="keyword">public</span> <a class="code" href="class_sylph_1_1_bool_convertible__base.html" title="Abstract base class for BoolConvertible.">BoolConvertible_base</a> {
+<a name="l00062"></a>00062 <span class="keyword">public</span>:
+<a name="l00063"></a>00063 
+<a name="l00064"></a>00064     operator bool_type()<span class="keyword"> const </span>{
+<a name="l00065"></a>00065         <span class="keywordflow">return</span> (static_cast&lt;const T*&gt; (<span class="keyword">this</span>))-&gt;toBool()
+<a name="l00066"></a>00066                 ? &amp;BoolConvertible::this_type_does_not_support_comparisons
+<a name="l00067"></a>00067                 : 0;
+<a name="l00068"></a>00068     }
+<a name="l00069"></a>00069 <span class="keyword">protected</span>:
+<a name="l00070"></a>00070 
+<a name="l00071"></a>00071     ~<a class="code" href="class_sylph_1_1_bool_convertible.html" title="Implementation of the Safe Bool Idiom.">BoolConvertible</a>() {
 <a name="l00072"></a>00072     }
-<a name="l00073"></a>00073 <span class="keyword">protected</span>:
-<a name="l00074"></a>00074     <span class="keyword">virtual</span> <span class="keywordtype">bool</span> toBool() <span class="keyword">const</span> = 0;
-<a name="l00075"></a>00075 
-<a name="l00076"></a>00076     <span class="keyword">virtual</span> ~BoolConvertible() {
-<a name="l00077"></a>00077     }
-<a name="l00078"></a>00078 };
-<a name="l00079"></a>00079 
-<a name="l00080"></a>00080 <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> U&gt;
-<a name="l00081"></a>00081 <span class="keywordtype">void</span> <a class="code" href="namespace_sylph.html#10c329a0349416d794bedf8f67feb25f" title="Compares the two Arrays on equality.">operator==</a>(<span class="keyword">const</span> BoolConvertible&lt;T&gt;&amp; lhs, <span class="keyword">const</span> BoolConvertible&lt;U&gt;&amp; rhs) {
-<a name="l00082"></a>00082     lhs.this_type_does_not_support_comparisons();
-<a name="l00083"></a>00083     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00084"></a>00084 }
+<a name="l00073"></a>00073 };
+<a name="l00074"></a>00074 
+<a name="l00075"></a>00075 <span class="keyword">template</span>&lt;&gt;
+<a name="l00076"></a>00076 <span class="keyword">class </span><a class="code" href="class_sylph_1_1_bool_convertible.html" title="Implementation of the Safe Bool Idiom.">BoolConvertible</a>&lt;void&gt; : <span class="keyword">public</span> <a class="code" href="class_sylph_1_1_bool_convertible__base.html" title="Abstract base class for BoolConvertible.">BoolConvertible_base</a> {
+<a name="l00077"></a>00077 <span class="keyword">public</span>:
+<a name="l00078"></a>00078 
+<a name="l00079"></a>00079     operator bool_type()<span class="keyword"> const </span>{
+<a name="l00080"></a>00080         <span class="keywordflow">return</span> toBool() == <span class="keyword">true</span> ?
+<a name="l00081"></a>00081                 &amp;BoolConvertible::this_type_does_not_support_comparisons : 0;
+<a name="l00082"></a>00082     }
+<a name="l00083"></a>00083 <span class="keyword">protected</span>:
+<a name="l00084"></a>00084     <span class="keyword">virtual</span> <span class="keywordtype">bool</span> toBool() <span class="keyword">const</span> = 0;
 <a name="l00085"></a>00085 
-<a name="l00086"></a>00086 <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> U&gt;
-<a name="l00087"></a>00087 <span class="keywordtype">void</span> operator!=(<span class="keyword">const</span> BoolConvertible&lt;T&gt;&amp; lhs, <span class="keyword">const</span> BoolConvertible&lt;U&gt;&amp; rhs) {
-<a name="l00088"></a>00088     lhs.this_type_does_not_support_comparisons();
-<a name="l00089"></a>00089     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00090"></a>00090 }
-<a name="l00091"></a>00091 
-<a name="l00092"></a>00092 
-<a name="l00093"></a>00093 
-<a name="l00094"></a>00094 SYLPH_END_NAMESPACE
-<a name="l00095"></a>00095 
-<a name="l00096"></a>00096 <span class="preprocessor">#endif  </span><span class="comment">/* BOOLCONVERTIBLE_H_ */</span>
-<a name="l00097"></a>00097 
+<a name="l00086"></a>00086     <span class="keyword">virtual</span> ~BoolConvertible() {
+<a name="l00087"></a>00087     }
+<a name="l00088"></a>00088 };
+<a name="l00089"></a>00089 
+<a name="l00094"></a>00094 <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> U&gt;
+<a name="l00095"></a><a class="code" href="namespace_sylph.html#7be2729c2252c04c807bed8da37a6d78">00095</a> <span class="keywordtype">void</span> <a class="code" href="namespace_sylph.html#10c329a0349416d794bedf8f67feb25f" title="Compares the two Arrays on equality.">operator==</a>(<span class="keyword">const</span> <a class="code" href="class_sylph_1_1_bool_convertible.html" title="Implementation of the Safe Bool Idiom.">BoolConvertible&lt;T&gt;</a>&amp; lhs, <span class="keyword">const</span> <a class="code" href="class_sylph_1_1_bool_convertible.html" title="Implementation of the Safe Bool Idiom.">BoolConvertible&lt;U&gt;</a>&amp; rhs) {
+<a name="l00096"></a>00096     lhs.<a class="code" href="class_sylph_1_1_bool_convertible__base.html#2b7868b4806d5d38c173764ef3d11f3b">this_type_does_not_support_comparisons</a>();
+<a name="l00097"></a>00097     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00098"></a>00098 }
+<a name="l00099"></a>00099 
+<a name="l00104"></a>00104 <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> U&gt;
+<a name="l00105"></a><a class="code" href="namespace_sylph.html#e0e899a2df3d9094e6692b2cdebde679">00105</a> <span class="keywordtype">void</span> <a class="code" href="namespace_sylph.html#e0e899a2df3d9094e6692b2cdebde679" title="Short circuits the operator!= for BoolConvertibles.">operator!=</a>(<span class="keyword">const</span> <a class="code" href="class_sylph_1_1_bool_convertible.html" title="Implementation of the Safe Bool Idiom.">BoolConvertible&lt;T&gt;</a>&amp; lhs, <span class="keyword">const</span> <a class="code" href="class_sylph_1_1_bool_convertible.html" title="Implementation of the Safe Bool Idiom.">BoolConvertible&lt;U&gt;</a>&amp; rhs) {
+<a name="l00106"></a>00106     lhs.<a class="code" href="class_sylph_1_1_bool_convertible__base.html#2b7868b4806d5d38c173764ef3d11f3b">this_type_does_not_support_comparisons</a>();
+<a name="l00107"></a>00107     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00108"></a>00108 }
+<a name="l00109"></a>00109 
+<a name="l00110"></a>00110 
+<a name="l00111"></a>00111 
+<a name="l00112"></a>00112 SYLPH_END_NAMESPACE
+<a name="l00113"></a>00113 
+<a name="l00114"></a>00114 <span class="preprocessor">#endif </span><span class="comment">/* BOOLCONVERTIBLE_H_ */</span>
+<a name="l00115"></a>00115 
 </pre></div></div>
 <hr size="1" class="unhidden"><address style="text-align: right;"><small>
 Documentation for LibSylph by Doxygen

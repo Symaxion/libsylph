@@ -26,6 +26,9 @@
 SYLPH_BEGIN_NAMESPACE
 SYLPH_PUBLIC
 
+/**
+ * Abstract base class for BoolConvertible.
+ */
 class BoolConvertible_base : public virtual Object {
 protected:
     typedef void (BoolConvertible_base::*bool_type)() const;
@@ -47,6 +50,13 @@ protected:
     }
 };
 
+/**
+ * Implementation of the Safe Bool Idiom. This class allows a safe conversion
+ * to @c bool for use in @c if() and @c while() statements, without allowing
+ * an implicit conversion to bool in other statements. You should override
+ * <code>toBool()</code> instead of <code>operator bool</code> here.
+ * @tplreqs T The type of the derived class.
+ */
 template <typename T = void>
 class BoolConvertible : public BoolConvertible_base {
 public:
@@ -77,12 +87,20 @@ protected:
     }
 };
 
+/**
+ * Short circuits the @c operator== for BoolConvertibles. You are ought to
+ * implement your own @c operator== for a BoolConvertible derived class.
+ */
 template <typename T, typename U>
 void operator==(const BoolConvertible<T>& lhs, const BoolConvertible<U>& rhs) {
     lhs.this_type_does_not_support_comparisons();
     return false;
 }
 
+/**
+ * Short circuits the @c operator!= for BoolConvertibles. You are ought to
+ * implement your own @c operator!= for a BoolConvertible derived class.
+ */
 template <typename T, typename U>
 void operator!=(const BoolConvertible<T>& lhs, const BoolConvertible<U>& rhs) {
     lhs.this_type_does_not_support_comparisons();

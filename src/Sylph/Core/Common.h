@@ -21,12 +21,37 @@
 #ifndef COMMON_H_
 #define	COMMON_H_
 
+/**
+ * @file
+ * @headerfile Sylph/Core/Common.h
+ * This file is a shortcut to include many commonly used headers. Actually, it
+ * will include the following headers (relative to @c Sylph/Core):
+ * <code><ul>
+ * <li>Any.h</li>
+ * <li>Array.h</li>
+ * <li>Dictionary.h</li>
+ * <li>Primitives.h</li>
+ * <li>Range.h</li>
+ * <li>String.h</li>
+ * <li>Exception.h</li>
+ * </ul></code>
+ * It also has 'using' statements for following classes:
+ * <code><ul>
+ * <li>Sylph::Array</li>
+ * <li>Sylph::Dictionary</li>
+ * <li>Sylph::String</li>
+ * <li>Sylph::range</li>
+ * </ul></code>
+ * You can turn this of by defining the macro @c SYLPH_NO_COMMON_USING before
+ * inclusion.
+ */
+
 #include "Any.h"
 #include "Array.h"
 #include "Dictionary.h"
 #include "Primitives.h"
 #include "Range.h"
-#include "Random.h"
+#include "String.h"
 #include "Exception.h"
 
 #ifndef SYLPH_NO_COMMON_USING
