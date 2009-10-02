@@ -61,8 +61,6 @@
           <itemPath>src/Sylph/Core/Object.h</itemPath>
           <itemPath>src/Sylph/Core/PointerManager.h</itemPath>
           <itemPath>src/Sylph/Core/Primitives.h</itemPath>
-          <itemPath>src/Sylph/Core/Ptr.h</itemPath>
-          <itemPath>src/Sylph/Core/Random.h</itemPath>
           <itemPath>src/Sylph/Core/Range.h</itemPath>
           <itemPath>src/Sylph/Core/String.cpp</itemPath>
           <itemPath>src/Sylph/Core/String.h</itemPath>
