@@ -67,7 +67,7 @@ SYLPH_BEGIN_NAMESPACE
  * Two other useful macros are defined, <code>if_nullptr()</code> and <code>
  * check_nullptr()</code>. <code>if_nullptr()</code> works similar to a normal
  * <code>if</code>, but the statements block is only executed when the pointer
- * passed is <code>NULL</code>. However, this macro is more optimized than a
+ * passed is <code>null</code>. However, this macro is more optimized than a
  * normal if. <code>check_nullptr()</code> works similar, but instead of
  * executing a block of code, it will immeadiately throw an
  * NullPointerException.
@@ -98,7 +98,7 @@ public:
      */
     virtual ~Exception() throw () {
         TraceMessage * current = tracemsg;
-        while(current != NULL) {
+        while(current != null) {
             TraceMessage * tmp = current;
             current = tmp->next;
             delete tmp;
@@ -134,14 +134,14 @@ public:
      * @param message The message to add in the traceinfo log.
      */
     void addTraceMessage(const char * message) const throw() {
-        if(tracemsg == NULL) {
-            tracemsg = new TraceMessage{message,NULL};
+        if(tracemsg == null) {
+            tracemsg = new TraceMessage{message,null};
         } else {
             TraceMessage * current = tracemsg;
-            while(current->next != NULL) {
+            while(current->next != null) {
                 current = current->next;
             }
-            current->next = new TraceMessage{message,NULL};
+            current->next = new TraceMessage{message,null};
         }
     }
 
@@ -199,7 +199,7 @@ S_CREATE_EXCEPTION(IllegalArgumentException);
  */
 S_CREATE_EXCEPTION(IllegalStateException);
 /**
- * This Exception gets thrown when a pointer to <code>NULL</code> is passed to
+ * This Exception gets thrown when a pointer to <code>null</code> is passed to
  * a function or method. It also gets automatically thrown by the <code>
  * check_nullptr()</code> macro.
  */

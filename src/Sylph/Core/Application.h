@@ -88,7 +88,7 @@ public:
      * the Mac OS X-platform. This array is used to determine the location of
      * the binary solely on the Mac platform and is the fourth argument to the
      * @c main entry function. On other platforms, this array may be substituted
-     * by a @c NULL pointer. Substituting this array on the Mac platform for
+     * by a @c null pointer. Substituting this array on the Mac platform for
      * anything else than the actual apple vector passed to the @c main function
      * may lead to undefined behaviour.
      * @param type An enumerated type representing the implementation to use

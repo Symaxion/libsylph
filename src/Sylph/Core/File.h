@@ -54,8 +54,8 @@ public:
 	friend class File;
     public:
         typedef BidirectionalIterator<String,iterator> super;
-        iterator(bool begin = false, const File* obj = NULL);
-        iterator(bool begin = false, File* obj = NULL);
+        iterator(bool begin = false, const File* obj = null);
+        iterator(bool begin = false, File* obj = null);
 
         reference current() const {
             return cur;

@@ -61,7 +61,7 @@ public:
     public:
 
         Entry(Key & _key, Value * _value) : key(_key), value(_value),
-        next(NULL) {
+        next(null) {
         }
 
         virtual ~Entry() {
@@ -110,7 +110,7 @@ public:
         }
 
         bool operator==(const Value * v) {
-            return static_cast<Value*> (*this) != NULL && v != NULL &&
+            return static_cast<Value*> (*this) != null && v != null &&
                     static_cast<Value*> (*this) == v;
         }
 
@@ -128,37 +128,37 @@ public:
     public:
 
         iterator(bool begin = false,
-                HashMap<key_,value_,hash_,equals_>* obj = NULL) : super(begin),
+                HashMap<key_,value_,hash_,equals_>* obj = null) : super(begin),
         map(obj) {
             if (begin) {
                 count = map.size();
                 idx = map.buckets->length;
                 currentPointer = *(map.buckets)[idx];
-                while (currentPointer == NULL) {
+                while (currentPointer == null) {
                     currentPointer = *(map.buckets)[--idx];
                 }
             } else {
                 count = 0;
                 idx = 0;
-                currentPointer = NULL;
+                currentPointer = null;
             }
         }
 
         iterator(bool begin = false,
-                const HashMap<key_,value_,hash_,equals_>* obj = NULL) :
+                const HashMap<key_,value_,hash_,equals_>* obj = null) :
                 super(begin),
                 map(const_cast<HashMap<key_,value_,hash_,equals_>*>(obj)) {
             if (begin) {
                 count = map.size();
                 idx = map.buckets->length;
                 currentPointer = *(map.buckets)[idx];
-                while (currentPointer == NULL) {
+                while (currentPointer == null) {
                     currentPointer = *(map.buckets)[--idx];
                 }
             } else {
                 count = 0;
                 idx = 0;
-                currentPointer = NULL;
+                currentPointer = null;
             }
         }
 
@@ -168,7 +168,7 @@ public:
 
         void next() const {
             currentPointer = currentPointer->next;
-            while (currentPointer == NULL) {
+            while (currentPointer == null) {
                 currentPointer = *(map.buckets)[--idx];
             }
         }
@@ -237,7 +237,7 @@ public:
     bool containsKey(const Key & key) const {
         std::idx_t idx = hash(key);
         EntryPtr entry = buckets[idx];
-        while (entry != NULL) {
+        while (entry != null) {
             if (equf(key, entry->key)) return true;
             entry = entry->next;
         }
@@ -247,7 +247,7 @@ public:
     bool containsValue(const Value * value) const {
         for (std::idx_t i = buckets.length - 1; i >= 0; i--) {
             EntryPtr entry = buckets[i];
-            while (entry != NULL) {
+            while (entry != null) {
                 if (equf(value, entry->value)) return true;
                 entry = entry->next;
             }
@@ -262,23 +262,23 @@ public:
     Value * get(const Key & key) {
         int h = hash(key);
         EntryPtr entry = buckets[h];
-        if (entry == NULL) return NULL;
-        while (entry->next != NULL) {
+        if (entry == null) return null;
+        while (entry->next != null) {
             if (entry->key == key) return entry->value;
             entry = entry->next;
         }
-        return NULL;
+        return null;
     }
 
     const Value * get(const Key & key) const {
         int h = hash(key);
         EntryPtr entry = buckets[h];
-        if (entry == NULL) return NULL;
-        while (entry->next != NULL) {
+        if (entry == null) return null;
+        while (entry->next != null) {
             if (entry->key == key) return entry->value;
             entry = entry->next;
         }
-        return NULL;
+        return null;
     }
 
     SYLPH_HASHMAP_RETURN_T(type) operator[](const Key & key) {
@@ -297,7 +297,7 @@ public:
         idx_t idx = hash(key);
         EntryPtr entry = buckets[idx];
 
-        while (entry != NULL) {
+        while (entry != null) {
             if (EqualsFunction(key, entry->key)) {
                 Value * val = entry->value;
                 entry->value = val;
@@ -315,7 +315,7 @@ public:
         newEnt->next = buckets[idx];
         buckets[idx] = newEnt;
 
-        return NULL;
+        return null;
     }
 
     void putAll(const HashMap<Key, Value, HashFunction, EqualsFunction> & map) {
@@ -328,11 +328,11 @@ public:
     Value * remove(const Key & key) {
         std::idx_t idx = hash(key);
         EntryPtr entry = buckets[idx];
-        EntryPtr last = NULL;
+        EntryPtr last = null;
 
-        while (entry != NULL) {
+        while (entry != null) {
             if (equf(key, entry->key)) {
-                if (last == NULL) {
+                if (last == null) {
                     buckets[idx] = entry->next;
                 } else {
 
@@ -344,7 +344,7 @@ public:
             last = entry;
             entry = entry->next;
         }
-        return NULL;
+        return null;
     }
 
     HashMap & operator<<(const EntryList& elist) {
@@ -364,7 +364,7 @@ private:
     EqualsFunction equf;
 
     sint hash(const Key & key) {
-        return key == NULL ? 0 : abs(hashf(key) % buckets.length);
+        return key == null ? 0 : abs(hashf(key) % buckets.length);
     }
 
     void rehash() {
@@ -376,7 +376,7 @@ private:
 
         for (idx_t i = oldBuckets.length - 1; i >= 0; i--) {
             EntryPtr entry = oldBuckets[i];
-            while (entry != NULL) {
+            while (entry != null) {
                 idx_t idx = hash(entry->key);
                 EntryPtr next = entry->next;
                 entry->next = buckets[idx];

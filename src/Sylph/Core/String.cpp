@@ -310,7 +310,7 @@ String::~String() {
     strdata->refcount--;
     if (strdata->refcount == 0) {
         delete strdata;
-        strdata = NULL;
+        strdata = null;
     }
 }
 
