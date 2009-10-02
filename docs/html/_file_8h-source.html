@@ -71,7 +71,7 @@
 <a name="l00051"></a>00051 <span class="keyword">public</span>:
 <a name="l00052"></a>00052 
 <a name="l00053"></a>00053     <span class="keyword">class </span>iterator : <span class="keyword">public</span> BidirectionalIterator&lt;String, iterator&gt; {
-<a name="l00054"></a>00054     <span class="keyword">friend</span> <span class="keyword">class </span>File;
+<a name="l00054"></a>00054  <span class="keyword">friend</span> <span class="keyword">class </span>File;
 <a name="l00055"></a>00055     <span class="keyword">public</span>:
 <a name="l00056"></a>00056         <span class="keyword">typedef</span> BidirectionalIterator&lt;String,iterator&gt; super;
 <a name="l00057"></a>00057         iterator(<span class="keywordtype">bool</span> begin = <span class="keyword">false</span>, <span class="keyword">const</span> File* obj = NULL);
@@ -182,7 +182,7 @@
 <a name="l00162"></a>00162 
 <a name="l00163"></a>00163 SYLPH_END_NAMESPACE
 <a name="l00164"></a>00164 
-<a name="l00165"></a>00165 <span class="preprocessor">#endif  </span><span class="comment">/* FILE_H_ */</span>
+<a name="l00165"></a>00165 <span class="preprocessor">#endif </span><span class="comment">/* FILE_H_ */</span>
 <a name="l00166"></a>00166 
 </pre></div></div>
 <hr size="1" class="unhidden"><address style="text-align: right;"><small>

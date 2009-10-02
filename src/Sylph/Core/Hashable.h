@@ -18,23 +18,37 @@
  * Created on 19 december 2008, 14:46
  */
 
-#ifndef _HASHABLE_H
-#define	_HASHABLE_H
+#ifndef HASHABLE_H_
+#define	HASHABLE_H_
 
 #include "Object.h"
 #include "Primitives.h"
 
-/*< rev Object-1
- *  rev Hashable-1
- */
-
 SYLPH_BEGIN_NAMESPACE
 SYLPH_PUBLIC
+
+/**
+ * Interface to indicate this object provides its own @c hashCode function.
+ * This interface is used by @c Sylph::Hash to determine when to use the builtin
+ * hash generator or the one supplied by the class itself.
+ */
 class Hashable : public virtual Object {
 public:
+    /**
+     * Calculates an unique hash code for this object. The returned value should
+     * be indentical for equal classes. It is possible to have the same hash
+     * code for non-equal classes, returning a constant number is a valid
+     * implementation of this function. However, the hash code is used for
+     * optimalisation in several collection classes, therefore, having this
+     * function return a generally unique hash code (such that
+     * <code>x != y</code> almost certainly guarantees <code>x.hashCode() !=
+     * y.hashCode()</code> will make access times for those collection classes
+     * much faster.
+     * @return A generally unique hash value for this class.
+     */
     virtual sint hashCode() const = 0;
 };
 SYLPH_END_NAMESPACE
 
-#endif	/* _HASHABLE_H */
+#endif	/* HASHABLE_H_ */
 

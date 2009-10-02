@@ -99,7 +99,7 @@ public:
     String();
     /**
      * Creates a String from a C-style string. The pointer passed must be a
-     * pointer to a null ('\0') terminated character array. The length
+     * pointer to a null ('\\0') terminated character array. The length
      * of the character array is deduced from the place of the null character.
      * Passing anything else than a null-terminated character array to this
      * constructor may result in undefined behaviour. <p>
@@ -117,7 +117,7 @@ public:
 
     /**
      * Creates a String from an Array of uchars. The Array passed must not be
-     * null ('\0') terminated. The length of the String will be equal to the
+     * null ('\\0') terminated. The length of the String will be equal to the
      * length of the Array.
      * The data in the Array passed is expected to be encoded in UTF-16. The
      * data is copied into the String without any checks applied<p>
@@ -184,7 +184,7 @@ public:
      * not negative, no sign will be prepended. If integer is equal to 0, a
      * single ASCII 0 will be used (U+0030). The String will match the regex
      * @c (0|-?[1-9][0-9]+).
-     * @param i A 64-bit signed integer.
+     * @param l A 64-bit signed integer.
      */
     String(const slong l);
     /**
@@ -192,7 +192,7 @@ public:
      * represented in base 10. If integer is equal to 0, a  single ASCII 0 will
      * be used (U+0030). The String will match the regex
      * @c (0|[1-9][0-9]+).
-     * @param i A 64-bit unsigned integer.
+     * @param l A 64-bit unsigned integer.
      */
     String(const sulong l);
     /**
@@ -366,17 +366,87 @@ public:
      */
     bool equalsIgnoreCase(const String other) const;
 
+    /**
+     * Checks if the string ends with the given suffix.
+     * @param other A suffix to test for.
+     * @return Wheter the string ends in given suffix.
+     */
     bool endsWith(const String other) const;
+
+    /**
+     * Checks if the string ends with the given prefix.
+     * @param other A prefix to test for.
+     * @return Wheter the string ends in given prefix.
+     */
     bool startsWith(const String other) const;
+
+    /**
+     * Checks if the string contains the given substring.
+     * @param other A substring to test for.
+     * @return Wheter the contains the given substring.
+     */
     bool contains(const String other) const;
 
+    /**
+     * Removes all whitespace characters on the front and on the end of the
+     * String. Whitespace characters are defined in the array @c spacechars.
+     * @return The trimmed string.
+     */
     String trim() const;
+
+    /**
+     * Returns a new String containing all characters from the given index to
+     * the end of the String. The index is 0-based. The length of the new
+     * String will be equal to <code>length() - begin - 1</code>.
+     * @param begin The first index of where to cut the substring.
+     * @return A string containing all characters from the given begin index.
+     * @throw ArrayException if <code>begin >= length()</code>.
+     */
     String substring(std::idx_t begin) const;
+
+    /**
+     * Returns a new String containing all characters from the given begin index
+     * up to and including the given end index. The indices are 0-based. The
+     * length of the new String will be equal to <code>end - begin - 1</code>.
+     * @param begin The first index of where to cut the substring.
+     * @param end The last index to where to cut the substring.
+     * @return A string containing all characters from the given begin index to
+     * the given end index.
+     * @throw ArrayException if <code>begin >= length() || end >= length() ||
+     * begin > end</code>.
+     */
     String substring(std::idx_t begin, std::idx_t end) const;
 
+    /**
+     * Returns the first index from given start index in this String on which
+     * the specified substring occurs. The index is 0-based.
+     * @param substr The substring to search for.
+     * @param start The first index to start looking for.
+     * @return If the substring occurs in this String, then the index of the
+     * first character of that substring is returned, else -1 is returned.
+     * @throw ArrayException if <code>start >= length()</code>
+     */
     sidx_t indexOf(const String substr, idx_t start = 0) const;
+
+    /**
+     * Returns the last index in this String on which the specified substring
+     * occurs. The index is 0-based.
+     * @param substr The substring to search for.
+     * @return If the substring occurs in this String, then the index of the
+     * first character of that substring is returned, else -1 is returned.
+     */
     sidx_t lastIndexOf(const String substr) const;
-    sidx_t lastIndexOf(const String substr, idx_t start) const;
+
+     /**
+     * Returns the last index in this String up to given end index
+     * on which the specified substring  occurs. The index is 0-based.
+     * @param substr The substring to search for.
+     * @param end The last position to search on.
+     * @return If the substring occurs in this String, then the index of the
+     * first character of that substring is returned, else -1 is returned.
+     * @throw ArrayException if <code>end >= length()</code>
+     */
+    sidx_t lastIndexOf(const String substr, idx_t end) const;
 
     String copy() const;
     bool merge(String other) const;
@@ -405,10 +475,25 @@ public:
 
     const String & operator+=(const String rhs) const;
 
+
+    /**
+     * Converts this String to a C-style array of chars. This is equivalent to
+     * <code>utf8()</code>. This conversion operator allows for passing
+     * Strings to functions expecting C-style strings without explicit
+     * conversion.
+     * @return A C-style string according to @c utf8().
+     */
     operator const char *() const;
+
+    /**
+     * Converts this String to a Standard Library string. This will effectively
+     * convert it to a C-style string encoded in UTF-8 and construct a
+     * @c std::string from that.
+     * @return A Standard Library string with the same contents as this String.
+     */
     operator std::string() const;
 
-    //private:
+    private:
     void fromAscii(const char* ascii) const;
     void fromUtf8(const char* unicode) const;
 

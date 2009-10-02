@@ -1,0 +1,16 @@
+digraph G
+{
+  edge [fontname="FreeSans",fontsize="10",labelfontname="FreeSans",labelfontsize="10"];
+  node [fontname="FreeSans",fontsize="10",shape=record];
+  Node1 [label="{Sylph::ForwardIterator\< T, I \>\n|+ _end_reached_\l|+ ForwardIterator()\l+ ForwardIterator()\l+ ~ForwardIterator()\l+ operator*()\l+ operator*()\l+ operator-\>()\l+ operator-\>()\l+ operator++()\l+ operator++()\l+ operator++()\l+ operator++()\l+ operator==()\l+ operator!=()\l+ construct()\l+ current()\l+ next()\l+ hasNext()\l+ equals()\l}",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node2 -> Node1 [dir=back,color="midnightblue",fontsize="10",style="solid",arrowtail="empty",fontname="FreeSans"];
+  Node2 [label="{Sylph::Object\n||}",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_sylph_1_1_object.html",tooltip="The root of all classes."];
+  Node1 -> Node1 [dir=back,color="orange",fontsize="10",style="dashed",label="\<T , I \>",fontname="FreeSans"];
+  Node1 -> Node3 [dir=back,color="orange",fontsize="10",style="dashed",label="\<T , iterator \>",fontname="FreeSans"];
+  Node3 [label="{Sylph::ForwardIterator\< T, iterator \>\n|+ _end_reached_\l|+ ForwardIterator()\l+ ForwardIterator()\l+ ~ForwardIterator()\l+ operator*()\l+ operator*()\l+ operator-\>()\l+ operator-\>()\l+ operator++()\l+ operator++()\l+ operator++()\l+ operator++()\l+ operator==()\l+ operator!=()\l+ construct()\l+ current()\l+ next()\l+ hasNext()\l+ equals()\l}",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_sylph_1_1_forward_iterator.html"];
+  Node1 -> Node1 [dir=back,color="orange",fontsize="10",style="dashed",label="\<T , I \>",fontname="FreeSans"];
+  Node1 -> Node4 [dir=back,color="orange",fontsize="10",style="dashed",label="\<String , iterator \>",fontname="FreeSans"];
+  Node4 [label="{Sylph::ForwardIterator\< String, iterator \>\n|+ _end_reached_\l|+ ForwardIterator()\l+ ForwardIterator()\l+ ~ForwardIterator()\l+ operator*()\l+ operator*()\l+ operator-\>()\l+ operator-\>()\l+ operator++()\l+ operator++()\l+ operator++()\l+ operator++()\l+ operator==()\l+ operator!=()\l+ construct()\l+ current()\l+ next()\l+ hasNext()\l+ equals()\l}",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_sylph_1_1_forward_iterator.html"];
+  Node1 -> Node5 [dir=back,color="orange",fontsize="10",style="dashed",label="\<Entry, iterator\>",fontname="FreeSans"];
+  Node5 [label="{Sylph::ForwardIterator\< Entry, iterator \>\n|+ _end_reached_\l|+ ForwardIterator()\l+ ForwardIterator()\l+ ~ForwardIterator()\l+ operator*()\l+ operator*()\l+ operator-\>()\l+ operator-\>()\l+ operator++()\l+ operator++()\l+ operator++()\l+ operator++()\l+ operator==()\l+ operator!=()\l+ construct()\l+ current()\l+ next()\l+ hasNext()\l+ equals()\l}",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_sylph_1_1_forward_iterator.html"];
+}
