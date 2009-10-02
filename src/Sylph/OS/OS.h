@@ -39,7 +39,7 @@
 #define S_INIT_PARAMS argc, argv, apple
 #else
 #define S_MAIN_PARAMS int argc, char ** argv
-#define S_INIT_PARAMS argc, argv, NULL
+#define S_INIT_PARAMS argc, argv, 0
 #endif
 
 #endif	/* OS_H_ */

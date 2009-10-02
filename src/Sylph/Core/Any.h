@@ -49,9 +49,9 @@ public:
 
     /**
      * Creates a new, empty Any object. The internal pointer will be initialized
-     * to <code>NULL</code>.
+     * to <code>null</code>.
      */
-    Any() : content(NULL) {}
+    Any() : content(null) {}
     template<class T>
     /**
      * Creates a new Any object from an existing object. The object will be
@@ -75,7 +75,7 @@ public:
 
     /**
      * Check if this Any is pointing to something.
-     * @return <i>true</i> if the internal pointer is a <code>NULL</code>
+     * @return <i>true</i> if the internal pointer is a <code>null</code>
      * pointer, <i>false</i> otherwise.
      */
     bool empty() { return !content; }
@@ -92,7 +92,7 @@ public:
      *     // give some error message about the wrong type
      * }
      * </pre>
-     * If the internal data pointer is a <code>NULL</code> pointer, it will
+     * If the internal data pointer is a <code>null</code> pointer, it will
      * return the <code>typeid</code> of <code>void</code>.
      */
     const std::type_info & type() const {
@@ -165,11 +165,11 @@ private:
  * either returns a correct pointer, or completely fails.
  * @param any An Any to convert to an instance of the type it is representing
  * @return A pointer to the internal data of the Any if the conversion was
- * successful, <code>NULL</code> otherwise.
+ * successful, <code>null</code> otherwise.
  */
 template<class T> T * any_cast(Any & any) {
     check_nullptr(any.content);
-    if(any.type() != typeid(T)) return NULL;
+    if(any.type() != typeid(T)) return null;
     else return &(*(static_cast<Any::AnyContainer<T> *>(any.content))->held);
 }
 SYLPH_END_NAMESPACE

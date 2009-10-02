@@ -14,10 +14,10 @@ SYLPH_BEGIN_NAMESPACE
 void DefaultUncaughtExceptionHandler::handle(const Exception& ex) const {
     StringBuffer buf;
     buf << "Uncaught Exception: "<<ex.name()<<": "<<ex.what()<<'\n';
-    if(ex.tracemsg != NULL) {
+    if(ex.tracemsg != null) {
         buf << "Trace messages: \n";
         Exception::TraceMessage * msg = ex.tracemsg;
-        while(msg->next != NULL) {
+        while(msg->next != null) {
             buf << '\t' << String(msg->message) << '\n';
             msg = msg->next;
         }
@@ -28,10 +28,10 @@ void DefaultUncaughtExceptionHandler::handle(const Exception& ex) const {
 void DebugUncaughtExceptionHandler::handle(const Exception& ex) const {
     StringBuffer buf;
     buf << "Uncaught Exception: "<<ex.name()<<": "<<ex.what()<<'\n';
-    if(ex.tracemsg != NULL) {
+    if(ex.tracemsg != null) {
         buf << "Trace messages: \n";
         Exception::TraceMessage * msg = ex.tracemsg;
-        while(msg->next != NULL) {
+        while(msg->next != null) {
             buf << '\t' << String(msg->message) << '\n';
             msg = msg->next;
         }

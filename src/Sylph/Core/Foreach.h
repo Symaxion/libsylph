@@ -43,7 +43,7 @@ struct foreach_container : public foreach_container_base {
 
 template <class T>
 inline T* foreach_pointer(const T&) {
-    return NULL;
+    return null;
 }
 
 template <class T>

@@ -62,12 +62,12 @@ public:
     public:
         typedef RandomAccessIterator<T, iterator> super;
 
-        iterator(bool begin = false, Array<T>* obj = NULL)
+        iterator(bool begin = false, Array<T>* obj = null)
         : super(begin), _obj(obj) {
             _currentIndex = begin ? 0 : (_obj->length - 1);
         }
 
-        iterator(bool begin = false, const Array<T>* obj = NULL)
+        iterator(bool begin = false, const Array<T>* obj = null)
         : super(begin), _obj(const_cast<Array<T>*> (obj)) {
             _currentIndex = begin ? 0 : (_obj->length - 1);
         }
@@ -245,7 +245,7 @@ public:
         data->refcount--;
         if (!data->refcount) {
             delete data;
-            data = NULL;
+            data = null;
         }
     }
 

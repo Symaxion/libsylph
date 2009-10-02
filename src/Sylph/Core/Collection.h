@@ -40,7 +40,7 @@ SYLPH_PUBLIC
  * <p>
  * All "destructive" methods (those not marked as @c const ) are allowed to
  * throw an @c UnsupportedOperationException. @c Collection that do not allow
- * @c NULL (0) elements are allowed to throw @c NullPointerException s .
+ * @c null (0) elements are allowed to throw @c NullPointerException s .
  * @c Collection s that are backed by @c Array s are allowed to throw
  * @c ArrayException s if the underlying @c Array gets an out-of-bounds error.
  */
