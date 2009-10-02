@@ -25,6 +25,8 @@
 #include "Exception.h"
 #include "Array.h"
 
+#include <math.h>
+
 SYLPH_BEGIN_NAMESPACE
 SYLPH_PUBLIC
 
@@ -51,9 +53,46 @@ inline void arraycopy(const Array<T> & src, std::size_t srcPos, Array<T> & dest,
 }
 
 template <typename T, std::size_t N>
-std::size_t carraysize(T(&)[N]) {
+inline std::size_t carraysize(T(&)[N]) {
     return N;
 }
+
+template<class T, class U = T>
+inline U abs(T t) {
+    return t > 0 ? t : -t;
+}
+
+template<>
+inline unsigned int abs<int, unsigned int>(int t) {
+    return t > 0 ? t : -t;
+}
+
+template<>
+inline unsigned long abs<long, unsigned long>(long t) {
+    return t > 0 ? t : -t;
+}
+
+template<>
+inline unsigned short abs<short, unsigned short>(short t) {
+    return t > 0 ? t : -t;
+}
+
+template<class T>
+inline signed char sign(T t) {
+    return t > 0? : t == 0? 0 : -1;
+}
+
+template<>
+inline signed char sign<double>(double t) {
+    return copysign(1.0,t);
+}
+
+
+template<>
+inline signed char sign<float>(float t) {
+    return copysignf(1.0f, t);
+}
+
 
 SYLPH_END_NAMESPACE
 
