@@ -29,7 +29,6 @@
 #include "Sylph/Core/AppType.h"
 #include "Sylph/Core/UncaughtExceptionHandler.h"
 
-#include <iostream>
 
 #ifndef SYLPH_NO_SYLPHMAIN
 #ifdef SYLPH_OS_MACOSX

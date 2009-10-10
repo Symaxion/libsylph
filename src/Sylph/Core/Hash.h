@@ -28,7 +28,7 @@
 
 SYLPH_BEGIN_NAMESPACE
 SYLPH_PUBLIC
-inline sint hash_internal(byte * b, std::size_t len) {
+inline sint hash_internal(const byte * b, std::size_t len) {
    suint hash = 0;
    suint x    = 0;
    suint i    = 0;
@@ -47,8 +47,13 @@ inline sint hash_internal(byte * b, std::size_t len) {
 }
 
 template<class T>
-inline sint Hash(T & t) {
-    return hash_internal(reinterpret_cast<byte*>(&t), sizeof(T));
+inline sint Hash(const T & t) {
+    return hash_internal(reinterpret_cast<const byte*>(&t), sizeof(T));
+}
+
+template<class T>
+inline sint Hash<T*>(const T*& t) {
+    return t == NULL ? 0 : Hash(*t);
 }
 
 template<>
