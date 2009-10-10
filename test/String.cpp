@@ -26,14 +26,13 @@ public:
     void testFromUtf8() {
         String s = "éèçàŒù£";
         Array<uchar> a = s.utf16();
-        CPPUNIT_ASSERT(a[0] == 0x0000);
-        CPPUNIT_ASSERT(a[0] == 0x0000);
-        CPPUNIT_ASSERT(a[0] == 0x0000);
-        CPPUNIT_ASSERT(a[0] == 0x0000);
-        CPPUNIT_ASSERT(a[0] == 0x0000);
-        CPPUNIT_ASSERT(a[0] == 0x0000);
-        CPPUNIT_ASSERT(a[0] == 0x0000);
-        CPPUNIT_ASSERT(a[0] == 0x0000);
+        CPPUNIT_ASSERT(a[0] == 0x00E9);
+        CPPUNIT_ASSERT(a[1] == 0x00E8);
+        CPPUNIT_ASSERT(a[2] == 0x00E7);
+        CPPUNIT_ASSERT(a[3] == 0x00E0);
+        CPPUNIT_ASSERT(a[4] == 0x008C);
+        CPPUNIT_ASSERT(a[5] == 0x00F9);
+        CPPUNIT_ASSERT(a[6] == 0x00A3);
         CPPUNIT_ASSERT(a[7] == 0xF8FF);
     }
 
@@ -132,13 +131,13 @@ public:
 
     void testUnicodeCharAt() {
         String s = "éèçàŒù£";
-        CPPUNIT_ASSERT(s.at(0) == 0x0000);
-        CPPUNIT_ASSERT(s.at(1) == 0x0000);
-        CPPUNIT_ASSERT(s.at(2) == 0x0000);
-        CPPUNIT_ASSERT(s.at(3) == 0x0000);
-        CPPUNIT_ASSERT(s.at(4) == 0x0000);
-        CPPUNIT_ASSERT(s.at(5) == 0x0000);
-        CPPUNIT_ASSERT(s.at(6) == 0x0000);
+        CPPUNIT_ASSERT(s.at(0) == 0x00E9);
+        CPPUNIT_ASSERT(s.at(1) == 0x00E8);
+        CPPUNIT_ASSERT(s.at(2) == 0x00E7);
+        CPPUNIT_ASSERT(s.at(3) == 0x00E0);
+        CPPUNIT_ASSERT(s.at(4) == 0x008C);
+        CPPUNIT_ASSERT(s.at(5) == 0x00F9);
+        CPPUNIT_ASSERT(s.at(6) == 0x00A3);
         CPPUNIT_ASSERT(s.at(7) == 0xF8FF);
     }
 
@@ -176,17 +175,43 @@ public:
 
     void testHashUniqueness() { }
 
-    void testToBool() { }
+    void testToBool() {
+        String s = "true";
+        CPPUNIT_ASSERT(s.boolValue());
+        s = "TrUe";
+        CPPUNIT_ASSERT(s.boolValue());
+        s = "";
+        CPPUNIT_ASSERT(!s.boolValue());
+        s = "false";
+        CPPUNIT_ASSERT(!s.boolValue());
+        s = "ololol";
+        CPPUNIT_ASSERT(!s.boolValue());
+        s = "ééé";
+        CPPUNIT_ASSERT(!s.boolValue());
+    }
 
     void testToInt() { }
 
     void testToFloat() { }
 
-    void testEmptynessBool() { }
+    void testEmptynessBool() {
+        String s = "";
+        CPPUNIT_ASSERT(!s);
+        String t = "hi";
+        CPPUNIT_ASSERT(s);
+    }
 
     void testAppend() { }
 
-    void testMultiply() { }
+    void testMultiply() {
+        String s = "-";
+        String t = s * 5;
+        CPPUNIT_ASSERT(t == "-----");
+
+        String u = "é";
+        String v = u * 5;
+        CPPUNIT_ASSERT(v == "ééééé");
+    }
 
     void testInvoke() { }
 };
