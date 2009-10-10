@@ -86,7 +86,7 @@ public:
      * which means that you can check if the Any can be casted to a type using
      * its <code>typeid</code>. E.g:
      * <pre>
-     * if(myany.type() == typeid(int) {
+     * if(myany.type() == typeid(int)) {
      *     // safe to cast to int here
      * } else {
      *     // give some error message about the wrong type

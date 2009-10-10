@@ -12,7 +12,4 @@ digraph G
   Node5 -> Node4 [dir=back,color="midnightblue",fontsize="10",style="solid",arrowtail="empty",fontname="FreeSans"];
   Node5 [label="{Sylph::BoolConvertible_base\n||# this_type_does_not_support_comparisons()\l# BoolConvertible_base()\l# BoolConvertible_base()\l# operator=()\l# ~BoolConvertible_base()\l}",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_sylph_1_1_bool_convertible__base.html",tooltip="Abstract base class for BoolConvertible."];
   Node3 -> Node5 [dir=back,color="midnightblue",fontsize="10",style="solid",arrowtail="empty",fontname="FreeSans"];
-  Node6 -> Node4 [dir=back,color="orange",fontsize="10",style="dashed",label="\<String\>",fontname="FreeSans"];
-  Node6 [label="{Sylph::BoolConvertible\< T \>\n||+ operator bool_type()\l# ~BoolConvertible()\l}",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_sylph_1_1_bool_convertible.html",tooltip="Implementation of the Safe Bool Idiom."];
-  Node5 -> Node6 [dir=back,color="midnightblue",fontsize="10",style="solid",arrowtail="empty",fontname="FreeSans"];
 }

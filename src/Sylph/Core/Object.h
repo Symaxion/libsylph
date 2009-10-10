@@ -33,8 +33,6 @@
 
 #include <cstddef>
 
-/*< rev Object-1 >*/
-
 /**
  * \namespace Sylph
  * The Sylph namespace contains everything in LibSylph.
@@ -43,9 +41,6 @@
 
 SYLPH_BEGIN_NAMESPACE
 SYLPH_PUBLIC
-
-class SerializationBuffer;
-class DeserializationBuffer;
 
 /**
  * Used for LibSylph's garbage collection. It is passed as a parameter to new,
