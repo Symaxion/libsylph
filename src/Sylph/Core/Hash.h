@@ -52,18 +52,18 @@ inline sint Hash(const T & t) {
 }
 
 template<class T>
-inline sint Hash<T*>(const T*& t) {
-    return t == NULL ? 0 : Hash(*t);
+inline sint Hash(const T* t) {
+    return t == 0 ? 0 : Hash(*t);
 }
 
 template<>
-inline sint Hash<int>(int & i) {
+inline sint Hash<int>(const int & i) {
     return i;
 }
 
 // 'Hashables' provide their own hasing method, usually it's based on this one
 template<>
-inline sint Hash<Hashable>(Hashable & h) {
+inline sint Hash<Hashable>(const Hashable & h) {
     return h.hashCode();
 }
 
