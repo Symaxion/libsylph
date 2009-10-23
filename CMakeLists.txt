@@ -27,4 +27,4 @@ add_subdirectory(deps/binreloc)
 add_subdirectory(src)
 add_subdirectory(test)
 
-install( FILES bin/sylphparams RUNTIME DESTINATION bin)
+install( PROGRAMS bin/sylphparams DESTINATION bin)
