@@ -642,7 +642,7 @@ void String::fromUtf8(const char* unicode) const {
             case 0:
                 if (univalue <= 0x7F) {
                     // ascii
-                    buf << univalue;
+                    buf << (char) univalue;
                 } else if ((univalue | 0x1F) == 0xDF) {
                     // start of 2-byte char
                     bytecount = 1;
@@ -653,21 +653,21 @@ void String::fromUtf8(const char* unicode) const {
                     current = (univalue & 0x0F) << 12;
                 } else if ((univalue | 0x07) == 0xF7) {
                     // start of 4-byte char, unsupported!
-                    buf << 0xFFFD; // That's such a nice ? in a black diamond.
+                    buf << (uchar)0xFFFD; // That's such a nice ? in a black diamond.
                     i += 3;
                 } else {
                     // invalid!
-                    buf << 0xFFFD;
+                    buf << (uchar)0xFFFD;
                 }
                 break;
             case 1:
                 if ((univalue | 0x3F) != 0xBF) {
                     // invalid followup
                     bytecount = 0;
-                    buf << 0xFFFD;
+                    buf << (uchar)0xFFFD;
                 } else {
                     current += (univalue & 0x3F);
-                    buf << current;
+                    buf << (char)current;
                     bytecount = 0;
                 }
                 break;
@@ -676,7 +676,7 @@ void String::fromUtf8(const char* unicode) const {
                     // invalid followup
                     i += bytecount - 1;
                     bytecount = 0;
-                    buf << 0xFFFD;
+                    buf << (uchar)0xFFFD;
                 } else {
                     current += (univalue & 0x3F) << 6;
                     bytecount--;
