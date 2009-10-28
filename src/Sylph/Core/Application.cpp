@@ -5,8 +5,6 @@
 #include <iostream>
 #include <cstdlib>
 
-#include <gc.h>
-
 #include "../OS/LinuxBundleAppSelf.h"
 #include "../OS/LinuxFHSAppSelf.h"
 #include "../OS/MacOSAppSelf.h"

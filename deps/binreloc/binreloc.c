@@ -13,6 +13,9 @@
 #ifndef __BINRELOC_C__
 #define __BINRELOC_C__
 
+// note: always enable for LibSylph
+#define ENABLE_BINRELOC
+
 #ifdef ENABLE_BINRELOC
 	#include <sys/types.h>
 	#include <sys/stat.h>

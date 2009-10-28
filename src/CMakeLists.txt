@@ -13,4 +13,5 @@ target_link_libraries(Sylph ${SYLPH_ALL_DEPS})
 set_target_properties(Sylph PROPERTIES COMPILE_FLAGS "-std=c++0x -Wno-main")
 
 install( TARGETS Sylph LIBRARY DESTINATION lib )
-install( DIRECTORY . DESTINATION include FILES_MATCHING PATTERN "*.h" )
+install( DIRECTORY . DESTINATION include FILES_MATCHING PATTERN "*.h"
+        PATTERN "CMakeFiles" EXCLUDE )
