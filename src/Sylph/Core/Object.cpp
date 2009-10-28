@@ -1,6 +1,6 @@
 #include "Object.h"
 
-#include <gc.h>
+#include <gc/gc.h>
 
 #include <new>
 

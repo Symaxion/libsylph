@@ -17,7 +17,6 @@
 extern "C" {
 #endif /* __cplusplus */
 
-
 /** These error codes can be returned by br_init(), br_init_lib(), gbr_init() or gbr_init_lib(). */
 typedef enum {
 	/** Cannot allocate memory. */
