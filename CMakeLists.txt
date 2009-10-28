@@ -27,4 +27,6 @@ add_subdirectory(deps/binreloc)
 add_subdirectory(src)
 add_subdirectory(test)
 
-install( PROGRAMS bin/sylphparams DESTINATION bin)
+configure_file( bin/sylphparams.in bin/sylphparams )
+
+install( PROGRAMS ${SYLPH_BINARY_DIR}/bin/sylphparams DESTINATION bin )

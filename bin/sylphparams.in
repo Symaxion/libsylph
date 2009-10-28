@@ -21,17 +21,17 @@
 
 params=''
 
-while [ -z "$1" ]; do
+while [[ -n "$1" ]]; do
 
     case "$1" in
         debug)
             params="$params -g -DSYLPH_DEBUG"
             ;;
         cflags)
-            params="$params -std=c++0x -Wall -Wno-main"
+            params="$params -std=c++0x -Wall -Wno-main -I@CMAKE_INSTALL_PREFIX@/include"
             ;;
         libs)
-            params="$params -lSylph"
+            params="$params -L@CMAKE_INSTALL_PREFIX@/lib -lSylph "
             ;;
         *)
             echo "Usage: $0 [debug] [cflags] [libs]" >&2
@@ -40,4 +40,4 @@ while [ -z "$1" ]; do
     esac
     shift
 done
-echo params
+echo $params
