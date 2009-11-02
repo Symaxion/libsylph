@@ -74,6 +74,7 @@ SYLPH_BEGIN_NAMESPACE
  */
 class Exception : public std::exception {
 public:
+
     /**
      * Creates a new Exception. You should not use this directly, instead, use
      * <code>sthrow()</code>
@@ -89,8 +90,7 @@ public:
 
     Exception(const char * r = "", const char * f = "unknown",
             const unsigned int l = 0)
-    throw () : _reason(r), _file(f), _line(l), tracemsg(0) {
-    }
+    throw () : _reason(r), _file(f), _line(l), tracemsg(0) { }
 
     /**
      * Default destructor. Frees the memory used by the trace info. If this
@@ -121,7 +121,7 @@ public:
      * the name yourself. This is purely diagnostic information.
      * @return The name of the class of this Exception.
      */
-    virtual const char* name() const throw() {
+    virtual const char* name() const throw () {
         return "Exception";
     }
 
@@ -133,22 +133,18 @@ public:
      * diagnostic.
      * @param message The message to add in the traceinfo log.
      */
-    void addTraceMessage(const char * message) const throw() {
+    void addTraceMessage(const char * message) const throw () {
         if(tracemsg == NULL) {
-            tracemsg = new TraceMessage{message,NULL};
+            tracemsg = new TraceMessage{message, NULL};
         } else {
             TraceMessage * current = tracemsg;
             while(current->next != NULL) {
                 current = current->next;
             }
-            current->next = new TraceMessage{message,NULL};
+            current->next = new TraceMessage{message, NULL};
         }
     }
 
-    mutable struct TraceMessage {
-        mutable const char * message;
-        mutable TraceMessage * next;
-    } * tracemsg;
 protected:
     const char * _reason;
 public:
@@ -156,6 +152,10 @@ public:
     const char * _file;
     const unsigned int _line;
 #endif
+    mutable struct TraceMessage {
+        mutable const char * message;
+        mutable TraceMessage * next;
+    } * tracemsg;
 };
 
 #define S_CREATE_EXCEPTION(Class) \
