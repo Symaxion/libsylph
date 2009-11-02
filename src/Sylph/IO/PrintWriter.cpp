@@ -39,7 +39,7 @@ PrintWriter& PrintWriter::operator<<(sint i) {
             operator<<(String::fromHex(i, _uc));
             break;
         case OCT:
-            operator<<(String::fromOct(i, _uc));
+            operator<<(String::fromOct(i));
             break;
     }
     return *this;
@@ -54,7 +54,7 @@ PrintWriter& PrintWriter::operator<<(suint i) {
             operator<<(String::fromHex(i, _uc));
             break;
         case OCT:
-            operator<<(String::fromOct(i, _uc));
+            operator<<(String::fromOct(i));
             break;
     }
     return *this;
@@ -69,7 +69,7 @@ PrintWriter& PrintWriter::operator<<(slong l) {
             operator<<(String::fromHex(l, _uc));
             break;
         case OCT:
-            operator<<(String::fromOct(l, _uc));
+            operator<<(String::fromOct(l));
             break;
     }
     return *this;
@@ -84,7 +84,7 @@ PrintWriter& PrintWriter::operator<<(sulong l) {
             operator<<(String::fromHex(l, _uc));
             break;
         case OCT:
-            operator<<(String::fromOct(l, _uc));
+            operator<<(String::fromOct(l));
             break;
     }
     return *this;
