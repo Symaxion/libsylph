@@ -75,6 +75,7 @@ ApplicationSelf * Application::self_app = 0;
                 const String file, unsigned int line) {
         std::cout << appName <<" error: " << reason << "@" << file << ":" <<
            line << std::endl;
+        exit(1);
     }
 
 SYLPH_END_NAMESPACE
