@@ -159,6 +159,9 @@ bool operator<(const File& lhs, const File& rhs);
 inline File operator/(const File& lhs, const File& rhs) {
     return File(lhs) /= rhs;
 }
+inline std::ostream& operator<<(std::ostream& lhs, const File& rhs) {
+    return lhs << rhs.toString();
+}
 
 SYLPH_END_NAMESPACE
 
