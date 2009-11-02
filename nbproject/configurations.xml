@@ -119,13 +119,16 @@
       <itemPath>developers.sh</itemPath>
     </logicalFolder>
   </logicalFolder>
+  <sourceRootList>
+    <Elem>src</Elem>
+  </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
     <conf name="Debug" type="2">
       <toolsSet>
         <developmentServer>localhost</developmentServer>
-        <compilerSet>GNU_C++0x|GNU</compilerSet>
-        <platform>4</platform>
+        <compilerSet>GNU|GNU</compilerSet>
+        <platform>2</platform>
       </toolsSet>
       <compileType>
         <ccTool>

@@ -15,11 +15,11 @@ RANLIB=ranlib
 CC=gcc
 CCC=g++
 CXX=g++
-FC=gfortran
-AS=
+FC=
+AS=as
 
 # Macros
-CND_PLATFORM=GNU_C++0x-MacOSX
+CND_PLATFORM=GNU-Linux-x86
 CND_CONF=Debug
 CND_DISTDIR=dist
 
@@ -75,11 +75,11 @@ LDLIBSOPTIONS=-Llib -lboost -lcord -lgc -lpthread -lbinreloc
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	${MAKE}  -f nbproject/Makefile-Debug.mk dist/Debug/GNU_C++0x-MacOSX/libsylph.dylib
+	${MAKE}  -f nbproject/Makefile-Debug.mk dist/Debug/GNU-Linux-x86/libsylph.so
 
-dist/Debug/GNU_C++0x-MacOSX/libsylph.dylib: ${OBJECTFILES}
-	${MKDIR} -p dist/Debug/GNU_C++0x-MacOSX
-	${LINK.cc} -dynamiclib -install_name libsylph.dylib -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libsylph.dylib -fPIC ${OBJECTFILES} ${LDLIBSOPTIONS} 
+dist/Debug/GNU-Linux-x86/libsylph.so: ${OBJECTFILES}
+	${MKDIR} -p dist/Debug/GNU-Linux-x86
+	${LINK.cc} -shared -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libsylph.so -fPIC ${OBJECTFILES} ${LDLIBSOPTIONS} 
 
 ${OBJECTDIR}/test/String.o: nbproject/Makefile-${CND_CONF}.mk test/String.cpp 
 	${MKDIR} -p ${OBJECTDIR}/test
@@ -212,7 +212,7 @@ ${OBJECTDIR}/src/Sylph/Core/StringBuffer.o: nbproject/Makefile-${CND_CONF}.mk sr
 # Clean Targets
 .clean-conf:
 	${RM} -r build/Debug
-	${RM} dist/Debug/GNU_C++0x-MacOSX/libsylph.dylib
+	${RM} dist/Debug/GNU-Linux-x86/libsylph.so
 
 # Subprojects
 .clean-subprojects:
