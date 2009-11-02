@@ -30,6 +30,7 @@
  * <li>Any.h</li>
  * <li>Array.h</li>
  * <li>Dictionary.h</li>
+ * <li>File.h</li>
  * <li>Primitives.h</li>
  * <li>Range.h</li>
  * <li>String.h</li>
@@ -49,6 +50,7 @@
 #include "Any.h"
 #include "Array.h"
 #include "Dictionary.h"
+#include "File.h"
 #include "Primitives.h"
 #include "Range.h"
 #include "String.h"
