@@ -453,7 +453,7 @@ public:
     int hashCode() const;
 
     static String fromHex(int, bool up);
-    static String fromOct(int, bool up);
+    static String fromOct(int);
     static String fromSci(float, bool up);
     static String fromSci(double, bool up);
 

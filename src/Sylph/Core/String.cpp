@@ -462,13 +462,13 @@ sidx_t String::lastIndexOf(const String substr) const {
 
 sidx_t String::lastIndexOf(const String substr, idx_t start) const {
     if (start < substr.length()) return -1;
-    suint currentidx = substr.length() - 1;
+    suint currentidx = substr.length();
     suint idxexport = 0;
     for (idx_t i = start; i >= 0; i--) {
-        if (this->at(i) == substr.at(currentidx)) {
+        if (this->at(i) == substr.at(currentidx - 1)) {
             currentidx--;
         } else {
-            currentidx = substr.length() - 1;
+            currentidx = substr.length();
         }
         if (currentidx == 0) {
             idxexport = i;
@@ -519,10 +519,10 @@ String String::fromHex(int i, bool up) {
     return toReturn;
 }
 
-String String::fromOct(int i, bool up) {
+String String::fromOct(int i) {
     size_t tmplen = sizeof (i) * 5; // long enough, i presume?
     char * buf = new char[tmplen];
-    sprintf(buf, up ? "%#O" : "%#o", i);
+    sprintf(buf, "%#o", i);
     String toReturn;
     delete toReturn.strdata;
     toReturn.fromAscii(buf);
