@@ -150,7 +150,7 @@ String File::extension() const {
 }
 
 File File::parent() const {
-    idx_t endpos = filenamePos(path, path.length());
+    idx_t endpos = filenamePos(path, path.length()-1);
 
     bool filenameWasSerparator = path.length() && path.at(endpos) == '/';
 
@@ -232,7 +232,7 @@ void File::appendSeparatorIfNeeded() {
             path.at(path.length() - 1) != ':' &&
 #endif
             path.at(path.length() - 1) != '/') {
-        path += '/';
+        path += (uchar)'/';
     }
 }
 
