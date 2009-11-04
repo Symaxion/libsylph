@@ -27,21 +27,15 @@
 #include "Util.h"
 
 #include "Array.h"
-#include "Collection.h"
-#include "PointerManager.h"
 
 #include <cmath>
 #include <initializer_list>
 
-#ifdef SYLPH_DOXYGEN
-#define SYLPH_HASHMAP_RETURN_T(type) type
-#else
-#define SYLPH_HASHMAP_RETURN_T(type) Pointer
-#endif
-
 SYLPH_BEGIN_NAMESPACE
 
-template<class key_, class value_, class hash_ = sint(*)(key_), class equals_ = bool(*)(key_) >
+template<class key_, class value_,
+class hash_ = sint(*)(key_),
+class equals_ = bool(*)(key_, key_) >
 class HashMap : public virtual Object {
 public:
     class Entry;
@@ -50,12 +44,15 @@ public:
     typedef value_ Value;
     typedef hash_ HashFunction;
     typedef equals_ EqualsFunction;
-    typedef std::pair<Key, Value> EntryPair;
-    typedef std::initializer_list<EntryPair> EntryList;
     typedef Entry* EntryPtr;
 public:
 
-    class Entry : public virtual Object {
+    struct EntryHelper {
+        Key key;
+        Value& value;
+    };
+
+    class Entry {
         friend class HashMap;
         friend class iterator;
     public:
@@ -68,7 +65,7 @@ public:
             delete value;
         }
 
-        Key key;
+        const Key key;
         Value * value;
     private:
         Entry * next;
@@ -105,16 +102,16 @@ public:
             return *map->get(key);
         }
 
-        inline Value * operator=(Value * value) {
+        inline Value & operator=(const Value& value) {
             return map->put(key, value);
         }
 
-        bool operator==(const Value * v) {
+        bool operator==(const Value& v) {
             return static_cast<Value*> (*this) != NULL && v != NULL &&
                     static_cast<Value*> (*this) == v;
         }
 
-        bool operator!=(const Value & v) {
+        bool operator!=(const Value& v) {
             return !(*this == v);
         }
 
@@ -128,12 +125,12 @@ public:
     public:
 
         iterator(bool begin = false,
-                HashMap<key_,value_,hash_,equals_>* obj = NULL) : super(begin),
+                HashMap<key_, value_, hash_, equals_>* obj = NULL) : super(begin),
         map(obj) {
             if (begin) {
                 count = map.size();
-                idx = map.buckets->length;
-                currentPointer = *(map.buckets)[idx];
+                idx = map.buckets.length;
+                currentPointer = map.buckets[idx];
                 while (currentPointer == NULL) {
                     currentPointer = *(map.buckets)[--idx];
                 }
@@ -145,15 +142,15 @@ public:
         }
 
         iterator(bool begin = false,
-                const HashMap<key_,value_,hash_,equals_>* obj = NULL) :
-                super(begin),
-                map(const_cast<HashMap<key_,value_,hash_,equals_>*>(obj)) {
+                const HashMap<key_, value_, hash_, equals_>* obj = NULL) :
+        super(begin),
+        map(const_cast<HashMap<key_, value_, hash_, equals_>*> (obj)) {
             if (begin) {
                 count = map.size();
-                idx = map.buckets->length;
-                currentPointer = *(map.buckets)[idx];
+                idx = map.buckets.length;
+                currentPointer = map.buckets[idx];
                 while (currentPointer == NULL) {
-                    currentPointer = *(map.buckets)[--idx];
+                    currentPointer = map.buckets[--idx];
                 }
             } else {
                 count = 0;
@@ -162,14 +159,18 @@ public:
             }
         }
 
+        iterator(const iterator& other) : map(other.map), count(other.count),
+        idx(other.idx), currentPointer(other.currentPointer) {
+        }
+
         typename super::reference current() const {
-            return &currentPointer;
+            return *currentPointer;
         }
 
         void next() const {
             currentPointer = currentPointer->next;
             while (currentPointer == NULL) {
-                currentPointer = *(map.buckets)[--idx];
+                currentPointer = map.buckets[--idx];
             }
         }
 
@@ -177,24 +178,18 @@ public:
             return count > 0;
         }
 
-        bool equals(iterator& other) const {
+        bool equals(const iterator& other) const {
             return map == other.map && ((count == other.count && idx == other.idx
                     && currentPointer == other.currentPointer) || (count ==
                     other.count == 0));
         }
 
-        void copyFrom(iterator& other) const {
-            map = other.map;
-            count = other.count;
-            idx = other.idx;
-            currentPointer = other.currentPointer;
-        }
+
     private:
         HashMap * map;
         mutable idx_t count;
         mutable idx_t idx;
-        EntryPtr currentPointer;
-
+        mutable EntryPtr currentPointer;
     };
 
     S_ITERABLE(Entry)
@@ -213,17 +208,25 @@ public:
         arraycopy(orig.buckets, 0, buckets, 0, orig.buckets.length);
     }
 
-    HashMap(const EntryList & elist) : loadFactor(.75f),
-    _size(0), buckets(11), threshold(11 * loadFactor),
-    hashf(Hash<Key>), equf(Equals<Key>) {
-        for (EntryPair * ptr = elist.begin(); ptr != elist.end(); ptr++) {
-            put(ptr->first, ptr->second);
+    HashMap(const std::initializer_list<EntryHelper>& init) : loadFactor(.75f),
+    _size(init.size()), buckets((init.size() << 1) + 1),
+    threshold(buckets.length*loadFactor), hashf(Hash<Key>),
+    equf(Equals<Key>) {
+        for (EntryHelper* it = init.begin(); it != init.end(); ++it) {
+            put(it->key, &(it->value));
         }
     }
 
     virtual ~HashMap() {
-        for (iterator it = begin(); it != end(); ++it) {
-            delete *it;
+        size_t count = size();
+        idx_t idx = buckets->length;
+        EntryPtr currentPointer = buckets[idx];
+        while (count > 0) {
+            while (currentPointer == NULL) {
+                currentPointer = buckets[--idx];
+            }
+            delete currentPointer;
+            currentPointer = currentPointer->next;
         }
     }
 
@@ -281,11 +284,11 @@ public:
         return NULL;
     }
 
-    SYLPH_HASHMAP_RETURN_T(type) operator[](const Key & key) {
+    Pointer operator[](const Key & key) {
         return Pointer(key, this);
     }
 
-    const SYLPH_HASHMAP_RETURN_T(type) operator[](const Key & key) const {
+    const Pointer operator[](const Key & key) const {
         return Pointer(key, this);
     }
 
@@ -320,7 +323,7 @@ public:
 
     void putAll(const HashMap<Key, Value, HashFunction, EqualsFunction> & map) {
 
-        for(iterator it = map.begin(); it != map.end(); ++it) {
+        for (iterator it = map.begin(); it != map.end(); ++it) {
             this->put((*it)->key, (*it)->value);
         }
     }
@@ -347,17 +350,14 @@ public:
         return NULL;
     }
 
-    HashMap & operator<<(const EntryList& elist) {
-        for (EntryPair * ptr = elist.begin(); ptr != elist.end(); ++ptr) {
-            put(ptr->first, ptr->second);
-        }
+    HashMap & operator<<(const EntryHelper& eh) {
+        put(eh.key, &(eh.value));
         return *this;
     }
 
 private:
     std::size_t _size;
     Array<EntryPtr> buckets;
-    PointerManager pm;
     std::size_t threshold;
     float loadFactor;
     HashFunction hashf;
