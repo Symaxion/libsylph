@@ -34,8 +34,8 @@
 SYLPH_BEGIN_NAMESPACE
 
 template<class key_, class value_,
-class hash_ = sint(*)(key_),
-class equals_ = bool(*)(key_, key_) >
+class hash_ = Hash<key_>,
+class equals_ = Equals<key_> >
 class HashMap : public virtual Object {
 public:
     class Entry;
@@ -74,8 +74,8 @@ public:
     class Pointer : public virtual Object {
     public:
 
-        Pointer(Key & key, HashMap * _map) :
-        key(key), map(map) {
+        Pointer(Key _key, HashMap * _map) :
+        key(_key), map(_map) {
         }
 
         inline operator Value*() {
@@ -86,24 +86,27 @@ public:
             return map->get(key);
         }
 
-        inline Value & operator*() {
+        inline Value& operator*() {
             return *map->get(key);
         }
 
-        inline const Value & operator*() const {
+        inline const Value& operator*() const {
             return *map->get(key);
         }
 
-        inline Value & operator->() {
-            return *map->get(key);
+        inline Value* operator->() {
+            return map->get(key);
         }
 
-        inline const Value & operator->() const {
-            return *map->get(key);
+        inline const Value* operator->() const {
+            return map->get(key);
         }
 
-        inline Value & operator=(const Value& value) {
-            return map->put(key, value);
+        inline void operator=(Value& value) {
+            map->put(key, &value);
+        }
+        inline void operator=(Value value) {
+            map->put(key, new Value(value));
         }
 
         bool operator==(const Value& v) {
@@ -128,11 +131,11 @@ public:
                 HashMap<key_, value_, hash_, equals_>* obj = NULL) : super(begin),
         map(obj) {
             if (begin) {
-                count = map.size();
-                idx = map.buckets.length;
-                currentPointer = map.buckets[idx];
+                count = map->size();
+                idx = map->buckets.length;
+                currentPointer = map->buckets[idx];
                 while (currentPointer == NULL) {
-                    currentPointer = *(map.buckets)[--idx];
+                    currentPointer = map->buckets[--idx];
                 }
             } else {
                 count = 0;
@@ -146,11 +149,11 @@ public:
         super(begin),
         map(const_cast<HashMap<key_, value_, hash_, equals_>*> (obj)) {
             if (begin) {
-                count = map.size();
-                idx = map.buckets.length;
-                currentPointer = map.buckets[idx];
+                count = map->size();
+                idx = map->buckets.length;
+                currentPointer = map->buckets[idx];
                 while (currentPointer == NULL) {
-                    currentPointer = map.buckets[--idx];
+                    currentPointer = map->buckets[--idx];
                 }
             } else {
                 count = 0;
@@ -170,7 +173,7 @@ public:
         void next() const {
             currentPointer = currentPointer->next;
             while (currentPointer == NULL) {
-                currentPointer = map.buckets[--idx];
+                currentPointer = map->buckets[--idx];
             }
         }
 
@@ -181,7 +184,7 @@ public:
         bool equals(const iterator& other) const {
             return map == other.map && ((count == other.count && idx == other.idx
                     && currentPointer == other.currentPointer) || (count ==
-                    other.count == 0));
+                    other.count));
         }
 
 
@@ -197,37 +200,39 @@ public:
 public:
 
     explicit HashMap(std::size_t initialCapacity = 11, float _loadFactor = .75f,
-            HashFunction h = Hash<Key>, EqualsFunction e = Equals<Key>)
-    : loadFactor(_loadFactor), _size(0), buckets(initialCapacity),
-    threshold(initialCapacity*loadFactor), hashf(h), equf(e) {
+            HashFunction h = Hash<Key>(), EqualsFunction e = Equals<Key>())
+            : loadFactor(_loadFactor), _size(0), buckets(initialCapacity),
+            threshold(initialCapacity*loadFactor), hashf(h), equf(e) {
     }
 
     HashMap(const HashMap<Key, Value, HashFunction, EqualsFunction> & orig)
-    : loadFactor(orig.loadFactor), _size(orig._size),
-    threshold(orig.threshold), buckets(orig.buckets.length) {
+            : loadFactor(orig.loadFactor), _size(orig._size),
+            buckets(orig.buckets.length), threshold(orig.threshold),
+            hashf(orig.hashf), equf(orig.equf) {
         arraycopy(orig.buckets, 0, buckets, 0, orig.buckets.length);
     }
 
     HashMap(const std::initializer_list<EntryHelper>& init) : loadFactor(.75f),
     _size(init.size()), buckets((init.size() << 1) + 1),
-    threshold(buckets.length*loadFactor), hashf(Hash<Key>),
-    equf(Equals<Key>) {
+    threshold(buckets.length*loadFactor), hashf(Hash<Key>()),
+    equf(Equals<Key>()) {
         for (EntryHelper* it = init.begin(); it != init.end(); ++it) {
             put(it->key, &(it->value));
         }
     }
 
     virtual ~HashMap() {
-        size_t count = size();
-        idx_t idx = buckets->length;
+        /*size_t count = size();
+        idx_t idx = buckets.length;
         EntryPtr currentPointer = buckets[idx];
         while (count > 0) {
             while (currentPointer == NULL) {
                 currentPointer = buckets[--idx];
             }
-            delete currentPointer;
+            EntryPtr oldPtr = currentPointer;
             currentPointer = currentPointer->next;
-        }
+            //delete oldPtr;
+        }*/
     }
 
     void clear() {
@@ -237,7 +242,7 @@ public:
 
     }
 
-    bool containsKey(const Key & key) const {
+    bool containsKey(Key key) const {
         std::idx_t idx = hash(key);
         EntryPtr entry = buckets[idx];
         while (entry != NULL) {
@@ -262,8 +267,9 @@ public:
         return _size;
     }
 
-    Value * get(const Key & key) {
+    Value * get(Key key) {
         int h = hash(key);
+        std::cout << "Key: " << key <<": "<<h << std::endl;
         EntryPtr entry = buckets[h];
         if (entry == NULL) return NULL;
         while (entry->next != NULL) {
@@ -273,8 +279,9 @@ public:
         return NULL;
     }
 
-    const Value * get(const Key & key) const {
+    const Value * get(Key key) const {
         int h = hash(key);
+        std::cout << "Key: " << key <<": "<<h << std::endl;
         EntryPtr entry = buckets[h];
         if (entry == NULL) return NULL;
         while (entry->next != NULL) {
@@ -284,11 +291,11 @@ public:
         return NULL;
     }
 
-    Pointer operator[](const Key & key) {
+    Pointer operator[](Key key) {
         return Pointer(key, this);
     }
 
-    const Pointer operator[](const Key & key) const {
+    const Pointer operator[](Key key) const {
         return Pointer(key, this);
     }
 
@@ -296,12 +303,13 @@ public:
         return size() == 0;
     }
 
-    Value * put(const Key & key, const Value * value) {
+    Value * put(Key key, Value * value) {
         idx_t idx = hash(key);
+        std::cout << "Key: " << key <<": "<<idx << std::endl;
         EntryPtr entry = buckets[idx];
 
         while (entry != NULL) {
-            if (EqualsFunction(key, entry->key)) {
+            if (equf(key, entry->key)) {
                 Value * val = entry->value;
                 entry->value = val;
                 return val;
@@ -321,14 +329,14 @@ public:
         return NULL;
     }
 
-    void putAll(const HashMap<Key, Value, HashFunction, EqualsFunction> & map) {
+    void putAll(const HashMap<Key, Value, HashFunction, EqualsFunction>& map) {
 
         for (iterator it = map.begin(); it != map.end(); ++it) {
             this->put((*it)->key, (*it)->value);
         }
     }
 
-    Value * remove(const Key & key) {
+    Value * remove(Key key) {
         std::idx_t idx = hash(key);
         EntryPtr entry = buckets[idx];
         EntryPtr last = NULL;
@@ -356,23 +364,23 @@ public:
     }
 
 private:
+    float loadFactor;
     std::size_t _size;
     Array<EntryPtr> buckets;
     std::size_t threshold;
-    float loadFactor;
     HashFunction hashf;
     EqualsFunction equf;
 
-    sint hash(const Key & key) {
-        return key == NULL ? 0 : abs(hashf(key) % buckets.length);
+    sint hash(const Key& key) const {
+        return abs(hashf(key) % buckets.length);
     }
 
     void rehash() {
-        Array<EntryPtr> * oldBuckets = buckets;
+        Array<EntryPtr> oldBuckets = buckets;
 
         int newcapacity = (buckets.length * 2) + 1;
         threshold = (int) (newcapacity * loadFactor);
-        buckets = new Array<EntryPtr > (newcapacity);
+        buckets = Array<EntryPtr > (newcapacity);
 
         for (idx_t i = oldBuckets.length - 1; i >= 0; i--) {
             EntryPtr entry = oldBuckets[i];

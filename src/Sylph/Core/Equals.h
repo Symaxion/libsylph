@@ -28,19 +28,25 @@
 SYLPH_BEGIN_NAMESPACE
 SYLPH_PUBLIC
 template<class T>
-inline bool Equals(T& t1, T& t2) {
-    return t1 == t2;
-}
+struct Equals {
+    inline bool operator()(const T& t1, const T & t2) const {
+        return t1 == t2;
+    }
+};
 
 template<>
-inline bool Equals<char*>(char *& c1, char *& c2) {
-    return std::strcmp(c1, c2) == 0;
-}
+struct Equals<const char*> {
+    inline bool operator()(const char * c1, const char * c2) const {
+        return std::strcmp(c1, c2) == 0;
+    }
+};
 
 template<class T>
-inline bool Equals(T * t1, T * t2) {
-    return *t1 == *t2;
-}
+struct Equals<T*> {
+    inline bool operator()(const T * t1, const T * t2) const {
+        return *t1 == *t2;
+    }
+};
 SYLPH_END_NAMESPACE
 
 #endif	/* EQUALS_H_ */
