@@ -22,7 +22,6 @@
 #define	VECTOR_H_
 
 #include "Array.h"
-#include "Collection.h"
 #include "Util.h"
 #include "Equals.h"
 #include "Iterator.h"
@@ -35,7 +34,7 @@ SYLPH_BEGIN_NAMESPACE
 SYLPH_PUBLIC
 
 template<class T>
-class Vector : public Collection<T> {
+class Vector : public Object {
 public:
     class iterator : public RandomAccessIterator<T, iterator> {
     public:
@@ -166,7 +165,7 @@ public:
         return true;
     }
 
-    bool addAll(const Collection<T> & c) {
+    bool addAll(const Vector<T> & c) {
 	Array<T> ar = c.toArray();
 	sforeach(T& t, ar) {
             this->add(t);
@@ -183,7 +182,7 @@ public:
         return indexOf(t) != -1;
     }
 
-    bool containsAll(const Collection<T> & c) const {
+    bool containsAll(const Vector<T> & c) const {
         std::size_t amount = 0;
 
         sforeach(T & t, c) {
@@ -192,7 +191,7 @@ public:
         return amount == c.size();
     }
 
-    bool operator==(const Collection<T> & c) const {
+    bool operator==(const Vector<T> & c) const {
         Vector * v = dynamic_cast<Vector> (c);
         if (v == NULL) return false;
         else if (this->size() != c.size()) return false;
@@ -206,14 +205,6 @@ public:
 
     bool empty() const {
         return size() == 0;
-    }
-    virtual Collection<T> filter(typename Collection<T>::FilterFunction func,
-      Any& clientData) {
-        Vector<T> toReturn;
-        for(idx_t i = 0; i < size(); i++) {
-            if(func((*this)[i],clientData)) toReturn.push((*this)[i]);
-        }
-        return toReturn;
     }
 
     bool remove(const T & t) {
@@ -230,7 +221,7 @@ public:
                 elementCount - idx);
     }
 
-    bool removeAll(const Collection<T> & c) {
+    bool removeAll(const Vector<T> & c) {
         std::size_t i;
         std::size_t j;
         for (i = 0; i < elementCount; i++) {
@@ -245,7 +236,7 @@ public:
         return true;
     }
 
-    bool retainAll(const Collection<T> & c) {
+    bool retainAll(const Vector<T> & c) {
         std::size_t i;
         std::size_t j;
         for (i = 0; i < elementCount; i++) {
@@ -286,8 +277,9 @@ public:
     }
 
     sidx_t indexOf(T & t, std::idx_t idx = 0) const {
+        static Equals<T> equf;
         for (std::size_t i = idx; i < size(); i++) {
-            if (Equals(*this[i], t)) {
+            if (equf(*this[i], t)) {
                 return i;
             }
         }
@@ -299,9 +291,10 @@ public:
     }
 
     sidx_t lastIndexOf(T & t, std::size_t idx) const {
+        static Equals<T> equf;
         if (idx > size()) sthrow(ArrayException, "Vector out of bounds");
         for (std::size_t i = idx; i >= 0; i--) {
-            if (Equals((*this)[i], t)) {
+            if (equf((*this)[i], t)) {
                 return i;
             }
         }
