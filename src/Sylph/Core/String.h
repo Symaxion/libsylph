@@ -23,8 +23,8 @@
 
 #include "Object.h"
 #include "Comparable.h"
+#include "Hash.h"
 #include "Primitives.h"
-#include "Hashable.h"
 #include "BoolConvertible.h"
 #include "Array.h"
 
@@ -78,7 +78,7 @@ static Array<uchar> spacechars = {' ', '\n', '\r', '\f', '\t', '\013'};
  * Plane (up to U+FFFF) is supported. Future versions may add support for the
  * other planes (up to U+10FFFF). In this case, UTF-32 will be used instead.
  */
-class String : public Hashable, public BoolConvertible<String> {
+class String : public BoolConvertible<String> {
     friend bool operator==(const String lhs, const String rhs);
     friend bool operator<(const String lhs, const String rhs);
     friend String operator+(const String lhs, const String rhs);
@@ -87,6 +87,8 @@ class String : public Hashable, public BoolConvertible<String> {
     friend String operator&(const String(*lhs)(String), const String rhs);
     friend String operator*(const String lhs, const std::size_t len);
     friend std::ostream & operator<<(std::ostream& lhs, const String rhs);
+
+    friend struct Hash<String>;
 
 public:
     /**
@@ -437,7 +439,7 @@ public:
      */
     sidx_t lastIndexOf(const String substr) const;
 
-     /**
+    /**
      * Returns the last index in this String up to given end index
      * on which the specified substring  occurs. The index is 0-based.
      * @param substr The substring to search for.
@@ -450,7 +452,6 @@ public:
 
     String copy() const;
     bool merge(String other) const;
-    int hashCode() const;
 
     static String fromHex(int, bool up);
     static String fromOct(int);
@@ -471,9 +472,9 @@ public:
 
     const String & operator=(const char * orig) const;
     const String & operator=(const std::string & orig) const;
-    const String & operator=(const String orig) const;
+    const String & operator=(const String orig)const;
 
-    const String & operator+=(const String rhs) const;
+    const String & operator+=(const String rhs)const;
 
 
     /**
@@ -493,17 +494,15 @@ public:
      */
     operator std::string() const;
 
-    private:
+private:
     void fromAscii(const char* ascii) const;
     void fromUtf8(const char* unicode) const;
 
     struct Data {
 
-        Data(size_t len) : data(len), refcount(1) {
-        }
+        Data(size_t len) : data(len), refcount(1) { }
 
-        virtual ~Data() {
-        }
+        virtual ~Data() { }
         Array<uchar> data;
         mutable std::size_t refcount;
     };
@@ -512,6 +511,27 @@ public:
 };
 
 bool operator==(const String lhs, const String rhs);
+
+template<>
+struct Hash<String> {
+
+    inline sint operator()(String s) {
+        suint hash = 0;
+        suint x = 0;
+        suint i = 0;
+        uchar * b = s.strdata->data.carray();
+
+        for(i = 0; i < s.length(); b++, i++) {
+            hash = (hash << 4) + (*b);
+            if((x = hash & 0xF0000000L) != 0) {
+                hash ^= (x >> 24);
+            }
+            hash &= ~x;
+        }
+
+        return hash;
+    }
+};
 
 inline bool operator==(const String lhs, const char* rhs) {
     return operator==(lhs, String(rhs));
