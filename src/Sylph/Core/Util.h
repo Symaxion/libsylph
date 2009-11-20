@@ -31,7 +31,7 @@ SYLPH_PUBLIC
 template<class T>
 inline void carraycopy(const T src[], std::size_t srcPos, T dest[],
         std::size_t destPos, std::size_t length) throw (Exception) {
-    for (int i = 0; i < length; i++) {
+    for (size_t i = 0; i < length; i++) {
         dest[destPos + i] = src[srcPos + i];
     }
 }
@@ -45,7 +45,7 @@ inline void arraycopy(const Array<T> & src, std::size_t srcPos, Array<T> & dest,
     if (srcPos + length > srcSize) sthrow(ArrayException, "Source array too short");
     if (destPos + length > destSize) sthrow(ArrayException, "Dest array too short");
 
-    for (int i = 0; i < length; i++) {
+    for (size_t i = 0; i < length; i++) {
         dest[destPos + i] = src[srcPos + i];
     }
 }
