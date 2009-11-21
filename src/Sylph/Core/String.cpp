@@ -491,23 +491,6 @@ bool String::merge(String other) const {
     }
 }
 
-sint String::hashCode() const {
-    suint hash = 0;
-    suint x = 0;
-    suint i = 0;
-    uchar * b = strdata->data.carray();
-
-    for (i = 0; i < length(); b++, i++) {
-        hash = (hash << 4) + (*b);
-        if ((x = hash & 0xF0000000L) != 0) {
-            hash ^= (x >> 24);
-        }
-        hash &= ~x;
-    }
-
-    return hash;
-}
-
 String String::fromHex(int i, bool up) {
     size_t tmplen = sizeof (i) * 5; // long enough, i presume?
     char * buf = new char[tmplen];

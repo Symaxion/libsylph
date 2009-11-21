@@ -81,16 +81,16 @@ public:
         return current();
     }
 
-    reference operator->() {
+    pointer operator->() {
         if (_end_reached_) sthrow(IteratorException,
                 "Tried to dereference an beyond-end iterator");
-        return current();
+        return &current();
     }
 
-    const reference operator->() const {
+    const pointer operator->() const {
         if (_end_reached_) sthrow(IteratorException,
                 "Tried to dereference an beyond-end iterator");
-        return current();
+        return &current();
     }
 
     const I & operator++() const {
