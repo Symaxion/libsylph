@@ -58,6 +58,9 @@ private:
     size_t _length;
 public:
 
+    /**
+     * @todo Write documentation!
+     */
     class iterator : public RandomAccessIterator<T, iterator> {
     public:
         typedef RandomAccessIterator<T, iterator> super;

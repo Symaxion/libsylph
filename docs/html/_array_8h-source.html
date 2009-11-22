@@ -11,6 +11,7 @@
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="classes.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
+      <li><a href="pages.html"><span>Related&nbsp;Pages</span></a></li>
     </ul>
   </div>
   <div class="tabs">
@@ -64,241 +65,241 @@
 <a name="l00058"></a>00058     <span class="keywordtype">size_t</span> _length;
 <a name="l00059"></a>00059 <span class="keyword">public</span>:
 <a name="l00060"></a>00060 
-<a name="l00061"></a>00061     <span class="keyword">class </span>iterator : <span class="keyword">public</span> RandomAccessIterator&lt;T, iterator&gt; {
-<a name="l00062"></a>00062     <span class="keyword">public</span>:
-<a name="l00063"></a>00063         <span class="keyword">typedef</span> RandomAccessIterator&lt;T, iterator&gt; super;
-<a name="l00064"></a>00064 
-<a name="l00065"></a>00065         iterator(<span class="keywordtype">bool</span> begin = <span class="keyword">false</span>, <a class="code" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array&lt;T&gt;</a>* obj = NULL)
-<a name="l00066"></a>00066         : super(begin), _obj(obj) {
-<a name="l00067"></a>00067             _currentIndex = begin ? 0 : (_obj-&gt;length - 1);
-<a name="l00068"></a>00068         }
-<a name="l00069"></a>00069 
-<a name="l00070"></a>00070         iterator(<span class="keywordtype">bool</span> begin = <span class="keyword">false</span>, <span class="keyword">const</span> <a class="code" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array&lt;T&gt;</a>* obj = NULL)
-<a name="l00071"></a>00071         : super(begin), _obj(<span class="keyword">const_cast&lt;</span><a class="code" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array&lt;T&gt;</a>*<span class="keyword">&gt;</span> (obj)) {
-<a name="l00072"></a>00072             _currentIndex = begin ? 0 : (_obj-&gt;length - 1);
-<a name="l00073"></a>00073         }
-<a name="l00074"></a>00074 
-<a name="l00075"></a>00075         <span class="keywordtype">bool</span> equals(<span class="keyword">const</span> iterator&amp; other)<span class="keyword"> const </span>{
-<a name="l00076"></a>00076             <span class="keywordflow">return</span> _currentIndex == other._currentIndex &amp;&amp;
-<a name="l00077"></a>00077                     _obj == other._obj;
-<a name="l00078"></a>00078         }
-<a name="l00079"></a>00079 
-<a name="l00080"></a>00080         iterator(<span class="keyword">const</span> iterator&amp; other) {
-<a name="l00081"></a>00081             _currentIndex = other._currentIndex;
-<a name="l00082"></a>00082             _obj = other._obj;
-<a name="l00083"></a>00083         }
-<a name="l00084"></a>00084 
-<a name="l00085"></a>00085         <span class="keyword">typename</span> super::reference current()<span class="keyword"> const </span>{
-<a name="l00086"></a>00086             <span class="keywordflow">return</span> (*_obj)[_currentIndex];
-<a name="l00087"></a>00087         }
-<a name="l00088"></a>00088 
-<a name="l00089"></a>00089         <span class="keywordtype">bool</span> hasNext()<span class="keyword"> const </span>{
-<a name="l00090"></a>00090             <span class="keywordflow">return</span> _currentIndex &lt; (_obj-&gt;length - 1);
-<a name="l00091"></a>00091         }
-<a name="l00092"></a>00092 
-<a name="l00093"></a>00093         <span class="keywordtype">void</span> next()<span class="keyword"> const </span>{
-<a name="l00094"></a>00094             _currentIndex++;
-<a name="l00095"></a>00095         }
-<a name="l00096"></a>00096 
-<a name="l00097"></a>00097         <span class="keywordtype">bool</span> hasPrevious()<span class="keyword"> const </span>{
-<a name="l00098"></a>00098             <span class="keywordflow">return</span> _currentIndex &gt;= 0;
-<a name="l00099"></a>00099         }
-<a name="l00100"></a>00100 
-<a name="l00101"></a>00101         <span class="keywordtype">void</span> previous()<span class="keyword"> const </span>{
-<a name="l00102"></a>00102             _currentIndex--;
-<a name="l00103"></a>00103         }
-<a name="l00104"></a>00104 
-<a name="l00105"></a>00105         idx_t currentIndex()<span class="keyword"> const </span>{
-<a name="l00106"></a>00106             <span class="keywordflow">return</span> _currentIndex;
-<a name="l00107"></a>00107         }
-<a name="l00108"></a>00108 
-<a name="l00109"></a>00109         <span class="keywordtype">size_t</span> length()<span class="keyword"> const </span>{
-<a name="l00110"></a>00110             <span class="keywordflow">return</span> _obj-&gt;length;
-<a name="l00111"></a>00111         }
-<a name="l00112"></a>00112     <span class="keyword">private</span>:
-<a name="l00113"></a>00113         <span class="keyword">mutable</span> idx_t _currentIndex;
-<a name="l00114"></a>00114         <a class="code" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array&lt;T&gt;</a>* _obj;
-<a name="l00115"></a>00115     };
-<a name="l00116"></a>00116     S_ITERABLE(T)
-<a name="l00117"></a>00117 <span class="keyword">public</span>:
-<a name="l00124"></a>00124     <span class="keyword">typedef</span> bool(*FilterFunction)(<span class="keyword">const</span> T&amp;, <a class="code" href="class_sylph_1_1_any.html" title="Wrapper class for any kind of class.">Any</a>&amp;);
-<a name="l00130"></a><a class="code" href="class_sylph_1_1_array.html#b804d99eeea5dd079706490062f196f2">00130</a>     <span class="keyword">const</span> <span class="keywordtype">size_t</span> &amp; length;
-<a name="l00131"></a>00131 
-<a name="l00140"></a><a class="code" href="class_sylph_1_1_array.html#71636c733d300bf785b95338ebf317ec">00140</a>     <span class="keyword">inline</span> <span class="keyword">static</span> <a class="code" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array&lt;T&gt;</a> <a class="code" href="class_sylph_1_1_array.html#71636c733d300bf785b95338ebf317ec" title="Creates an Array&amp;lt;T&amp;gt; from a pointer to T and a length.">fromPointer</a>(std::size_t length, T * orig) {
-<a name="l00141"></a>00141         <a class="code" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array&lt;T&gt;</a> ar(length);
-<a name="l00142"></a>00142         <span class="keywordflow">for</span> (<span class="keywordtype">int</span> x = 0; x &lt; length; x++)ar[x] = orig[x];
-<a name="l00143"></a>00143         <span class="keywordflow">return</span> ar;
-<a name="l00144"></a>00144     }
-<a name="l00145"></a>00145 <span class="keyword">public</span>:
-<a name="l00146"></a>00146 
-<a name="l00153"></a><a class="code" href="class_sylph_1_1_array.html#d1066e241cbe5ab5531267b786f29c57">00153</a>     <span class="keyword">explicit</span> <a class="code" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a>(std::size_t len = 0) : _length(len), length(_length),
-<a name="l00154"></a>00154             data(new Data(len)) {
-<a name="l00155"></a>00155     }
-<a name="l00156"></a>00156 
-<a name="l00167"></a><a class="code" href="class_sylph_1_1_array.html#dbbad8c487665fd8b4b56a8677d7bca8">00167</a>     <a class="code" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a>(<span class="keyword">const</span> std::initializer_list&lt;T&gt; &amp; il) : _length(il.size()), 
-<a name="l00168"></a>00168             length(_length), data(new Data(_length)) {
-<a name="l00169"></a>00169         <span class="keywordflow">for</span> (idx_t i = 0; i &lt; il.size(); i++) {
-<a name="l00170"></a>00170             data-&gt;_carray[i] = il.begin()[i];
-<a name="l00171"></a>00171         }
-<a name="l00172"></a>00172     }
-<a name="l00173"></a>00173 
-<a name="l00185"></a>00185     <span class="keyword">template</span>&lt;<span class="keywordtype">size_t</span> N&gt;
-<a name="l00186"></a><a class="code" href="class_sylph_1_1_array.html#647dc899b23b352d5fac47883028af0f">00186</a>     <a class="code" href="class_sylph_1_1_array.html#647dc899b23b352d5fac47883028af0f" title="Creates an Array from an existing C-style array.">Array</a>(<span class="keyword">const</span> T(&amp;array)[N]) : _length(N), length(_length), data(new Data(N)) {
-<a name="l00187"></a>00187         <span class="keywordflow">for</span> (idx_t i = 0; i &lt; _length; i++) {
-<a name="l00188"></a>00188             data-&gt;_carray[i] = array[i];
-<a name="l00189"></a>00189         }
-<a name="l00190"></a>00190     }
-<a name="l00191"></a>00191 
-<a name="l00200"></a><a class="code" href="class_sylph_1_1_array.html#928ad30994a7f3cd7a9c26bfde51689d">00200</a>     <a class="code" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a>(<span class="keyword">const</span> <a class="code" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array&lt;T&gt;</a> &amp; other) : _length(other._length), length(_length),
-<a name="l00201"></a>00201         data(other.data){
-<a name="l00202"></a>00202         data-&gt;refcount++;
-<a name="l00203"></a>00203     }
-<a name="l00204"></a>00204 
-<a name="l00216"></a><a class="code" href="class_sylph_1_1_array.html#6272731c791b129188873fd669a2ac93">00216</a>     <a class="code" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a>(<span class="keyword">const</span> basic_range&lt;T&gt; &amp; ran) : _length(ran.last() - ran.first()),
-<a name="l00217"></a>00217     length(_length), data(new Data(length)) {
-<a name="l00218"></a>00218         idx_t idx = 0;
-<a name="l00219"></a>00219         <span class="keywordflow">for</span> (T x = ran.first(); x &lt; ran.last(); x++) {
-<a name="l00220"></a>00220             *<span class="keyword">this</span>[idx] = x;
-<a name="l00221"></a>00221             idx++;
-<a name="l00222"></a>00222         }
-<a name="l00223"></a>00223     }
-<a name="l00224"></a>00224 
-<a name="l00235"></a><a class="code" href="class_sylph_1_1_array.html#3d4530aa8417cbf35b7d67d75abb15a6">00235</a>     <span class="keyword">explicit</span> <a class="code" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a>(<span class="keyword">const</span> T&amp; t) : _length(1), length(_length),
-<a name="l00236"></a>00236             data(new Data(1)) {
-<a name="l00237"></a>00237         data-&gt;_carray[0] = t;
-<a name="l00238"></a>00238     }
-<a name="l00239"></a>00239 
-<a name="l00244"></a><a class="code" href="class_sylph_1_1_array.html#d4a67621f6f91387f75e50e9ef975bf7">00244</a>     <span class="keyword">virtual</span> <a class="code" href="class_sylph_1_1_array.html#d4a67621f6f91387f75e50e9ef975bf7" title="Destructor.">~Array</a>() {
-<a name="l00245"></a>00245         data-&gt;refcount--;
-<a name="l00246"></a>00246         <span class="keywordflow">if</span> (!data-&gt;refcount) {
-<a name="l00247"></a>00247             <span class="keyword">delete</span> data;
-<a name="l00248"></a>00248             data = NULL;
-<a name="l00249"></a>00249         }
-<a name="l00250"></a>00250     }
-<a name="l00251"></a>00251 
-<a name="l00260"></a><a class="code" href="class_sylph_1_1_array.html#ee7eb7bc5e19aef28d7d58a58a0e7abe">00260</a>     <a class="code" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array&lt;T&gt;</a> <a class="code" href="class_sylph_1_1_array.html#ee7eb7bc5e19aef28d7d58a58a0e7abe" title="Creates a copy of this array.">copy</a>()<span class="keyword"> const </span>{
-<a name="l00261"></a>00261         <a class="code" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array&lt;T&gt;</a> toReturn((std::size_t)length);
-<a name="l00262"></a>00262         <span class="keywordflow">for</span> (idx_t i = 0; i &lt; length; i++) {
-<a name="l00263"></a>00263             toReturn[i] = (*this)[i];
-<a name="l00264"></a>00264         }
-<a name="l00265"></a>00265         <span class="keywordflow">return</span> toReturn;
-<a name="l00266"></a>00266     }
-<a name="l00267"></a>00267 
-<a name="l00273"></a><a class="code" href="class_sylph_1_1_array.html#6f4b7a642f0548cd0c6097b54296e14d">00273</a>     T * <a class="code" href="class_sylph_1_1_array.html#6f4b7a642f0548cd0c6097b54296e14d" title="Returns a c-style array representing the contents of this Array.">carray</a>() {
-<a name="l00274"></a>00274         <span class="keywordflow">return</span> data-&gt;_carray;
-<a name="l00275"></a>00275     }
-<a name="l00276"></a>00276 
-<a name="l00283"></a><a class="code" href="class_sylph_1_1_array.html#7710b1d662712fbdf10b7998b2040cd4">00283</a>     <span class="keyword">const</span> T *<a class="code" href="class_sylph_1_1_array.html#7710b1d662712fbdf10b7998b2040cd4" title="Returns a c-style array representing the contents of this Array.">carray</a>()<span class="keyword"> const </span>{
-<a name="l00284"></a>00284         <span class="keywordflow">return</span> data-&gt;_carray;
-<a name="l00285"></a>00285     }
-<a name="l00286"></a>00286 
-<a name="l00295"></a><a class="code" href="class_sylph_1_1_array.html#b46e1eff76bf8750176a840022d85393">00295</a>     <a class="code" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array&lt;T&gt;</a> <a class="code" href="class_sylph_1_1_array.html#b46e1eff76bf8750176a840022d85393" title="This will filter the Array according to a FilterFunction.">filter</a>(FilterFunction func, <a class="code" href="class_sylph_1_1_any.html" title="Wrapper class for any kind of class.">Any</a>&amp; clientData) {
-<a name="l00296"></a>00296         <span class="comment">// I'm terribly sorry but we'll need to iterate twice over the Array...</span>
-<a name="l00297"></a>00297         <span class="keywordtype">size_t</span> newlength;
-<a name="l00298"></a>00298         <span class="keywordflow">for</span> (idx_t i = 0; i &lt; length; i++) {
-<a name="l00299"></a>00299             <span class="keywordflow">if</span> (func(*<span class="keyword">this</span>[i], clientData)) newlength++;
-<a name="l00300"></a>00300         }
-<a name="l00301"></a>00301         <a class="code" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array&lt;T&gt;</a> toReturn(newlength);
-<a name="l00302"></a>00302         idx_t curpos = 0;
-<a name="l00303"></a>00303         <span class="keywordflow">for</span> (idx_t i = 0; i &lt; length; i++) {
-<a name="l00304"></a>00304             <span class="keywordflow">if</span> (func(*<span class="keyword">this</span>[i], clientData)) {
-<a name="l00305"></a>00305                 toReturn[curpos] = *<span class="keyword">this</span>[i];
-<a name="l00306"></a>00306                 curpos++;
-<a name="l00307"></a>00307             }
-<a name="l00308"></a>00308         }
-<a name="l00309"></a>00309         <span class="keywordflow">return</span> toReturn;
-<a name="l00310"></a>00310     }
-<a name="l00311"></a>00311 
-<a name="l00316"></a><a class="code" href="class_sylph_1_1_array.html#e62754e1628aed49d7f514803296ae4b">00316</a>     <span class="keywordtype">void</span> <a class="code" href="class_sylph_1_1_array.html#e62754e1628aed49d7f514803296ae4b" title="Sets every entry in the array to the object returned by that classes&amp;#39; default...">clear</a>() {
-<a name="l00317"></a>00317         <span class="keyword">delete</span> this-&gt;data-&gt;_carray;
-<a name="l00318"></a>00318         this-&gt;data-&gt;_carray = <span class="keyword">new</span> T[this-&gt;data-&gt;_length];
-<a name="l00319"></a>00319     }
-<a name="l00320"></a>00320 
-<a name="l00329"></a><a class="code" href="class_sylph_1_1_array.html#c3e4f7e2ac9074863b6b94856bd79622">00329</a>     <a class="code" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array&lt;T&gt;</a> &amp; <a class="code" href="class_sylph_1_1_array.html#c3e4f7e2ac9074863b6b94856bd79622" title="Swaps the data pointer of this Array with the other Array.">operator=</a>(<span class="keyword">const</span> <a class="code" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array&lt;T&gt;</a> &amp; other) {
-<a name="l00330"></a>00330         <span class="keywordflow">if</span> (this-&gt;data == other.data) <span class="keywordflow">return</span> *<span class="keyword">this</span>;
-<a name="l00331"></a>00331         this-&gt;data-&gt;refcount--;
-<a name="l00332"></a>00332         <span class="keywordflow">if</span> (!this-&gt;data-&gt;refcount) <span class="keyword">delete</span> this-&gt;data;
-<a name="l00333"></a>00333         this-&gt;data = other.data;
-<a name="l00334"></a>00334         this-&gt;_length = other.data-&gt;<a class="code" href="class_sylph_1_1_array.html#b6f17e507810f257f2dfe566e56a7b0d">_length</a>;
-<a name="l00335"></a>00335         data-&gt;refcount++;
-<a name="l00336"></a>00336         <span class="keywordflow">return</span> *<span class="keyword">this</span>;
-<a name="l00337"></a>00337     }
-<a name="l00338"></a>00338 
-<a name="l00347"></a><a class="code" href="class_sylph_1_1_array.html#9976e4486a5e539fc04b39756e67c71e">00347</a>     T &amp; <a class="code" href="class_sylph_1_1_array.html#9976e4486a5e539fc04b39756e67c71e" title="Used for accessing the Array&amp;#39;s contents.">operator[]</a>(std::sidx_t idx) <span class="keywordflow">throw</span> (<a class="code" href="class_sylph_1_1_exception.html" title="This class provides a ready-to-use interface for exception handling.">Exception</a>) {
-<a name="l00348"></a>00348         <span class="keywordflow">if</span> ((idx &lt; (sidx_t)length) &amp;&amp; (idx &gt;= -(sidx_t)length)) {
-<a name="l00349"></a>00349             <span class="keywordflow">return</span> idx &gt;= 0 ? data-&gt;_carray[idx] : data-&gt;_carray[length + idx];
-<a name="l00350"></a>00350         } <span class="keywordflow">else</span> {
-<a name="l00351"></a>00351             sthrow(<a class="code" href="class_sylph_1_1_array_exception.html" title="A generic Exception when an error occurs with an Array.">ArrayException</a>, <span class="stringliteral">"Array overflow"</span>);
-<a name="l00352"></a>00352         }
-<a name="l00353"></a>00353     }
-<a name="l00354"></a>00354 
-<a name="l00362"></a><a class="code" href="class_sylph_1_1_array.html#563bf3a6b4239d551df7bdb6df48a640">00362</a>     <span class="keyword">const</span> T &amp; <a class="code" href="class_sylph_1_1_array.html#563bf3a6b4239d551df7bdb6df48a640" title="This is the const version of T&amp;amp; operator[] .">operator[]</a>(std::sidx_t idx) <span class="keyword">const</span> <span class="keywordflow">throw</span> (<a class="code" href="class_sylph_1_1_exception.html" title="This class provides a ready-to-use interface for exception handling.">Exception</a>) {
-<a name="l00363"></a>00363         <span class="keywordflow">if</span> ((idx &lt; (sidx_t)length) &amp;&amp; (idx &gt;= -(sidx_t)length)) {
-<a name="l00364"></a>00364             <span class="keywordflow">return</span> idx &gt;= 0 ? data-&gt;_carray[idx] : data-&gt;_carray[length + idx];
-<a name="l00365"></a>00365         } <span class="keywordflow">else</span> {
-<a name="l00366"></a>00366             sthrow(<a class="code" href="class_sylph_1_1_array_exception.html" title="A generic Exception when an error occurs with an Array.">ArrayException</a>, <span class="stringliteral">"Array overflow"</span>);
-<a name="l00367"></a>00367         }
-<a name="l00368"></a>00368     }
-<a name="l00369"></a>00369 
-<a name="l00378"></a><a class="code" href="class_sylph_1_1_array.html#c621cb5748d4fef484a83b91a6e72ece">00378</a>     <a class="code" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array&lt;T&gt;</a> <a class="code" href="class_sylph_1_1_array.html#c621cb5748d4fef484a83b91a6e72ece" title="Slices the array and returns the subarray.">operator[]</a>(<span class="keyword">const</span> range &amp; ran) <span class="keywordflow">throw</span> (<a class="code" href="class_sylph_1_1_exception.html" title="This class provides a ready-to-use interface for exception handling.">Exception</a>) {
-<a name="l00379"></a>00379         <span class="keywordflow">if</span> (ran.first() &lt; 0 || ran.last() &gt;= length)
-<a name="l00380"></a>00380             sthrow(<a class="code" href="class_sylph_1_1_array_exception.html" title="A generic Exception when an error occurs with an Array.">ArrayException</a>, <span class="stringliteral">"Array overflow"</span>);
-<a name="l00381"></a>00381 
-<a name="l00382"></a>00382         <a class="code" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array&lt;T&gt;</a> toReturn = <a class="code" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array&lt;T&gt;::fromPointer</a>((ran.last() - ran.first())+1,
-<a name="l00383"></a>00383                 data-&gt;_carray + ran.first());
-<a name="l00384"></a>00384         <span class="keywordflow">return</span> toReturn;
-<a name="l00385"></a>00385     }
-<a name="l00386"></a>00386 
-<a name="l00392"></a><a class="code" href="class_sylph_1_1_array.html#a1221040e56ad8a7ed7e0e4d6af61ea2">00392</a>     <span class="keyword">const</span> <a class="code" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array&lt;T&gt;</a> <a class="code" href="class_sylph_1_1_array.html#a1221040e56ad8a7ed7e0e4d6af61ea2" title="Const-version of operator[](const range &amp;amp;) .">operator[]</a>(<span class="keyword">const</span> range &amp; ran) <span class="keyword">const</span> <span class="keywordflow">throw</span> (<a class="code" href="class_sylph_1_1_exception.html" title="This class provides a ready-to-use interface for exception handling.">Exception</a>) {
-<a name="l00393"></a>00393         <span class="keywordflow">if</span> (ran.first() &lt; 0 || ran.last() &gt;= length)
-<a name="l00394"></a>00394             sthrow(<a class="code" href="class_sylph_1_1_array_exception.html" title="A generic Exception when an error occurs with an Array.">ArrayException</a>, <span class="stringliteral">"Array overflow"</span>);
-<a name="l00395"></a>00395 
-<a name="l00396"></a>00396         <a class="code" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array&lt;T&gt;</a> toReturn = <a class="code" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array&lt;T&gt;::fromPointer</a>((ran.last() - ran.first())+1,
-<a name="l00397"></a>00397                 data-&gt;_carray + ran.first());
-<a name="l00398"></a>00398         <span class="keywordflow">return</span> toReturn;
-<a name="l00399"></a>00399     }
-<a name="l00400"></a>00400 
-<a name="l00401"></a>00401 <span class="preprocessor">#ifndef SYLPH_DOXYGEN</span>
-<a name="l00402"></a>00402 <span class="preprocessor"></span><span class="keyword">protected</span>:
+<a name="l00064"></a><a class="code" href="class_sylph_1_1_array_1_1iterator.html">00064</a>     <span class="keyword">class </span><a class="code" href="class_sylph_1_1_array_1_1iterator.html">iterator</a> : <span class="keyword">public</span> <a class="code" href="class_sylph_1_1_random_access_iterator.html">RandomAccessIterator</a>&lt;T, iterator&gt; {
+<a name="l00065"></a>00065     <span class="keyword">public</span>:
+<a name="l00066"></a>00066         <span class="keyword">typedef</span> <a class="code" href="class_sylph_1_1_random_access_iterator.html">RandomAccessIterator&lt;T, iterator&gt;</a> <a class="code" href="class_sylph_1_1_random_access_iterator.html">super</a>;
+<a name="l00067"></a>00067 
+<a name="l00068"></a>00068         <a class="code" href="class_sylph_1_1_array_1_1iterator.html">iterator</a>(<span class="keywordtype">bool</span> begin = <span class="keyword">false</span>, <a class="code" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array&lt;T&gt;</a>* obj = NULL)
+<a name="l00069"></a>00069         : <a class="code" href="class_sylph_1_1_random_access_iterator.html">super</a>(begin), _obj(obj) {
+<a name="l00070"></a>00070             _currentIndex = begin ? 0 : (_obj-&gt;length - 1);
+<a name="l00071"></a>00071         }
+<a name="l00072"></a>00072 
+<a name="l00073"></a>00073         <a class="code" href="class_sylph_1_1_array_1_1iterator.html">iterator</a>(<span class="keywordtype">bool</span> begin = <span class="keyword">false</span>, <span class="keyword">const</span> <a class="code" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array&lt;T&gt;</a>* obj = NULL)
+<a name="l00074"></a>00074         : <a class="code" href="class_sylph_1_1_random_access_iterator.html">super</a>(begin), _obj(<span class="keyword">const_cast&lt;</span><a class="code" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array&lt;T&gt;</a>*<span class="keyword">&gt;</span> (obj)) {
+<a name="l00075"></a>00075             _currentIndex = begin ? 0 : (_obj-&gt;length - 1);
+<a name="l00076"></a>00076         }
+<a name="l00077"></a>00077 
+<a name="l00078"></a>00078         <span class="keywordtype">bool</span> equals(<span class="keyword">const</span> <a class="code" href="class_sylph_1_1_array_1_1iterator.html">iterator</a>&amp; other)<span class="keyword"> const </span>{
+<a name="l00079"></a>00079             <span class="keywordflow">return</span> _currentIndex == other.<a class="code" href="class_sylph_1_1_array_1_1iterator.html#4b3fb1a13c46d11e230fd9c28e852714">_currentIndex</a> &amp;&amp;
+<a name="l00080"></a>00080                     _obj == other.<a class="code" href="class_sylph_1_1_array_1_1iterator.html#2980aa099921432879e4d084003e84b2">_obj</a>;
+<a name="l00081"></a>00081         }
+<a name="l00082"></a>00082 
+<a name="l00083"></a>00083         <a class="code" href="class_sylph_1_1_array_1_1iterator.html">iterator</a>(<span class="keyword">const</span> <a class="code" href="class_sylph_1_1_array_1_1iterator.html">iterator</a>&amp; other) {
+<a name="l00084"></a>00084             _currentIndex = other.<a class="code" href="class_sylph_1_1_array_1_1iterator.html#4b3fb1a13c46d11e230fd9c28e852714">_currentIndex</a>;
+<a name="l00085"></a>00085             _obj = other.<a class="code" href="class_sylph_1_1_array_1_1iterator.html#2980aa099921432879e4d084003e84b2">_obj</a>;
+<a name="l00086"></a>00086         }
+<a name="l00087"></a>00087 
+<a name="l00088"></a><a class="code" href="class_sylph_1_1_array_1_1iterator.html#22bfc5f805fcbc5917ae279f451e110f">00088</a>         <span class="keyword">typename</span> super::reference <a class="code" href="class_sylph_1_1_array_1_1iterator.html#22bfc5f805fcbc5917ae279f451e110f" title="OVERRIDE THIS METHOD Returns a reference to the object the iterator is currently...">current</a>()<span class="keyword"> const </span>{
+<a name="l00089"></a>00089             <span class="keywordflow">return</span> (*_obj)[_currentIndex];
+<a name="l00090"></a>00090         }
+<a name="l00091"></a>00091 
+<a name="l00092"></a><a class="code" href="class_sylph_1_1_array_1_1iterator.html#6dcf01f3b483a19c96faf73c8c829ce9">00092</a>         <span class="keywordtype">bool</span> <a class="code" href="class_sylph_1_1_array_1_1iterator.html#6dcf01f3b483a19c96faf73c8c829ce9" title="OVERRIDE THIS METHOD Tells wheter there are any objects left in the collection.">hasNext</a>()<span class="keyword"> const </span>{
+<a name="l00093"></a>00093             <span class="keywordflow">return</span> _currentIndex &lt; (_obj-&gt;length - 1);
+<a name="l00094"></a>00094         }
+<a name="l00095"></a>00095 
+<a name="l00096"></a><a class="code" href="class_sylph_1_1_array_1_1iterator.html#3c1145de7f34e2f9ad853369e418be0a">00096</a>         <span class="keywordtype">void</span> <a class="code" href="class_sylph_1_1_array_1_1iterator.html#3c1145de7f34e2f9ad853369e418be0a" title="OVERRIDE THIS METHOD Sets the iterator one place forward.">next</a>()<span class="keyword"> const </span>{
+<a name="l00097"></a>00097             _currentIndex++;
+<a name="l00098"></a>00098         }
+<a name="l00099"></a>00099 
+<a name="l00100"></a>00100         <span class="keywordtype">bool</span> hasPrevious()<span class="keyword"> const </span>{
+<a name="l00101"></a>00101             <span class="keywordflow">return</span> _currentIndex &gt;= 0;
+<a name="l00102"></a>00102         }
+<a name="l00103"></a>00103 
+<a name="l00104"></a>00104         <span class="keywordtype">void</span> previous()<span class="keyword"> const </span>{
+<a name="l00105"></a>00105             _currentIndex--;
+<a name="l00106"></a>00106         }
+<a name="l00107"></a>00107 
+<a name="l00108"></a>00108         idx_t currentIndex()<span class="keyword"> const </span>{
+<a name="l00109"></a>00109             <span class="keywordflow">return</span> _currentIndex;
+<a name="l00110"></a>00110         }
+<a name="l00111"></a>00111 
+<a name="l00112"></a>00112         <span class="keywordtype">size_t</span> length()<span class="keyword"> const </span>{
+<a name="l00113"></a>00113             <span class="keywordflow">return</span> _obj-&gt;length;
+<a name="l00114"></a>00114         }
+<a name="l00115"></a>00115     <span class="keyword">private</span>:
+<a name="l00116"></a>00116         <span class="keyword">mutable</span> idx_t _currentIndex;
+<a name="l00117"></a>00117         Array&lt;T&gt;* _obj;
+<a name="l00118"></a>00118     };
+<a name="l00119"></a>00119     S_ITERABLE(T)
+<a name="l00120"></a>00120 public:
+<a name="l00127"></a>00127     typedef <span class="keywordtype">bool</span>(*FilterFunction)(const T&amp;, Any&amp;);
+<a name="l00133"></a><a class="code" href="class_sylph_1_1_array.html#b804d99eeea5dd079706490062f196f2">00133</a>     const <span class="keywordtype">size_t</span> &amp; length;
+<a name="l00134"></a>00134 
+<a name="l00143"></a><a class="code" href="class_sylph_1_1_array.html#71636c733d300bf785b95338ebf317ec">00143</a>     inline static <a class="code" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a>&lt;T&gt; fromPointer(std::<span class="keywordtype">size_t</span> length, T * orig) {
+<a name="l00144"></a>00144         <a class="code" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array&lt;T&gt;</a> ar(length);
+<a name="l00145"></a>00145         <span class="keywordflow">for</span> (<span class="keywordtype">int</span> x = 0; x &lt; length; x++)ar[x] = orig[x];
+<a name="l00146"></a>00146         <span class="keywordflow">return</span> ar;
+<a name="l00147"></a>00147     }
+<a name="l00148"></a>00148 <span class="keyword">public</span>:
+<a name="l00149"></a>00149 
+<a name="l00156"></a><a class="code" href="class_sylph_1_1_array.html#d1066e241cbe5ab5531267b786f29c57">00156</a>     <span class="keyword">explicit</span> <a class="code" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a>(std::size_t len = 0) : _length(len), length(_length),
+<a name="l00157"></a>00157             data(new Data(len)) {
+<a name="l00158"></a>00158     }
+<a name="l00159"></a>00159 
+<a name="l00170"></a><a class="code" href="class_sylph_1_1_array.html#dbbad8c487665fd8b4b56a8677d7bca8">00170</a>     <a class="code" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a>(<span class="keyword">const</span> std::initializer_list&lt;T&gt; &amp; il) : _length(il.size()), 
+<a name="l00171"></a>00171             length(_length), data(new Data(_length)) {
+<a name="l00172"></a>00172         <span class="keywordflow">for</span> (idx_t i = 0; i &lt; il.size(); i++) {
+<a name="l00173"></a>00173             data-&gt;_carray[i] = il.begin()[i];
+<a name="l00174"></a>00174         }
+<a name="l00175"></a>00175     }
+<a name="l00176"></a>00176 
+<a name="l00188"></a>00188     <span class="keyword">template</span>&lt;<span class="keywordtype">size_t</span> N&gt;
+<a name="l00189"></a><a class="code" href="class_sylph_1_1_array.html#647dc899b23b352d5fac47883028af0f">00189</a>     <a class="code" href="class_sylph_1_1_array.html#647dc899b23b352d5fac47883028af0f" title="Creates an Array from an existing C-style array.">Array</a>(<span class="keyword">const</span> T(&amp;array)[N]) : _length(N), length(_length), data(new Data(N)) {
+<a name="l00190"></a>00190         <span class="keywordflow">for</span> (idx_t i = 0; i &lt; _length; i++) {
+<a name="l00191"></a>00191             data-&gt;_carray[i] = array[i];
+<a name="l00192"></a>00192         }
+<a name="l00193"></a>00193     }
+<a name="l00194"></a>00194 
+<a name="l00203"></a><a class="code" href="class_sylph_1_1_array.html#928ad30994a7f3cd7a9c26bfde51689d">00203</a>     <a class="code" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a>(<span class="keyword">const</span> <a class="code" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array&lt;T&gt;</a> &amp; other) : _length(other._length), length(_length),
+<a name="l00204"></a>00204         data(other.data){
+<a name="l00205"></a>00205         data-&gt;refcount++;
+<a name="l00206"></a>00206     }
+<a name="l00207"></a>00207 
+<a name="l00219"></a><a class="code" href="class_sylph_1_1_array.html#6272731c791b129188873fd669a2ac93">00219</a>     <a class="code" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a>(<span class="keyword">const</span> basic_range&lt;T&gt; &amp; ran) : _length(ran.last() - ran.first()),
+<a name="l00220"></a>00220     length(_length), data(new Data(length)) {
+<a name="l00221"></a>00221         idx_t idx = 0;
+<a name="l00222"></a>00222         <span class="keywordflow">for</span> (T x = ran.first(); x &lt; ran.last(); x++) {
+<a name="l00223"></a>00223             *<span class="keyword">this</span>[idx] = x;
+<a name="l00224"></a>00224             idx++;
+<a name="l00225"></a>00225         }
+<a name="l00226"></a>00226     }
+<a name="l00227"></a>00227 
+<a name="l00238"></a><a class="code" href="class_sylph_1_1_array.html#3d4530aa8417cbf35b7d67d75abb15a6">00238</a>     <span class="keyword">explicit</span> <a class="code" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a>(<span class="keyword">const</span> T&amp; t) : _length(1), length(_length),
+<a name="l00239"></a>00239             data(new Data(1)) {
+<a name="l00240"></a>00240         data-&gt;_carray[0] = t;
+<a name="l00241"></a>00241     }
+<a name="l00242"></a>00242 
+<a name="l00247"></a><a class="code" href="class_sylph_1_1_array.html#d4a67621f6f91387f75e50e9ef975bf7">00247</a>     <span class="keyword">virtual</span> <a class="code" href="class_sylph_1_1_array.html#d4a67621f6f91387f75e50e9ef975bf7" title="Destructor.">~Array</a>() {
+<a name="l00248"></a>00248         data-&gt;refcount--;
+<a name="l00249"></a>00249         <span class="keywordflow">if</span> (!data-&gt;refcount) {
+<a name="l00250"></a>00250             <span class="keyword">delete</span> data;
+<a name="l00251"></a>00251             data = NULL;
+<a name="l00252"></a>00252         }
+<a name="l00253"></a>00253     }
+<a name="l00254"></a>00254 
+<a name="l00263"></a><a class="code" href="class_sylph_1_1_array.html#ee7eb7bc5e19aef28d7d58a58a0e7abe">00263</a>     <a class="code" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array&lt;T&gt;</a> <a class="code" href="class_sylph_1_1_array.html#ee7eb7bc5e19aef28d7d58a58a0e7abe" title="Creates a copy of this array.">copy</a>()<span class="keyword"> const </span>{
+<a name="l00264"></a>00264         <a class="code" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array&lt;T&gt;</a> toReturn((std::size_t)length);
+<a name="l00265"></a>00265         <span class="keywordflow">for</span> (idx_t i = 0; i &lt; length; i++) {
+<a name="l00266"></a>00266             toReturn[i] = (*this)[i];
+<a name="l00267"></a>00267         }
+<a name="l00268"></a>00268         <span class="keywordflow">return</span> toReturn;
+<a name="l00269"></a>00269     }
+<a name="l00270"></a>00270 
+<a name="l00276"></a><a class="code" href="class_sylph_1_1_array.html#6f4b7a642f0548cd0c6097b54296e14d">00276</a>     T * <a class="code" href="class_sylph_1_1_array.html#6f4b7a642f0548cd0c6097b54296e14d" title="Returns a c-style array representing the contents of this Array.">carray</a>() {
+<a name="l00277"></a>00277         <span class="keywordflow">return</span> data-&gt;_carray;
+<a name="l00278"></a>00278     }
+<a name="l00279"></a>00279 
+<a name="l00286"></a><a class="code" href="class_sylph_1_1_array.html#7710b1d662712fbdf10b7998b2040cd4">00286</a>     <span class="keyword">const</span> T *<a class="code" href="class_sylph_1_1_array.html#7710b1d662712fbdf10b7998b2040cd4" title="Returns a c-style array representing the contents of this Array.">carray</a>()<span class="keyword"> const </span>{
+<a name="l00287"></a>00287         <span class="keywordflow">return</span> data-&gt;_carray;
+<a name="l00288"></a>00288     }
+<a name="l00289"></a>00289 
+<a name="l00298"></a><a class="code" href="class_sylph_1_1_array.html#b46e1eff76bf8750176a840022d85393">00298</a>     <a class="code" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array&lt;T&gt;</a> <a class="code" href="class_sylph_1_1_array.html#b46e1eff76bf8750176a840022d85393" title="This will filter the Array according to a FilterFunction.">filter</a>(FilterFunction func, <a class="code" href="class_sylph_1_1_any.html" title="Wrapper class for any kind of class.">Any</a>&amp; clientData) {
+<a name="l00299"></a>00299         <span class="comment">// I'm terribly sorry but we'll need to iterate twice over the Array...</span>
+<a name="l00300"></a>00300         <span class="keywordtype">size_t</span> newlength;
+<a name="l00301"></a>00301         <span class="keywordflow">for</span> (idx_t i = 0; i &lt; length; i++) {
+<a name="l00302"></a>00302             <span class="keywordflow">if</span> (func(*<span class="keyword">this</span>[i], clientData)) newlength++;
+<a name="l00303"></a>00303         }
+<a name="l00304"></a>00304         <a class="code" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array&lt;T&gt;</a> toReturn(newlength);
+<a name="l00305"></a>00305         idx_t curpos = 0;
+<a name="l00306"></a>00306         <span class="keywordflow">for</span> (idx_t i = 0; i &lt; length; i++) {
+<a name="l00307"></a>00307             <span class="keywordflow">if</span> (func(*<span class="keyword">this</span>[i], clientData)) {
+<a name="l00308"></a>00308                 toReturn[curpos] = *<span class="keyword">this</span>[i];
+<a name="l00309"></a>00309                 curpos++;
+<a name="l00310"></a>00310             }
+<a name="l00311"></a>00311         }
+<a name="l00312"></a>00312         <span class="keywordflow">return</span> toReturn;
+<a name="l00313"></a>00313     }
+<a name="l00314"></a>00314 
+<a name="l00319"></a><a class="code" href="class_sylph_1_1_array.html#e62754e1628aed49d7f514803296ae4b">00319</a>     <span class="keywordtype">void</span> <a class="code" href="class_sylph_1_1_array.html#e62754e1628aed49d7f514803296ae4b" title="Sets every entry in the array to the object returned by that classes&amp;#39; default...">clear</a>() {
+<a name="l00320"></a>00320         <span class="keyword">delete</span> this-&gt;data-&gt;_carray;
+<a name="l00321"></a>00321         this-&gt;data-&gt;_carray = <span class="keyword">new</span> T[this-&gt;data-&gt;_length];
+<a name="l00322"></a>00322     }
+<a name="l00323"></a>00323 
+<a name="l00332"></a><a class="code" href="class_sylph_1_1_array.html#c3e4f7e2ac9074863b6b94856bd79622">00332</a>     <a class="code" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array&lt;T&gt;</a> &amp; <a class="code" href="class_sylph_1_1_array.html#c3e4f7e2ac9074863b6b94856bd79622" title="Swaps the data pointer of this Array with the other Array.">operator=</a>(<span class="keyword">const</span> <a class="code" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array&lt;T&gt;</a> &amp; other) {
+<a name="l00333"></a>00333         <span class="keywordflow">if</span> (this-&gt;data == other.data) <span class="keywordflow">return</span> *<span class="keyword">this</span>;
+<a name="l00334"></a>00334         this-&gt;data-&gt;refcount--;
+<a name="l00335"></a>00335         <span class="keywordflow">if</span> (!this-&gt;data-&gt;refcount) <span class="keyword">delete</span> this-&gt;data;
+<a name="l00336"></a>00336         this-&gt;data = other.data;
+<a name="l00337"></a>00337         this-&gt;_length = other.data-&gt;<a class="code" href="class_sylph_1_1_array.html#b6f17e507810f257f2dfe566e56a7b0d">_length</a>;
+<a name="l00338"></a>00338         data-&gt;refcount++;
+<a name="l00339"></a>00339         <span class="keywordflow">return</span> *<span class="keyword">this</span>;
+<a name="l00340"></a>00340     }
+<a name="l00341"></a>00341 
+<a name="l00350"></a><a class="code" href="class_sylph_1_1_array.html#9976e4486a5e539fc04b39756e67c71e">00350</a>     T &amp; <a class="code" href="class_sylph_1_1_array.html#9976e4486a5e539fc04b39756e67c71e" title="Used for accessing the Array&amp;#39;s contents.">operator[]</a>(std::sidx_t idx) <span class="keywordflow">throw</span> (<a class="code" href="class_sylph_1_1_exception.html" title="This class provides a ready-to-use interface for exception handling.">Exception</a>) {
+<a name="l00351"></a>00351         <span class="keywordflow">if</span> ((idx &lt; (sidx_t)length) &amp;&amp; (idx &gt;= -(sidx_t)length)) {
+<a name="l00352"></a>00352             <span class="keywordflow">return</span> idx &gt;= 0 ? data-&gt;_carray[idx] : data-&gt;_carray[length + idx];
+<a name="l00353"></a>00353         } <span class="keywordflow">else</span> {
+<a name="l00354"></a>00354             sthrow(<a class="code" href="class_sylph_1_1_array_exception.html" title="A generic Exception when an error occurs with an Array.">ArrayException</a>, <span class="stringliteral">"Array overflow"</span>);
+<a name="l00355"></a>00355         }
+<a name="l00356"></a>00356     }
+<a name="l00357"></a>00357 
+<a name="l00365"></a><a class="code" href="class_sylph_1_1_array.html#563bf3a6b4239d551df7bdb6df48a640">00365</a>     <span class="keyword">const</span> T &amp; <a class="code" href="class_sylph_1_1_array.html#563bf3a6b4239d551df7bdb6df48a640" title="This is the const version of T&amp;amp; operator[] .">operator[]</a>(std::sidx_t idx) <span class="keyword">const</span> <span class="keywordflow">throw</span> (<a class="code" href="class_sylph_1_1_exception.html" title="This class provides a ready-to-use interface for exception handling.">Exception</a>) {
+<a name="l00366"></a>00366         <span class="keywordflow">if</span> ((idx &lt; (sidx_t)length) &amp;&amp; (idx &gt;= -(sidx_t)length)) {
+<a name="l00367"></a>00367             <span class="keywordflow">return</span> idx &gt;= 0 ? data-&gt;_carray[idx] : data-&gt;_carray[length + idx];
+<a name="l00368"></a>00368         } <span class="keywordflow">else</span> {
+<a name="l00369"></a>00369             sthrow(<a class="code" href="class_sylph_1_1_array_exception.html" title="A generic Exception when an error occurs with an Array.">ArrayException</a>, <span class="stringliteral">"Array overflow"</span>);
+<a name="l00370"></a>00370         }
+<a name="l00371"></a>00371     }
+<a name="l00372"></a>00372 
+<a name="l00381"></a><a class="code" href="class_sylph_1_1_array.html#c621cb5748d4fef484a83b91a6e72ece">00381</a>     <a class="code" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array&lt;T&gt;</a> <a class="code" href="class_sylph_1_1_array.html#c621cb5748d4fef484a83b91a6e72ece" title="Slices the array and returns the subarray.">operator[]</a>(<span class="keyword">const</span> range &amp; ran) <span class="keywordflow">throw</span> (<a class="code" href="class_sylph_1_1_exception.html" title="This class provides a ready-to-use interface for exception handling.">Exception</a>) {
+<a name="l00382"></a>00382         <span class="keywordflow">if</span> (ran.first() &lt; 0 || ran.last() &gt;= length)
+<a name="l00383"></a>00383             sthrow(<a class="code" href="class_sylph_1_1_array_exception.html" title="A generic Exception when an error occurs with an Array.">ArrayException</a>, <span class="stringliteral">"Array overflow"</span>);
+<a name="l00384"></a>00384 
+<a name="l00385"></a>00385         <a class="code" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array&lt;T&gt;</a> toReturn = <a class="code" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array&lt;T&gt;::fromPointer</a>((ran.last() - ran.first())+1,
+<a name="l00386"></a>00386                 data-&gt;_carray + ran.first());
+<a name="l00387"></a>00387         <span class="keywordflow">return</span> toReturn;
+<a name="l00388"></a>00388     }
+<a name="l00389"></a>00389 
+<a name="l00395"></a><a class="code" href="class_sylph_1_1_array.html#a1221040e56ad8a7ed7e0e4d6af61ea2">00395</a>     <span class="keyword">const</span> <a class="code" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array&lt;T&gt;</a> <a class="code" href="class_sylph_1_1_array.html#a1221040e56ad8a7ed7e0e4d6af61ea2" title="Const-version of operator[](const range &amp;amp;) .">operator[]</a>(<span class="keyword">const</span> range &amp; ran) <span class="keyword">const</span> <span class="keywordflow">throw</span> (<a class="code" href="class_sylph_1_1_exception.html" title="This class provides a ready-to-use interface for exception handling.">Exception</a>) {
+<a name="l00396"></a>00396         <span class="keywordflow">if</span> (ran.first() &lt; 0 || ran.last() &gt;= length)
+<a name="l00397"></a>00397             sthrow(<a class="code" href="class_sylph_1_1_array_exception.html" title="A generic Exception when an error occurs with an Array.">ArrayException</a>, <span class="stringliteral">"Array overflow"</span>);
+<a name="l00398"></a>00398 
+<a name="l00399"></a>00399         <a class="code" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array&lt;T&gt;</a> toReturn = <a class="code" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array&lt;T&gt;::fromPointer</a>((ran.last() - ran.first())+1,
+<a name="l00400"></a>00400                 data-&gt;_carray + ran.first());
+<a name="l00401"></a>00401         <span class="keywordflow">return</span> toReturn;
+<a name="l00402"></a>00402     }
 <a name="l00403"></a>00403 
-<a name="l00404"></a>00404     <span class="keyword">struct </span>Data {
-<a name="l00405"></a>00405 
-<a name="l00406"></a>00406         <span class="keyword">explicit</span> Data(<span class="keywordtype">size_t</span> length) : _length(length), 
-<a name="l00407"></a>00407                  _carray(new T[length]()), refcount(1) {
+<a name="l00404"></a>00404 <span class="preprocessor">#ifndef SYLPH_DOXYGEN</span>
+<a name="l00405"></a>00405 <span class="preprocessor"></span><span class="keyword">protected</span>:
+<a name="l00406"></a>00406 
+<a name="l00407"></a>00407     <span class="keyword">struct </span>Data {
 <a name="l00408"></a>00408 
-<a name="l00409"></a>00409         }
-<a name="l00410"></a>00410 
-<a name="l00411"></a>00411         <span class="keyword">virtual</span> ~Data() {
-<a name="l00412"></a>00412             <span class="keyword">delete</span> _carray;
-<a name="l00413"></a>00413         }
-<a name="l00414"></a>00414         <span class="keyword">const</span> <span class="keywordtype">size_t</span> _length;
-<a name="l00415"></a>00415         T * _carray;
-<a name="l00416"></a>00416         suint refcount;
-<a name="l00417"></a>00417     } * data;
-<a name="l00418"></a>00418 <span class="preprocessor">#endif</span>
-<a name="l00419"></a>00419 <span class="preprocessor"></span>};
-<a name="l00420"></a>00420 
-<a name="l00429"></a>00429 <span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;
-<a name="l00430"></a><a class="code" href="namespace_sylph.html#10c329a0349416d794bedf8f67feb25f">00430</a> <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="namespace_sylph.html#10c329a0349416d794bedf8f67feb25f" title="Compares the two Arrays on equality.">operator==</a>(<span class="keyword">const</span> <a class="code" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array&lt;T&gt;</a>&amp; lhs, <span class="keyword">const</span> <a class="code" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array&lt;T&gt;</a>&amp; rhs) {
-<a name="l00431"></a>00431     <span class="keywordflow">if</span>(lhs.<a class="code" href="class_sylph_1_1_array.html#b804d99eeea5dd079706490062f196f2" title="The length of the array.">length</a> == rhs.<a class="code" href="class_sylph_1_1_array.html#b804d99eeea5dd079706490062f196f2" title="The length of the array.">length</a>) {
-<a name="l00432"></a>00432         <span class="keywordflow">for</span>(idx_t i = 0; i &lt; lhs.<a class="code" href="class_sylph_1_1_array.html#b804d99eeea5dd079706490062f196f2" title="The length of the array.">length</a>; i++) {
-<a name="l00433"></a>00433             <span class="keywordflow">if</span>(lhs[i] != rhs[i]) <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00434"></a>00434         }
-<a name="l00435"></a>00435         <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00436"></a>00436     }
-<a name="l00437"></a>00437     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00438"></a>00438 }
-<a name="l00439"></a>00439 
-<a name="l00448"></a>00448 <span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;
-<a name="l00449"></a><a class="code" href="namespace_sylph.html#049ea1ef37b015ca0292637e6d2e3ffa">00449</a> <span class="keyword">inline</span> <span class="keywordtype">bool</span> operator&lt;(const Array&lt;T&gt;&amp; lhs, <span class="keyword">const</span> <a class="code" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array&lt;T&gt;</a>&amp; rhs) {
-<a name="l00450"></a>00450     <span class="keywordflow">return</span> std::lexicographical_compare(&amp;lhs[0], &amp;lhs[lhs.length-1],
-<a name="l00451"></a>00451             &amp;rhs[0], &amp;rhs[rhs.length-1]);
-<a name="l00452"></a>00452 }
-<a name="l00453"></a>00453 
-<a name="l00454"></a>00454 SYLPH_END_NAMESPACE
-<a name="l00455"></a>00455 
-<a name="l00456"></a>00456 <span class="preprocessor">#endif  </span><span class="comment">/* ARRAY_H_ */</span>
-<a name="l00457"></a>00457 
+<a name="l00409"></a>00409         <span class="keyword">explicit</span> Data(<span class="keywordtype">size_t</span> length) : _length(length), 
+<a name="l00410"></a>00410                  _carray(new T[length]()), refcount(1) {
+<a name="l00411"></a>00411 
+<a name="l00412"></a>00412         }
+<a name="l00413"></a>00413 
+<a name="l00414"></a>00414         <span class="keyword">virtual</span> ~Data() {
+<a name="l00415"></a>00415             <span class="keyword">delete</span> _carray;
+<a name="l00416"></a>00416         }
+<a name="l00417"></a>00417         <span class="keyword">const</span> <span class="keywordtype">size_t</span> _length;
+<a name="l00418"></a>00418         T * _carray;
+<a name="l00419"></a>00419         suint refcount;
+<a name="l00420"></a>00420     } * data;
+<a name="l00421"></a>00421 <span class="preprocessor">#endif</span>
+<a name="l00422"></a>00422 <span class="preprocessor"></span>};
+<a name="l00423"></a>00423 
+<a name="l00432"></a>00432 <span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;
+<a name="l00433"></a><a class="code" href="namespace_sylph.html#10c329a0349416d794bedf8f67feb25f">00433</a> <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="namespace_sylph.html#10c329a0349416d794bedf8f67feb25f" title="Compares the two Arrays on equality.">operator==</a>(<span class="keyword">const</span> <a class="code" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array&lt;T&gt;</a>&amp; lhs, <span class="keyword">const</span> <a class="code" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array&lt;T&gt;</a>&amp; rhs) {
+<a name="l00434"></a>00434     <span class="keywordflow">if</span>(lhs.<a class="code" href="class_sylph_1_1_array.html#b804d99eeea5dd079706490062f196f2" title="The length of the array.">length</a> == rhs.<a class="code" href="class_sylph_1_1_array.html#b804d99eeea5dd079706490062f196f2" title="The length of the array.">length</a>) {
+<a name="l00435"></a>00435         <span class="keywordflow">for</span>(idx_t i = 0; i &lt; lhs.<a class="code" href="class_sylph_1_1_array.html#b804d99eeea5dd079706490062f196f2" title="The length of the array.">length</a>; i++) {
+<a name="l00436"></a>00436             <span class="keywordflow">if</span>(lhs[i] != rhs[i]) <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00437"></a>00437         }
+<a name="l00438"></a>00438         <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00439"></a>00439     }
+<a name="l00440"></a>00440     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00441"></a>00441 }
+<a name="l00442"></a>00442 
+<a name="l00451"></a>00451 <span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;
+<a name="l00452"></a><a class="code" href="namespace_sylph.html#049ea1ef37b015ca0292637e6d2e3ffa">00452</a> <span class="keyword">inline</span> <span class="keywordtype">bool</span> operator&lt;(const Array&lt;T&gt;&amp; lhs, <span class="keyword">const</span> <a class="code" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array&lt;T&gt;</a>&amp; rhs) {
+<a name="l00453"></a>00453     <span class="keywordflow">return</span> std::lexicographical_compare(&amp;lhs[0], &amp;lhs[lhs.length-1],
+<a name="l00454"></a>00454             &amp;rhs[0], &amp;rhs[rhs.length-1]);
+<a name="l00455"></a>00455 }
+<a name="l00456"></a>00456 
+<a name="l00457"></a>00457 SYLPH_END_NAMESPACE
+<a name="l00458"></a>00458 
+<a name="l00459"></a>00459 <span class="preprocessor">#endif  </span><span class="comment">/* ARRAY_H_ */</span>
+<a name="l00460"></a>00460 
 </pre></div></div>
 <hr size="1" class="unhidden"><address style="text-align: right;"><small>
 Documentation for LibSylph by Doxygen

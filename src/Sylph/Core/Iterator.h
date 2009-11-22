@@ -188,6 +188,9 @@ public:
     mutable bool _end_reached_;
 };
 
+/**
+ * @todo Write documentation!
+ */
 template<class T, class I>
 class BidirectionalIterator : public ForwardIterator<T, I> {
 public:
@@ -263,6 +266,9 @@ public:
     virtual void previous() const = 0;
 };
 
+/**
+ * @todo Write documentation!
+ */
 template<class T, class I>
 class RandomAccessIterator : public BidirectionalIterator<T, I> {
 public:

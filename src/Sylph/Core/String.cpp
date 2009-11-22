@@ -429,11 +429,11 @@ String String::trim() const {
     return substring(beginct, endct);
 }
 
-String String::substring(idx_t begin) const {
+String String::substring(std::idx_t begin) const {
     return substring(begin, length());
 }
 
-String String::substring(idx_t begin, idx_t end) const {
+String String::substring(std::idx_t begin, std::idx_t end) const {
     return String(strdata->data[range(begin, end)]);
 }
 

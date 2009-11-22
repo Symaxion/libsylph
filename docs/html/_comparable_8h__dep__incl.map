@@ -1,26 +1,24 @@
-<area shape="rect" href="$_array_8h-source.html" title="Sylph/Core/Array.h" alt="" coords="1058,82,1242,109">
-<area shape="rect" href="$_string_8h-source.html" title="Sylph/Core/String.h" alt="" coords="875,232,1062,258">
-<area shape="rect" href="$_ptr_8h-source.html" title="Sylph/Core/Ptr.h" alt="" coords="1266,82,1429,109">
-<area shape="rect" href="$_application_8h-source.html" title="Sylph/Core/Application.h" alt="" coords="853,306,1085,333">
-<area shape="rect" href="$_sylph_8h-source.html" title="Sylph.h" alt="" coords="770,456,850,482">
-<area shape="rect" href="$_common_8h-source.html" title="Sylph/Core/Common.h" alt="" coords="2687,381,2898,408">
-<area shape="rect" href="$_input_stream_8h-source.html" title="Sylph/IO/InputStream.h" alt="" coords="275,306,494,333">
-<area shape="rect" href="$_string_buffer_8h-source.html" title="Sylph/Core/StringBuffer.h" alt="" coords="1338,306,1578,333">
-<area shape="rect" href="$_util_8h-source.html" title="Sylph/Core/Util.h" alt="" coords="1238,157,1403,184">
-<area shape="rect" href="$_hash_map_8h-source.html" title="Sylph/Core/HashMap.h" alt="" coords="1406,232,1619,258">
-<area shape="rect" href="$_vector_8h-source.html" title="Sylph/Core/Vector.h" alt="" coords="1187,232,1382,258">
-<area shape="rect" href="$_output_stream_8h-source.html" title="Sylph/IO/OutputStream.h" alt="" coords="1975,232,2210,258">
-<area shape="rect" href="$_linux_bundle_app_self_8h-source.html" title="Sylph/OS/LinuxBundleAppSelf.h" alt="" coords="2087,381,2375,408">
-<area shape="rect" href="$_linux_f_h_s_app_self_8h-source.html" title="Sylph/OS/LinuxFHSAppSelf.h" alt="" coords="2399,381,2663,408">
-<area shape="rect" href="$_mac_o_s_app_self_8h-source.html" title="Sylph/OS/MacOSAppSelf.h" alt="" coords="847,381,1090,408">
-<area shape="rect" href="$_mac_o_s_f_h_s_app_self_8h-source.html" title="Sylph/OS/MacOSFHSAppSelf.h" alt="" coords="1789,381,2063,408">
-<area shape="rect" href="$_uncaught_exception_handler_8h-source.html" title="Sylph/Core/UncaughtExceptionHandler.h" alt="" coords="1114,381,1477,408">
-<area shape="rect" href="$_file_8h-source.html" title="Sylph/Core/File.h" alt="" coords="663,306,829,333">
-<area shape="rect" href="$_dictionary_8h-source.html" title="Sylph/Core/Dictionary.h" alt="" coords="1602,306,1823,333">
-<area shape="rect" href="$_random_8h-source.html" title="Sylph/Core/Random.h" alt="" coords="1109,306,1314,333">
-<area shape="rect" href="$_print_writer_8h-source.html" title="Sylph/IO/PrintWriter.h" alt="" coords="1847,306,2055,333">
-<area shape="rect" href="$_file_input_stream_8h-source.html" title="Sylph/IO/FileInputStream.h" alt="" coords="525,381,773,408">
-<area shape="rect" href="$_file_output_stream_8h-source.html" title="Sylph/IO/FileOutputStream.h" alt="" coords="1501,381,1765,408">
-<area shape="rect" href="$_byte_buffer_8h-source.html" title="Sylph/Core/ByteBuffer.h" alt="" coords="2678,456,2907,482">
-<area shape="rect" href="$_buffered_input_stream_8h-source.html" title="Sylph/IO/BufferedInputStream.h" alt="" coords="109,381,399,408">
-<area shape="rect" href="$_buffered_output_stream_8h-source.html" title="Sylph/IO/BufferedOutputStream.h" alt="" coords="2130,306,2437,333">
+<area shape="rect" id="node3" href="$_array_8h-source.html" title="Sylph/Core/Array.h" alt="" coords="1282,83,1423,112">
+<area shape="rect" id="node20" href="$_string_8h-source.html" title="Sylph/Core/String.h" alt="" coords="1189,237,1335,267">
+<area shape="rect" id="node5" href="$_application_8h-source.html" title="Sylph/Core/Application.h" alt="" coords="1034,315,1215,344">
+<area shape="rect" id="node17" href="$_sylph_8h-source.html" title="Sylph.h" alt="" coords="1278,469,1345,499">
+<area shape="rect" id="node25" href="$_common_8h.html" title="This file is a shortcut to include many commonly used headers." alt="" coords="1479,392,1647,421">
+<area shape="rect" id="node38" href="$_input_stream_8h-source.html" title="Sylph/IO/InputStream.h" alt="" coords="2255,315,2431,344">
+<area shape="rect" id="node44" href="$_string_buffer_8h-source.html" title="Sylph/Core/StringBuffer.h" alt="" coords="823,315,1010,344">
+<area shape="rect" id="node50" href="$_util_8h-source.html" title="Sylph/Core/Util.h" alt="" coords="1390,160,1521,189">
+<area shape="rect" id="node52" href="$_hash_map_8h-source.html" title="Sylph/Core/HashMap.h" alt="" coords="1535,237,1703,267">
+<area shape="rect" id="node55" href="$_vector_8h-source.html" title="Sylph/Core/Vector.h" alt="" coords="1359,237,1511,267">
+<area shape="rect" id="node59" href="$_output_stream_8h-source.html" title="Sylph/IO/OutputStream.h" alt="" coords="1962,237,2151,267">
+<area shape="rect" id="node7" href="$_linux_bundle_app_self_8h-source.html" title="Sylph/OS/LinuxBundleAppSelf.h" alt="" coords="359,392,586,421">
+<area shape="rect" id="node9" href="$_linux_f_h_s_app_self_8h-source.html" title="Sylph/OS/LinuxFHSAppSelf.h" alt="" coords="610,392,815,421">
+<area shape="rect" id="node11" href="$_mac_o_s_app_self_8h-source.html" title="Sylph/OS/MacOSAppSelf.h" alt="" coords="839,392,1031,421">
+<area shape="rect" id="node13" href="$_mac_o_s_f_h_s_app_self_8h-source.html" title="Sylph/OS/MacOSFHSAppSelf.h" alt="" coords="1055,392,1274,421">
+<area shape="rect" id="node15" href="$_uncaught_exception_handler_8h-source.html" title="Sylph/Core/UncaughtExceptionHandler.h" alt="" coords="45,392,335,421">
+<area shape="rect" id="node23" href="$_file_8h-source.html" title="Sylph/Core/File.h" alt="" coords="1778,315,1909,344">
+<area shape="rect" id="node34" href="$_dictionary_8h-source.html" title="Sylph/Core/Dictionary.h" alt="" coords="1341,315,1517,344">
+<area shape="rect" id="node46" href="$_print_writer_8h-source.html" title="Sylph/IO/PrintWriter.h" alt="" coords="1541,315,1703,344">
+<area shape="rect" id="node30" href="$_file_input_stream_8h-source.html" title="Sylph/IO/FileInputStream.h" alt="" coords="1949,392,2149,421">
+<area shape="rect" id="node32" href="$_file_output_stream_8h-source.html" title="Sylph/IO/FileOutputStream.h" alt="" coords="1711,392,1925,421">
+<area shape="rect" id="node27" href="$_byte_buffer_8h-source.html" title="Sylph/Core/ByteBuffer.h" alt="" coords="2353,469,2537,499">
+<area shape="rect" id="node41" href="$_buffered_input_stream_8h-source.html" title="Sylph/IO/BufferedInputStream.h" alt="" coords="2173,392,2407,421">
+<area shape="rect" id="node62" href="$_buffered_output_stream_8h-source.html" title="Sylph/IO/BufferedOutputStream.h" alt="" coords="1933,315,2181,344">

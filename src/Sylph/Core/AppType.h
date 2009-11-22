@@ -42,8 +42,8 @@ enum AppType {
     S_APPTYPE_BUNDLE, /**< This AppType uses a LibSylph-style 'bundle'
                             *  structure. For more information about LibSylph
                             *  bundles, please see @c LinuxBundleAppSelf
-                            *  or the wiki. This is the default AppType on Linux
-                            * .
+                            *  or the wiki. This is the default AppType on 
+                            *  Linux.
                             */
     S_APPTYPE_FHS, /**< This AppType uses a classic 'FHS'-like structure
                         *   on Linux. The application automatically detects

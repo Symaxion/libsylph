@@ -27,6 +27,10 @@
 
 SYLPH_BEGIN_NAMESPACE
 SYLPH_PUBLIC
+
+/**
+ * @todo Write documentation!
+ */
 template<class T>
 struct Equals {
     inline bool operator()(const T& t1, const T & t2) const {

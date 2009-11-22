@@ -11,6 +11,7 @@
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="classes.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
+      <li><a href="pages.html"><span>Related&nbsp;Pages</span></a></li>
     </ul>
   </div>
   <div class="tabs">
@@ -51,7 +52,7 @@
 <a name="l00031"></a>00031 <span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;
 <a name="l00032"></a>00032 <span class="keyword">inline</span> <span class="keywordtype">void</span> carraycopy(<span class="keyword">const</span> T src[], std::size_t srcPos, T dest[],
 <a name="l00033"></a>00033         std::size_t destPos, std::size_t length) <span class="keywordflow">throw</span> (Exception) {
-<a name="l00034"></a>00034     <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; length; i++) {
+<a name="l00034"></a>00034     <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; length; i++) {
 <a name="l00035"></a>00035         dest[destPos + i] = src[srcPos + i];
 <a name="l00036"></a>00036     }
 <a name="l00037"></a>00037 }
@@ -65,7 +66,7 @@
 <a name="l00045"></a>00045     <span class="keywordflow">if</span> (srcPos + length &gt; srcSize) sthrow(ArrayException, <span class="stringliteral">"Source array too short"</span>);
 <a name="l00046"></a>00046     <span class="keywordflow">if</span> (destPos + length &gt; destSize) sthrow(ArrayException, <span class="stringliteral">"Dest array too short"</span>);
 <a name="l00047"></a>00047 
-<a name="l00048"></a>00048     <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; length; i++) {
+<a name="l00048"></a>00048     <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; length; i++) {
 <a name="l00049"></a>00049         dest[destPos + i] = src[srcPos + i];
 <a name="l00050"></a>00050     }
 <a name="l00051"></a>00051 }

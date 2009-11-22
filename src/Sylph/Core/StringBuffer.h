@@ -30,6 +30,9 @@ SYLPH_BEGIN_NAMESPACE
 SYLPH_PUBLIC
 typedef uint16_t uchar;
 
+/**
+ * @todo Write documentation!
+ */
 class StringBuffer : public virtual Object {
 public:
     explicit StringBuffer(std::size_t len = 16) : buf(len), _length(0) {}

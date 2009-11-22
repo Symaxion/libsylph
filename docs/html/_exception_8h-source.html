@@ -11,6 +11,7 @@
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="classes.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
+      <li><a href="pages.html"><span>Related&nbsp;Pages</span></a></li>
     </ul>
   </div>
   <div class="tabs">
@@ -51,10 +52,10 @@
 <a name="l00031"></a>00031 
 <a name="l00075"></a><a class="code" href="class_sylph_1_1_exception.html">00075</a> <span class="keyword">class </span><a class="code" href="class_sylph_1_1_exception.html" title="This class provides a ready-to-use interface for exception handling.">Exception</a> : <span class="keyword">public</span> std::exception {
 <a name="l00076"></a>00076 <span class="keyword">public</span>:
-<a name="l00090"></a><a class="code" href="class_sylph_1_1_exception.html#0f450c97db441da6ac67dae78388ada5">00090</a>     <a class="code" href="class_sylph_1_1_exception.html" title="This class provides a ready-to-use interface for exception handling.">Exception</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> * r = <span class="stringliteral">""</span>, <span class="keyword">const</span> <span class="keywordtype">char</span> * f = <span class="stringliteral">"unknown"</span>,
-<a name="l00091"></a>00091             <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> l = 0)
-<a name="l00092"></a>00092     throw () : _reason(r), _file(f), _line(l), tracemsg(0) {
-<a name="l00093"></a>00093     }
+<a name="l00077"></a>00077 
+<a name="l00091"></a><a class="code" href="class_sylph_1_1_exception.html#0f450c97db441da6ac67dae78388ada5">00091</a>     <a class="code" href="class_sylph_1_1_exception.html" title="This class provides a ready-to-use interface for exception handling.">Exception</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> * r = <span class="stringliteral">""</span>, <span class="keyword">const</span> <span class="keywordtype">char</span> * f = <span class="stringliteral">"unknown"</span>,
+<a name="l00092"></a>00092             <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> l = 0)
+<a name="l00093"></a>00093     throw () : _reason(r), _file(f), _line(l), tracemsg(0) { }
 <a name="l00094"></a>00094 
 <a name="l00099"></a><a class="code" href="class_sylph_1_1_exception.html#0a1244e5e39e0c176247e7eca88fd6b2">00099</a>     <span class="keyword">virtual</span> <a class="code" href="class_sylph_1_1_exception.html#0a1244e5e39e0c176247e7eca88fd6b2" title="Default destructor.">~Exception</a>() throw () {
 <a name="l00100"></a>00100         TraceMessage * current = tracemsg;
@@ -69,34 +70,34 @@
 <a name="l00114"></a>00114         <span class="keywordflow">return</span> _reason;
 <a name="l00115"></a>00115     }
 <a name="l00116"></a>00116 
-<a name="l00124"></a><a class="code" href="class_sylph_1_1_exception.html#16528d47441cf5ffb45bcdbd119d1661">00124</a>     <span class="keyword">virtual</span> <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="class_sylph_1_1_exception.html#16528d47441cf5ffb45bcdbd119d1661" title="Returns the class name of this Exception.">name</a>() <span class="keyword">const</span> throw() {
+<a name="l00124"></a><a class="code" href="class_sylph_1_1_exception.html#16528d47441cf5ffb45bcdbd119d1661">00124</a>     <span class="keyword">virtual</span> <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="class_sylph_1_1_exception.html#16528d47441cf5ffb45bcdbd119d1661" title="Returns the class name of this Exception.">name</a>() <span class="keyword">const</span> throw () {
 <a name="l00125"></a>00125         <span class="keywordflow">return</span> <span class="stringliteral">"Exception"</span>;
 <a name="l00126"></a>00126     }
 <a name="l00127"></a>00127 
-<a name="l00136"></a><a class="code" href="class_sylph_1_1_exception.html#1038e3fb0e96d4733beb0ea03c4aad04">00136</a>     <span class="keywordtype">void</span> <a class="code" href="class_sylph_1_1_exception.html#1038e3fb0e96d4733beb0ea03c4aad04" title="This function adds a message to the trace information inside this Exception.">addTraceMessage</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> * message) <span class="keyword">const</span> <span class="keywordflow">throw</span>() {
+<a name="l00136"></a><a class="code" href="class_sylph_1_1_exception.html#1038e3fb0e96d4733beb0ea03c4aad04">00136</a>     <span class="keywordtype">void</span> <a class="code" href="class_sylph_1_1_exception.html#1038e3fb0e96d4733beb0ea03c4aad04" title="This function adds a message to the trace information inside this Exception.">addTraceMessage</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> * message) <span class="keyword">const</span> <span class="keywordflow">throw</span> () {
 <a name="l00137"></a>00137         <span class="keywordflow">if</span>(tracemsg == NULL) {
-<a name="l00138"></a>00138             tracemsg = <span class="keyword">new</span> TraceMessage{message,NULL};
+<a name="l00138"></a>00138             tracemsg = <span class="keyword">new</span> TraceMessage{message, NULL};
 <a name="l00139"></a>00139         } <span class="keywordflow">else</span> {
 <a name="l00140"></a>00140             TraceMessage * current = tracemsg;
 <a name="l00141"></a>00141             <span class="keywordflow">while</span>(current-&gt;next != NULL) {
 <a name="l00142"></a>00142                 current = current-&gt;next;
 <a name="l00143"></a>00143             }
-<a name="l00144"></a>00144             current-&gt;next = <span class="keyword">new</span> TraceMessage{message,NULL};
+<a name="l00144"></a>00144             current-&gt;next = <span class="keyword">new</span> TraceMessage{message, NULL};
 <a name="l00145"></a>00145         }
 <a name="l00146"></a>00146     }
 <a name="l00147"></a>00147 
-<a name="l00148"></a>00148     <span class="keyword">mutable</span> <span class="keyword">struct </span>TraceMessage {
-<a name="l00149"></a>00149         <span class="keyword">mutable</span> <span class="keyword">const</span> <span class="keywordtype">char</span> * message;
-<a name="l00150"></a>00150         <span class="keyword">mutable</span> TraceMessage * next;
-<a name="l00151"></a>00151     } * tracemsg;
-<a name="l00152"></a>00152 <span class="keyword">protected</span>:
-<a name="l00153"></a>00153     <span class="keyword">const</span> <span class="keywordtype">char</span> * _reason;
-<a name="l00154"></a>00154 <span class="keyword">public</span>:
-<a name="l00155"></a>00155 <span class="preprocessor">#ifndef SYLPH_DOXYGEN</span>
-<a name="l00156"></a>00156 <span class="preprocessor"></span>    <span class="keyword">const</span> <span class="keywordtype">char</span> * _file;
-<a name="l00157"></a>00157     <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> _line;
-<a name="l00158"></a>00158 <span class="preprocessor">#endif</span>
-<a name="l00159"></a>00159 <span class="preprocessor"></span>};
+<a name="l00148"></a>00148 <span class="keyword">protected</span>:
+<a name="l00149"></a>00149     <span class="keyword">const</span> <span class="keywordtype">char</span> * _reason;
+<a name="l00150"></a>00150 <span class="keyword">public</span>:
+<a name="l00151"></a>00151 <span class="preprocessor">#ifndef SYLPH_DOXYGEN</span>
+<a name="l00152"></a>00152 <span class="preprocessor"></span>    <span class="keyword">const</span> <span class="keywordtype">char</span> * _file;
+<a name="l00153"></a>00153     <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> _line;
+<a name="l00154"></a>00154 <span class="preprocessor">#endif</span>
+<a name="l00155"></a>00155 <span class="preprocessor"></span>    <span class="keyword">mutable</span> <span class="keyword">struct </span>TraceMessage {
+<a name="l00156"></a>00156         <span class="keyword">mutable</span> <span class="keyword">const</span> <span class="keywordtype">char</span> * message;
+<a name="l00157"></a>00157         <span class="keyword">mutable</span> TraceMessage * next;
+<a name="l00158"></a>00158     } * tracemsg;
+<a name="l00159"></a>00159 };
 <a name="l00160"></a>00160 
 <a name="l00161"></a>00161 <span class="preprocessor">#define S_CREATE_EXCEPTION(Class) \</span>
 <a name="l00162"></a>00162 <span class="preprocessor">class Class : public ::Sylph::Exception { \</span>

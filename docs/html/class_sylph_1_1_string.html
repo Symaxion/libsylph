@@ -11,6 +11,7 @@
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="classes.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
+      <li><a href="pages.html"><span>Related&nbsp;Pages</span></a></li>
     </ul>
   </div>
   <div class="tabs">
@@ -24,7 +25,7 @@
   </div>
 </div>
 <div class="contents">
-<h1>Sylph::String Class Reference</h1><!-- doxytag: class="Sylph::String" --><!-- doxytag: inherits="Sylph::Hashable,BoolConvertible&lt; String &gt;" -->The <a class="el" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a> class represents character strings.  
+<h1>Sylph::String Class Reference</h1><!-- doxytag: class="Sylph::String" --><!-- doxytag: inherits="BoolConvertible&lt; String &gt;" -->The <a class="el" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a> class represents character strings.  
 <a href="#_details">More...</a>
 <p>
 <code>#include &lt;<a class="el" href="_string_8h-source.html">Sylph/Core/String.h</a>&gt;</code>
@@ -32,16 +33,10 @@
 <div class="dynheader">
 Inheritance diagram for Sylph::String:</div>
 <div class="dynsection">
-
-<p><center><img src="class_sylph_1_1_string.png" usemap="#Sylph::String_map" border="0" alt=""></center>
-<map name="Sylph::String_map">
-<area href="class_sylph_1_1_hashable.html" alt="Sylph::Hashable" shape="rect" coords="0,112,197,136">
-<area href="class_sylph_1_1_bool_convertible.html" alt="Sylph::BoolConvertible< String >" shape="rect" coords="207,112,404,136">
-<area href="class_sylph_1_1_object.html" alt="Sylph::Object" shape="rect" coords="0,56,197,80">
-<area href="class_sylph_1_1_bool_convertible__base.html" alt="Sylph::BoolConvertible_base" shape="rect" coords="207,56,404,80">
-<area href="class_sylph_1_1_object.html" alt="Sylph::Object" shape="rect" coords="207,0,404,24">
-</map>
-</div>
+<p><center><img src="class_sylph_1_1_string__inherit__graph.png" border="0" usemap="#_sylph_1_1_string__inherit__map" alt="Inheritance graph"></center>
+<map name="_sylph_1_1_string__inherit__map">
+<area shape="rect" id="node2" href="class_sylph_1_1_bool_convertible.html" title="Sylph::BoolConvertible\&lt; String \&gt;" alt="" coords="5,160,248,189"><area shape="rect" id="node4" href="class_sylph_1_1_bool_convertible__base.html" title="Abstract base class for BoolConvertible." alt="" coords="21,83,232,112"><area shape="rect" id="node6" href="class_sylph_1_1_object.html" title="The root of all classes." alt="" coords="71,5,183,35"></map>
+<center><font size="2">[<a href="graph_legend.html">legend</a>]</font></center></div>
 
 <p>
 <a href="class_sylph_1_1_string-members.html">List of all members.</a><table border="0" cellpadding="0" cellspacing="0">
@@ -140,9 +135,6 @@ Inheritance diagram for Sylph::String:</div>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">sidx_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sylph_1_1_string.html#d73112dd65d5570b927dc3ac2889b6a4">lastIndexOf</a> (const <a class="el" href="class_sylph_1_1_string.html">String</a> substr, idx_t end) const </td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Returns the last index in this <a class="el" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a> up to given end index on which the specified substring occurs.  <a href="#d73112dd65d5570b927dc3ac2889b6a4"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sylph_1_1_string.html#b613fa35524314b56a089ecb4c7d1c7f">hashCode</a> () const </td></tr>
-
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Calculates an unique hash code for this object.  <a href="#b613fa35524314b56a089ecb4c7d1c7f"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sylph_1_1_string.html#7c6cd45258aa88b36de81806d3ba8e83">operator const char *</a> () const </td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Converts this <a class="el" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a> to a C-style array of chars.  <a href="#7c6cd45258aa88b36de81806d3ba8e83"></a><br></td></tr>
@@ -154,7 +146,7 @@ Inheritance diagram for Sylph::String:</div>
 The <a class="el" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a> class represents character strings. 
 <p>
 All strings used in LibSylph are instances of this class. <p>
-Strings are constant, their value can not be changed after they are created. StringBuffer implements a mutable string. The copy constructor only copies a pointer to the actual internal data, making Strings trivial to copy, they should therefore be treated as built-in types, such as ints and floats. <p>
+Strings are constant, their value can not be changed after they are created. <a class="el" href="class_sylph_1_1_string_buffer.html">StringBuffer</a> implements a mutable string. The copy constructor only copies a pointer to the actual internal data, making Strings trivial to copy, they should therefore be treated as built-in types, such as ints and floats. <p>
 The class <a class="el" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a> includes methods for examining individual characters of the sequence, for comparing strings, for searching strings, for extracting substrings, and for creating a copy of a string with all characters translated to uppercase or to lowercase. Case mapping relies heavily on the information provided by the Unicode Consortium's Unicode 5.1 specification. The specification's UnicodeData.txt and SpecialCasing.txt files are used extensively to provide case mapping. For specific details, please refer to the ICU library documentation.<p>
 Strings are encoded internally in UTF-16, but only the Basic Multilinguar Plane (up to U+FFFF) is supported. Future versions may add support for the other planes (up to U+10FFFF). In this case, UTF-32 will be used instead. <hr><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" name="2258d9abda8b9acf4ac8713a2d95eb4c"></a><!-- doxytag: member="Sylph::String::String" ref="2258d9abda8b9acf4ac8713a2d95eb4c" args="()" -->
@@ -230,7 +222,7 @@ An example: <pre><a class="el" href="class_sylph_1_1_string.html" title="The Str
 Creates a <a class="el" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a> from an <a class="el" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a> of uchars. 
 <p>
 The <a class="el" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a> passed must not be null ('\0') terminated. The length of the <a class="el" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a> will be equal to the length of the <a class="el" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a>. The data in the <a class="el" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a> passed is expected to be encoded in UTF-16. The data is copied into the <a class="el" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a> without any checks applied<p>
-The original <a class="el" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a> will not be modified. Please note that for construction of a 'mutable' string, StringBuffer is prefered. <dl compact><dt><b>Parameters:</b></dt><dd>
+The original <a class="el" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a> will not be modified. Please note that for construction of a 'mutable' string, <a class="el" href="class_sylph_1_1_string_buffer.html">StringBuffer</a> is prefered. <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>orig</em>&nbsp;</td><td>An <a class="el" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a> containing the values to be copied into this string </td></tr>
   </table>
@@ -710,30 +702,6 @@ This is the same as <code>s.toLowerCase() == t.toLowerCase()</code>. <dl compact
 
 </div>
 </div><p>
-<a class="anchor" name="b613fa35524314b56a089ecb4c7d1c7f"></a><!-- doxytag: member="Sylph::String::hashCode" ref="b613fa35524314b56a089ecb4c7d1c7f" args="() const " -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">sint Sylph::String::hashCode           </td>
-          <td>(</td>
-          <td class="paramname">          </td>
-          <td>&nbsp;)&nbsp;</td>
-          <td> const<code> [virtual]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-Calculates an unique hash code for this object. 
-<p>
-The returned value should be indentical for equal classes. It is possible to have the same hash code for non-equal classes, returning a constant number is a valid implementation of this function. However, the hash code is used for optimalisation in several collection classes, therefore, having this function return a generally unique hash code (such that <code>x != y</code> almost certainly guarantees <code>x.hashCode() != y.hashCode()</code> will make access times for those collection classes much faster. <dl class="return" compact><dt><b>Returns:</b></dt><dd>A generally unique hash value for this class. </dd></dl>
-
-<p>Implements <a class="el" href="class_sylph_1_1_hashable.html#ca57ac3aca4acef074ec6c54e72c13fa">Sylph::Hashable</a>.</p>
-
-</div>
-</div><p>
 <a class="anchor" name="30dd8de96b21b028d723d82158c9a5d9"></a><!-- doxytag: member="Sylph::String::indexOf" ref="30dd8de96b21b028d723d82158c9a5d9" args="(const String substr, idx_t start=0) const " -->
 <div class="memitem">
 <div class="memproto">
@@ -1102,7 +1070,7 @@ Whitespace characters are defined in the array <code>spacechars</code>. <dl clas
 <p>
 Returns an UTF-16 representation of this <a class="el" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a>. 
 <p>
-Because <a class="el" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a> uses UTF-16 internally, it will simply return a copy of the internal buffer. The returned value is not null-terminated. The length of the returned <a class="el" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a> is equal to the length of the <a class="el" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a>. You cannot use this <a class="el" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a> to modify the interal buffer directly, for that would make data sharing impossible (as all Strings that share data would be modified). Instead, use a StringBuffer or an <a class="el" href="class_sylph_1_1_array.html">Array&lt;uchar&gt;</a>. <dl class="return" compact><dt><b>Returns:</b></dt><dd>An <a class="el" href="class_sylph_1_1_array.html">Array&lt;uchar&gt;</a> with the UTF-16 encoded <a class="el" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a> in it. </dd></dl>
+Because <a class="el" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a> uses UTF-16 internally, it will simply return a copy of the internal buffer. The returned value is not null-terminated. The length of the returned <a class="el" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a> is equal to the length of the <a class="el" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a>. You cannot use this <a class="el" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a> to modify the interal buffer directly, for that would make data sharing impossible (as all Strings that share data would be modified). Instead, use a <a class="el" href="class_sylph_1_1_string_buffer.html">StringBuffer</a> or an <a class="el" href="class_sylph_1_1_array.html">Array&lt;uchar&gt;</a>. <dl class="return" compact><dt><b>Returns:</b></dt><dd>An <a class="el" href="class_sylph_1_1_array.html">Array&lt;uchar&gt;</a> with the UTF-16 encoded <a class="el" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a> in it. </dd></dl>
 
 </div>
 </div><p>
