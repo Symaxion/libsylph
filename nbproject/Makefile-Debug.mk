@@ -79,7 +79,7 @@ LDLIBSOPTIONS=-Llib -lboost -lcord -lgc -lpthread -lbinreloc
 
 dist/Debug/GNU-Linux-x86/libsylph.so: ${OBJECTFILES}
 	${MKDIR} -p dist/Debug/GNU-Linux-x86
-	${LINK.cc} -shared -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libsylph.so -fPIC ${OBJECTFILES} ${LDLIBSOPTIONS} 
+	${LINK.cc} -dynamiclib -install_name -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libsylph.so -fPIC ${OBJECTFILES} ${LDLIBSOPTIONS} 
 
 ${OBJECTDIR}/test/String.o: nbproject/Makefile-${CND_CONF}.mk test/String.cpp 
 	${MKDIR} -p ${OBJECTDIR}/test

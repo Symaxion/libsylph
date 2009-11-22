@@ -99,5 +99,42 @@ namespace std {
     SYLPH_SPECIALIZE(Class,double); \
     SYLPH_SPECIALIZE(Class,::Sylph::String)
 
+// Conversions ///////////////////////////////////////////////////////////////
+
+SYLPH_BEGIN_NAMESPACE
+namespace Convert {
+    inline suint float2int(float f) {
+        return *reinterpret_cast<suint*>(&f);
+    }
+    inline float int2float(suint i) {
+        return *reinterpret_cast<float*>(&i);
+    }
+    inline sulong double2long(double d) {
+        return *reinterpret_cast<sulong*>(&d);
+    }
+    inline double long2double(sulong l) {
+        return *reinterpret_cast<double*>(&l);
+    }
+    template<class T>
+    inline byte* a2bseq(const T& t) {
+        return reinterpret_cast<byte*>(&t);
+    }
+
+    template<class T>
+    inline byte* a2bseq(const T* const t) {
+        return reinterpret_cast<byte*>(t);
+    }
+    template<class T>
+    inline T& bseq2a(const byte* b) {
+        return *reinterpret_cast<T*>(b);
+    }
+
+    template<class T>
+    inline ptr_t ptr2int(const T* const t) {
+        return reinterpret_cast<ptr_t>(t);
+    }
+}
+SYLPH_END_NAMESPACE
+
 #endif	/* PRIMITIVES_H_ */
 

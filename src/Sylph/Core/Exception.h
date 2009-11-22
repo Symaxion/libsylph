@@ -67,14 +67,13 @@ SYLPH_BEGIN_NAMESPACE
  * Two other useful macros are defined, <code>if_nullptr()</code> and <code>
  * check_nullptr()</code>. <code>if_nullptr()</code> works similar to a normal
  * <code>if</code>, but the statements block is only executed when the pointer
- * passed is <code>NULL</code>. However, this macro is more optimized than a
+ * passed is <code>null</code>. However, this macro is more optimized than a
  * normal if. <code>check_nullptr()</code> works similar, but instead of
  * executing a block of code, it will immeadiately throw an
  * NullPointerException.
  */
 class Exception : public std::exception {
 public:
-
     /**
      * Creates a new Exception. You should not use this directly, instead, use
      * <code>sthrow()</code>
@@ -90,7 +89,8 @@ public:
 
     Exception(const char * r = "", const char * f = "unknown",
             const unsigned int l = 0)
-    throw () : _reason(r), _file(f), _line(l), tracemsg(0) { }
+    throw () : _reason(r), _file(f), _line(l), tracemsg(0) {
+    }
 
     /**
      * Default destructor. Frees the memory used by the trace info. If this
@@ -98,7 +98,7 @@ public:
      */
     virtual ~Exception() throw () {
         TraceMessage * current = tracemsg;
-        while(current != NULL) {
+        while(current != null) {
             TraceMessage * tmp = current;
             current = tmp->next;
             delete tmp;
@@ -121,7 +121,7 @@ public:
      * the name yourself. This is purely diagnostic information.
      * @return The name of the class of this Exception.
      */
-    virtual const char* name() const throw () {
+    virtual const char* name() const throw() {
         return "Exception";
     }
 
@@ -133,18 +133,22 @@ public:
      * diagnostic.
      * @param message The message to add in the traceinfo log.
      */
-    void addTraceMessage(const char * message) const throw () {
-        if(tracemsg == NULL) {
-            tracemsg = new TraceMessage{message, NULL};
+    void addTraceMessage(const char * message) const throw() {
+        if(tracemsg == null) {
+            tracemsg = new TraceMessage{message,null};
         } else {
             TraceMessage * current = tracemsg;
-            while(current->next != NULL) {
+            while(current->next != null) {
                 current = current->next;
             }
-            current->next = new TraceMessage{message, NULL};
+            current->next = new TraceMessage{message,null};
         }
     }
 
+    mutable struct TraceMessage {
+        mutable const char * message;
+        mutable TraceMessage * next;
+    } * tracemsg;
 protected:
     const char * _reason;
 public:
@@ -152,10 +156,6 @@ public:
     const char * _file;
     const unsigned int _line;
 #endif
-    mutable struct TraceMessage {
-        mutable const char * message;
-        mutable TraceMessage * next;
-    } * tracemsg;
 };
 
 #define S_CREATE_EXCEPTION(Class) \
@@ -199,7 +199,7 @@ S_CREATE_EXCEPTION(IllegalArgumentException);
  */
 S_CREATE_EXCEPTION(IllegalStateException);
 /**
- * This Exception gets thrown when a pointer to <code>NULL</code> is passed to
+ * This Exception gets thrown when a pointer to <code>null</code> is passed to
  * a function or method. It also gets automatically thrown by the <code>
  * check_nullptr()</code> macro.
  */
