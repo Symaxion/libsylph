@@ -29,15 +29,19 @@
 #include "Sylph/Core/AppType.h"
 #include "Sylph/Core/UncaughtExceptionHandler.h"
 
-
 #ifndef SYLPH_NO_SYLPHMAIN
+#ifndef SYLPH_APP_NAME
+#define SYLPH_APP_NAME "Application"
+#endif
+
 #ifdef SYLPH_OS_MACOSX
 int main(int argc, char * argv[], char * envp[], char * apple[]);
 #else
 int main(int argc, char * argv[]);
 #endif
 static inline void SylphInit(int argc, char * argv[], char * apple[]) {
-    Sylph::Application::init(argc, argv, apple, Sylph::APP_TYPE);
+    Sylph::Application::init(argc, argv, apple, Sylph::SYLPH_APP_TYPE,
+            SYLPH_APP_NAME);
 }
 extern int SylphMain(Sylph::Array<Sylph::String> argv);
 
