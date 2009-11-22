@@ -13,11 +13,12 @@ using std::isnan;
 
 #include <unicode/uchar.h>
 #include <unicode/ustring.h>
+#include <gc.h>
 
 SYLPH_BEGIN_NAMESPACE
 
 const char * float2string(float f) {
-    char * buf = new char[20];
+    char * buf = (char*)GC_MALLOC_ATOMIC(20);
     idx_t idx = 0;
     // first check if it we need no decimal dot...
     if (int(f) == f) {
@@ -58,7 +59,7 @@ const char * float2string(float f) {
 }
 
 const char * float2stringe(float f, bool u) {
-    char * buf = new char[20];
+    char * buf = (char*)GC_MALLOC_ATOMIC(20);
     // first get the stuff for before the dot...
     idx_t idx = 0;
     int numdigits = floor(log10(f));
@@ -106,7 +107,7 @@ const char * float2stringe(float f, bool u) {
 }
 
 const char * double2string(double d) {
-    char * buf = new char[40];
+    char * buf = (char*)GC_MALLOC_ATOMIC(40);
     idx_t idx = 0;
     // first check if it we need no decimal dot...
     if (int(d) == d) {
@@ -147,7 +148,7 @@ const char * double2string(double d) {
 }
 
 const char * double2stringe(double d, bool u) {
-    char * buf = new char[40];
+    char * buf = (char*)GC_MALLOC_ATOMIC(40);
     // first get the stuff for before the dot...
     idx_t idx = 0;
     int numdigits = floor(log10(d));
@@ -309,7 +310,7 @@ String::~String() {
     strdata->refcount--;
     if (strdata->refcount == 0) {
         delete strdata;
-        strdata = NULL;
+        strdata = null;
     }
 }
 
@@ -323,7 +324,7 @@ const uchar String::at(std::size_t idx) const {
 
 const char * String::ascii() const {
     // all non-ascii chars will be converted to '?' literals.
-    char * buf = new char[length() + 1];
+    char * buf = (char*)GC_MALLOC_ATOMIC(length() + 1);
     for (idx_t i = 0; i < length(); i++) {
         if (at(i) > 0x7F) buf[i] = '?';
         else buf[i] = at(i);
@@ -334,7 +335,7 @@ const char * String::ascii() const {
 const char * String::utf8() const {
     // In the best case, the the buffer need to be length()+1. In the worst
     // case, it's 3 * length() + 1. Always prepare for the worst ;)
-    char * buf = new char[3 * length() + 1];
+    char * buf = (char*)GC_MALLOC_ATOMIC(3 * length() + 1);
     size_t buflen = 0;
     for (idx_t i = 0; i < length(); i++) {
         if (at(i) <= 0x7F) {

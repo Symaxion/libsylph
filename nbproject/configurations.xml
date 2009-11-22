@@ -19,6 +19,7 @@
         <itemPath>test/CMakeLists.txt</itemPath>
       </logicalFolder>
       <itemPath>AUTHORS</itemPath>
+      <itemPath>BRANCH</itemPath>
       <itemPath>CMakeLists.txt</itemPath>
       <itemPath>COPYING</itemPath>
       <itemPath>README</itemPath>
@@ -29,6 +30,9 @@
                    projectFiles="true">
     </logicalFolder>
     <logicalFolder name="src" displayName="Sources" projectFiles="true">
+      <logicalFolder name="f1" displayName="csylph" projectFiles="true">
+        <itemPath>src/csylph/csylph.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="Sylph" displayName="Sylph" projectFiles="true">
         <logicalFolder name="Core" displayName="Core" projectFiles="true">
           <itemPath>src/Sylph/Core/Any.h</itemPath>
@@ -40,7 +44,6 @@
           <itemPath>src/Sylph/Core/BoolConvertible.h</itemPath>
           <itemPath>src/Sylph/Core/ByteBuffer.cpp</itemPath>
           <itemPath>src/Sylph/Core/ByteBuffer.h</itemPath>
-          <itemPath>src/Sylph/Core/Collection.h</itemPath>
           <itemPath>src/Sylph/Core/Common.h</itemPath>
           <itemPath>src/Sylph/Core/Comparable.h</itemPath>
           <itemPath>src/Sylph/Core/CurrentFunction.h</itemPath>

@@ -21,6 +21,7 @@
 #ifndef FOREACH_H_
 #define	FOREACH_H_
 
+#include "Object.h"
 #include <cstddef>
 
 struct foreach_container_base {
@@ -43,7 +44,7 @@ struct foreach_container : public foreach_container_base {
 
 template <class T>
 inline T* foreach_pointer(const T&) {
-    return NULL;
+    return Sylph::null;
 }
 
 template <class T>
