@@ -28,6 +28,9 @@
 SYLPH_BEGIN_NAMESPACE
 SYLPH_PUBLIC
 
+/**
+ * @todo Write documentation!
+ */
 class ByteBuffer : public InputStream, public OutputStream {
     friend OutputStream& operator<<(OutputStream&, ByteBuffer&);
     friend InputStream& operator>>(InputStream&, ByteBuffer&);

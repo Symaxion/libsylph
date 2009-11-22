@@ -48,11 +48,11 @@ typedef std::uint16_t uchar;
  * characters by default. The following shows the contents of this list:
  * <ul>
  * <li> space (Unicode U+0020, character literal ' ') </li>
- * <li> newline (Unicode U+000A, character literal '\n')</li>
- * <li> carriage return (Unicode U+000D, character literal '\r')</li>
- * <li> form feed (Unicode U+000C, character literal '\f')</li>
- * <li> horizontal tab (Unicode U+0009, character literal '\t')</li>
- * <li> vertical tab (Unicode U+000B, character literal '\v' or '\013')</li>
+ * <li> newline (Unicode U+000A, character literal '\\n')</li>
+ * <li> carriage return (Unicode U+000D, character literal '\\r')</li>
+ * <li> form feed (Unicode U+000C, character literal '\\f')</li>
+ * <li> horizontal tab (Unicode U+0009, character literal '\\t')</li>
+ * <li> vertical tab (Unicode U+000B, character literal '\\v' or '\\013')</li>
  * </ul><p>
  * Certain functions, such as String::trim() and String::split() use this array
  * to determine a default set of characters to look after.

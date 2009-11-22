@@ -33,6 +33,9 @@
 
 SYLPH_BEGIN_NAMESPACE
 
+/**
+ * @todo Write documentation!
+ */
 template<class key_, class value_,
 class hash_ = Hash<key_>,
 class equals_ = Equals<key_> >

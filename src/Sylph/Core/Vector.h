@@ -33,6 +33,9 @@ SYLPH_BEGIN_NAMESPACE
 
 SYLPH_PUBLIC
 
+/**
+ * @todo Write documentation!
+ */
 template<class T>
 class Vector : public Object {
 public:

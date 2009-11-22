@@ -11,6 +11,7 @@
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="classes.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
+      <li><a href="pages.html"><span>Related&nbsp;Pages</span></a></li>
     </ul>
   </div>
   <div class="tabs">
@@ -48,72 +49,72 @@
 <a name="l00028"></a>00028 SYLPH_BEGIN_NAMESPACE
 <a name="l00029"></a>00029 SYLPH_PUBLIC
 <a name="l00030"></a>00030 
-<a name="l00031"></a>00031 <span class="keyword">class </span>ByteBuffer : <span class="keyword">public</span> InputStream, <span class="keyword">public</span> OutputStream {
-<a name="l00032"></a>00032     <span class="keyword">friend</span> OutputStream&amp; operator&lt;&lt;(OutputStream&amp;, ByteBuffer&amp;);
-<a name="l00033"></a>00033     <span class="keyword">friend</span> InputStream&amp; operator&gt;&gt;(InputStream&amp;, ByteBuffer&amp;);
-<a name="l00034"></a>00034 <span class="keyword">public</span>:
-<a name="l00035"></a>00035     <span class="keyword">enum</span> Traits {
-<a name="l00036"></a>00036         Closed = 0x00,
-<a name="l00037"></a>00037         Read = 0x01,
-<a name="l00038"></a>00038         Write = 0x02,
-<a name="l00039"></a>00039         ReadWrite = 0x03,
-<a name="l00040"></a>00040         RW = ReadWrite
-<a name="l00041"></a>00041     };
-<a name="l00042"></a>00042     ByteBuffer(Traits traits = RW, <span class="keywordtype">size_t</span> bufsize = 16);
-<a name="l00043"></a>00043     ByteBuffer(<span class="keyword">const</span> <a class="code" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array&lt;byte&gt;</a> &amp; ar);
-<a name="l00044"></a>00044     ByteBuffer(<span class="keyword">const</span> ByteBuffer&amp; orig);
-<a name="l00045"></a>00045     <span class="keyword">virtual</span> ~ByteBuffer();
-<a name="l00046"></a>00046 
-<a name="l00047"></a>00047     <span class="comment">// common methods</span>
-<a name="l00048"></a>00048     
-<a name="l00049"></a>00049     fsize_t available() <span class="keyword">const</span>;
-<a name="l00050"></a>00050     <span class="keywordtype">void</span> close();
-<a name="l00051"></a>00051     <span class="keywordtype">bool</span> eof() <span class="keyword">const</span>;
-<a name="l00052"></a>00052     <span class="keywordtype">bool</span> markSupported()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <span class="keyword">true</span>; }
-<a name="l00053"></a>00053     <span class="keywordtype">void</span> mark(fsize_t);
-<a name="l00054"></a>00054     fsize_t skip(fsize_t);
-<a name="l00055"></a>00055     <span class="keywordtype">void</span> reset();
-<a name="l00056"></a>00056     <span class="keywordtype">size_t</span> size() <span class="keyword">const</span>;
-<a name="l00057"></a>00057     <span class="keywordtype">void</span> clear();
-<a name="l00058"></a>00058     
-<a name="l00059"></a>00059     <span class="comment">// traits modifiers</span>
-<a name="l00060"></a>00060     
-<a name="l00061"></a>00061     <span class="keywordtype">void</span> setTraits(Traits traits);
-<a name="l00062"></a>00062 
-<a name="l00063"></a>00063     <span class="comment">// Read methods</span>
-<a name="l00064"></a>00064     InputStream&amp; operator&gt;&gt;(byte&amp; b);
+<a name="l00034"></a><a class="code" href="class_sylph_1_1_byte_buffer.html">00034</a> <span class="keyword">class </span><a class="code" href="class_sylph_1_1_byte_buffer.html">ByteBuffer</a> : <span class="keyword">public</span> InputStream, <span class="keyword">public</span> OutputStream {
+<a name="l00035"></a>00035     <span class="keyword">friend</span> OutputStream&amp; operator&lt;&lt;(OutputStream&amp;, <a class="code" href="class_sylph_1_1_byte_buffer.html">ByteBuffer</a>&amp;);
+<a name="l00036"></a>00036     <span class="keyword">friend</span> InputStream&amp; operator&gt;&gt;(InputStream&amp;, <a class="code" href="class_sylph_1_1_byte_buffer.html">ByteBuffer</a>&amp;);
+<a name="l00037"></a>00037 <span class="keyword">public</span>:
+<a name="l00038"></a>00038     <span class="keyword">enum</span> Traits {
+<a name="l00039"></a>00039         Closed = 0x00,
+<a name="l00040"></a>00040         Read = 0x01,
+<a name="l00041"></a>00041         Write = 0x02,
+<a name="l00042"></a>00042         ReadWrite = 0x03,
+<a name="l00043"></a>00043         RW = ReadWrite
+<a name="l00044"></a>00044     };
+<a name="l00045"></a>00045     <a class="code" href="class_sylph_1_1_byte_buffer.html">ByteBuffer</a>(Traits traits = RW, <span class="keywordtype">size_t</span> bufsize = 16);
+<a name="l00046"></a>00046     <a class="code" href="class_sylph_1_1_byte_buffer.html">ByteBuffer</a>(<span class="keyword">const</span> <a class="code" href="class_sylph_1_1_array.html">Array&lt;byte&gt;</a> &amp; ar);
+<a name="l00047"></a>00047     <a class="code" href="class_sylph_1_1_byte_buffer.html">ByteBuffer</a>(<span class="keyword">const</span> <a class="code" href="class_sylph_1_1_byte_buffer.html">ByteBuffer</a>&amp; orig);
+<a name="l00048"></a>00048     <span class="keyword">virtual</span> ~<a class="code" href="class_sylph_1_1_byte_buffer.html">ByteBuffer</a>();
+<a name="l00049"></a>00049 
+<a name="l00050"></a>00050     <span class="comment">// common methods</span>
+<a name="l00051"></a>00051     
+<a name="l00052"></a>00052     fsize_t available() <span class="keyword">const</span>;
+<a name="l00053"></a>00053     <span class="keywordtype">void</span> close();
+<a name="l00054"></a>00054     <span class="keywordtype">bool</span> eof() <span class="keyword">const</span>;
+<a name="l00055"></a>00055     <span class="keywordtype">bool</span> markSupported()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <span class="keyword">true</span>; }
+<a name="l00056"></a>00056     <span class="keywordtype">void</span> mark(fsize_t);
+<a name="l00057"></a>00057     fsize_t skip(fsize_t);
+<a name="l00058"></a>00058     <span class="keywordtype">void</span> reset();
+<a name="l00059"></a>00059     <span class="keywordtype">size_t</span> size() <span class="keyword">const</span>;
+<a name="l00060"></a>00060     <span class="keywordtype">void</span> clear();
+<a name="l00061"></a>00061     
+<a name="l00062"></a>00062     <span class="comment">// traits modifiers</span>
+<a name="l00063"></a>00063     
+<a name="l00064"></a>00064     <span class="keywordtype">void</span> setTraits(Traits traits);
 <a name="l00065"></a>00065 
-<a name="l00066"></a>00066     <span class="comment">// Write methods and operators</span>
-<a name="l00067"></a>00067     OutputStream&amp; operator&lt;&lt;(<span class="keyword">const</span> byte b);
+<a name="l00066"></a>00066     <span class="comment">// Read methods</span>
+<a name="l00067"></a>00067     InputStream&amp; operator&gt;&gt;(byte&amp; b);
 <a name="l00068"></a>00068 
-<a name="l00069"></a>00069     ByteBuffer&amp; fromString(<span class="keyword">const</span> <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a> s);
-<a name="l00070"></a>00070 
-<a name="l00071"></a>00071     <span class="comment">// Operators:</span>
-<a name="l00072"></a>00072     ByteBuffer&amp; operator=(<span class="keyword">const</span> ByteBuffer &amp; rhs);
+<a name="l00069"></a>00069     <span class="comment">// Write methods and operators</span>
+<a name="l00070"></a>00070     OutputStream&amp; operator&lt;&lt;(<span class="keyword">const</span> byte b);
+<a name="l00071"></a>00071 
+<a name="l00072"></a>00072     <a class="code" href="class_sylph_1_1_byte_buffer.html">ByteBuffer</a>&amp; fromString(<span class="keyword">const</span> <a class="code" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a> s);
 <a name="l00073"></a>00073 
-<a name="l00074"></a>00074     <span class="comment">// Convertors:</span>
-<a name="l00075"></a>00075     
-<a name="l00076"></a>00076     <a class="code" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array&lt;byte&gt;</a> toArray();
-<a name="l00077"></a>00077     <span class="keyword">const</span> <a class="code" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array&lt;byte&gt;</a> toArray() <span class="keyword">const</span>;
-<a name="l00078"></a>00078 
-<a name="l00079"></a>00079     operator Array&lt;byte&gt;();
-<a name="l00080"></a>00080     operator const Array&lt;byte&gt;() <span class="keyword">const</span>;
-<a name="l00081"></a>00081 <span class="keyword">private</span>:
-<a name="l00082"></a>00082     <span class="keywordtype">void</span> ensureCapacity(<span class="keywordtype">size_t</span> capacity);
-<a name="l00083"></a>00083     <a class="code" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array&lt;byte&gt;</a> _array;
-<a name="l00084"></a>00084     idx_t _pos;
-<a name="l00085"></a>00085     <span class="keywordtype">size_t</span> _size;
-<a name="l00086"></a>00086     Traits _traits;
-<a name="l00087"></a>00087     idx_t _mark;
-<a name="l00088"></a>00088     <span class="keywordtype">size_t</span> _markExpires;
-<a name="l00089"></a>00089 };
-<a name="l00090"></a>00090 
-<a name="l00091"></a>00091 OutputStream&amp; operator&lt;&lt;(OutputStream&amp;, ByteBuffer&amp;);
-<a name="l00092"></a>00092 InputStream&amp; operator&gt;&gt;(InputStream&amp;, ByteBuffer&amp;);
+<a name="l00074"></a>00074     <span class="comment">// Operators:</span>
+<a name="l00075"></a>00075     <a class="code" href="class_sylph_1_1_byte_buffer.html">ByteBuffer</a>&amp; operator=(<span class="keyword">const</span> <a class="code" href="class_sylph_1_1_byte_buffer.html">ByteBuffer</a> &amp; rhs);
+<a name="l00076"></a>00076 
+<a name="l00077"></a>00077     <span class="comment">// Convertors:</span>
+<a name="l00078"></a>00078     
+<a name="l00079"></a>00079     <a class="code" href="class_sylph_1_1_array.html">Array&lt;byte&gt;</a> toArray();
+<a name="l00080"></a>00080     <span class="keyword">const</span> <a class="code" href="class_sylph_1_1_array.html">Array&lt;byte&gt;</a> toArray() <span class="keyword">const</span>;
+<a name="l00081"></a>00081 
+<a name="l00082"></a>00082     operator Array&lt;byte&gt;();
+<a name="l00083"></a>00083     operator const Array&lt;byte&gt;() <span class="keyword">const</span>;
+<a name="l00084"></a>00084 <span class="keyword">private</span>:
+<a name="l00085"></a>00085     <span class="keywordtype">void</span> ensureCapacity(<span class="keywordtype">size_t</span> capacity);
+<a name="l00086"></a>00086     <a class="code" href="class_sylph_1_1_array.html">Array&lt;byte&gt;</a> _array;
+<a name="l00087"></a>00087     idx_t _pos;
+<a name="l00088"></a>00088     <span class="keywordtype">size_t</span> _size;
+<a name="l00089"></a>00089     Traits _traits;
+<a name="l00090"></a>00090     idx_t _mark;
+<a name="l00091"></a>00091     <span class="keywordtype">size_t</span> _markExpires;
+<a name="l00092"></a>00092 };
 <a name="l00093"></a>00093 
-<a name="l00094"></a>00094 SYLPH_END_NAMESPACE
-<a name="l00095"></a>00095 
-<a name="l00096"></a>00096 <span class="preprocessor">#endif  </span><span class="comment">/* BYTEBUFFER_H_ */</span>
+<a name="l00094"></a>00094 OutputStream&amp; operator&lt;&lt;(OutputStream&amp;, <a class="code" href="class_sylph_1_1_byte_buffer.html">ByteBuffer</a>&amp;);
+<a name="l00095"></a>00095 InputStream&amp; operator&gt;&gt;(InputStream&amp;, <a class="code" href="class_sylph_1_1_byte_buffer.html">ByteBuffer</a>&amp;);
+<a name="l00096"></a>00096 
+<a name="l00097"></a>00097 SYLPH_END_NAMESPACE
+<a name="l00098"></a>00098 
+<a name="l00099"></a>00099 <span class="preprocessor">#endif  </span><span class="comment">/* BYTEBUFFER_H_ */</span>
 </pre></div></div>
 <hr size="1" class="unhidden"><address style="text-align: right;"><small>
 Documentation for LibSylph by Doxygen

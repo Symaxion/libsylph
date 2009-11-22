@@ -38,8 +38,8 @@
 // linux:
 #  define SYLPH_OS_LINUX
 
-#ifndef APP_TYPE
-#define APP_TYPE S_APPTYPE_BUNDLE
+#ifndef SYLPH_APP_TYPE
+#define SYLPH_APP_TYPE S_APPTYPE_BUNDLE
 #endif
 
 #elif defined(__CYGWIN__)
@@ -47,24 +47,24 @@
 #  define SYLPH_OS_CYGWIN
 #  define SYLPH_OS_LINUX
 
-#ifndef APP_TYPE
-#define APP_TYPE S_APPTYPE_BUNDLE
+#ifndef SYLPH_APP_TYPE
+#define SYLPH_APP_TYPE S_APPTYPE_BUNDLE
 #endif
 
 #elif defined(_WIN32) || defined(__WIN32__) || defined(WIN32)
 // win32:
 #  define SYLPH_OS_WINDOWS
 
-#ifndef APP_TYPE
-#define APP_TYPE S_APPTYPE_WINDOWS
+#ifndef SYLPH_APP_TYPE
+#define SYLPH_APP_TYPE S_APPTYPE_WINDOWS
 #endif
 
 #elif defined(macintosh) || defined(__APPLE__) || defined(__APPLE_CC__)
 // MacOS
 #  define SYLPH_OS_MACOSX
 
-#ifndef APP_TYPE
-#define APP_TYPE S_APPTYPE_MACOS
+#ifndef SYLPH_APP_TYPE
+#define SYLPH_APP_TYPE S_APPTYPE_MACOS
 #endif
 
 #endif

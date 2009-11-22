@@ -1,0 +1,7 @@
+<area shape="rect" id="node3" href="$class_sylph_1_1_array_exception.html" title="A generic Exception when an error occurs with an Array." alt="" coords="225,5,393,35">
+<area shape="rect" id="node5" href="$class_sylph_1_1_file_exception.html" title="A genreric Exception which gets thrown whenever something goes wrong in the File..." alt="" coords="231,59,388,88">
+<area shape="rect" id="node7" href="$class_sylph_1_1_illegal_argument_exception.html" title="Generic exception to flag an argument with an illegal state was passed to an function..." alt="" coords="189,112,429,141">
+<area shape="rect" id="node9" href="$class_sylph_1_1_illegal_state_exception.html" title="Generic exception to flag that a method is not supported in the current state of..." alt="" coords="204,165,415,195">
+<area shape="rect" id="node11" href="$class_sylph_1_1_i_o_exception.html" title="This is a generic exception for I/O errors." alt="" coords="235,219,384,248">
+<area shape="rect" id="node13" href="$class_sylph_1_1_null_pointer_exception.html" title="This Exception gets thrown when a pointer to NULL is passed to a function or method..." alt="" coords="205,272,413,301">
+<area shape="rect" id="node15" href="$class_sylph_1_1_serialization_exception.html" title="This Exception gets thrown if there is a problem with serializing or deserializing..." alt="" coords="201,325,417,355">

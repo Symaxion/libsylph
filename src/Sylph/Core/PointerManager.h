@@ -24,6 +24,10 @@
 #include "Object.h"
 SYLPH_BEGIN_NAMESPACE
 SYLPH_PUBLIC
+
+/**
+ * @todo Write documentation!
+ */
 class PointerManager : public virtual Object {
 public:
     PointerManager() {}
