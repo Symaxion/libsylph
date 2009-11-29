@@ -41,7 +41,6 @@
           <itemPath>src/Sylph/Core/Application.h</itemPath>
           <itemPath>src/Sylph/Core/Array.cpp</itemPath>
           <itemPath>src/Sylph/Core/Array.h</itemPath>
-          <itemPath>src/Sylph/Core/BoolConvertible.h</itemPath>
           <itemPath>src/Sylph/Core/ByteBuffer.cpp</itemPath>
           <itemPath>src/Sylph/Core/ByteBuffer.h</itemPath>
           <itemPath>src/Sylph/Core/Common.h</itemPath>

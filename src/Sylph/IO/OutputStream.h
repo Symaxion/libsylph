@@ -21,15 +21,13 @@
 #ifndef OUTPUTSTREAM_H_
 #define	OUTPUTSTREAM_H_
 
-
-#include "../Core/BoolConvertible.h"
 #include "../Core/Exception.h"
 #include "../Core/Array.h"
 
 SYLPH_BEGIN_NAMESPACE
 SYLPH_PUBLIC
 
-class OutputStream : public virtual BoolConvertible<OutputStream> {
+class OutputStream : public virtual Object {
 public:
 
     OutputStream() : closed(false) {
