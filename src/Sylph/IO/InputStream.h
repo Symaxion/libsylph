@@ -25,13 +25,12 @@
 #include "../Core/Object.h"
 #include "../Core/Primitives.h"
 #include "../Core/Array.h"
-#include "../Core/BoolConvertible.h"
 #include "../Core/String.h"
 
 SYLPH_BEGIN_NAMESPACE
 SYLPH_PUBLIC
 
-class InputStream : public virtual BoolConvertible<InputStream> {
+class InputStream : public virtual Object {
 public:
     InputStream() : closed(false) {}
     virtual ~InputStream() {}

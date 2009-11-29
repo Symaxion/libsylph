@@ -22,14 +22,13 @@
 #define	PRINTWRITER_H_
 
 #include "../Core/Primitives.h"
-#include "../Core/BoolConvertible.h"
 #include "../Core/String.h"
 #include "OutputStream.h"
 
 SYLPH_BEGIN_NAMESPACE
 SYLPH_PUBLIC
 
-class PrintWriter : public BoolConvertible<PrintWriter> {
+class PrintWriter : public virtual Object {
     friend PrintWriter& dec(PrintWriter&);
     friend PrintWriter& hex(PrintWriter&);
     friend PrintWriter& oct(PrintWriter&);

@@ -25,7 +25,6 @@
 #include "Comparable.h"
 #include "Hash.h"
 #include "Primitives.h"
-#include "BoolConvertible.h"
 #include "Array.h"
 
 // for convenience
@@ -78,7 +77,7 @@ static Array<uchar> spacechars = {' ', '\n', '\r', '\f', '\t', '\013'};
  * Plane (up to U+FFFF) is supported. Future versions may add support for the
  * other planes (up to U+10FFFF). In this case, UTF-32 will be used instead.
  */
-class String : public BoolConvertible<String> {
+class String : public virtual Object {
     friend bool operator==(const String lhs, const String rhs);
     friend bool operator<(const String lhs, const String rhs);
     friend String operator+(const String lhs, const String rhs);
