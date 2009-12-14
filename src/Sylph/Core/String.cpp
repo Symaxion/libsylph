@@ -13,7 +13,7 @@ using std::isnan;
 
 #include <unicode/uchar.h>
 #include <unicode/ustring.h>
-#include <gc.h>
+#include <gc/gc.h>
 
 SYLPH_BEGIN_NAMESPACE
 
@@ -23,7 +23,6 @@ const char * float2string(float f) {
     // first check if it we need no decimal dot...
     if (int(f) == f) {
         // no decimal dot. use conversion from int
-        delete[] buf;
         return String(int(f));
     } else {
         // Decimal dot...
@@ -32,7 +31,6 @@ const char * float2string(float f) {
         const char * buf2 = String(int(f));
         carraycopy(buf2, 0, buf, 0, strlen(buf2));
         idx += strlen(buf2);
-        delete[] buf2;
 
         // append a '.'
         buf[idx] = '.';
@@ -112,7 +110,6 @@ const char * double2string(double d) {
     // first check if it we need no decimal dot...
     if (int(d) == d) {
         // no decimal dot. use conversion from int
-        delete[] buf;
         return String(int(d));
     } else {
         // Decimal dot...
@@ -121,7 +118,6 @@ const char * double2string(double d) {
         const char * buf2 = String(int(d));
         carraycopy(buf2, 0, buf, 0, strlen(buf2));
         idx += strlen(buf2);
-        delete[] buf2;
 
         // append a '.'
         buf[idx] = '.';
@@ -280,7 +276,6 @@ String::String(const float f) {
 
         }
         fromAscii(buf);
-        delete[] buf;
     }
 }
 
@@ -302,7 +297,6 @@ String::String(const double d) {
 
         }
         fromAscii(buf);
-        delete[] buf;
     }
 }
 
@@ -335,7 +329,7 @@ const char * String::ascii() const {
 const char * String::utf8() const {
     // In the best case, the the buffer need to be length()+1. In the worst
     // case, it's 3 * length() + 1. Always prepare for the worst ;)
-    char * buf = (char*)GC_MALLOC_ATOMIC(3 * length() + 1);
+    char * buf = new char[3 * length() + 1];
     size_t buflen = 0;
     for (idx_t i = 0; i < length(); i++) {
         if (at(i) <= 0x7F) {
@@ -357,7 +351,7 @@ const char * String::utf8() const {
     }
 
     // now copy it to the final buffer...
-    char * final = new char[buflen + 1];
+    char * final = static_cast<char*>(GC_MALLOC_ATOMIC(buflen + 1));
     carraycopy(buf, 0, final, 0, buflen);
     final[buflen] = 0;
     delete[] buf;
