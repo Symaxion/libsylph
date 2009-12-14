@@ -106,12 +106,11 @@
       <itemPath>src/Sylph.h</itemPath>
     </logicalFolder>
     <logicalFolder name="f2" displayName="Test Cases" projectFiles="true">
-      <itemPath>test/Application.cpp</itemPath>
-      <itemPath>test/Array.cpp</itemPath>
-      <itemPath>test/HashMap.cpp</itemPath>
-      <itemPath>test/String.cpp</itemPath>
-      <itemPath>test/Vector.cpp</itemPath>
-      <itemPath>test/main.cpp</itemPath>
+      <itemPath>test/Application.tst</itemPath>
+      <itemPath>test/Array.tst</itemPath>
+      <itemPath>test/HashMap.tst</itemPath>
+      <itemPath>test/String.tst</itemPath>
+      <itemPath>test/Vector.tst</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -122,6 +121,7 @@
   </logicalFolder>
   <sourceRootList>
     <Elem>src</Elem>
+    <Elem>test</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
