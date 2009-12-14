@@ -1,18 +1,19 @@
-#include <cppunit/extensions/HelperMacros.h>
+@.Header:
 #include <Sylph/Core/String.h>
 
+// for strcmp
+#include <cstring>
+
 using namespace Sylph;
+@.End
 
-class TestString : public CppUnit::TestFixture {
-    CPPUNIT_TEST_SUITE(TestString);
-    CPPUNIT_TEST_SUITE_END();
-public:
+@.SetUp:
+@.End
 
-    void setUp() { }
+@.TearDown:
+@.End
 
-    void tearDown() { }
-
-    void testFromAscii() {
+@testFromAscii:
         String s = "foobar";
         Array<uchar> a = s.utf16();
         CPPUNIT_ASSERT(a[0] == 'f');
@@ -21,9 +22,9 @@ public:
         CPPUNIT_ASSERT(a[3] == 'b');
         CPPUNIT_ASSERT(a[4] == 'a');
         CPPUNIT_ASSERT(a[5] == 'r');
-    }
+@.End
 
-    void testFromUtf8() {
+@testFromUtf8:
         String s = "éèçàŒù£";
         Array<uchar> a = s.utf16();
         CPPUNIT_ASSERT(a[0] == 0x00E9);
@@ -34,9 +35,9 @@ public:
         CPPUNIT_ASSERT(a[5] == 0x00F9);
         CPPUNIT_ASSERT(a[6] == 0x00A3);
         CPPUNIT_ASSERT(a[7] == 0xF8FF);
-    }
+@.End
 
-    void testRealEquality() {
+@testRealEquality:
         String s = "foobar";
         String t = "foobar";
         String u = "barfoo";
@@ -46,9 +47,9 @@ public:
         CPPUNIT_ASSERT(u != s);
         CPPUNIT_ASSERT(t != u);
         CPPUNIT_ASSERT(u != t);
-    }
+@.End
 
-    void testUnicodeRealEquality() {
+@testUnicodeRealEquality:
         String s = "éèçàŒù£";
         String t = "éèçàŒù£";
         String u = "Œù£éèçà";
@@ -58,68 +59,68 @@ public:
         CPPUNIT_ASSERT(u != s);
         CPPUNIT_ASSERT(t != u);
         CPPUNIT_ASSERT(u != t);
-    }
+@.End
 
-    void testCopyEquality() {
+@testCopyEquality:
         String s = "foobar";
         String t = s.copy();
         CPPUNIT_ASSERT(s == t);
         CPPUNIT_ASSERT(t == s);
-    }
+@.End
 
-    void testUnicodeCopyEquality() {
+@testUnicodeCopyEquality:
         String s = "éèçàŒù£";
         String t = s.copy();
         CPPUNIT_ASSERT(s == t);
         CPPUNIT_ASSERT(t == s);
-    }
+@.End
 
-    void testRefcountEquality() {
+@testRefcountEquality:
         String s = "foobar";
         String t = s;
         CPPUNIT_ASSERT(s == t);
         CPPUNIT_ASSERT(t == s);
-    }
+@.End
 
-    void testSelfEquality() { 
+@testSelfEquality:
         String s = "foobar";
         CPPUNIT_ASSERT(s == s);
-    }
+@.End
 
-    void testUnicodeSelfEquality() {
+@testUnicodeSelfEquality:
         String s = "éèçàŒù£";
         CPPUNIT_ASSERT(s == s);
-    }
+@.End
 
-    void testBoolConstructor() {
+@testBoolConstructor:
         String s = true;
         CPPUNIT_ASSERT(s == "true");
         String t = false;
         CPPUNIT_ASSERT(t == "false");
-    }
+@.End
 
-    void testIntConstructor() {
+@testIntConstructor:
         String s = 12345678;
         CPPUNIT_ASSERT(s == "12345678");
         String t = 12345678901234LL;
         CPPUNIT_ASSERT(t == "12345678901234");
-    }
+@.End
 
-    void testFloatConstructor() {
+@testFloatConstructor:
         String s = 3.14f;
         CPPUNIT_ASSERT(s == "3.14");
         String t = 3.14;
         CPPUNIT_ASSERT(t == "3.14");
-    }
+@.End
 
-    void testLength() {
+@testLength:
         String s = "foobar";
         CPPUNIT_ASSERT(s.length() == 6);
         String t = "éèçàŒù£";
         CPPUNIT_ASSERT(t.length() == 8);
-    }
+@.End
 
-    void testCharAt() {
+@testCharAt:
         String s = "foobar";
         CPPUNIT_ASSERT(s.at(0) == 'f');
         CPPUNIT_ASSERT(s.at(1) == 'o');
@@ -127,9 +128,9 @@ public:
         CPPUNIT_ASSERT(s.at(3) == 'b');
         CPPUNIT_ASSERT(s.at(4) == 'a');
         CPPUNIT_ASSERT(s.at(5) == 'r');
-    }
+@.End
 
-    void testUnicodeCharAt() {
+@testUnicodeCharAt:
         String s = "éèçàŒù£";
         CPPUNIT_ASSERT(s.at(0) == 0x00E9);
         CPPUNIT_ASSERT(s.at(1) == 0x00E8);
@@ -139,43 +140,86 @@ public:
         CPPUNIT_ASSERT(s.at(5) == 0x00F9);
         CPPUNIT_ASSERT(s.at(6) == 0x00A3);
         CPPUNIT_ASSERT(s.at(7) == 0xF8FF);
-    }
+@.End
 
-    void testInvalidUnicode() {
+@testInvalidUnicode:
         char invalid[] = {};
         String s = invalid;
         //2do
-    }
+@.End
 
-    void testAstralPlaneUnicode() {
+@testAstralPlaneUnicode:
         char astral[] = {};
         String s = astral;
         //2do
-    }
+@.End
 
-    void testToAscii() { }
+@testToAscii:
+        String s = "foobar";
+        const char * c = s.ascii();
+        CPPUNIT_ASSERT(std::strcmp(c,"foobar") == 0);
+        String t = "français";
+        const char * c2 = t.ascii();
+        CPPUNIT_ASSERT(std::strcmp(c,"fran?ais") == 0);
+@.End
 
-    void testToUtf8() { }
+@testToUtf8:
+        String s = "foobar";
+        const char * c = s.utf8();
+        CPPUNIT_ASSERT(std::strcmp(c,"foobar") == 0);
+        String t = "français";
+        const char * c2 = t.utf8();
+        CPPUNIT_ASSERT(std::strcmp(c,"français") == 0);
+@.End
 
-    void testLowerCase() { }
+@testLowerCase:
+        String s = "foo";
+        CPPUNIT_ASSERT(s.toLowerCase() == "foo");
+        s = "FoO";
+        CPPUNIT_ASSERT(s.toLowerCase() == "foo");
+        s = "FoX";
+        CPPUNIT_ASSERT(!(s.toLowerCase() == "foo"));
+@.End
 
-    void testUpperCase() { }
+@testUpperCase:
+        String s = "FOO";
+        CPPUNIT_ASSERT(s.toUpperCase() == "FOO");
+        s = "fOO";
+        CPPUNIT_ASSERT(s.toUpperCase() == "FOO");
+        s = "FoX";
+        CPPUNIT_ASSERT(!(s.toUpperCase() == "foo"));
+@.End
 
-    void testEqualsIgnoreCase() { }
+@testEqualsIgnoreCase:
+    String s = "foo";
+    String t = "FOO";
+    CPPUNIT_ASSERT(s.equalsIgnoreCase(s));
+    CPPUNIT_ASSERT(s.equalsIgnoreCase(t));
+    CPPUNIT_ASSERT(t.equalsIgnoreCase(t));
+    CPPUNIT_ASSERT(t.equalsIgnoreCase(s));
+    CPPUNIT_ASSERT(!s.equalsIgnoreCase("Fox"));
+    CPPUNIT_ASSERT(!t.equalsIgnoreCase("Fox"));
+@.End
 
-    void testContainment() { }
+@testContainment:
+@.End
 
-    void testTrim() { }
+@testTrim:
+@.End
 
-    void testSubstring() { }
+@testSubstring:
+@.End
 
-    void testIndexOf() { }
+@testIndexOf:
+@.End
 
-    void testMerge() { }
+@testMerge:
+@.End
 
-    void testHashUniqueness() { }
+@testHashUniqueness:
+@.End
 
-    void testToBool() {
+@testToBool:
         String s = "true";
         CPPUNIT_ASSERT(s.boolValue());
         s = "TrUe";
@@ -188,22 +232,32 @@ public:
         CPPUNIT_ASSERT(!s.boolValue());
         s = "ééé";
         CPPUNIT_ASSERT(!s.boolValue());
-    }
+@.End
 
-    void testToInt() { }
+@testToInt:
+        String a = "123";
+        CPPUNIT_ASSERT(a.intValue() == 123);
+        String b = "-123";
+        CPPUNIT_ASSERT(b.intValue() == -123);
+        String c = " 333 ";
+        CPPUNIT_ASSERT(c.intValue() == 333);
+        String d = "foobar";
+        CPPUNIT_ASSERT(d.intValue() == 0);
+@.End
 
-    void testToFloat() { }
+@testToFloat:
+@.End
 
-    void testEmptynessBool() {
-        String s = "";
-        CPPUNIT_ASSERT(!s);
-        String t = "hi";
-        CPPUNIT_ASSERT(s);
-    }
+@testAppend:
+        String a = "foo";
+        String b = "bar";
+        String c = a + b;
+        a += b;
+        CPPUNIT_ASSERT(a == "foobar");
+        CPPUNIT_ASSERT(c == "foobar");
+@.End
 
-    void testAppend() { }
-
-    void testMultiply() {
+@testMultiply:
         String s = "-";
         String t = s * 5;
         CPPUNIT_ASSERT(t == "-----");
@@ -211,9 +265,7 @@ public:
         String u = "é";
         String v = u * 5;
         CPPUNIT_ASSERT(v == "ééééé");
-    }
+@.End
 
-    void testInvoke() { }
-};
-
-CPPUNIT_TEST_SUITE_REGISTRATION(TestString);
+@testInvoke:
+@.End

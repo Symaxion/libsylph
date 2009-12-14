@@ -31,7 +31,6 @@ OBJECTDIR=build/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/test/String.o \
 	${OBJECTDIR}/src/Sylph/OS/MacOSAppSelf.o \
 	${OBJECTDIR}/src/Sylph/IO/PrintWriter.o \
 	${OBJECTDIR}/src/Sylph/Core/Object.o \
@@ -40,21 +39,16 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/Sylph/OS/MacOSFHSAppSelf.o \
 	${OBJECTDIR}/src/Sylph/OS/LinuxBundleAppSelf.o \
 	${OBJECTDIR}/src/Sylph/Core/ByteBuffer.o \
-	${OBJECTDIR}/test/Array.o \
 	${OBJECTDIR}/src/Sylph/OS/LinuxFHSAppSelf.o \
 	${OBJECTDIR}/src/Sylph/IO/FileInputStream.o \
 	${OBJECTDIR}/src/Sylph/Core/Application.o \
 	${OBJECTDIR}/src/Sylph/Core/Array.o \
 	${OBJECTDIR}/src/Sylph/Core/HashMap.o \
-	${OBJECTDIR}/test/Vector.o \
 	${OBJECTDIR}/src/Sylph/IO/FileOutputStream.o \
 	${OBJECTDIR}/src/Sylph/Core/UncaughtExceptionHandler.o \
-	${OBJECTDIR}/test/Application.o \
 	${OBJECTDIR}/src/Sylph/Core/String.o \
-	${OBJECTDIR}/test/main.o \
-	${OBJECTDIR}/src/Sylph/Core/Vector.o \
 	${OBJECTDIR}/src/Sylph/Core/File.o \
-	${OBJECTDIR}/test/HashMap.o \
+	${OBJECTDIR}/src/Sylph/Core/Vector.o \
 	${OBJECTDIR}/src/Sylph/Core/StringBuffer.o
 
 # C Compiler Flags
@@ -79,12 +73,7 @@ LDLIBSOPTIONS=-Llib -lboost -lcord -lgc -lpthread -lbinreloc
 
 dist/Debug/GNU-Linux-x86/libsylph.so: ${OBJECTFILES}
 	${MKDIR} -p dist/Debug/GNU-Linux-x86
-	${LINK.cc} -dynamiclib -install_name -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libsylph.so -fPIC ${OBJECTFILES} ${LDLIBSOPTIONS} 
-
-${OBJECTDIR}/test/String.o: nbproject/Makefile-${CND_CONF}.mk test/String.cpp 
-	${MKDIR} -p ${OBJECTDIR}/test
-	${RM} $@.d
-	$(COMPILE.cc) -g -DSYLPH_DEBUG -D__GXX_EXPERIMENTAL_CXX0X__ -Isrc -Ideps/binreloc -Ideps/boost -Ideps/gc/include -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/test/String.o test/String.cpp
+	${LINK.cc} -shared -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libsylph.so -fPIC ${OBJECTFILES} ${LDLIBSOPTIONS} 
 
 ${OBJECTDIR}/src/Sylph/OS/MacOSAppSelf.o: nbproject/Makefile-${CND_CONF}.mk src/Sylph/OS/MacOSAppSelf.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/Sylph/OS
@@ -126,11 +115,6 @@ ${OBJECTDIR}/src/Sylph/Core/ByteBuffer.o: nbproject/Makefile-${CND_CONF}.mk src/
 	${RM} $@.d
 	$(COMPILE.cc) -g -DSYLPH_DEBUG -D__GXX_EXPERIMENTAL_CXX0X__ -Isrc -Ideps/binreloc -Ideps/boost -Ideps/gc/include -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Sylph/Core/ByteBuffer.o src/Sylph/Core/ByteBuffer.cpp
 
-${OBJECTDIR}/test/Array.o: nbproject/Makefile-${CND_CONF}.mk test/Array.cpp 
-	${MKDIR} -p ${OBJECTDIR}/test
-	${RM} $@.d
-	$(COMPILE.cc) -g -DSYLPH_DEBUG -D__GXX_EXPERIMENTAL_CXX0X__ -Isrc -Ideps/binreloc -Ideps/boost -Ideps/gc/include -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/test/Array.o test/Array.cpp
-
 ${OBJECTDIR}/src/Sylph/OS/LinuxFHSAppSelf.o: nbproject/Makefile-${CND_CONF}.mk src/Sylph/OS/LinuxFHSAppSelf.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/Sylph/OS
 	${RM} $@.d
@@ -156,11 +140,6 @@ ${OBJECTDIR}/src/Sylph/Core/HashMap.o: nbproject/Makefile-${CND_CONF}.mk src/Syl
 	${RM} $@.d
 	$(COMPILE.cc) -g -DSYLPH_DEBUG -D__GXX_EXPERIMENTAL_CXX0X__ -Isrc -Ideps/binreloc -Ideps/boost -Ideps/gc/include -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Sylph/Core/HashMap.o src/Sylph/Core/HashMap.cpp
 
-${OBJECTDIR}/test/Vector.o: nbproject/Makefile-${CND_CONF}.mk test/Vector.cpp 
-	${MKDIR} -p ${OBJECTDIR}/test
-	${RM} $@.d
-	$(COMPILE.cc) -g -DSYLPH_DEBUG -D__GXX_EXPERIMENTAL_CXX0X__ -Isrc -Ideps/binreloc -Ideps/boost -Ideps/gc/include -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/test/Vector.o test/Vector.cpp
-
 ${OBJECTDIR}/src/Sylph/IO/FileOutputStream.o: nbproject/Makefile-${CND_CONF}.mk src/Sylph/IO/FileOutputStream.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/Sylph/IO
 	${RM} $@.d
@@ -171,35 +150,20 @@ ${OBJECTDIR}/src/Sylph/Core/UncaughtExceptionHandler.o: nbproject/Makefile-${CND
 	${RM} $@.d
 	$(COMPILE.cc) -g -DSYLPH_DEBUG -D__GXX_EXPERIMENTAL_CXX0X__ -Isrc -Ideps/binreloc -Ideps/boost -Ideps/gc/include -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Sylph/Core/UncaughtExceptionHandler.o src/Sylph/Core/UncaughtExceptionHandler.cpp
 
-${OBJECTDIR}/test/Application.o: nbproject/Makefile-${CND_CONF}.mk test/Application.cpp 
-	${MKDIR} -p ${OBJECTDIR}/test
-	${RM} $@.d
-	$(COMPILE.cc) -g -DSYLPH_DEBUG -D__GXX_EXPERIMENTAL_CXX0X__ -Isrc -Ideps/binreloc -Ideps/boost -Ideps/gc/include -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/test/Application.o test/Application.cpp
-
 ${OBJECTDIR}/src/Sylph/Core/String.o: nbproject/Makefile-${CND_CONF}.mk src/Sylph/Core/String.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/Sylph/Core
 	${RM} $@.d
 	$(COMPILE.cc) -g -DSYLPH_DEBUG -D__GXX_EXPERIMENTAL_CXX0X__ -Isrc -Ideps/binreloc -Ideps/boost -Ideps/gc/include -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Sylph/Core/String.o src/Sylph/Core/String.cpp
-
-${OBJECTDIR}/test/main.o: nbproject/Makefile-${CND_CONF}.mk test/main.cpp 
-	${MKDIR} -p ${OBJECTDIR}/test
-	${RM} $@.d
-	$(COMPILE.cc) -g -DSYLPH_DEBUG -D__GXX_EXPERIMENTAL_CXX0X__ -Isrc -Ideps/binreloc -Ideps/boost -Ideps/gc/include -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/test/main.o test/main.cpp
-
-${OBJECTDIR}/src/Sylph/Core/Vector.o: nbproject/Makefile-${CND_CONF}.mk src/Sylph/Core/Vector.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src/Sylph/Core
-	${RM} $@.d
-	$(COMPILE.cc) -g -DSYLPH_DEBUG -D__GXX_EXPERIMENTAL_CXX0X__ -Isrc -Ideps/binreloc -Ideps/boost -Ideps/gc/include -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Sylph/Core/Vector.o src/Sylph/Core/Vector.cpp
 
 ${OBJECTDIR}/src/Sylph/Core/File.o: nbproject/Makefile-${CND_CONF}.mk src/Sylph/Core/File.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/Sylph/Core
 	${RM} $@.d
 	$(COMPILE.cc) -g -DSYLPH_DEBUG -D__GXX_EXPERIMENTAL_CXX0X__ -Isrc -Ideps/binreloc -Ideps/boost -Ideps/gc/include -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Sylph/Core/File.o src/Sylph/Core/File.cpp
 
-${OBJECTDIR}/test/HashMap.o: nbproject/Makefile-${CND_CONF}.mk test/HashMap.cpp 
-	${MKDIR} -p ${OBJECTDIR}/test
+${OBJECTDIR}/src/Sylph/Core/Vector.o: nbproject/Makefile-${CND_CONF}.mk src/Sylph/Core/Vector.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src/Sylph/Core
 	${RM} $@.d
-	$(COMPILE.cc) -g -DSYLPH_DEBUG -D__GXX_EXPERIMENTAL_CXX0X__ -Isrc -Ideps/binreloc -Ideps/boost -Ideps/gc/include -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/test/HashMap.o test/HashMap.cpp
+	$(COMPILE.cc) -g -DSYLPH_DEBUG -D__GXX_EXPERIMENTAL_CXX0X__ -Isrc -Ideps/binreloc -Ideps/boost -Ideps/gc/include -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/src/Sylph/Core/Vector.o src/Sylph/Core/Vector.cpp
 
 ${OBJECTDIR}/src/Sylph/Core/StringBuffer.o: nbproject/Makefile-${CND_CONF}.mk src/Sylph/Core/StringBuffer.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src/Sylph/Core
