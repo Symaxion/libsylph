@@ -63,7 +63,7 @@ int main(int argc, char * argv[], char * envp[], char * apple[]) {
 
 int main(int argc, char * argv[]) {
     try {
-        SylphInit(argc, argv, null);
+        SylphInit(argc, argv, Sylph::null);
         Array<String> args(argc);
         for(int i = 0; i < argc; ++i) {
             args[i] = argv[i];
