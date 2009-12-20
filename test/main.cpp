@@ -18,28 +18,57 @@
  * Created on 19 augustus 2009, 13:12
  */
 
-#include <cppunit/extensions/TestFactoryRegistry.h>
-#include <cppunit/ui/text/TestRunner.h>
-#include <cppunit/CompilerOutputter.h>
-#include <cppunit/BriefTestProgressListener.h>
-#include <cppunit/TestResultCollector.h>
-#include <cppunit/TestResult.h>
+#include <gtest/gtest.h>
 
+#include <Sylph/OS/OS.h>
+#include <Sylph/Core/Application.h>
+#include <Sylph/Core/Array.h>
+#include <Sylph/Core/String.h>
+#include <Sylph/Core/Common.h>
+#include <Sylph/Core/AppType.h>
+#include <Sylph/Core/UncaughtExceptionHandler.h>
 
-#include <Sylph.h>
+#define SYLPH_APP_NAME "LibSylph Unit Tests"
 
-int SylphMain(Array<String> args) {
-
-    CppUnit::TextUi::TestRunner runner;
-    CppUnit::BriefTestProgressListener progress;
-    CppUnit::TestFactoryRegistry &registry =
-            CppUnit::TestFactoryRegistry::getRegistry();
-    runner.addTest(registry.makeTest());
-    runner.setOutputter(new CppUnit::CompilerOutputter(&runner.result(),
-            std::cerr));
-    runner.eventManager().addListener(&progress);
-    int wasSuccessful = runner.run("", false);
-    return wasSuccessful ? 0 : 1;
-
+#ifdef SYLPH_OS_MACOSX
+int main(int argc, char * argv[], char * envp[], char * apple[]);
+#else
+int main(int argc, char * argv[]);
+#endif
+static inline void SylphInit(int argc, char * argv[], char * apple[]) {
+    Sylph::Application::init(argc, argv, apple, Sylph::SYLPH_APP_TYPE,
+            SYLPH_APP_NAME);
 }
+
+#ifdef SYLPH_OS_MACOSX
+
+int main(int argc, char * argv[], char * envp[], char * apple[]) {
+    try {
+        SylphInit(argc, argv, apple);
+        ::testing::InitGoogleTest(&argc, argv);
+        return RUN_ALL_TESTS();
+    } catch(const Sylph::Assertion& as) {
+        Sylph::UncaughtExceptionHandler::handler->handleAssertion(as);
+        throw;
+    } catch (const Sylph::Exception & ex) {
+        Sylph::UncaughtExceptionHandler::handler->handle(ex);
+        throw;
+    }
+}
+#else
+
+int main(int argc, char * argv[]) {
+    try {
+        SylphInit(argc, argv, Sylph::null);
+        ::testing::InitGoogleTest(&argc, argv);
+        return RUN_ALL_TESTS();
+    } catch(const Sylph::Assertion& as) {
+        Sylph::UncaughtExceptionHandler::handler->handleAssertion(as);
+        throw;
+    } catch (const Sylph::Exception & ex) {
+        Sylph::UncaughtExceptionHandler::handler->handle(ex);
+        throw;
+    }
+}
+#endif
 

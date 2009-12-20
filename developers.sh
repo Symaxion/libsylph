@@ -60,19 +60,10 @@ do-cmake() {
         > SourcesList.txt
     echo '# the main source directory. DO NOT EDIT MANUALLY!' >> SourcesList.txt
     echo >> SourcesList.txt
-    echo 'SET ( STEST_ALL_PRE_SRC ' >> SourcesList.txt
-
-    for x in `find * | grep '\.tst$'`; do
-        echo -n "$x " >> SourcesList.txt
-    done
-
-    echo ' )' >> SourcesList.txt
-    echo >> SourcesList.txt
     echo 'SET ( STEST_ALL_SRC ' >> SourcesList.txt
-
-    for x in `find * | grep '\.tst$'`; do
-        y=`echo $x | sed 's/tst$/cpp/'`
-        echo -n "$y " >> SourcesList.txt
+    
+    for x in `find * | grep '\.cpp$'`; do
+        echo -n "$x " >> SourcesList.txt
     done
 
     echo ' )' >> SourcesList.txt
