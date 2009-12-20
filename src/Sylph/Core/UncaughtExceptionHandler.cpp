@@ -25,9 +25,38 @@ void DefaultUncaughtExceptionHandler::handle(const Exception& ex) const {
     thisapp->fail(buf);
 }
 
+void DefaultUncaughtExceptionHandler::handleAssertion
+    (const Assertion& ex) const {
+    StringBuffer buf;
+    buf << "Assertion failed: "<<ex.name()<<": "<<ex.what()<<'\n';
+    if(ex.tracemsg != null) {
+        buf << "Trace messages: \n";
+        Exception::TraceMessage * msg = ex.tracemsg;
+        while(msg->next != null) {
+            buf << '\t' << String(msg->message) << '\n';
+            msg = msg->next;
+        }
+    }
+    thisapp->fail(buf);
+}
+
 void DebugUncaughtExceptionHandler::handle(const Exception& ex) const {
     StringBuffer buf;
     buf << "Uncaught Exception: "<<ex.name()<<": "<<ex.what()<<'\n';
+    if(ex.tracemsg != null) {
+        buf << "Trace messages: \n";
+        Exception::TraceMessage * msg = ex.tracemsg;
+        while(msg->next != null) {
+            buf << '\t' << String(msg->message) << '\n';
+            msg = msg->next;
+        }
+    }
+    thisapp->fail(buf, ex._file, ex._line);
+}
+
+void DebugUncaughtExceptionHandler::handleAssertion(const Assertion& ex) const {
+    StringBuffer buf;
+    buf << "Assertion failed: "<<ex.name()<<": "<<ex.what()<<'\n';
     if(ex.tracemsg != null) {
         buf << "Trace messages: \n";
         Exception::TraceMessage * msg = ex.tracemsg;

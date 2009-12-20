@@ -55,8 +55,12 @@ int main(int argc, char * argv[], char * envp[], char * apple[]) {
             args[i] = argv[i];
         }
         return SylphMain(args);
-    } catch (Sylph::Exception & ex) {
+    } catch(const Sylph::Assertion& as) {
+        Sylph::UncaughtExceptionHandler::handler->handleAssertion(as);
+        throw;
+    } catch (const Sylph::Exception & ex) {
         Sylph::UncaughtExceptionHandler::handler->handle(ex);
+        throw;
     }
 }
 #else
@@ -69,8 +73,12 @@ int main(int argc, char * argv[]) {
             args[i] = argv[i];
         }
         return SylphMain(args);
-    } catch (Sylph::Exception & ex) {
+    } catch(const Sylph::Assertion& as) {
+        Sylph::UncaughtExceptionHandler::handler->handleAssertion(as);
+        throw;
+    } catch (const Sylph::Exception & ex) {
         Sylph::UncaughtExceptionHandler::handler->handle(ex);
+        throw;
     }
 }
 #endif
