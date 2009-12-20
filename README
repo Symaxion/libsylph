@@ -4,12 +4,12 @@
     / /           / /     / _____/            / /          / /
    / /       _   / /__   / /____    _    _   / / _____    / /_
   / /       / / / __  \  \_____ \  / /  / / / / / __  \  / __ \
- / /_____  / / / /__/ /  _____/ / / /__/ / / / / /__/ / / /  \ \
+ / /_____  / / / /__/ /  _____/ / / /__/ / / / / /__/ / / /``\ \
 /_______/ /_/ /______/  /______/  \___  / /_/ / _____/ /_/   /_/
-                                     / /     / /
+````````  ``  ```````   ```````    ``/ /  `` / /`````  ``    ``
                                     / /     / /
                                    /_/     /_/
-
+                                   ``      ``
 ###################################################################
 
   Table of Contents
@@ -43,8 +43,13 @@
        on Mac OS X.
 
        Minimal support for Microsoft Windows is included as well. However, no
-       compiler for this platform meets the required features (see 1.2), there-
-       fore LibSylph WON'T run on Microsoft Windows currently.
+       prepackaged compiler for this platform meets the required features (see 
+       section 1.2), therefore LibSylph WON'T run by default on Microsoft Windows
+       currently. You can always try to set up a conforming compiler yourself.
+       For that reason, we do not support nor endorse LibSylph on Microsoft
+       Windows. You will see that certain functionality might be flawed,
+       lacking, or nonexistent on Windows. Please do not report this as a bug
+       until official support is added.
 
     1.2 Supported Compilers
 
@@ -60,21 +65,30 @@
 
     2.1 Compiling the source code
 
-        2.1.1 Dependancies
+        2.1.1 Dependencies
              
-            LibSylph depends on boehm-gc,icu, and gettext. You need to have
+            LibSylph depends on boehm-gc, icu, and gettext. You need to have
             these programs installed first. Please consult your operating
             system vendor's manuals or look at our wiki.
-        
+            If you want to run test cases, you need to have gtest installed
+            as well. For more information about the unit test system, see
+            section 2.3.
+            
        2.1.2 Building
-    
+            
             To build the source code, issue the following commands:
    
                  cmake .
                  make
 
-            Please note you might need to explicitely specify the path to
-            a C++0x compiler by using -DCMAKE_CXX_COMPILER=/path/to/c++.
+            Please note you might need to specify the path to a C++0x compiler
+            explicitly by using `-DCMAKE_CXX_COMPILER=/path/to/c++'.
+
+            To enable debugging symbols and other useful debug output, such
+            as debug logging, assertions, and line number information,
+            pass `-DCMAKE_BUILD_TYPE=Debug -DSYLPH_DEBUG=1' to cmake. Read
+            the CMake documentation for more information about additional
+            parameters that control the build.
 
     2.2 Installing
 
@@ -82,6 +96,10 @@
         operating systems respective administrator account):
  
               make install
+        
+        By default, LibSylph will install in /usr/local. If this is not what
+        you want, you need to pass the -DCMAKE_INSTALL_PREFIX=/your/prefix
+        to cmake before the build.
 
     2.3 Running the test suite
  
@@ -90,7 +108,9 @@
  
              make test
 
-        This will build and run the entire test suite.
+        This will build and run the entire test suite. You need to have
+        gtest (Google Test) installed for this. Please consult the manual
+        of your operating system vendor on how to install this library.
 
   3. Acknowledgements
 
@@ -99,11 +119,37 @@
         Please see the files `AUTHORS' and `COPYING' to see the names of the
         original authors and the license of the code, respectively.
 
-    3.2 Reporting bugs.
+    3.2 Reporting bugs
 
-        TODO Mailing list.
-        We're poor devs, we don't have a mailing list. Just bother one of us
-        with your questions (see `AUTHORS') and if we're in a good mood, we'll
-        reply.
+        Please report bugs to the libsylph-devel@lists.sf.net mailing list. You
+        need to register in order to be able to send e-mails to this list.
+        See https://lists.sf.net/lists/listinfo/libsylph-devel for more info
+        on how to register. When submitting bug reports, please state the
+        version of LibSylph used. If you aren't using the latest version from
+        git, first look if your bug is already fixed. If it isn't, include
+        a full description of what is going wrong, and any possible error
+        messages.
+
+        Things you should mention:
+            * Your operating system, including version. For Linux users, state
+              your kernel version, architecture, and distro.
+            * The version of your compiler.
+            * The version of any other tools you are using important to the
+              problem (including LibSylph!).
+            * What you were trying to do, what actually happened, and how this
+              is not what you expected. Perhaps it's a feature, and not
+              a bug? ;)
+            * If you can reproduce the bug, and so, under what conditions.
+            * If the bug is specifically tied to a certain operating system, or
+              if you tried reproducing the bug on another operating system.
+            * A minimal test case showcasing the bug. In case this is not
+              possible, step-by-step instructions on how to reproduce the bug.
+              The test case should not contain anything more than necessary,
+              and shouldn't link with any other libraries than the standard
+              libraries and LibSylph. If a certain library is essential to
+              demonstrate the problem, please make sure it's readily available.
+            * Any error messages, including backtraces from a debugger in case
+              of program-terminating bugs (e.g. overflows, exceptions, ...)
+            * If you have one, a patch to fix the bug :)
 
 ###########################################################
