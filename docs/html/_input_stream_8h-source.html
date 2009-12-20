@@ -46,52 +46,51 @@
 <a name="l00025"></a>00025 <span class="preprocessor">#include "../Core/Object.h"</span>
 <a name="l00026"></a>00026 <span class="preprocessor">#include "../Core/Primitives.h"</span>
 <a name="l00027"></a>00027 <span class="preprocessor">#include "../Core/Array.h"</span>
-<a name="l00028"></a>00028 <span class="preprocessor">#include "../Core/BoolConvertible.h"</span>
-<a name="l00029"></a>00029 <span class="preprocessor">#include "../Core/String.h"</span>
-<a name="l00030"></a>00030 
-<a name="l00031"></a>00031 SYLPH_BEGIN_NAMESPACE
-<a name="l00032"></a>00032 SYLPH_PUBLIC
-<a name="l00033"></a>00033 
-<a name="l00034"></a>00034 <span class="keyword">class </span>InputStream : <span class="keyword">public</span> <span class="keyword">virtual</span> BoolConvertible&lt;InputStream&gt; {
-<a name="l00035"></a>00035 <span class="keyword">public</span>:
-<a name="l00036"></a>00036     InputStream() : closed(false) {}
-<a name="l00037"></a>00037     <span class="keyword">virtual</span> ~InputStream() {}
-<a name="l00038"></a>00038 
-<a name="l00039"></a>00039     <span class="keyword">virtual</span> fsize_t available() <span class="keyword">const</span> = 0;
-<a name="l00040"></a>00040     <span class="keyword">virtual</span> <span class="keywordtype">void</span> close() { closed = <span class="keyword">true</span>; }
-<a name="l00041"></a>00041     <span class="keyword">virtual</span> <span class="keywordtype">void</span> read(byte&amp; b) {
-<a name="l00042"></a>00042         operator&gt;&gt;(b);
-<a name="l00043"></a>00043     }
-<a name="l00044"></a>00044     <span class="keyword">virtual</span> fssize_t read(Array&lt;byte&gt;&amp; b, off_t offset = 0, <span class="keywordtype">size_t</span> len = 0) {
-<a name="l00045"></a>00045         <span class="keywordflow">if</span>(!len) len = b.length;
-<a name="l00046"></a>00046         <span class="keywordflow">if</span>(offset + len &gt; b.length) sthrow(ArrayException, <span class="stringliteral">"Index out of bounds"</span>);
-<a name="l00047"></a>00047         <span class="keywordflow">if</span>(eof()) <span class="keywordflow">return</span> -1;
-<a name="l00048"></a>00048         fssize_t actuallyRead = 0;
-<a name="l00049"></a>00049         <span class="keywordflow">for</span>(idx_t i = offset; i &lt; len; i++) {
-<a name="l00050"></a>00050             <span class="keywordflow">if</span>(eof()) <span class="keywordflow">break</span>;
-<a name="l00051"></a>00051             operator&gt;&gt;(b[i]);
-<a name="l00052"></a>00052             actuallyRead++;
-<a name="l00053"></a>00053         }
-<a name="l00054"></a>00054         <span class="keywordflow">return</span> actuallyRead;
-<a name="l00055"></a>00055     }
-<a name="l00056"></a>00056     <span class="keyword">virtual</span> <span class="keywordtype">bool</span> eof() <span class="keyword">const</span> = 0;
-<a name="l00057"></a>00057     <span class="keyword">virtual</span> <span class="keywordtype">bool</span> markSupported()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <span class="keyword">false</span>; }
-<a name="l00058"></a>00058     <span class="keyword">virtual</span> <span class="keywordtype">void</span> mark(fsize_t) = 0;
-<a name="l00059"></a>00059     <span class="keyword">virtual</span> fsize_t skip(fsize_t) = 0;
-<a name="l00060"></a>00060     <span class="keyword">virtual</span> <span class="keywordtype">void</span> reset() = 0;
-<a name="l00061"></a>00061 
-<a name="l00062"></a>00062     <span class="keyword">virtual</span> InputStream&amp; operator&gt;&gt;(byte&amp;) = 0;
-<a name="l00063"></a>00063     <span class="keyword">virtual</span> InputStream&amp; operator&gt;&gt;(Array&lt;byte&gt;&amp; b) {
-<a name="l00064"></a>00064         read(b);
-<a name="l00065"></a>00065         <span class="keywordflow">return</span> *<span class="keyword">this</span>;
-<a name="l00066"></a>00066     }
-<a name="l00067"></a>00067     <span class="keywordtype">bool</span> toBool()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> eof() &amp;&amp; !closed; }
-<a name="l00068"></a>00068 <span class="keyword">protected</span>:
-<a name="l00069"></a>00069     <span class="keywordtype">bool</span> closed;
-<a name="l00070"></a>00070 };
-<a name="l00071"></a>00071 SYLPH_END_NAMESPACE
-<a name="l00072"></a>00072 
-<a name="l00073"></a>00073 <span class="preprocessor">#endif  </span><span class="comment">/* INPUTSTREAM_H_ */</span>
+<a name="l00028"></a>00028 <span class="preprocessor">#include "../Core/String.h"</span>
+<a name="l00029"></a>00029 
+<a name="l00030"></a>00030 SYLPH_BEGIN_NAMESPACE
+<a name="l00031"></a>00031 SYLPH_PUBLIC
+<a name="l00032"></a>00032 
+<a name="l00033"></a>00033 <span class="keyword">class </span>InputStream : <span class="keyword">public</span> <span class="keyword">virtual</span> Object {
+<a name="l00034"></a>00034 <span class="keyword">public</span>:
+<a name="l00035"></a>00035     InputStream() : closed(false) {}
+<a name="l00036"></a>00036     <span class="keyword">virtual</span> ~InputStream() {}
+<a name="l00037"></a>00037 
+<a name="l00038"></a>00038     <span class="keyword">virtual</span> fsize_t available() <span class="keyword">const</span> = 0;
+<a name="l00039"></a>00039     <span class="keyword">virtual</span> <span class="keywordtype">void</span> close() { closed = <span class="keyword">true</span>; }
+<a name="l00040"></a>00040     <span class="keyword">virtual</span> <span class="keywordtype">void</span> read(byte&amp; b) {
+<a name="l00041"></a>00041         operator&gt;&gt;(b);
+<a name="l00042"></a>00042     }
+<a name="l00043"></a>00043     <span class="keyword">virtual</span> fssize_t read(Array&lt;byte&gt;&amp; b, off_t offset = 0, <span class="keywordtype">size_t</span> len = 0) {
+<a name="l00044"></a>00044         <span class="keywordflow">if</span>(!len) len = b.length;
+<a name="l00045"></a>00045         <span class="keywordflow">if</span>(offset + len &gt; b.length) sthrow(ArrayException, <span class="stringliteral">"Index out of bounds"</span>);
+<a name="l00046"></a>00046         <span class="keywordflow">if</span>(eof()) <span class="keywordflow">return</span> -1;
+<a name="l00047"></a>00047         fssize_t actuallyRead = 0;
+<a name="l00048"></a>00048         <span class="keywordflow">for</span>(idx_t i = offset; i &lt; len; i++) {
+<a name="l00049"></a>00049             <span class="keywordflow">if</span>(eof()) <span class="keywordflow">break</span>;
+<a name="l00050"></a>00050             operator&gt;&gt;(b[i]);
+<a name="l00051"></a>00051             actuallyRead++;
+<a name="l00052"></a>00052         }
+<a name="l00053"></a>00053         <span class="keywordflow">return</span> actuallyRead;
+<a name="l00054"></a>00054     }
+<a name="l00055"></a>00055     <span class="keyword">virtual</span> <span class="keywordtype">bool</span> eof() <span class="keyword">const</span> = 0;
+<a name="l00056"></a>00056     <span class="keyword">virtual</span> <span class="keywordtype">bool</span> markSupported()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <span class="keyword">false</span>; }
+<a name="l00057"></a>00057     <span class="keyword">virtual</span> <span class="keywordtype">void</span> mark(fsize_t) = 0;
+<a name="l00058"></a>00058     <span class="keyword">virtual</span> fsize_t skip(fsize_t) = 0;
+<a name="l00059"></a>00059     <span class="keyword">virtual</span> <span class="keywordtype">void</span> reset() = 0;
+<a name="l00060"></a>00060 
+<a name="l00061"></a>00061     <span class="keyword">virtual</span> InputStream&amp; operator&gt;&gt;(byte&amp;) = 0;
+<a name="l00062"></a>00062     <span class="keyword">virtual</span> InputStream&amp; operator&gt;&gt;(Array&lt;byte&gt;&amp; b) {
+<a name="l00063"></a>00063         read(b);
+<a name="l00064"></a>00064         <span class="keywordflow">return</span> *<span class="keyword">this</span>;
+<a name="l00065"></a>00065     }
+<a name="l00066"></a>00066     <span class="keywordtype">bool</span> toBool()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> eof() &amp;&amp; !closed; }
+<a name="l00067"></a>00067 <span class="keyword">protected</span>:
+<a name="l00068"></a>00068     <span class="keywordtype">bool</span> closed;
+<a name="l00069"></a>00069 };
+<a name="l00070"></a>00070 SYLPH_END_NAMESPACE
+<a name="l00071"></a>00071 
+<a name="l00072"></a>00072 <span class="preprocessor">#endif  </span><span class="comment">/* INPUTSTREAM_H_ */</span>
 </pre></div></div>
 <hr size="1" class="unhidden"><address style="text-align: right;"><small>
 Documentation for LibSylph by Doxygen
