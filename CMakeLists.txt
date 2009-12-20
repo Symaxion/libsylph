@@ -7,6 +7,8 @@ macro (get_gcc_version version)
     endif(CMAKE_COMPILER_IS_GNUCC)
 endmacro (get_gcc_version)
 
+option(SYLPH_DEBUG "Enable assertions and exception line info")
+
 get_gcc_version ( S_GCC_VERSION )
 
 if ( NOT CMAKE_COMPILER_IS_GNUCC OR S_GCC_VERSION STRLESS "4.4.0" )
