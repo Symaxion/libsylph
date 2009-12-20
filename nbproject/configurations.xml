@@ -46,6 +46,7 @@
           <itemPath>src/Sylph/Core/Common.h</itemPath>
           <itemPath>src/Sylph/Core/Comparable.h</itemPath>
           <itemPath>src/Sylph/Core/CurrentFunction.h</itemPath>
+          <itemPath>src/Sylph/Core/Debug.h</itemPath>
           <itemPath>src/Sylph/Core/Dictionary.h</itemPath>
           <itemPath>src/Sylph/Core/Equals.h</itemPath>
           <itemPath>src/Sylph/Core/Exception.h</itemPath>
@@ -106,11 +107,12 @@
       <itemPath>src/Sylph.h</itemPath>
     </logicalFolder>
     <logicalFolder name="f2" displayName="Test Cases" projectFiles="true">
-      <itemPath>test/Application.tst</itemPath>
-      <itemPath>test/Array.tst</itemPath>
-      <itemPath>test/HashMap.tst</itemPath>
-      <itemPath>test/String.tst</itemPath>
-      <itemPath>test/Vector.tst</itemPath>
+      <itemPath>test/Application.cpp</itemPath>
+      <itemPath>test/Array.cpp</itemPath>
+      <itemPath>test/HashMap.cpp</itemPath>
+      <itemPath>test/String.cpp</itemPath>
+      <itemPath>test/Vector.cpp</itemPath>
+      <itemPath>test/main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -133,12 +135,6 @@
       </toolsSet>
       <compileType>
         <ccTool>
-          <incDir>
-            <pElem>src</pElem>
-            <pElem>deps/binreloc</pElem>
-            <pElem>deps/boost</pElem>
-            <pElem>deps/gc/include</pElem>
-          </incDir>
           <commandLine>-std=c++0x</commandLine>
           <preprocessorList>
             <Elem>SYLPH_DEBUG</Elem>
@@ -171,13 +167,10 @@
         </cTool>
         <ccTool>
           <developmentMode>5</developmentMode>
-          <incDir>
-            <pElem>src</pElem>
-            <pElem>deps/binreloc</pElem>
-            <pElem>deps/boost</pElem>
-            <pElem>deps/gc/include</pElem>
-          </incDir>
           <commandLine>-std=c++0x</commandLine>
+          <preprocessorList>
+            <Elem>__GXX_EXPERIMENTAL_CXX0X__</Elem>
+          </preprocessorList>
         </ccTool>
         <fortranCompilerTool>
           <developmentMode>5</developmentMode>
