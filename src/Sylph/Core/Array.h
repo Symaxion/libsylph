@@ -462,6 +462,16 @@ inline bool operator<(const Array<T>& lhs, const Array<T>& rhs) {
             &rhs[0], &rhs[rhs.length-1]);
 }
 
+template<class T>
+std::ostream& operator<<(std::ostream& out, const Array<T>& rhs) {
+    out << "{ ";
+    for(idx_t i = 0; i < rhs.length - 1; ++i) {
+        out << rhs[i] << ", ";
+    }
+    out << rhs[rhs.length-1] << " }";
+    return out;
+}
+
 SYLPH_END_NAMESPACE
 
 #endif	/* ARRAY_H_ */
