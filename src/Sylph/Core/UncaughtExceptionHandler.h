@@ -24,6 +24,7 @@
 #include "Object.h"
 #include "Exception.h"
 #include "Application.h"
+#include "Debug.h"
 
 SYLPH_BEGIN_NAMESPACE
 
@@ -34,6 +35,7 @@ public:
     UncaughtExceptionHandler() {}
     virtual ~UncaughtExceptionHandler() {}
     virtual void handle(const Exception & ex) const = 0;
+    virtual void handleAssertion(const Assertion& as) const = 0;
 public:
     static UncaughtExceptionHandler * handler;
 };
@@ -41,11 +43,13 @@ public:
 struct DefaultUncaughtExceptionHandler : public UncaughtExceptionHandler {
     DefaultUncaughtExceptionHandler() {}
     void handle(const Exception & ex) const;
+    void handleAssertion(const Assertion& as) const;
 };
 
 struct DebugUncaughtExceptionHandler : public UncaughtExceptionHandler {
     DebugUncaughtExceptionHandler() {}
     void handle(const Exception & ex) const;
+    void handleAssertion(const Assertion& as) const;
 };
 SYLPH_END_NAMESPACE
 

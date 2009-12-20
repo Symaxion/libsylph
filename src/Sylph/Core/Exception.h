@@ -170,6 +170,18 @@ public: \
     }\
 }
 
+#define S_CREATE_EXCEPTION2(Class,Base) \
+class Class : public Base { \
+public: \
+    Class(const char * r = "", const char * f = "unknown", \
+            const unsigned int l = 0) \
+    throw () : Base(r,f,l) { \
+    } \
+    virtual const char* name() const throw() {\
+        return #Class ; \
+    }\
+}
+
 /**
  * A generic Exception when an error occurs with an Array. Examples of such
  * errors are Array overflow or underflow, Array length too short or too long,
