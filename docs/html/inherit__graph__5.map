@@ -1,9 +1,0 @@
-<area shape="rect" href="$class_sylph_1_1_object.html" title="The root of all classes." alt="" coords="9,134,140,161">
-<area shape="rect" href="$class_sylph_1_1_array__base.html" title="Sylph::Array_base\&lt; T \&gt;" alt="" coords="204,58,422,85">
-<area shape="rect" href="$class_sylph_1_1_array__base.html" title="Array_base provides a base class for the specialisations of Array." alt="" coords="204,109,422,135">
-<area shape="rect" href="$class_sylph_1_1_sylph_iterator.html" title="SylphIterator provides a easier-to-use wrapper around STL iterators." alt="" coords="189,210,437,237">
-<area shape="rect" href="$class_sylph_1_1_array.html" title="Array provides a safe array." alt="" coords="510,7,678,34">
-<area shape="rect" href="$class_sylph_1_1_array_3_01_t_01_5_01_4.html" title="Specialisation of the Array class for pointers." alt="" coords="504,58,685,85">
-<area shape="rect" href="$class_sylph_1_1_collection.html" title="Sylph::Collection\&lt; T * \&gt;" alt="" coords="485,109,704,135">
-<area shape="rect" href="$class_sylph_1_1_collection.html" title="Sylph::Collection\&lt; T \&gt;" alt="" coords="493,159,696,186">
-<area shape="rect" href="$class_sylph_1_1_collection.html" title="A Collection represents a group of objects, known as its elements." alt="" coords="493,210,696,237">

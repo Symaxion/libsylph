@@ -42,63 +42,61 @@
 <a name="l00021"></a>00021 <span class="preprocessor">#ifndef OUTPUTSTREAM_H_</span>
 <a name="l00022"></a>00022 <span class="preprocessor"></span><span class="preprocessor">#define OUTPUTSTREAM_H_</span>
 <a name="l00023"></a>00023 <span class="preprocessor"></span>
-<a name="l00024"></a>00024 
-<a name="l00025"></a>00025 <span class="preprocessor">#include "../Core/BoolConvertible.h"</span>
-<a name="l00026"></a>00026 <span class="preprocessor">#include "../Core/Exception.h"</span>
-<a name="l00027"></a>00027 <span class="preprocessor">#include "../Core/Array.h"</span>
-<a name="l00028"></a>00028 
-<a name="l00029"></a>00029 SYLPH_BEGIN_NAMESPACE
-<a name="l00030"></a>00030 SYLPH_PUBLIC
-<a name="l00031"></a>00031 
-<a name="l00032"></a>00032 <span class="keyword">class </span>OutputStream : <span class="keyword">public</span> <span class="keyword">virtual</span> BoolConvertible&lt;OutputStream&gt; {
-<a name="l00033"></a>00033 <span class="keyword">public</span>:
-<a name="l00034"></a>00034 
-<a name="l00035"></a>00035     OutputStream() : closed(false) {
-<a name="l00036"></a>00036     }
-<a name="l00037"></a>00037     <span class="keyword">virtual</span> ~OutputStream() {
-<a name="l00038"></a>00038 
-<a name="l00039"></a>00039     }
-<a name="l00040"></a>00040     <span class="keyword">virtual</span> <span class="keywordtype">void</span> close() {
-<a name="l00041"></a>00041         closed = <span class="keyword">true</span>;
-<a name="l00042"></a>00042     }
-<a name="l00043"></a>00043 
-<a name="l00044"></a>00044     <span class="keyword">virtual</span> <span class="keywordtype">void</span> flush() {}
-<a name="l00045"></a>00045     <span class="keyword">virtual</span> <span class="keywordtype">void</span> write(<span class="keyword">const</span> Array&lt;byte&gt; b, off_t off = 0, <span class="keywordtype">size_t</span> len = 0) {
-<a name="l00046"></a>00046         <span class="keywordflow">if</span>(len = 0) len = b.length;
-<a name="l00047"></a>00047         <span class="keywordflow">if</span>(off+len &gt; b.length) sthrow(ArrayException, <span class="stringliteral">"Array out of bounds"</span>);
-<a name="l00048"></a>00048         <span class="keywordflow">for</span>(idx_t i = off; i &lt; off+len; i++) {
-<a name="l00049"></a>00049             operator&lt;&lt;(b[i]);
-<a name="l00050"></a>00050         }
-<a name="l00051"></a>00051     }
-<a name="l00052"></a>00052     <span class="keyword">virtual</span> <span class="keywordtype">void</span> write(<span class="keyword">const</span> byte b) {
-<a name="l00053"></a>00053         operator&lt;&lt;(b);
-<a name="l00054"></a>00054     }
-<a name="l00055"></a>00055 
-<a name="l00056"></a>00056     <span class="keyword">virtual</span> OutputStream&amp; operator&lt;&lt;(<span class="keyword">const</span> byte b) = 0;
-<a name="l00057"></a>00057     OutputStream&amp; operator&lt;&lt;(const Array&lt;byte&gt; b) {
-<a name="l00058"></a>00058         write(b);
-<a name="l00059"></a>00059     }
-<a name="l00060"></a>00060 
-<a name="l00061"></a>00061     OutputStream &amp; operator&lt;&lt;(OutputStream&amp;(*f)(OutputStream&amp;)) {
-<a name="l00062"></a>00062         <span class="keywordflow">return</span> f(*<span class="keyword">this</span>);
-<a name="l00063"></a>00063     }
-<a name="l00064"></a>00064 
-<a name="l00065"></a>00065     <span class="keywordtype">bool</span> toBool()<span class="keyword"> const </span>{
-<a name="l00066"></a>00066         <span class="keywordflow">return</span> !closed;
-<a name="l00067"></a>00067     }
-<a name="l00068"></a>00068 <span class="keyword">protected</span>:
-<a name="l00069"></a>00069     <span class="keywordtype">bool</span> closed;
-<a name="l00070"></a>00070 };
-<a name="l00071"></a>00071 
-<a name="l00072"></a>00072 <span class="keyword">inline</span> OutputStream&amp; flush(OutputStream&amp; s) {
-<a name="l00073"></a>00073     s.flush();
-<a name="l00074"></a>00074     <span class="keywordflow">return</span> s;
-<a name="l00075"></a>00075 }
-<a name="l00076"></a>00076 
-<a name="l00077"></a>00077 
-<a name="l00078"></a>00078 SYLPH_END_NAMESPACE
-<a name="l00079"></a>00079 <span class="preprocessor">#endif  </span><span class="comment">/* OUTPUTSTREAM_H_ */</span>
-<a name="l00080"></a>00080 
+<a name="l00024"></a>00024 <span class="preprocessor">#include "../Core/Exception.h"</span>
+<a name="l00025"></a>00025 <span class="preprocessor">#include "../Core/Array.h"</span>
+<a name="l00026"></a>00026 
+<a name="l00027"></a>00027 SYLPH_BEGIN_NAMESPACE
+<a name="l00028"></a>00028 SYLPH_PUBLIC
+<a name="l00029"></a>00029 
+<a name="l00030"></a>00030 <span class="keyword">class </span>OutputStream : <span class="keyword">public</span> <span class="keyword">virtual</span> Object {
+<a name="l00031"></a>00031 <span class="keyword">public</span>:
+<a name="l00032"></a>00032 
+<a name="l00033"></a>00033     OutputStream() : closed(false) {
+<a name="l00034"></a>00034     }
+<a name="l00035"></a>00035     <span class="keyword">virtual</span> ~OutputStream() {
+<a name="l00036"></a>00036 
+<a name="l00037"></a>00037     }
+<a name="l00038"></a>00038     <span class="keyword">virtual</span> <span class="keywordtype">void</span> close() {
+<a name="l00039"></a>00039         closed = <span class="keyword">true</span>;
+<a name="l00040"></a>00040     }
+<a name="l00041"></a>00041 
+<a name="l00042"></a>00042     <span class="keyword">virtual</span> <span class="keywordtype">void</span> flush() {}
+<a name="l00043"></a>00043     <span class="keyword">virtual</span> <span class="keywordtype">void</span> write(<span class="keyword">const</span> Array&lt;byte&gt; b, off_t off = 0, <span class="keywordtype">size_t</span> len = 0) {
+<a name="l00044"></a>00044         <span class="keywordflow">if</span>(len = 0) len = b.length;
+<a name="l00045"></a>00045         <span class="keywordflow">if</span>(off+len &gt; b.length) sthrow(ArrayException, <span class="stringliteral">"Array out of bounds"</span>);
+<a name="l00046"></a>00046         <span class="keywordflow">for</span>(idx_t i = off; i &lt; off+len; i++) {
+<a name="l00047"></a>00047             operator&lt;&lt;(b[i]);
+<a name="l00048"></a>00048         }
+<a name="l00049"></a>00049     }
+<a name="l00050"></a>00050     <span class="keyword">virtual</span> <span class="keywordtype">void</span> write(<span class="keyword">const</span> byte b) {
+<a name="l00051"></a>00051         operator&lt;&lt;(b);
+<a name="l00052"></a>00052     }
+<a name="l00053"></a>00053 
+<a name="l00054"></a>00054     <span class="keyword">virtual</span> OutputStream&amp; operator&lt;&lt;(<span class="keyword">const</span> byte b) = 0;
+<a name="l00055"></a>00055     OutputStream&amp; operator&lt;&lt;(const Array&lt;byte&gt; b) {
+<a name="l00056"></a>00056         write(b);
+<a name="l00057"></a>00057     }
+<a name="l00058"></a>00058 
+<a name="l00059"></a>00059     OutputStream &amp; operator&lt;&lt;(OutputStream&amp;(*f)(OutputStream&amp;)) {
+<a name="l00060"></a>00060         <span class="keywordflow">return</span> f(*<span class="keyword">this</span>);
+<a name="l00061"></a>00061     }
+<a name="l00062"></a>00062 
+<a name="l00063"></a>00063     <span class="keywordtype">bool</span> toBool()<span class="keyword"> const </span>{
+<a name="l00064"></a>00064         <span class="keywordflow">return</span> !closed;
+<a name="l00065"></a>00065     }
+<a name="l00066"></a>00066 <span class="keyword">protected</span>:
+<a name="l00067"></a>00067     <span class="keywordtype">bool</span> closed;
+<a name="l00068"></a>00068 };
+<a name="l00069"></a>00069 
+<a name="l00070"></a>00070 <span class="keyword">inline</span> OutputStream&amp; flush(OutputStream&amp; s) {
+<a name="l00071"></a>00071     s.flush();
+<a name="l00072"></a>00072     <span class="keywordflow">return</span> s;
+<a name="l00073"></a>00073 }
+<a name="l00074"></a>00074 
+<a name="l00075"></a>00075 
+<a name="l00076"></a>00076 SYLPH_END_NAMESPACE
+<a name="l00077"></a>00077 <span class="preprocessor">#endif  </span><span class="comment">/* OUTPUTSTREAM_H_ */</span>
+<a name="l00078"></a>00078 
 </pre></div></div>
 <hr size="1" class="unhidden"><address style="text-align: right;"><small>
 Documentation for LibSylph by Doxygen

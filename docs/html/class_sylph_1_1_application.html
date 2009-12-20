@@ -46,16 +46,16 @@ Inheritance diagram for Sylph::Application:</div>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Returns the location of the file containing the object code of the application.  <a href="#86f3f28afa3682734789a12ae578c656"></a><br></td></tr>
 <tr><td colspan="2"><br><h2>Static Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">static void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sylph_1_1_application.html#81f7feb7bbcfc9277f4a714ef91dcfea">init</a> (int argc, char *argv[], char *apple[], <a class="el" href="namespace_sylph.html#8e3a8cf0fd1c1cf417e7834d2a473dc4">AppType</a> type)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sylph_1_1_application.html#4c4e7adbcf061be18bf1dd99fadf9c0c">init</a> (int argc, char *argv[], char *apple[], <a class="el" href="namespace_sylph.html#8e3a8cf0fd1c1cf417e7834d2a473dc4">AppType</a> type, <a class="el" href="class_sylph_1_1_string.html">String</a> name)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Initialize the current application.  <a href="#81f7feb7bbcfc9277f4a714ef91dcfea"></a><br></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Initialize the current application.  <a href="#4c4e7adbcf061be18bf1dd99fadf9c0c"></a><br></td></tr>
 </table>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
 Class representing an application. 
 <p>
 An application is any file containing executable object code that can be directly invoked by the operating system through a well-defined entry point. Probably the most famous example is the <code>thisapp</code> instance of this class, a pointer to an <a class="el" href="class_sylph_1_1_application.html" title="Class representing an application.">Application</a> object representing the application accessing the pointer.<p>
 It is not possible to directly instantiate an <a class="el" href="class_sylph_1_1_application.html" title="Class representing an application.">Application</a> object. Future releases may contain functions to create <a class="el" href="class_sylph_1_1_application.html" title="Class representing an application.">Application</a> objects and run the accompanying object code. <hr><h2>Member Function Documentation</h2>
-<a class="anchor" name="81f7feb7bbcfc9277f4a714ef91dcfea"></a><!-- doxytag: member="Sylph::Application::init" ref="81f7feb7bbcfc9277f4a714ef91dcfea" args="(int argc, char *argv[], char *apple[], AppType type)" -->
+<a class="anchor" name="4c4e7adbcf061be18bf1dd99fadf9c0c"></a><!-- doxytag: member="Sylph::Application::init" ref="4c4e7adbcf061be18bf1dd99fadf9c0c" args="(int argc, char *argv[], char *apple[], AppType type, String name)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -81,7 +81,13 @@ It is not possible to directly instantiate an <a class="el" href="class_sylph_1_
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="namespace_sylph.html#8e3a8cf0fd1c1cf417e7834d2a473dc4">AppType</a>&nbsp;</td>
-          <td class="paramname"> <em>type</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>type</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_sylph_1_1_string.html">String</a>&nbsp;</td>
+          <td class="paramname"> <em>name</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -99,8 +105,9 @@ This function will give the correct value to <code>thisapp</code>. Note that if 
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>argc</em>&nbsp;</td><td>The number of arguments passed to the entry point designated by the platform. </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>argv</em>&nbsp;</td><td>An array of C strings containing the arguments passed to the entry point designated by the platform. This array is expected to have a length of argc or more. If argc is larger than the actual length of argv, undefined behaviour may occur. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>apple</em>&nbsp;</td><td>The so-called 'apple-vector', an array of chars unique to the Mac OS X-platform. This array is used to determine the location of the binary solely on the Mac platform and is the fourth argument to the <code>main</code> entry function. On other platforms, this array may be substituted by a <code>NULL</code> pointer. Substituting this array on the Mac platform for anything else than the actual apple vector passed to the <code>main</code> function may lead to undefined behaviour. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>apple</em>&nbsp;</td><td>The so-called 'apple-vector', an array of chars unique to the Mac OS X-platform. This array is used to determine the location of the binary solely on the Mac platform and is the fourth argument to the <code>main</code> entry function. On other platforms, this array may be substituted by a <code>null</code> pointer. Substituting this array on the Mac platform for anything else than the actual apple vector passed to the <code>main</code> function may lead to undefined behaviour. </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>type</em>&nbsp;</td><td>An enumerated type representing the implementation to use for resource retrieval. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>name</em>&nbsp;</td><td>The name of the application. Used in debug messages and for retrieving configuration files. </td></tr>
   </table>
 </dl>
 

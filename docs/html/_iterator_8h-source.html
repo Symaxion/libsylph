@@ -150,7 +150,7 @@
 <a name="l00143"></a>00143         <span class="keywordflow">return</span> (_end_reached_ == other._end_reached_) &amp;&amp; equals(other);
 <a name="l00144"></a>00144     }
 <a name="l00145"></a>00145 
-<a name="l00146"></a>00146     <span class="keywordtype">bool</span> <a class="code" href="namespace_sylph.html#e0e899a2df3d9094e6692b2cdebde679" title="Short circuits the operator!= for BoolConvertibles.">operator!=</a>(<span class="keyword">const</span> <a class="code" href="class_sylph_1_1_forward_iterator.html">ForwardIterator&lt;T, I&gt;</a>&amp; other)<span class="keyword"> const </span>{
+<a name="l00146"></a>00146     <span class="keywordtype">bool</span> operator!=(<span class="keyword">const</span> <a class="code" href="class_sylph_1_1_forward_iterator.html">ForwardIterator&lt;T, I&gt;</a>&amp; other)<span class="keyword"> const </span>{
 <a name="l00147"></a>00147         <span class="keywordflow">return</span> !(*<span class="keyword">this</span> == other);
 <a name="l00148"></a>00148     }
 <a name="l00149"></a>00149     <span class="keywordtype">void</span> construct(<span class="keywordtype">bool</span> begin, <span class="keywordtype">void</span>* obj) {

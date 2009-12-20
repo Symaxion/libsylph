@@ -55,7 +55,7 @@
 <a name="l00047"></a>00047     <span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt; <span class="keyword">friend</span> T* <a class="code" href="namespace_sylph.html#1d4330bb87843d404b430a8b8a4b4af5" title="Cast an Any to the type it is holding.">any_cast</a>(<a class="code" href="class_sylph_1_1_any.html" title="Wrapper class for any kind of class.">Any</a> &amp; any);
 <a name="l00048"></a>00048 <span class="keyword">public</span>:
 <a name="l00049"></a>00049 
-<a name="l00054"></a><a class="code" href="class_sylph_1_1_any.html#63cde8641e21cda8efe82b3752bed66f">00054</a>     <a class="code" href="class_sylph_1_1_any.html#63cde8641e21cda8efe82b3752bed66f" title="Creates a new, empty Any object.">Any</a>() : content(NULL) {}
+<a name="l00054"></a><a class="code" href="class_sylph_1_1_any.html#63cde8641e21cda8efe82b3752bed66f">00054</a>     <a class="code" href="class_sylph_1_1_any.html#63cde8641e21cda8efe82b3752bed66f" title="Creates a new, empty Any object.">Any</a>() : content(null) {}
 <a name="l00055"></a>00055     <span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;
 <a name="l00063"></a><a class="code" href="class_sylph_1_1_any.html#b03f14f5215fe956a8e76d6350024f02">00063</a>     <a class="code" href="class_sylph_1_1_any.html#b03f14f5215fe956a8e76d6350024f02" title="Creates a new Any object from an existing object.">Any</a>(<span class="keyword">const</span> T &amp; value) : content(new AnyContainer&lt;T&gt;(value)) {}
 <a name="l00064"></a>00064 
@@ -118,7 +118,7 @@
 <a name="l00162"></a>00162 
 <a name="l00170"></a><a class="code" href="namespace_sylph.html#1d4330bb87843d404b430a8b8a4b4af5">00170</a> <span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt; T * <a class="code" href="namespace_sylph.html#1d4330bb87843d404b430a8b8a4b4af5" title="Cast an Any to the type it is holding.">any_cast</a>(<a class="code" href="class_sylph_1_1_any.html" title="Wrapper class for any kind of class.">Any</a> &amp; any) {
 <a name="l00171"></a>00171     check_nullptr(any.<a class="code" href="class_sylph_1_1_any.html#fb53f24e61d99c6e0da59ffc396aea2f">content</a>);
-<a name="l00172"></a>00172     <span class="keywordflow">if</span>(any.<a class="code" href="class_sylph_1_1_any.html#77fc0fdfa5c15a6366378f5f770e2e4d" title="Gets the typeinfo of the data pointed to.">type</a>() != <span class="keyword">typeid</span>(T)) <span class="keywordflow">return</span> NULL;
+<a name="l00172"></a>00172     <span class="keywordflow">if</span>(any.<a class="code" href="class_sylph_1_1_any.html#77fc0fdfa5c15a6366378f5f770e2e4d" title="Gets the typeinfo of the data pointed to.">type</a>() != <span class="keyword">typeid</span>(T)) <span class="keywordflow">return</span> null;
 <a name="l00173"></a>00173     <span class="keywordflow">else</span> <span class="keywordflow">return</span> &amp;(*(<span class="keyword">static_cast&lt;</span>Any::AnyContainer&lt;T&gt; *<span class="keyword">&gt;</span>(any.<a class="code" href="class_sylph_1_1_any.html#fb53f24e61d99c6e0da59ffc396aea2f">content</a>))-&gt;held);
 <a name="l00174"></a>00174 }
 <a name="l00175"></a>00175 SYLPH_END_NAMESPACE

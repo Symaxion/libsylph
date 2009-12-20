@@ -40,12 +40,6 @@
 <tr><td class="memItemLeft" nowrap align="right" valign="top">class &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sylph_1_1_array.html">Array</a></td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight"><a class="el" href="class_sylph_1_1_array.html" title="Array provides a safe array.">Array</a> provides a safe array.  <a href="class_sylph_1_1_array.html#_details">More...</a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">class &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sylph_1_1_bool_convertible__base.html">BoolConvertible_base</a></td></tr>
-
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Abstract base class for <a class="el" href="class_sylph_1_1_bool_convertible.html" title="Implementation of the Safe Bool Idiom.">BoolConvertible</a>.  <a href="class_sylph_1_1_bool_convertible__base.html#_details">More...</a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">class &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sylph_1_1_bool_convertible.html">BoolConvertible</a></td></tr>
-
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Implementation of the Safe Bool Idiom.  <a href="class_sylph_1_1_bool_convertible.html#_details">More...</a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">class &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sylph_1_1_byte_buffer.html">ByteBuffer</a></td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">struct &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_sylph_1_1_equals.html">Equals</a></td></tr>
@@ -70,7 +64,7 @@
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Generic exception to flag that a method is not supported in the current state of the object it is invoked on.  <a href="class_sylph_1_1_illegal_state_exception.html#_details">More...</a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">class &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sylph_1_1_null_pointer_exception.html">NullPointerException</a></td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">This <a class="el" href="class_sylph_1_1_exception.html" title="This class provides a ready-to-use interface for exception handling.">Exception</a> gets thrown when a pointer to <code>NULL</code> is passed to a function or method.  <a href="class_sylph_1_1_null_pointer_exception.html#_details">More...</a><br></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">This <a class="el" href="class_sylph_1_1_exception.html" title="This class provides a ready-to-use interface for exception handling.">Exception</a> gets thrown when a pointer to <code>null</code> is passed to a function or method.  <a href="class_sylph_1_1_null_pointer_exception.html#_details">More...</a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">class &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_sylph_1_1_serialization_exception.html">SerializationException</a></td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">This <a class="el" href="class_sylph_1_1_exception.html" title="This class provides a ready-to-use interface for exception handling.">Exception</a> gets thrown if there is a problem with serializing or deserializing an object.  <a href="class_sylph_1_1_serialization_exception.html#_details">More...</a><br></td></tr>
@@ -139,14 +133,6 @@ typedef std::uint16_t&nbsp;</td><td class="memItemRight" valign="bottom"><a clas
 <tr><td class="memTemplItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_sylph.html#049ea1ef37b015ca0292637e6d2e3ffa">operator&lt;</a> (const <a class="el" href="class_sylph_1_1_array.html">Array</a>&lt; T &gt; &amp;lhs, const <a class="el" href="class_sylph_1_1_array.html">Array</a>&lt; T &gt; &amp;rhs)</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Compares the two Arrays.  <a href="#049ea1ef37b015ca0292637e6d2e3ffa"></a><br></td></tr>
-<tr><td class="memTemplParams" nowrap colspan="2">template&lt;typename T , typename U &gt; </td></tr>
-<tr><td class="memTemplItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_sylph.html#7be2729c2252c04c807bed8da37a6d78">operator==</a> (const <a class="el" href="class_sylph_1_1_bool_convertible.html">BoolConvertible</a>&lt; T &gt; &amp;lhs, const <a class="el" href="class_sylph_1_1_bool_convertible.html">BoolConvertible</a>&lt; U &gt; &amp;rhs)</td></tr>
-
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Short circuits the <code>operator==</code> for BoolConvertibles.  <a href="#7be2729c2252c04c807bed8da37a6d78"></a><br></td></tr>
-<tr><td class="memTemplParams" nowrap colspan="2">template&lt;typename T , typename U &gt; </td></tr>
-<tr><td class="memTemplItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_sylph.html#e0e899a2df3d9094e6692b2cdebde679">operator!=</a> (const <a class="el" href="class_sylph_1_1_bool_convertible.html">BoolConvertible</a>&lt; T &gt; &amp;lhs, const <a class="el" href="class_sylph_1_1_bool_convertible.html">BoolConvertible</a>&lt; U &gt; &amp;rhs)</td></tr>
-
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Short circuits the <code>operator!=</code> for BoolConvertibles.  <a href="#e0e899a2df3d9094e6692b2cdebde679"></a><br></td></tr>
 <tr><td class="memTemplParams" nowrap colspan="2">template&lt;class T , class... Args&gt; </td></tr>
 <tr><td class="memTemplItemLeft" nowrap align="right" valign="top">T *&nbsp;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_sylph.html#63ddec6709f9855d2db98dc3ff22179b">newgc</a> (const Args &amp;...args)</td></tr>
 
@@ -282,7 +268,7 @@ This cast is completely safe, and either returns a correct pointer, or completel
     <tr><td valign="top"></td><td valign="top"><em>any</em>&nbsp;</td><td>An <a class="el" href="class_sylph_1_1_any.html" title="Wrapper class for any kind of class.">Any</a> to convert to an instance of the type it is representing </td></tr>
   </table>
 </dl>
-<dl class="return" compact><dt><b>Returns:</b></dt><dd>A pointer to the internal data of the <a class="el" href="class_sylph_1_1_any.html" title="Wrapper class for any kind of class.">Any</a> if the conversion was successful, <code>NULL</code> otherwise. </dd></dl>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd>A pointer to the internal data of the <a class="el" href="class_sylph_1_1_any.html" title="Wrapper class for any kind of class.">Any</a> if the conversion was successful, <code>null</code> otherwise. </dd></dl>
 
 </div>
 </div><p>
@@ -344,39 +330,6 @@ Example (using Qt): <pre>
 
 </div>
 </div><p>
-<a class="anchor" name="e0e899a2df3d9094e6692b2cdebde679"></a><!-- doxytag: member="Sylph::operator!=" ref="e0e899a2df3d9094e6692b2cdebde679" args="(const BoolConvertible&lt; T &gt; &amp;lhs, const BoolConvertible&lt; U &gt; &amp;rhs)" -->
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T , typename U &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">void Sylph::operator!=           </td>
-          <td>(</td>
-          <td class="paramtype">const BoolConvertible&lt; T &gt; &amp;&nbsp;</td>
-          <td class="paramname"> <em>lhs</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const BoolConvertible&lt; U &gt; &amp;&nbsp;</td>
-          <td class="paramname"> <em>rhs</em></td><td>&nbsp;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td><td><code> [inline]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-Short circuits the <code>operator!=</code> for BoolConvertibles. 
-<p>
-You are ought to implement your own <code>operator!=</code> for a <a class="el" href="class_sylph_1_1_bool_convertible.html" title="Implementation of the Safe Bool Idiom.">BoolConvertible</a> derived class. 
-</div>
-</div><p>
 <a class="anchor" name="049ea1ef37b015ca0292637e6d2e3ffa"></a><!-- doxytag: member="Sylph::operator&lt;" ref="049ea1ef37b015ca0292637e6d2e3ffa" args="(const Array&lt; T &gt; &amp;lhs, const Array&lt; T &gt; &amp;rhs)" -->
 <div class="memitem">
 <div class="memproto">
@@ -410,39 +363,6 @@ Compares the two Arrays.
 To Arrays compare less than when their lengths are identical and each of the items compare less than to the item on the same position in the other array. <dl class="return" compact><dt><b>Returns:</b></dt><dd><em>true</em> when the first array compares less than the first, <em>false</em> otherwise. </dd></dl>
 <dl class="user" compact><dt><b>Template requirements:</b></dt><dd><em>T</em> LessThanComparable </dd></dl>
 
-</div>
-</div><p>
-<a class="anchor" name="7be2729c2252c04c807bed8da37a6d78"></a><!-- doxytag: member="Sylph::operator==" ref="7be2729c2252c04c807bed8da37a6d78" args="(const BoolConvertible&lt; T &gt; &amp;lhs, const BoolConvertible&lt; U &gt; &amp;rhs)" -->
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T , typename U &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">void Sylph::operator==           </td>
-          <td>(</td>
-          <td class="paramtype">const BoolConvertible&lt; T &gt; &amp;&nbsp;</td>
-          <td class="paramname"> <em>lhs</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const BoolConvertible&lt; U &gt; &amp;&nbsp;</td>
-          <td class="paramname"> <em>rhs</em></td><td>&nbsp;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td><td><code> [inline]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-Short circuits the <code>operator==</code> for BoolConvertibles. 
-<p>
-You are ought to implement your own <code>operator==</code> for a <a class="el" href="class_sylph_1_1_bool_convertible.html" title="Implementation of the Safe Bool Idiom.">BoolConvertible</a> derived class. 
 </div>
 </div><p>
 <a class="anchor" name="10c329a0349416d794bedf8f67feb25f"></a><!-- doxytag: member="Sylph::operator==" ref="10c329a0349416d794bedf8f67feb25f" args="(const Array&lt; T &gt; &amp;lhs, const Array&lt; T &gt; &amp;rhs)" -->
