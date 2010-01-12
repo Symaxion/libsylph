@@ -19,7 +19,6 @@
         <itemPath>test/CMakeLists.txt</itemPath>
       </logicalFolder>
       <itemPath>AUTHORS</itemPath>
-      <itemPath>BRANCH</itemPath>
       <itemPath>CMakeLists.txt</itemPath>
       <itemPath>COPYING</itemPath>
       <itemPath>README</itemPath>
@@ -31,6 +30,7 @@
     </logicalFolder>
     <logicalFolder name="src" displayName="Sources" projectFiles="true">
       <logicalFolder name="f1" displayName="csylph" projectFiles="true">
+        <itemPath>src/csylph/csylph.cpp</itemPath>
         <itemPath>src/csylph/csylph.h</itemPath>
       </logicalFolder>
       <logicalFolder name="Sylph" displayName="Sylph" projectFiles="true">
