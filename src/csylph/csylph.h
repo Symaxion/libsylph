@@ -27,8 +27,11 @@ extern "C" {
 
     static int syerror = 0;
 
-    #define SYENULL 1
-    #define SYECPPEXC 2
+    static char* sy_excp = (char*)malloc(255);
+
+    #define SYENONE     0
+    #define SYENULL     1
+    #define SYECPPEXC   2
 
     enum sylph_apptype_t {
         sy_at_linux,
@@ -38,11 +41,11 @@ extern "C" {
     };
 
     typedef struct sylph_file_t {
-        const char* sy_f_loc;
+        char* sy_f_loc;
     } sylph_file_t;
 
-    extern int sylph_init(int, char**, sylph_apptype_t);
-    extern int sylph_initm(int, char**, char**, sylph_apptype_t);
+    extern int sylph_init(int, char**, sylph_apptype_t,char*);
+    extern int sylph_initm(int, char**, char**, sylph_apptype_t,char*);
 
     extern int sy_bundle(sylph_file_t*);
     extern int sy_rscdir(sylph_file_t*);
