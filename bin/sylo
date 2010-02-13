@@ -1,0 +1,187 @@
+#!/usr/bin/perl
+#
+# LibSylph tools (Sylo)
+# Copyright (C) 2009 Frank "SeySayux" Erens <seysayux@gmail.com>
+#
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the LibSylph Pulbic License as published
+# by the LibSylph Developers; either version 1.0 of the License, or
+# (at your option) any later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the LibSylph
+# Public License for more details.
+#
+# You should have received a copy of the LibSylph Public License
+# along with this Library, if not, contact the LibSylph Developers.
+#
+
+#########################################################################
+
+use strict;
+use warnings;
+use feature qw{switch};
+use File::Copy;
+use Getopt::Long qw(:config gnu_getopt);
+use Pod::Usage;
+
+my @_aResources;
+my @_aBinaries;
+my $_sOs = getOs();
+my $_sLayoutType = 'bundle';
+my $_sAppname = '';
+my $_fOutdir = '.';
+
+sub serror {
+    print STDERR "sylo: error: @_\n";
+    exit 1;
+}
+
+sub swarn {
+    print STDERR "sylo: warning: @_\n";
+}
+
+sub getOs {
+    given($^O) {
+        when("darwin") { return "macosx"; }
+        when("linux") { return "linux"; }
+    }
+    serror "Unknown operating system: $^O";
+}
+
+sub packBundle {
+    mkdir $_fOutdir . "/" . $_sAppname . ".app";
+    mkdir $_fOutdir . "/" . $_sAppname . ".app/Contents";
+    my $fBundleCont = $_fOutdir . "/" . $_sAppname . ".app/Contents";
+
+    my $fBindir = $fBundleCont . "/";
+    my $fResdir = $fBundleCont . "/Resources";
+
+    given($_sOs) {
+        when("macosx") { $fBindir .= "MacOS"; }
+        when("linux") { $fBindir .= "Linux"; }
+    }
+
+    mkdir $fBindir;
+    mkdir $fResdir;
+
+    foreach (@_aBinaries) {
+        my $fBinary = $_;
+        if(-d $fBinary) {
+            my $hinDir;
+            opendir($hinDir, $fBinary) or serror("Could not open $fBinary");
+            foreach my $fDirEnt (readdir($hinDir)) {
+                copy($fDirEnt, $fBindir);
+            }
+            closedir($hinDir);
+        } elsif(-f $fBinary) {
+            copy($fBinary, $fBindir);
+        } else {
+            swarn("$fBinary: no such file or directory");
+        }
+    }
+    foreach (@_aResources) {
+        my $fResource = $_;
+        if(-d $fResource) {
+            my $hinDir;
+            opendir($hinDir, $fResource) or serror("Could not open $fResource");
+            foreach my $fDirEnt (readdir($fResource)) {
+                copy($fDirEnt, $fResdir);
+            }
+            closedir($hinDir);
+        } else {
+            swarn("$fResource: not a directory");
+        }
+    }
+    print STDERR "sylo: created bundle ${_fOutdir}/${_sAppname}.app\n"
+}
+
+sub packFhs {
+    mkdir "${_fOutdir}/${$_sAppname}";
+    mkdir "${_fOutdir}/${$_sAppname}/bin";
+    mkdir "${_fOutdir}/${$_sAppname}/share";
+    mkdir "${_fOutdir}/${$_sAppname}/share" . lc($_sAppname);
+
+    my $fBindir = "${_fOutdir}/${$_sAppname}/bin";
+    my $fResdir = "${_fOutdir}/${$_sAppname}/share" . lc($_sAppname);
+
+    foreach (@_aBinaries) {
+        my $fBinary = $_;
+        if(-d $fBinary) {
+            my $hinDir;
+            opendir($hinDir, $fBinary) or serror("Could not open $fBinary");
+            foreach my $fDirEnt (readdir($hinDir)) {
+                copy($fDirEnt, $fBindir);
+            }
+            closedir($hinDir);
+        } elsif(-f $fBinary) {
+            copy($fBinary, $fBindir);
+        } else {
+            swarn("$fBinary: no such file or directory");
+        }
+    }
+    foreach (@_aResources) {
+        my $fResource = $_;
+        if(-d $fResource) {
+            my $hinDir;
+            opendir($hinDir, $fResource) or serror("Could not open $fResource");
+            foreach my $fDirEnt (readdir($fResource)) {
+                copy($fDirEnt, $fResdir);
+            }
+            closedir($hinDir);
+        } else {
+            swarn("$fResource: not a directory");
+        }
+    }
+    print STDERR "sylo: created fhs layout in ${_fOutdir}/${_sAppname}\n"
+}
+
+sub main {
+    GetOptions("resources|R=s" => \@_aResources,
+        "binary|binaries|B=s" => \@_aBinaries,
+        "system|S=s" => \$_sOs,
+        "layout|L=s" => \$_sLayoutType,
+        "name|appname|n=s" => \$_sAppname,
+        "dest|out|o=s" => \$_fOutdir,
+        "help|h" => sub { pod2usage(1); });
+
+    serror "Need an application name" if ($_sAppname eq '');
+    serror "Invalid operating system: $_sOs\nValid options are: linux macosx"
+           if($_sOs ne "macosx" and $_sOs ne "linux");
+    serror "Destination folder $_fOutdir does not exist" if(!-d $_fOutdir);
+    serror "Invalid layout: $_sLayoutType\nValid options are: bundle fhs"
+           if($_sLayoutType ne "bundle" and $_sOs ne "fhs");
+
+    if(@_aBinaries == 0) { swarn "No binaries specified"; }
+
+    given($_sLayoutType) {
+        when("bundle") { packBundle(); }
+        when("fhs") { packFhs(); }
+    }
+}
+
+main;
+
+__END__
+
+=pod
+
+=head1 NAME
+
+sylo - LibSylph Layout generator
+
+=head1 SYNOPSIS
+
+sylo [option...]
+
+  Options:
+  --resources,-R  Specifies the folder(s) where resources are located.
+  --binary,-B     Specifies the folder or file of the binary.
+  --system,-S     The operating system for which to pack [default=current]
+  --layout,-L     The type of layout to generate [default=bundle]
+  --name,-n       The name of the application to pack
+  --dest,-o       The destination of the packed application [default=current]
+  --help,-h       Display this help message.
+
+=cut
