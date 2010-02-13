@@ -3,7 +3,8 @@
   <logicalFolder name="root" displayName="root" projectFiles="true">
     <logicalFolder name="f1" displayName="Other files" projectFiles="true">
       <logicalFolder name="f4" displayName="bin" projectFiles="true">
-        <itemPath>bin/sylphparams</itemPath>
+        <itemPath>bin/sylo</itemPath>
+        <itemPath>bin/sylphparams.in</itemPath>
       </logicalFolder>
       <logicalFolder name="f1" displayName="binreloc" projectFiles="true">
         <itemPath>deps/binreloc/CMakeLists.txt</itemPath>
