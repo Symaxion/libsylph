@@ -452,15 +452,81 @@ public:
     String copy() const;
     bool merge(String other) const;
 
-    static String fromHex(int, bool up);
-    static String fromOct(int);
-    static String fromSci(float, bool up);
-    static String fromSci(double, bool up);
+    /**
+     * Creates a string from a hexadecimal number. The returned string will
+     * match the regex <code>0[xX][0-9a-fA-F]+</code>.
+     * @param i The integer value to create the string from.
+     * @param up Whether to use uppercase alphabetic characters. This will turn
+     * all alphabetic characters (@c A through @c F and @c X ) uppercase.
+     * @return A string representing the given value in hex.
+     */
+    static String fromHex(int i, bool up);
 
+    /**
+     * Creates a string from a octal number. The returned string will match the
+     * regex <code>0[0-9]+</code>.
+     * @param i The integer value to create the string from.
+     * @return A string representing the given value in octal.
+     */
+    static String fromOct(int i);
+
+    /**
+     * Creates a string from given float in scientific notation. The returned
+     * string will match the regex <code>[0-9]+[eE]-?[0-9]{1,2}</code>.
+     * @param f A float to represent in scientific notation
+     * @param up Whether to print the exponentional @c E in upper case.
+     */
+    static String fromSci(float f, bool up);
+
+    /**
+     * Creates a string from given double in scientific notation. The returned
+     * string will match the regex <code>[0-9]+[eE]-?[0-9]{1,2}</code>.
+     * @param d A double to represent in scientific notation
+     * @param up Whether to print the exponentional @c E in upper case.
+     */
+    static String fromSci(double d, bool up);
+
+    /**
+     * Interprets this string as a bool.
+     * @return <i>true</i> iff this string equals ignoring case
+     * <code>"true"</code>, false otherwise.
+     */
     bool boolValue() const;
+
+    /**
+     * Interprets this string as a signed 32-bit integer. The string has to
+     * match the regex <code>-?[0-9]+</code> after removing leading and trailing
+     * whitespace.
+     * @return The value of the integer interpreting this String in base 10. If
+     * the String does not match the given regex, 0 is returned.
+     */
     sint intValue() const;
+
+    /**
+     * Interprets this string as an unsigned 32-bit integer. The string has to
+     * match the regex <code>[0-9]+</code> after removing leading and trailing
+     * whitespace.
+     * @return The value of the integer interpreting this String in base 10. If
+     * the String does not match the given regex, 0 is returned.
+     */
     suint uintValue() const;
+
+    /**
+     * Interprets this string as a signed 64-bit integer. The string has to
+     * match the regex <code>-?[0-9]+</code> after removing leading and trailing
+     * whitespace.
+     * @return The value of the integer interpreting this String in base 10. If
+     * the String does not match the given regex, 0 is returned.
+     */
     slong longValue() const;
+
+    /**
+     * Interprets this string as an unsigned 64-bit integer. The string has to
+     * match the regex <code>[0-9]+</code> after removing leading and trailing
+     * whitespace.
+     * @return The value of the integer interpreting this String in base 10. If
+     * the String does not match the given regex, 0 is returned.
+     */
     sulong ulongValue() const;
     float floatValue() const;
     double doubleValue() const;
