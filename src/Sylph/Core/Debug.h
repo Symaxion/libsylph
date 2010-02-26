@@ -39,7 +39,7 @@ S_CREATE_ASSERTION(StubTest);
 #define SYLPH_STUB std::cerr << "Warning: stub function: " << \
     S_CURRENT_FUNCTION << " in " << __FILE__ << ":" << __LINE__ << "\n"
 
-#define SYLPH_STUB_TEST sthrow(StubTest,"Stub test")
+#define SYLPH_STUB_TEST FAIL() << "Stub test!"
 
 template<class A>
 inline void Assert(bool b) {
