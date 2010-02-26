@@ -1,4 +1,4 @@
-#include <gtest/gtest.h>
+#include "SylphTest.h"
 #include <Sylph/Core/String.h>
 #include <Sylph/Core/Debug.h>
 
@@ -158,16 +158,16 @@ namespace {
         EXPECT_STREQ("foobar", c);
         String t = "français";
         const char * c2 = t.ascii();
-        EXPECT_STREQ("fran?ais", c);
+        EXPECT_STREQ("fran?ais", c2);
     }
 
     TEST_F(TestString, testToUtf8) {
         String s = "foobar";
-        const char * c = s.ascii();
+        const char * c = s.utf8();
         EXPECT_STREQ("foobar", c);
         String t = "français";
-        const char * c2 = t.ascii();
-        EXPECT_STREQ("français", c);
+        const char * c2 = t.utf8();
+        EXPECT_STREQ("français", c2);
     }
 
     TEST_F(TestString, testLowerCase) {
@@ -200,19 +200,30 @@ namespace {
     }
 
     TEST_F(TestString, testContainment) {
-        SYLPH_STUB_TEST;
+        String s = "foobar";
+        EXPECT_TRUE(s.contains("oba"));
     }
 
     TEST_F(TestString, testTrim) {
-        SYLPH_STUB_TEST;
+        String s = "\t\twtf  \n";
+        EXPECT_EQ("wtf",s.trim());
     }
 
     TEST_F(TestString, testSubstring) {
-        SYLPH_STUB_TEST;
+        String s = "foobar";
+        EXPECT_EQ("oba",s.substring(2,4));
     }
 
     TEST_F(TestString, testIndexOf) {
-        SYLPH_STUB_TEST;
+        String s = "foobar";
+        EXPECT_EQ(3,s.indexOf("b"));
+        EXPECT_EQ(2,s.indexOf("ob"));
+    }
+
+    TEST_F(TestString, testLastIndexOf) {
+        String s = "foobar";
+        EXPECT_EQ(3,s.lastIndexOf("b"));
+        EXPECT_EQ(2,s.lastIndexOf("ob"));
     }
 
     TEST_F(TestString, testMerge) {
@@ -220,11 +231,18 @@ namespace {
     }
 
     TEST_F(TestString, testHashUniqueness) {
-        SYLPH_STUB_TEST;
+        String s = "foo";
+        String t = "bar";
+        Hash<String> hashf;
+        EXPECT_NE(hashf(s),hashf(t));
     }
 
     TEST_F(TestString, testHashEquality) {
-        SYLPH_STUB_TEST;
+        String s = "foo";
+        String t = "foo";
+        Hash<String> hashf;
+        EXPECT_EQ(hashf(s),hashf(s));
+        EXPECT_EQ(hashf(s),hashf(t));
     }
 
     TEST_F(TestString, testToBool) {
@@ -253,8 +271,9 @@ namespace {
         EXPECT_EQ(0, d.intValue());
     }
 
-    TEST_F(TestString, testToFloat) {
-        SYLPH_STUB_TEST;
+    TEST_F(TestString, testToFloatSimple) {
+        String s = "3.14";
+        EXPECT_FLOAT_EQ(3.14f,s.floatValue());
     }
 
     TEST_F(TestString, testAppend) {

@@ -191,6 +191,17 @@ const char * double2stringe(double d, bool u) {
     return buf;
 }
 
+bool startsWithHelper(idx_t from, const String& left, const String& right) {
+    if (left.length() - from < right.length()) return false;
+    suint count = 0;
+    for (idx_t i = 0; i < (left.length() - from); i++) {
+        if(i >= right.length()) break;
+        if (left.at(i + from) == right.at(i)) count++;
+        else break;
+    }
+    return count == right.length();
+}
+
 //////////////////////////////////////////////////////////////////////
 
 String::String() {
@@ -399,13 +410,7 @@ bool String::endsWith(const String other) const {
 }
 
 bool String::startsWith(const String other) const {
-    if (this->length() < other.length()) return false;
-    suint count = 0;
-    for (idx_t i = 0; i < other.length(); i++) {
-        if (this->at(i) == other.at(i)) count++;
-        else break;
-    }
-    return count == other.length();
+    return startsWithHelper(0,*this, other);
 }
 
 bool String::contains(const String other) const {
@@ -417,9 +422,11 @@ String String::trim() const {
     size_t endct = length() - 1;
     for (idx_t i = 0; i < this->length(); i++) {
         if (isspace(this->at(i))) beginct++;
+        else break;
     }
-    for (idx_t i = length() - 1; i >= 0; i--) {
+    for (idx_t i = (length() - 1); i > 0; i--) {
         if (isspace(this->at(i))) endct--;
+        else break;
     }
     return substring(beginct, endct);
 }
@@ -434,21 +441,12 @@ String String::substring(std::idx_t begin, std::idx_t end) const {
 
 sidx_t String::indexOf(const String substr, idx_t start) const {
     if (this->length() - start < substr.length()) return -1;
-    suint currentidx = 0;
-    suint idxexport = 0;
-    for (idx_t i = start; i < substr.length(); i++) {
-        if (this->at(i) == substr.at(currentidx)) {
-            currentidx++;
-        } else {
-            currentidx = 0;
-        }
-        if (currentidx == substr.length()) {
-            idxexport = i;
-            break;
+    for (idx_t i = start; i < (this->length() - substr.length()); i++) {
+        if(startsWithHelper(i,*this,substr)) {
+            return i;
         }
     }
-    return currentidx == substr.length() ?
-            this->length() - idxexport - substr.length() : -1;
+    return -1;
 }
 
 sidx_t String::lastIndexOf(const String substr) const {
