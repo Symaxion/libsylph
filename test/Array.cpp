@@ -1,4 +1,4 @@
-#include <gtest/gtest.h>
+#include "SylphTest.h"
 #include <Sylph/Core/Array.h>
 #include <Sylph/Core/Debug.h>
 
