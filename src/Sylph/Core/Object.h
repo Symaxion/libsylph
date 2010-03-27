@@ -42,6 +42,24 @@
 SYLPH_BEGIN_NAMESPACE
 SYLPH_PUBLIC
 
+/**
+ * null is a safe %null pointer. It can only be assigned to pointers, not to
+ * ints. Therefore, no overload confusion can happen. E.g.:
+ * <pre>
+ * \#define NULL 0
+ * int* i1 = NULL; // works
+ * int  i2 = NULL; // works too, but maybe not what you want
+ *
+ * \#undef NULL
+ * \#define NULL ((void*)0)
+ * int* i3 = NULL; // does not work
+ * int* i4 = (int*)NULL; // needs explicit cast in C++
+ * int  i5 = NULL; // does not work -- like expected
+ *
+ * int* i5 = null; // works
+ * int  i6 = null; // does not work -- like expected
+ * </pre>
+ */
 struct null {
     null() {}
     template<class T>
