@@ -28,7 +28,7 @@
 <h1>Sylph::Any Class Reference</h1><!-- doxytag: class="Sylph::Any" --><!-- doxytag: inherits="Sylph::Object" -->Wrapper class for any kind of class.  
 <a href="#_details">More...</a>
 <p>
-<code>#include &lt;<a class="el" href="_any_8h-source.html">Sylph/Core/Any.h</a>&gt;</code>
+<code>#include &lt;<a class="el" href="_any_8h-source.html">/Users/frank/Dropbox/sylph/src/Sylph/Core/Any.h</a>&gt;</code>
 <p>
 <div class="dynheader">
 Inheritance diagram for Sylph::Any:</div>
@@ -78,7 +78,7 @@ Inheritance diagram for Sylph::Any:</div>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
 Wrapper class for any kind of class. 
 <p>
-<a class="el" href="class_sylph_1_1_any.html" title="Wrapper class for any kind of class.">Any</a> allows you to wrap any kind of class in it, in other words, it acts as an universal supertype. It is similar to what <code>void*</code> was used in C, but safer to use (wrong casts return a null pointer instead of a corrupted pointer). <a class="el" href="class_sylph_1_1_any.html" title="Wrapper class for any kind of class.">Any</a> is useful for using in collections, it will allow any kind of object to be stored in a single collection. Other languages or toolkits use a superclass for this purpose, (e.g. <a class="el" href="class_sylph_1_1_object.html" title="The root of all classes.">Object</a>), but this does not take primitive or alien (i.e. from another API) types into account. <a class="el" href="class_sylph_1_1_any.html" title="Wrapper class for any kind of class.">Any</a> can be used safely for such purposes and is recommended over <code>void*</code> or <a class="el" href="class_sylph_1_1_object.html" title="The root of all classes.">Object</a>. <p>
+<a class="el" href="class_sylph_1_1_any.html" title="Wrapper class for any kind of class.">Any</a> allows you to wrap any kind of class in it, in other words, it acts as an universal supertype. It is similar to what <code>void*</code> was used in C, but safer to use (wrong casts return a <a class="el" href="struct_sylph_1_1null.html" title="null is a safe null pointer.">null</a> pointer instead of a corrupted pointer). <a class="el" href="class_sylph_1_1_any.html" title="Wrapper class for any kind of class.">Any</a> is useful for using in collections, it will allow any kind of object to be stored in a single collection. Other languages or toolkits use a superclass for this purpose, (e.g. <a class="el" href="class_sylph_1_1_object.html" title="The root of all classes.">Object</a>), but this does not take primitive or alien (i.e. from another API) types into account. <a class="el" href="class_sylph_1_1_any.html" title="Wrapper class for any kind of class.">Any</a> can be used safely for such purposes and is recommended over <code>void*</code> or <a class="el" href="class_sylph_1_1_object.html" title="The root of all classes.">Object</a>. <p>
 An example of a predefined collection using <a class="el" href="class_sylph_1_1_any.html" title="Wrapper class for any kind of class.">Any</a> is Dictionary, which acts as a <a class="el" href="class_sylph_1_1_hash_map.html">HashMap</a> of <a class="el" href="class_sylph_1_1_string.html" title="The String class represents character strings.">String</a>,<a class="el" href="class_sylph_1_1_any.html" title="Wrapper class for any kind of class.">Any</a>. <hr><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" name="63cde8641e21cda8efe82b3752bed66f"></a><!-- doxytag: member="Sylph::Any::Any" ref="63cde8641e21cda8efe82b3752bed66f" args="()" -->
 <div class="memitem">
@@ -98,7 +98,7 @@ An example of a predefined collection using <a class="el" href="class_sylph_1_1_
 <p>
 Creates a new, empty <a class="el" href="class_sylph_1_1_any.html" title="Wrapper class for any kind of class.">Any</a> object. 
 <p>
-The internal pointer will be initialized to <code>null</code>. 
+The internal pointer will be initialized to <code><a class="el" href="struct_sylph_1_1null.html" title="null is a safe null pointer.">null</a></code>. 
 </div>
 </div><p>
 <a class="anchor" name="b03f14f5215fe956a8e76d6350024f02"></a><!-- doxytag: member="Sylph::Any::Any" ref="b03f14f5215fe956a8e76d6350024f02" args="(const T &amp;value)" -->
@@ -172,7 +172,7 @@ The internal pointer will be copied to this new <a class="el" href="class_sylph_
 <p>
 Check if this <a class="el" href="class_sylph_1_1_any.html" title="Wrapper class for any kind of class.">Any</a> is pointing to something. 
 <p>
-<dl class="return" compact><dt><b>Returns:</b></dt><dd><em>true</em> if the internal pointer is a <code>null</code> pointer, <em>false</em> otherwise. </dd></dl>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd><em>true</em> if the internal pointer is a <code><a class="el" href="struct_sylph_1_1null.html" title="null is a safe null pointer.">null</a></code> pointer, <em>false</em> otherwise. </dd></dl>
 
 </div>
 </div><p>
@@ -258,7 +258,7 @@ The result returned is compatible with the return value of the <code>typeid</cod
  } else {
      // give some error message about the wrong type
  }
- </pre> If the internal data pointer is a <code>null</code> pointer, it will return the <code>typeid</code> of <code>void</code>. 
+ </pre> If the internal data pointer is a <code><a class="el" href="struct_sylph_1_1null.html" title="null is a safe null pointer.">null</a></code> pointer, it will return the <code>typeid</code> of <code>void</code>. 
 </div>
 </div><p>
 <hr><h2>Friends And Related Function Documentation</h2>
@@ -288,7 +288,7 @@ This cast is completely safe, and either returns a correct pointer, or completel
     <tr><td valign="top"></td><td valign="top"><em>any</em>&nbsp;</td><td>An <a class="el" href="class_sylph_1_1_any.html" title="Wrapper class for any kind of class.">Any</a> to convert to an instance of the type it is representing </td></tr>
   </table>
 </dl>
-<dl class="return" compact><dt><b>Returns:</b></dt><dd>A pointer to the internal data of the <a class="el" href="class_sylph_1_1_any.html" title="Wrapper class for any kind of class.">Any</a> if the conversion was successful, <code>null</code> otherwise. </dd></dl>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd>A pointer to the internal data of the <a class="el" href="class_sylph_1_1_any.html" title="Wrapper class for any kind of class.">Any</a> if the conversion was successful, <code><a class="el" href="struct_sylph_1_1null.html" title="null is a safe null pointer.">null</a></code> otherwise. </dd></dl>
 
 </div>
 </div><p>
