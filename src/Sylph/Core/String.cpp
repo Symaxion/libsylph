@@ -20,6 +20,7 @@ SYLPH_BEGIN_NAMESPACE
 const char * float2string(float f) {
     char * buf = (char*)GC_MALLOC_ATOMIC(20);
     idx_t idx = 0;
+    ssize_t tot = 9;
     // first check if it we need no decimal dot...
     if (int(f) == f) {
         // no decimal dot. use conversion from int
@@ -29,6 +30,7 @@ const char * float2string(float f) {
 
         // first, get the integral part
         const char * buf2 = String(int(f));
+        tot -= strlen(buf);
         carraycopy(buf2, 0, buf, 0, strlen(buf2));
         idx += strlen(buf2);
 
@@ -375,10 +377,13 @@ const Array<uchar> String::utf16() const {
 
 String String::toLowerCase() const {
     Array<uchar> dest(length() << 1);
-    UErrorCode error;
+    UErrorCode error = U_ZERO_ERROR;
     size_t newlength = u_strToLower(dest.carray(), dest.length,
             strdata->data.carray(), length(), 0, &error);
-    // Todo: check for errors
+    if(U_FAILURE(error)) {
+        sthrow(Exception,u_errorName(error));
+    }
+
     Array<uchar> toReturn(newlength);
     arraycopy(dest, 0, toReturn, 0, newlength);
     return toReturn;
@@ -386,10 +391,14 @@ String String::toLowerCase() const {
 
 String String::toUpperCase() const {
     Array<uchar> dest(length() << 1);
-    UErrorCode error;
+    UErrorCode error = U_ZERO_ERROR;
     size_t newlength = u_strToUpper(dest.carray(), dest.length,
             strdata->data.carray(), length(), 0, &error);
-    // Todo: check for errors
+
+    if(U_FAILURE(error)) {
+        sthrow(Exception,u_errorName(error));
+    }
+
     Array<uchar> toReturn(newlength);
     arraycopy(dest, 0, toReturn, 0, newlength);
     return toReturn;
