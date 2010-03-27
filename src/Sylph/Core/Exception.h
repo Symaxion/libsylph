@@ -233,7 +233,9 @@ SYLPH_END_NAMESPACE
 
 #define strace \
 catch(::Sylph::Exception& ex) { \
-    ex.addTraceMessage(S_CURRENT_FUNCTION); \
+    char buf[2048]; \
+    sprintf(buf,"Function: `%s\'", S_CURRENT_FUNCTION); \
+    ex.addTraceMessage(buf); \
     throw; \
 } do{} while(0)
 #ifdef SYLPH_DEBUG
@@ -243,6 +245,8 @@ catch(::Sylph::Exception& ex) { \
 #endif
 
 #define if_nullptr(__x) if(SYLPH_UNLIKELY(__x == 0))
-#define check_nullptr(__x) if_nullptr(__x) sthrow (NullPointerException, "Dereferenced a null pointer")
+#define check_nullptr(__x) if_nullptr(__x) sthrow (NullPointerException, \
+    "Dereferenced a null pointer")
+        
 #endif	/* EXCEPTION_H_ */
 

@@ -17,10 +17,9 @@ void DefaultUncaughtExceptionHandler::handle(const Exception& ex) const {
     if(ex.tracemsg != null) {
         buf << "Trace messages: \n";
         Exception::TraceMessage * msg = ex.tracemsg;
-        while(msg->next != null) {
-            buf << '\t' << String(msg->message) << '\n';
-            msg = msg->next;
-        }
+        do {
+            buf << "    " << String(msg->message) << '\n';
+        } while((msg->next != null) && (msg = msg->next));
     }
     thisapp->fail(buf);
 }
@@ -32,10 +31,9 @@ void DefaultUncaughtExceptionHandler::handleAssertion
     if(ex.tracemsg != null) {
         buf << "Trace messages: \n";
         Exception::TraceMessage * msg = ex.tracemsg;
-        while(msg->next != null) {
-            buf << '\t' << String(msg->message) << '\n';
-            msg = msg->next;
-        }
+        do {
+            buf << "    " << String(msg->message) << '\n';
+        } while((msg->next != null) && (msg = msg->next));
     }
     thisapp->fail(buf);
 }
@@ -46,10 +44,9 @@ void DebugUncaughtExceptionHandler::handle(const Exception& ex) const {
     if(ex.tracemsg != null) {
         buf << "Trace messages: \n";
         Exception::TraceMessage * msg = ex.tracemsg;
-        while(msg->next != null) {
-            buf << '\t' << String(msg->message) << '\n';
-            msg = msg->next;
-        }
+        do {
+            buf << "    " << String(msg->message) << '\n';
+        } while((msg->next != null) && (msg = msg->next));
     }
     thisapp->fail(buf, ex._file, ex._line);
 }
@@ -60,10 +57,9 @@ void DebugUncaughtExceptionHandler::handleAssertion(const Assertion& ex) const {
     if(ex.tracemsg != null) {
         buf << "Trace messages: \n";
         Exception::TraceMessage * msg = ex.tracemsg;
-        while(msg->next != null) {
-            buf << '\t' << String(msg->message) << '\n';
-            msg = msg->next;
-        }
+        do {
+            buf << "    " << String(msg->message) << '\n';
+        } while((msg->next != null) && (msg = msg->next));
     }
     thisapp->fail(buf, ex._file, ex._line);
 }
