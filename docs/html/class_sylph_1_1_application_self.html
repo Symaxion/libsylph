@@ -28,7 +28,7 @@
 <h1>Sylph::ApplicationSelf Class Reference</h1><!-- doxytag: class="Sylph::ApplicationSelf" --><!-- doxytag: inherits="Sylph::Application" -->An <a class="el" href="class_sylph_1_1_application.html" title="Class representing an application.">Application</a> representing the currently running application.  
 <a href="#_details">More...</a>
 <p>
-<code>#include &lt;<a class="el" href="_application_8h-source.html">Sylph/Core/Application.h</a>&gt;</code>
+<code>#include &lt;<a class="el" href="_application_8h-source.html">/Users/frank/Dropbox/sylph/src/Sylph/Core/Application.h</a>&gt;</code>
 <p>
 <div class="dynheader">
 Inheritance diagram for Sylph::ApplicationSelf:</div>
@@ -129,7 +129,7 @@ This function will give the correct value to <code>thisapp</code>. Note that if 
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>argc</em>&nbsp;</td><td>The number of arguments passed to the entry point designated by the platform. </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>argv</em>&nbsp;</td><td>An array of C strings containing the arguments passed to the entry point designated by the platform. This array is expected to have a length of argc or more. If argc is larger than the actual length of argv, undefined behaviour may occur. </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>apple</em>&nbsp;</td><td>The so-called 'apple-vector', an array of chars unique to the Mac OS X-platform. This array is used to determine the location of the binary solely on the Mac platform and is the fourth argument to the <code>main</code> entry function. On other platforms, this array may be substituted by a <code>null</code> pointer. Substituting this array on the Mac platform for anything else than the actual apple vector passed to the <code>main</code> function may lead to undefined behaviour. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>apple</em>&nbsp;</td><td>The so-called 'apple-vector', an array of chars unique to the Mac OS X-platform. This array is used to determine the location of the binary solely on the Mac platform and is the fourth argument to the <code>main</code> entry function. On other platforms, this array may be substituted by a <code><a class="el" href="struct_sylph_1_1null.html" title="null is a safe null pointer.">null</a></code> pointer. Substituting this array on the Mac platform for anything else than the actual apple vector passed to the <code>main</code> function may lead to undefined behaviour. </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>type</em>&nbsp;</td><td>An enumerated type representing the implementation to use for resource retrieval. </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>name</em>&nbsp;</td><td>The name of the application. Used in debug messages and for retrieving configuration files. </td></tr>
   </table>

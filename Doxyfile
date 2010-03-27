@@ -31,7 +31,7 @@ PROJECT_NAME           = LibSylph
 # This could be handy for archiving the generated documentation or 
 # if some version control system is used.
 
-PROJECT_NUMBER         = "0.1 alpha 3"
+PROJECT_NUMBER         = "0.1 alpha 4"
 
 # The OUTPUT_DIRECTORY tag is used to specify the (relative or absolute) 
 # base path where the generated documentation will be put. 
@@ -576,7 +576,7 @@ WARN_LOGFILE           =
 # directories like "/usr/src/myproject". Separate the files or directories 
 # with spaces.
 
-INPUT                  = /Users/frank/Projecten/C++/sylph/src
+INPUT                  = /Users/frank/Dropbox/sylph/src
 
 # This tag can be used to specify the character encoding of the source files 
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding, which is 
