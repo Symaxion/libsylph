@@ -22,6 +22,7 @@
 #define	HASHMAP_H_
 
 #include "Object.h"
+#include "Debug.h"
 #include "Hash.h"
 #include "Equals.h"
 #include "Util.h"
@@ -34,11 +35,11 @@
 SYLPH_BEGIN_NAMESPACE
 
 /**
- * @todo Write documentation!
+ * @todo Write better documentation!
  */
 template<class key_, class value_,
 class hash_ = Hash<key_>,
-class equals_ = Equals<key_> >
+class equals_ = Equals<Value*> >
 class HashMap : public virtual Object {
 public:
     class Entry;
@@ -81,44 +82,24 @@ public:
         key(_key), map(_map) {
         }
 
-        inline operator Value*() {
-            return map->get(key);
+        inline operator Value&() {
+            Value * v = map->get(key);
+            check_nullptr(v);
+            return *v;
         }
 
-        inline operator const Value*() const {
-            return map->get(key);
-        }
-
-        inline Value& operator*() {
-            return *map->get(key);
-        }
-
-        inline const Value& operator*() const {
-            return *map->get(key);
-        }
-
-        inline Value* operator->() {
-            return map->get(key);
-        }
-
-        inline const Value* operator->() const {
-            return map->get(key);
+        inline operator const Value&() const {
+            Value * v = map->get(key);
+            check_nullptr(v);
+            return *v;
         }
 
         inline void operator=(Value& value) {
             map->put(key, &value);
         }
+
         inline void operator=(Value value) {
             map->put(key, new Value(value));
-        }
-
-        bool operator==(const Value& v) {
-            return static_cast<Value*> (*this) != NULL && v != NULL &&
-                    static_cast<Value*> (*this) == v;
-        }
-
-        bool operator!=(const Value& v) {
-            return !(*this == v);
         }
 
     private:
@@ -202,19 +183,40 @@ public:
 
 public:
 
+    /**
+     * Creates a new HashMap.
+     * @param initialCapacity The capacity the HashMap starts with. Recommended
+     * to be a prime.
+     * @param _loadFactor The percentage of the HashMap that has to be filled
+     * before rehashing starts.
+     * @param h A suitable hash function
+     * @param e A suitable equals function.
+     */
     explicit HashMap(std::size_t initialCapacity = 11, float _loadFactor = .75f,
             HashFunction h = Hash<Key>(), EqualsFunction e = Equals<Key>())
-            : loadFactor(_loadFactor), _size(0), buckets(initialCapacity),
-            threshold(initialCapacity*loadFactor), hashf(h), equf(e) {
+    : loadFactor(_loadFactor), _size(0), buckets(initialCapacity),
+    threshold(initialCapacity*loadFactor), hashf(h), equf(e) {
     }
 
+    /**
+     * Copies the contents of another HashMap into this HashMap.
+     * @param orig The original HashMap
+     */
     HashMap(const HashMap<Key, Value, HashFunction, EqualsFunction> & orig)
-            : loadFactor(orig.loadFactor), _size(orig._size),
-            buckets(orig.buckets.length), threshold(orig.threshold),
-            hashf(orig.hashf), equf(orig.equf) {
+    : loadFactor(orig.loadFactor), _size(orig._size),
+    buckets(orig.buckets.length), threshold(orig.threshold),
+    hashf(orig.hashf), equf(orig.equf) {
         arraycopy(orig.buckets, 0, buckets, 0, orig.buckets.length);
     }
 
+    /**
+     * Creates a HashMap from an initializer list. E.g.
+     * <pre>
+     * HashMap&lt;String,String&gt; h = {{"Hello","Hi"},{"World","Earth"}};
+     * </pre>
+     * All parameters will be initialized to default.
+     * @param init An initializer list
+     */
     HashMap(const std::initializer_list<EntryHelper>& init) : loadFactor(.75f),
     _size(init.size()), buckets((init.size() << 1) + 1),
     threshold(buckets.length*loadFactor), hashf(Hash<Key>()),
@@ -225,19 +227,25 @@ public:
     }
 
     virtual ~HashMap() {
-        /*size_t count = size();
-        idx_t idx = buckets.length;
-        EntryPtr currentPointer = buckets[idx];
-        while (count > 0) {
-            while (currentPointer == NULL) {
-                currentPointer = buckets[--idx];
+        try {
+            size_t count = size();
+            idx_t idx = buckets.length - 1;
+            EntryPtr currentPointer = buckets[idx];
+            while (count > 0) {
+                while (currentPointer == NULL) {
+                    currentPointer = buckets[--idx];
+                }
+                EntryPtr oldPtr = currentPointer;
+                currentPointer = currentPointer->next;
+                --count;
+                delete oldPtr;
             }
-            EntryPtr oldPtr = currentPointer;
-            currentPointer = currentPointer->next;
-            //delete oldPtr;
-        }*/
+        } strace;
     }
 
+    /**
+     * Removes all entries from the HashMap
+     */
     void clear() {
         threshold = loadFactor * 11;
         _size = 0;
@@ -245,16 +253,24 @@ public:
 
     }
 
+    /**
+     * Checks whether this hashMap contains a given key.
+     * @return <i>true</i> iff this HashMap contains given key.
+     */
     bool containsKey(Key key) const {
         std::idx_t idx = hash(key);
         EntryPtr entry = buckets[idx];
         while (entry != NULL) {
-            if (equf(key, entry->key)) return true;
+            if (key == entry) return true;
             entry = entry->next;
         }
         return false;
     }
 
+    /**
+     * Checks whether this hashMap contains a given value.
+     * @return <i>true</i> iff this HashMap contains given value.
+     */
     bool containsValue(const Value * value) const {
         for (std::idx_t i = buckets.length - 1; i >= 0; i--) {
             EntryPtr entry = buckets[i];
@@ -266,31 +282,47 @@ public:
         return false;
     }
 
+    /**
+     * Returns the amount of entries in this HashMap.
+     * @return The amount of entries in this HashMap.
+     */
     std::size_t size() const {
         return _size;
     }
 
+    /**
+     * Get the value for given key, or null if this key does not exist.
+     * @param key A key to search the value for
+     * @return The value for given key, or null if this key does not exist.
+     */
     Value * get(Key key) {
         int h = hash(key);
-        std::cout << "Key: " << key <<": "<<h << std::endl;
         EntryPtr entry = buckets[h];
-        if (entry == NULL) return NULL;
-        while (entry->next != NULL) {
+        if (entry == NULL) {
+            return NULL;
+        }
+        do {
             if (entry->key == key) return entry->value;
             entry = entry->next;
-        }
+        } while (entry->next != NULL);
         return NULL;
     }
 
+    /**
+     * Get the value for given key, or null if this key does not exist.
+     * @param key A key to search the value for
+     * @return The value for given key, or null if this key does not exist.
+     */
     const Value * get(Key key) const {
         int h = hash(key);
-        std::cout << "Key: " << key <<": "<<h << std::endl;
         EntryPtr entry = buckets[h];
-        if (entry == NULL) return NULL;
-        while (entry->next != NULL) {
+        if (entry == NULL) {
+            return NULL;
+        }
+        do {
             if (entry->key == key) return entry->value;
             entry = entry->next;
-        }
+        } while (entry->next != NULL);
         return NULL;
     }
 
@@ -302,13 +334,24 @@ public:
         return Pointer(key, this);
     }
 
+    /**
+     * Checks if this HashMap is empty, i\.e\. it has no keys in it.
+     * @return <i>true</i> iff size() == 0
+     */
     bool empty() const {
         return size() == 0;
     }
 
+    /**
+     * Map a value to a given key. If the key does not yet exist, it is added.
+     * If the key already exists, the value is overwritten and the old value
+     * is returned.
+     * @param key A new key
+     * @param value The value for this new key
+     * @return The old value if the key already existed, null otherwise.
+     */
     Value * put(Key key, Value * value) {
         idx_t idx = hash(key);
-        std::cout << "Key: " << key <<": "<<idx << std::endl;
         EntryPtr entry = buckets[idx];
 
         while (entry != NULL) {
@@ -332,6 +375,11 @@ public:
         return NULL;
     }
 
+    /**
+     * Copies everything from the given HashMap into this HashMap. Existing
+     * keys will be overwritten.
+     * @param map Another HashMap.
+     */
     void putAll(const HashMap<Key, Value, HashFunction, EqualsFunction>& map) {
 
         for (iterator it = map.begin(); it != map.end(); ++it) {
@@ -339,6 +387,11 @@ public:
         }
     }
 
+    /**
+     * Removes given key from the HashMap. If the key was in the HashMap, return
+     * the associated value. If it was not, return null.
+     * @return The old value of the key if it existed, null otherwise.
+     */
     Value * remove(Key key) {
         std::idx_t idx = hash(key);
         EntryPtr entry = buckets[idx];
@@ -397,6 +450,11 @@ private:
         }
     }
 };
+
+template<class K, class V, class H, class E>
+bool operator==(const HashMap<K,V,H,E>& lhs, const HashMap<K,V,H,E>& rhs) {
+    SYLPH_STUB;
+}
 
 SYLPH_END_NAMESPACE
 #endif	/* HASHMAP_H_ */
