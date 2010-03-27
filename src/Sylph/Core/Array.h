@@ -463,6 +463,26 @@ inline bool operator<(const Array<T>& lhs, const Array<T>& rhs) {
 }
 
 template<class T>
+inline bool operator!=(const Array<T>& lhs, const Array<T>& rhs) {
+    return !(lhs == rhs);
+}
+
+template<class T>
+inline bool operator>=(const Array<T>& lhs, const Array<T>& rhs) {
+    return !(lhs < rhs);
+}
+
+template<class T>
+inline bool operator<=(const Array<T>& lhs, const Array<T>& rhs) {
+    return (lhs < rhs) || (lhs == rhs);
+}
+
+template<class T>
+inline bool operator>(const Array<T>& lhs, const Array<T>& rhs) {
+    return !(lhs < rhs) && !(lhs == rhs);
+}
+
+template<class T>
 std::ostream& operator<<(std::ostream& out, const Array<T>& rhs) {
     out << "{ ";
     for(idx_t i = 0; i < rhs.length - 1; ++i) {
