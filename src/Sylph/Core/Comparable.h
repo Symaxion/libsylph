@@ -34,25 +34,39 @@
 
 SYLPH_BEGIN_NAMESPACE
 SYLPH_PUBLIC
-template<class T, class V>
-inline bool operator!=(const T& lhs, const V& rhs) {
-    return !(lhs == rhs);
+
+#define S_CMP_NE_2_UNI(Left, Right) \
+inline bool operator!=(const Left& lhs, const Right& rhs) {\
+    return !(lhs == rhs); \
 }
 
-template<class T, class V>
-inline bool operator>(const T& lhs, const V& rhs) {
-    return !(lhs < rhs) && !(*lhs == rhs);
+#define S_CMP_NE_2(Left, Right) \
+S_CMP_NE_2_UNI(Left,Right) \
+S_CMP_NE_2_UNI(Right, Left)
+
+#define S_CMP_NE(Class) \
+S_CMP_NE_2_UNI(Class, Class)
+
+#define S_CMP_SEQ_2_UNI(Left, Right) \
+S_CMP_NE_2_UNI(Left,Right) \
+inline bool operator>=(const Left& lhs, const Right& rhs) {\
+    return !(lhs < rhs); \
+} \
+inline bool operator>(const Left& lhs, const Right& rhs) {\
+    return !(lhs < rhs) && !(lhs == rhs); \
+} \
+inline bool operator<=(const Left& lhs, const Right& rhs) {\
+    return (lhs < rhs) || (lhs == rhs); \
 }
 
-template<class T, class V>
-inline bool operator<=(const T& lhs, const V& rhs) {
-    return (lhs < rhs) || (lhs == rhs);
-}
+#define S_CMP_SEQ_2(Left, Right) \
+S_CMP_SEQ_2_UNI(Left,Right) \
+S_CMP_SEQ_2_UNI(Right, Left)
 
-template<class T, class V>
-inline bool operator>=(const T& lhs, const V& rhs) {
-    return !(lhs < rhs);
-}
+#define S_CMP_SEQ(Class) \
+S_CMP_SEQ_2_UNI(Class, Class)
+
+        
 SYLPH_END_NAMESPACE
 
 #endif	/* _COMPARABLE_H_ */

@@ -580,7 +580,7 @@ bool operator==(const String lhs, const String rhs);
 template<>
 struct Hash<String> {
 
-    inline sint operator()(String s) {
+    inline sint operator()(String s) const {
         suint hash = 0;
         suint x = 0;
         suint i = 0;
@@ -616,6 +616,9 @@ std::ostream & operator<<(std::ostream& lhs, const String rhs);
 String lc(const String rhs);
 String uc(const String rhs);
 String t(const String rhs);
+
+S_CMP_SEQ(String)
+S_CMP_SEQ_2(String,const char*)
 
 SYLPH_END_NAMESPACE
 
