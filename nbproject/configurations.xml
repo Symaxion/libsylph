@@ -90,6 +90,9 @@
           <itemPath>src/Sylph/IO/PrintWriter.cpp</itemPath>
           <itemPath>src/Sylph/IO/PrintWriter.h</itemPath>
         </logicalFolder>
+        <logicalFolder name="f4" displayName="Math" projectFiles="true">
+          <itemPath>src/Math/internal_base.h</itemPath>
+        </logicalFolder>
         <logicalFolder name="f1" displayName="OS" projectFiles="true">
           <itemPath>src/Sylph/OS/GuessOS.h</itemPath>
           <itemPath>src/Sylph/OS/LinuxBundleAppSelf.cpp</itemPath>
@@ -110,8 +113,10 @@
     <logicalFolder name="f2" displayName="Test Cases" projectFiles="true">
       <itemPath>test/Application.cpp</itemPath>
       <itemPath>test/Array.cpp</itemPath>
+      <itemPath>test/ByteBuffer.cpp</itemPath>
       <itemPath>test/HashMap.cpp</itemPath>
       <itemPath>test/String.cpp</itemPath>
+      <itemPath>test/SylphTest.h</itemPath>
       <itemPath>test/Vector.cpp</itemPath>
       <itemPath>test/main.cpp</itemPath>
     </logicalFolder>
