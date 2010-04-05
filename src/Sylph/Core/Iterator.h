@@ -143,7 +143,7 @@ public:
         return (_end_reached_ == other._end_reached_) && equals(other);
     }
 
-    bool operator!=(const ForwardIterator<T, I>& other) const {
+    bool operator!=(const I& other) const {
         return !(*this == other);
     }
     void construct(bool begin, void* obj) {

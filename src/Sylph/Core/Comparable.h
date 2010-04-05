@@ -36,7 +36,7 @@ SYLPH_BEGIN_NAMESPACE
 SYLPH_PUBLIC
 
 #define S_CMP_NE_2_UNI(Left, Right) \
-inline bool operator!=(const Left& lhs, const Right& rhs) {\
+inline bool operator!=(Left lhs, Right rhs) {\
     return !(lhs == rhs); \
 }
 
@@ -49,13 +49,13 @@ S_CMP_NE_2_UNI(Class, Class)
 
 #define S_CMP_SEQ_2_UNI(Left, Right) \
 S_CMP_NE_2_UNI(Left,Right) \
-inline bool operator>=(const Left& lhs, const Right& rhs) {\
+inline bool operator>=(Left lhs,Right rhs) {\
     return !(lhs < rhs); \
 } \
-inline bool operator>(const Left& lhs, const Right& rhs) {\
+inline bool operator>(Left lhs, Right rhs) {\
     return !(lhs < rhs) && !(lhs == rhs); \
 } \
-inline bool operator<=(const Left& lhs, const Right& rhs) {\
+inline bool operator<=(Left lhs, Right rhs) {\
     return (lhs < rhs) || (lhs == rhs); \
 }
 
