@@ -1,7 +1,9 @@
 #include <sys/stat.h>
+#include <string.h>
 
 #include "csylph.h"
 #include "../Sylph/Core/Application.h"
+#include "../Sylph/Core/File.h"
 
 int sylph_init(int argc, char** argv, sylph_apptype_t app, char* name) {
     try {
@@ -370,7 +372,6 @@ try {
     strncpy(sy_excp, ex.what(), 255);
     syerror = SYECPPEXC;
     return 1;
-}
 }
 
 int sy_usr_rscdir(sylph_file_t* in) {
