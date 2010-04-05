@@ -39,7 +39,7 @@ SYLPH_BEGIN_NAMESPACE
  */
 template<class key_, class value_,
 class hash_ = Hash<key_>,
-class equals_ = Equals<Value*> >
+class equals_ = Equals<value_*> >
 class HashMap : public virtual Object {
 public:
     class Entry;
@@ -193,7 +193,7 @@ public:
      * @param e A suitable equals function.
      */
     explicit HashMap(std::size_t initialCapacity = 11, float _loadFactor = .75f,
-            HashFunction h = Hash<Key>(), EqualsFunction e = Equals<Key>())
+            HashFunction h = Hash<Key>(), EqualsFunction e = Equals<Value*>())
     : loadFactor(_loadFactor), _size(0), buckets(initialCapacity),
     threshold(initialCapacity*loadFactor), hashf(h), equf(e) {
     }
@@ -220,7 +220,7 @@ public:
     HashMap(const std::initializer_list<EntryHelper>& init) : loadFactor(.75f),
     _size(init.size()), buckets((init.size() << 1) + 1),
     threshold(buckets.length*loadFactor), hashf(Hash<Key>()),
-    equf(Equals<Key>()) {
+    equf(Equals<Value*>()) {
         for (EntryHelper* it = init.begin(); it != init.end(); ++it) {
             put(it->key, &(it->value));
         }
@@ -254,25 +254,26 @@ public:
     }
 
     /**
-     * Checks whether this hashMap contains a given key.
+     * Checks whether this HashMap contains a given key.
      * @return <i>true</i> iff this HashMap contains given key.
      */
     bool containsKey(Key key) const {
         std::idx_t idx = hash(key);
         EntryPtr entry = buckets[idx];
         while (entry != NULL) {
-            if (key == entry) return true;
+            if (key == entry->key) return true;
             entry = entry->next;
         }
         return false;
     }
 
     /**
-     * Checks whether this hashMap contains a given value.
+     * Checks whether this HashMap contains a given value.
      * @return <i>true</i> iff this HashMap contains given value.
      */
     bool containsValue(const Value * value) const {
-        for (std::idx_t i = buckets.length - 1; i >= 0; i--) {
+        if(buckets.length == 0) return false;
+        for (std::idx_t i = (buckets.length - 1); (signed)i >= 0; --i) {
             EntryPtr entry = buckets[i];
             while (entry != NULL) {
                 if (equf(value, entry->value)) return true;
@@ -355,7 +356,7 @@ public:
         EntryPtr entry = buckets[idx];
 
         while (entry != NULL) {
-            if (equf(key, entry->key)) {
+            if (key == entry->key) {
                 Value * val = entry->value;
                 entry->value = val;
                 return val;
