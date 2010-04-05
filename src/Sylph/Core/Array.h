@@ -359,7 +359,9 @@ public:
         if ((idx < (sidx_t)length) && (idx >= -(sidx_t)length)) {
             return idx >= 0 ? data->_carray[idx] : data->_carray[length + idx];
         } else {
-            sthrow(ArrayException, "Array overflow");
+            char buf[2048];
+            sprintf(buf, "Array overflow - index: %d , length: %d", idx, length);
+            sthrow(ArrayException, buf);
         }
     }
 
@@ -374,7 +376,9 @@ public:
         if ((idx < (sidx_t)length) && (idx >= -(sidx_t)length)) {
             return idx >= 0 ? data->_carray[idx] : data->_carray[length + idx];
         } else {
-            sthrow(ArrayException, "Array overflow");
+            char buf[2048];
+            sprintf(buf, "Array overflow - index: %d , length: %d", idx, length);
+            sthrow(ArrayException, buf);
         }
     }
 
@@ -387,8 +391,12 @@ public:
      * @throw ArrayException if ran.last() > length
      */
     Array<T> operator[](const range & ran) throw (Exception) {
-        if (ran.first() < 0 || ran.last() >= length)
-            sthrow(ArrayException, "Array overflow");
+        if (ran.first() < 0 || ran.last() >= length) {
+            char buf[2048];
+            sprintf(buf, "Array overflow - range: %d - %d , length: %d",
+                    ran.first(), ran.last(), length);
+            sthrow(ArrayException, buf);
+        }
 
         Array<T> toReturn = Array<T>::fromPointer((ran.last() - ran.first())+1,
                 data->_carray + ran.first());
@@ -401,8 +409,12 @@ public:
      * @throw ArrayException if ran.last() > length
      */
     const Array<T> operator[](const range & ran) const throw (Exception) {
-        if (ran.first() < 0 || ran.last() >= length)
-            sthrow(ArrayException, "Array overflow");
+        if (ran.first() < 0 || ran.last() >= length) {
+            char buf[2048];
+            sprintf(buf, "Array overflow - range: %d - %d , length: %d",
+                    ran.first(), ran.last(), length);
+            sthrow(ArrayException, buf);
+        }
 
         Array<T> toReturn = Array<T>::fromPointer((ran.last() - ran.first())+1,
                 data->_carray + ran.first());
