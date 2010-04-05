@@ -111,9 +111,9 @@
       <itemPath>src/Sylph.h</itemPath>
     </logicalFolder>
     <logicalFolder name="f2" displayName="Test Cases" projectFiles="true">
-      <itemPath>test/Application.cpp</itemPath>
       <itemPath>test/Array.cpp</itemPath>
       <itemPath>test/ByteBuffer.cpp</itemPath>
+      <itemPath>test/File.cpp</itemPath>
       <itemPath>test/HashMap.cpp</itemPath>
       <itemPath>test/String.cpp</itemPath>
       <itemPath>test/SylphTest.h</itemPath>
