@@ -25,6 +25,8 @@
 extern "C" {
 #endif /* __cplusplus */
 
+#include <stdlib.h>
+
     static int syerror = 0;
 
     static char* sy_excp = (char*)malloc(255);
@@ -41,7 +43,7 @@ extern "C" {
     };
 
     typedef struct sylph_file_t {
-        char* sy_f_loc;
+        const char* sy_f_loc;
     } sylph_file_t;
 
     extern int sylph_init(int, char**, sylph_apptype_t,char*);
