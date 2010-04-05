@@ -606,6 +606,12 @@ inline bool operator==(const char* rhs, const String lhs) {
     return operator==(String(rhs), lhs);
 }
 bool operator<(const String lhs, const String rhs);
+inline bool operator<(const String lhs, const char* rhs) {
+    return lhs < String(rhs);
+}
+inline bool operator<(const char* lhs, const String rhs) {
+    return String(lhs) < rhs;
+}
 String operator+(const String lhs, const String rhs);
 //String operator%(const String lhs, const String rhs);
 String operator&(const String lhs, String(*rhs)(const String));
@@ -617,8 +623,8 @@ String lc(const String rhs);
 String uc(const String rhs);
 String t(const String rhs);
 
-S_CMP_SEQ(String)
-S_CMP_SEQ_2(String,const char*)
+S_CMP_SEQ(const String)
+S_CMP_SEQ_2(const String,const char*)
 
 SYLPH_END_NAMESPACE
 
