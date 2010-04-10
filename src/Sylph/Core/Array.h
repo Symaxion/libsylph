@@ -391,18 +391,6 @@ public:
      * @throw ArrayException if ran.last() > length
      */
     Array<T> operator[](const range & ran) throw (Exception) {
-        }
-    }
-
-    /**
-     * Slices the array and returns the subarray. E.g. :
-     * <pre>Array<String> subarr = myarr[range(5,8)]</pre>
-     * <code>subarr</code> now contains the values of @c myarr[5] to @c myarr[8]
-     * . Please note that the subarray contains a copy of the original.
-     * @param ran The range describing the slice.
-     * @throw ArrayException if ran.last() > length
-     */
-    Array<T> operator[](const range & ran) throw (Exception) {
         if (ran.first() < 0 || ran.last() >= length) {
             char buf[2048];
             sprintf(buf, "Array overflow - range: %d - %d , length: %d",
@@ -519,4 +507,5 @@ std::ostream& operator<<(std::ostream& out, const Array<T>& rhs) {
 SYLPH_END_NAMESPACE
 
 #endif	/* ARRAY_H_ */
+
 
