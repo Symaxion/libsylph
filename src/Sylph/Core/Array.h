@@ -98,7 +98,7 @@ public:
         }
 
         bool hasPrevious() const {
-            return _currentIndex >= 0;
+            return _currentIndex > 0;
         }
 
         void previous() const {
@@ -379,6 +379,18 @@ public:
             char buf[2048];
             sprintf(buf, "Array overflow - index: %d , length: %d", idx, length);
             sthrow(ArrayException, buf);
+        }
+    }
+
+    /**
+     * Slices the array and returns the subarray. E.g. :
+     * <pre>Array<String> subarr = myarr[range(5,8)]</pre>
+     * <code>subarr</code> now contains the values of @c myarr[5] to @c myarr[8]
+     * . Please note that the subarray contains a copy of the original.
+     * @param ran The range describing the slice.
+     * @throw ArrayException if ran.last() > length
+     */
+    Array<T> operator[](const range & ran) throw (Exception) {
         }
     }
 
