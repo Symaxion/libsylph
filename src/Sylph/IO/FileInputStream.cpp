@@ -3,9 +3,9 @@
 
 SYLPH_BEGIN_NAMESPACE
 FileInputStream::FileInputStream(File& f, IO::IOType t) {
-    fptr = fopen(f.nativeString(), t & IO::Binary ? "rb" : "r");
+    fptr = fopen(f.toCanonicalName(), t & IO::Binary ? "rb" : "r");
     if (!fptr) sthrow(IOException,
-            String("Unable to open file ") + f.nativeString());
+            String("Unable to open file ") + f.toCanonicalName());
 }
 
 FileInputStream::~FileInputStream() {

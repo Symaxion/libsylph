@@ -188,12 +188,10 @@ public: \
  * ...
  */
 S_CREATE_EXCEPTION(ArrayException);
-S_CREATE_EXCEPTION(EncodingException);
 /**
- * A genreric Exception which gets thrown whenever something goes wrong in the
- * File class.
+ * A generic exception for an unexpected value supplied to a parser.
  */
-S_CREATE_EXCEPTION(FileException);
+S_CREATE_EXCEPTION(ParseException);
 /**
  * This is a generic exception for I/O errors. It can get thrown for example
  * when a file doesn't exist, when a file can't be accessed, when an socket
