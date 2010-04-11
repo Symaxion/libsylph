@@ -218,12 +218,16 @@ namespace {
         String s = "foobar";
         EXPECT_EQ(3,s.indexOf("b"));
         EXPECT_EQ(2,s.indexOf("ob"));
+        EXPECT_EQ(-1,s.indexOf("zaz"));
+        EXPECT_EQ(-1,s.indexOf("z"));
     }
 
     TEST_F(TestString, testLastIndexOf) {
         String s = "foobar";
         EXPECT_EQ(3,s.lastIndexOf("b"));
         EXPECT_EQ(2,s.lastIndexOf("ob"));
+        EXPECT_EQ(-1,s.lastIndexOf("zaz"));
+        EXPECT_EQ(-1,s.lastIndexOf("z"));
     }
 
     TEST_F(TestString, testMerge) {
