@@ -539,7 +539,14 @@ public:
     const String & operator=(const std::string & orig) const;
     const String & operator=(const String orig)const;
 
-    const String & operator+=(const String rhs)const;
+    /**
+     * Appends given String to this String. The internally shared data will be
+     * replaced by the new String, its reference count will be decreased by
+     * one and deleted if it reaches zero.
+     * @param rhs The String to append
+     * @return This String, with the new part appended to it.
+     */
+    const String& operator+=(const String rhs) const;
 
 
     /**
@@ -577,6 +584,10 @@ private:
 
 bool operator==(const String lhs, const String rhs);
 
+/**
+ * Overridden version of Hash<T> for String.
+ * @todo Explain how it works.
+ */
 template<>
 struct Hash<String> {
 
