@@ -42,6 +42,7 @@
           <itemPath>src/Sylph/Core/Application.h</itemPath>
           <itemPath>src/Sylph/Core/Array.cpp</itemPath>
           <itemPath>src/Sylph/Core/Array.h</itemPath>
+          <itemPath>src/Sylph/Core/Array2d.h</itemPath>
           <itemPath>src/Sylph/Core/ByteBuffer.cpp</itemPath>
           <itemPath>src/Sylph/Core/ByteBuffer.h</itemPath>
           <itemPath>src/Sylph/Core/Common.h</itemPath>
@@ -111,8 +112,8 @@
       <itemPath>src/Sylph.h</itemPath>
     </logicalFolder>
     <logicalFolder name="f2" displayName="Test Cases" projectFiles="true">
-      <itemPath>test/Application.cpp</itemPath>
       <itemPath>test/Array.cpp</itemPath>
+      <itemPath>test/Array2d.cpp</itemPath>
       <itemPath>test/ByteBuffer.cpp</itemPath>
       <itemPath>test/HashMap.cpp</itemPath>
       <itemPath>test/String.cpp</itemPath>
