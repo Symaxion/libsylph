@@ -298,7 +298,7 @@ public:
      * @param idx the index of the character to return
      * @return the character at the specified index, in UTF-16.
      */
-    const uchar at(std::size_t idx) const;
+    const uchar at(sidx_t idx) const;
 
     /**
      * Converts the String to ASCII. The conversion algorithm goes as follows:

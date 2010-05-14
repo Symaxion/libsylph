@@ -196,12 +196,28 @@ const char * double2stringe(double d, bool u) {
 bool startsWithHelper(idx_t from, const String& left, const String& right) {
     if (left.length() - from < right.length()) return false;
     suint count = 0;
-    for (idx_t i = 0; i < (left.length() - from); i++) {
-        if(i >= right.length()) break;
-        if (left.at(i + from) == right.at(i)) count++;
+    for (idx_t i = 0; i < right.length(); i++) {
+        if (left.at(i + from) == right.at(i)) {
+            count++;
+            if(count == right.length()) return true;
+        }
         else break;
     }
-    return count == right.length();
+    return false;
+}
+
+bool endsWithHelper(idx_t from, const String& left, const String& right) {
+    if (from < right.length()) {
+        return false;
+    }
+    suint count = 0;
+    for (idx_t i = 0; i < right.length(); i++) {
+        if (left.at(from - i) == right.at(-i-1)) {
+            count++;
+            if(count == right.length()) return true;
+        } else break;
+    }
+    return false;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -325,8 +341,10 @@ std::size_t String::length() const {
     return strdata->data.length;
 }
 
-const uchar String::at(std::size_t idx) const {
-    return strdata->data[idx];
+const uchar String::at(sidx_t idx) const {
+    try {
+        return strdata->data[idx];
+    } straced;
 }
 
 const char * String::ascii() const {
@@ -409,13 +427,7 @@ bool String::equalsIgnoreCase(const String other) const {
 }
 
 bool String::endsWith(const String other) const {
-    if (this->length() < other.length()) return false;
-    suint count = 0;
-    for (idx_t i = this->length() - 1; i > this->length() - other.length(); i--) {
-        if (this->at(i) == other.at(i)) count++;
-        else break;
-    }
-    return count == other.length();
+    return endsWithHelper(-1,*this,other);
 }
 
 bool String::startsWith(const String other) const {
@@ -440,11 +452,11 @@ String String::trim() const {
     return substring(beginct, endct);
 }
 
-String String::substring(std::idx_t begin) const {
+String String::substring(idx_t begin) const {
     return substring(begin, length());
 }
 
-String String::substring(std::idx_t begin, std::idx_t end) const {
+String String::substring(idx_t begin, idx_t end) const {
     return String(strdata->data[range(begin, end)]);
 }
 
@@ -463,21 +475,15 @@ sidx_t String::lastIndexOf(const String substr) const {
 }
 
 sidx_t String::lastIndexOf(const String substr, idx_t start) const {
-    if (start < substr.length()) return -1;
-    suint currentidx = substr.length();
-    suint idxexport = 0;
-    for (idx_t i = start; i >= 0; i--) {
-        if (this->at(i) == substr.at(currentidx - 1)) {
-            currentidx--;
-        } else {
-            currentidx = substr.length();
-        }
-        if (currentidx == 0) {
-            idxexport = i;
-            break;
+    if (start < substr.length()) { 
+        return -1;
+    }
+    for (idx_t i = start; i >= substr.length(); i--) {
+        if(endsWithHelper(i,*this,substr)) {
+            return i-substr.length() + 1;
         }
     }
-    return currentidx == 0 ? idxexport : -1;
+    return -1;
 }
 
 String String::copy() const {

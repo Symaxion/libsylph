@@ -2,11 +2,11 @@
 
 SYLPH_BEGIN_NAMESPACE
 FileOutputStream::FileOutputStream(File& f, IO::IOType t) {
-    fptr = fopen(f.nativeString().utf8(), t & IO::Append ? (t & IO::Binary ?
+    fptr = fopen(f.toCanonicalName().utf8(), t & IO::Append ? (t & IO::Binary ?
             "ab" : "a") : (t & IO::Binary ? "w" : "wb"));
     if (fptr == null) {
         sthrow(IOException, (String("Unable to open file ") +
-                f.nativeString()).utf8());
+                f.toCanonicalName()).utf8());
     }
 }
 FileOutputStream::~FileOutputStream() {
