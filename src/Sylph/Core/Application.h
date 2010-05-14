@@ -132,8 +132,9 @@ public:
      */
     AppType appType();
 
-    void fail(const String reason);
-    void fail(const String reason, const String file, unsigned int line);
+    void fail(const String reason, bool exit = true);
+    void fail(const String reason, const String file, unsigned int line,
+        bool exit = true);
 
 
     virtual const File& bundle() = 0;
@@ -169,9 +170,9 @@ protected:
     }
     virtual ~ApplicationSelf();
 
-    void _fail(const String appName, const String reason);
+    void _fail(const String appName, const String reason, bool exit = true);
     void _fail(const String appName, const String reason,
-            const String file, unsigned int line);
+            const String file, unsigned int line, bool exit = true);
 
 private:
     void _preconstruct();

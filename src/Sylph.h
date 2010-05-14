@@ -65,10 +65,10 @@ int main(int argc, char * argv[], char * envp[], char * apple[]) {
         #endif
     } catch(const Sylph::Assertion& as) {
         Sylph::UncaughtExceptionHandler::handler->handleAssertion(as);
-        throw;
+        abort();
     } catch (const Sylph::Exception & ex) {
         Sylph::UncaughtExceptionHandler::handler->handle(ex);
-        throw;
+        abort();
     }
 }
 #else
@@ -87,10 +87,10 @@ int main(int argc, char * argv[]) {
         #endif
     } catch(const Sylph::Assertion& as) {
         Sylph::UncaughtExceptionHandler::handler->handleAssertion(as);
-        throw;
+        abort();
     } catch (const Sylph::Exception & ex) {
         Sylph::UncaughtExceptionHandler::handler->handle(ex);
-        throw;
+        abort();
     }
 }
 #endif

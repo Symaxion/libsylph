@@ -21,7 +21,7 @@ void DefaultUncaughtExceptionHandler::handle(const Exception& ex) const {
             buf << "    " << String(msg->message) << '\n';
         } while((msg->next != null) && (msg = msg->next));
     }
-    thisapp->fail(buf);
+    thisapp->fail(buf, false);
 }
 
 void DefaultUncaughtExceptionHandler::handleAssertion
@@ -35,7 +35,7 @@ void DefaultUncaughtExceptionHandler::handleAssertion
             buf << "    " << String(msg->message) << '\n';
         } while((msg->next != null) && (msg = msg->next));
     }
-    thisapp->fail(buf);
+    thisapp->fail(buf, false);
 }
 
 void DebugUncaughtExceptionHandler::handle(const Exception& ex) const {
@@ -48,7 +48,7 @@ void DebugUncaughtExceptionHandler::handle(const Exception& ex) const {
             buf << "    " << String(msg->message) << '\n';
         } while((msg->next != null) && (msg = msg->next));
     }
-    thisapp->fail(buf, ex._file, ex._line);
+    thisapp->fail(buf, ex._file, ex._line, false);
 }
 
 void DebugUncaughtExceptionHandler::handleAssertion(const Assertion& ex) const {
@@ -61,7 +61,7 @@ void DebugUncaughtExceptionHandler::handleAssertion(const Assertion& ex) const {
             buf << "    " << String(msg->message) << '\n';
         } while((msg->next != null) && (msg = msg->next));
     }
-    thisapp->fail(buf, ex._file, ex._line);
+    thisapp->fail(buf, ex._file, ex._line, false);
 }
 
 SYLPH_END_NAMESPACE

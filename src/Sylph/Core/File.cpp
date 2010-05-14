@@ -66,9 +66,9 @@ bool isRoot(String path) {
 
 const String File::Separator =
 #ifdef SYLPH_OS_WINDOWS
-        '\\'
+        uchar('\\')
 #else
-        '/'
+        uchar('/')
 #endif
         ;
 
@@ -97,7 +97,7 @@ String File::rootName() const {
     return "C:\\";
 #else
     // while Unix can have a different root, assume '/' for the moment
-    return '/';
+    return uchar('/');
 #endif
 }
 
@@ -106,7 +106,8 @@ File File::parent() const {
     if (*this == rootName()) return *this;
 
     // Okay, just remove the last part now...
-    return toCanonical().path.substring(0, path.lastIndexOf(Separator) - 1);
+    String canonc = toCanonical().path;
+    return canonc.substring(0, canonc.lastIndexOf(Separator) - 1);
 }
 
 String File::filename() const {
@@ -151,7 +152,7 @@ File File::toAbsolute() const {
     return "";
 #else
     // does it already start with a '/'?
-    if (path.startsWith('/')) return *this;
+    if (path.startsWith(uchar('/'))) return *this;
 
     // nope... Okay, assume it's relative to this directory.
     return workingDir() / path;
@@ -430,47 +431,65 @@ File & File::operator/=(const String rhs) {
             path += ("/" + rhs);
         }
     }
-    // REMOVE extra '/' on end
-    while (path.endsWith("/")) {
-        path = path.substring(0, path.length() - 2);
+    
+    if(path != "/") {
+        // REMOVE extra '/' on end
+        while (path.endsWith("/")) {
+            path = path.substring(0, path.length() - 2);
+        }
     }
     return *this;
 }
 
 // iterator
 
-File::iterator::iterator(bool begin, const File* obj) {
+File::iterator::iterator(bool begin, const File* obj) : super(begin) {
     file = const_cast<File*>(obj);
-    pos = begin ? 0 : file->path.length();
-    if(begin) next(); else previous();
+    pos = begin ? 0 : file->path.length() - 1;
+    if(begin) next();
 }
 
-File::iterator::iterator(bool begin, File* obj) {
+File::iterator::iterator(bool begin, File* obj) : super(begin) {
     file = obj;
-    pos = begin ? 0 : file->path.length();
-    if(begin) next(); else previous();
+    pos = begin ? 0 : file->path.length() - 1;
+    if(begin) next();
 }
 
 void File::iterator::next() const {
-    sidx_t newpos = file->path.indexOf(File::Separator,pos + 1);
-    if(newpos == -1) newpos = file->path.length();
-    cur = file->path.substring(pos,newpos - 1);
-    pos = newpos;
+    sidx_t start = 0;
+    if(pos == 0) {
+        start = 1;
+    } else {
+        start = file->path.indexOf(File::Separator,pos);
+        if(start == -1) {
+            pos = file->path.length();
+            return;
+        } else {
+            ++start;
+        }
+    }
+
+    sidx_t end = file->path.indexOf(File::Separator,start);
+    if(end == -1) {
+        end = file->path.length();
+    }
+
+    --end;
+
+    cur = file->path.substring(start,end);
+    pos = end;
 }
 
 bool File::iterator::hasNext() const {
-    return pos < file->path.length();
+    return pos < file->path.length() - 1;
 }
 
 bool File::iterator::hasPrevious() const {
-    return pos == 0;
+    return pos != 0;
 }
 
 void File::iterator::previous() const {
-    sidx_t newpos = file->path.lastIndexOf(File::Separator,pos - 1);
-    if(newpos == -1) newpos = 0;
-    cur = file->path.substring(newpos,pos);
-    pos = newpos;
+    SYLPH_STUB;
 }
 
 SYLPH_END_NAMESPACE
