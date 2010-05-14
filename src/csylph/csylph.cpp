@@ -78,7 +78,7 @@ int sy_bundle(sylph_file_t* in) {
             return 1;
         }
         static Sylph::File f = thisapp->bundle();
-        in->sy_f_loc = f.nativeString();
+        in->sy_f_loc = f.toCanonicalName();
         return 0;
     } catch (Sylph::Exception ex) {
         strncpy(sy_excp, ex.what(), 255);
@@ -94,7 +94,7 @@ int sy_rscdir(sylph_file_t* in) {
             return 1;
         }
         static Sylph::File f = thisapp->resourceDir();
-        in->sy_f_loc = f.nativeString();
+        in->sy_f_loc = f.toCanonicalName();
         return 0;
     } catch (Sylph::Exception ex) {
         strncpy(sy_excp, ex.what(), 255);
@@ -110,7 +110,7 @@ int sy_rsc(sylph_file_t* in, const char* fname) {
             return 1;
         }
         Sylph::File f = thisapp->resource(fname);
-        in->sy_f_loc = f.nativeString();
+        in->sy_f_loc = f.toCanonicalName();
         return 0;
     } catch (Sylph::Exception ex) {
         strncpy(sy_excp, ex.what(), 255);
@@ -126,7 +126,7 @@ int sy_libdir(sylph_file_t* in) {
             return 1;
         }
         static Sylph::File f = thisapp->libraryDir();
-        in->sy_f_loc = f.nativeString();
+        in->sy_f_loc = f.toCanonicalName();
         return 0;
     } catch (Sylph::Exception ex) {
         strncpy(sy_excp, ex.what(), 255);
@@ -142,7 +142,7 @@ int sy_pldir(sylph_file_t* in) {
             return 1;
         }
         static Sylph::File f = thisapp->pluginDir();
-        in->sy_f_loc = f.nativeString();
+        in->sy_f_loc = f.toCanonicalName();
         return 0;
     } catch (Sylph::Exception ex) {
         strncpy(sy_excp, ex.what(), 255);
@@ -158,7 +158,7 @@ int sy_plddir(sylph_file_t* in) {
             return 1;
         }
         static Sylph::File f = thisapp->plugindisabledDir();
-        in->sy_f_loc = f.nativeString();
+        in->sy_f_loc = f.toCanonicalName();
         return 0;
     } catch (Sylph::Exception ex) {
         strncpy(sy_excp, ex.what(), 255);
@@ -174,7 +174,7 @@ int sy_sys_libdir(sylph_file_t* in) {
             return 1;
         }
         static Sylph::File f = thisapp->systemLibraryDir();
-        in->sy_f_loc = f.nativeString();
+        in->sy_f_loc = f.toCanonicalName();
         return 0;
     } catch (Sylph::Exception ex) {
         strncpy(sy_excp, ex.what(), 255);
@@ -190,7 +190,7 @@ int sy_sys_sts(sylph_file_t* in) {
             return 1;
         }
         static Sylph::File f = thisapp->systemSettings();
-        in->sy_f_loc = f.nativeString();
+        in->sy_f_loc = f.toCanonicalName();
         return 0;
     } catch (Sylph::Exception ex) {
         strncpy(sy_excp, ex.what(), 255);
@@ -206,7 +206,7 @@ int sy_sys_stsdir(sylph_file_t* in) {
             return 1;
         }
         static Sylph::File f = thisapp->systemSettingsDir();
-        in->sy_f_loc = f.nativeString();
+        in->sy_f_loc = f.toCanonicalName();
         return 0;
     } catch (Sylph::Exception ex) {
         strncpy(sy_excp, ex.what(), 255);
@@ -222,7 +222,7 @@ int sy_sys_pldir(sylph_file_t* in) {
             return 1;
         }
         static Sylph::File f = thisapp->systemPluginDir();
-        in->sy_f_loc = f.nativeString();
+        in->sy_f_loc = f.toCanonicalName();
         return 0;
     } catch (Sylph::Exception ex) {
         strncpy(sy_excp, ex.what(), 255);
@@ -238,7 +238,7 @@ int sy_sys_plddir(sylph_file_t* in) {
             return 1;
         }
         static Sylph::File f = thisapp->systemPluginDisabledDir();
-        in->sy_f_loc = f.nativeString();
+        in->sy_f_loc = f.toCanonicalName();
         return 0;
     } catch (Sylph::Exception ex) {
         strncpy(sy_excp, ex.what(), 255);
@@ -254,7 +254,7 @@ int sy_sys_rscdir(sylph_file_t* in) {
             return 1;
         }
         static Sylph::File f = thisapp->systemResourceDir();
-        in->sy_f_loc = f.nativeString();
+        in->sy_f_loc = f.toCanonicalName();
         return 0;
     } catch (Sylph::Exception ex) {
         strncpy(sy_excp, ex.what(), 255);
@@ -270,7 +270,7 @@ int sy_sys_rsc(sylph_file_t* in, const char* fname) {
             return 1;
         }
         Sylph::File f = thisapp->systemResource(fname);
-        in->sy_f_loc = f.nativeString();
+        in->sy_f_loc = f.toCanonicalName();
         return 0;
     } catch (Sylph::Exception ex) {
         strncpy(sy_excp, ex.what(), 255);
@@ -286,7 +286,7 @@ int sy_usr(sylph_file_t* in) {
             return 1;
         }
         static Sylph::File f = thisapp->userHome();
-        in->sy_f_loc = f.nativeString();
+        in->sy_f_loc = f.toCanonicalName();
         return 0;
     } catch (Sylph::Exception ex) {
         strncpy(sy_excp, ex.what(), 255);
@@ -302,7 +302,7 @@ int sy_usr_libdir(sylph_file_t* in) {
             return 1;
         }
         static Sylph::File f = thisapp->userLibraryDir();
-        in->sy_f_loc = f.nativeString();
+        in->sy_f_loc = f.toCanonicalName();
         return 0;
     } catch (Sylph::Exception ex) {
         strncpy(sy_excp, ex.what(), 255);
@@ -318,7 +318,7 @@ int sy_usr_sts(sylph_file_t* in) {
             return 1;
         }
         static Sylph::File f = thisapp->userSettings();
-        in->sy_f_loc = f.nativeString();
+        in->sy_f_loc = f.toCanonicalName();
         return 0;
     } catch (Sylph::Exception ex) {
         strncpy(sy_excp, ex.what(), 255);
@@ -334,7 +334,7 @@ int sy_usr_stsdir(sylph_file_t* in) {
             return 1;
         }
         static Sylph::File f = thisapp->userSettingsDir();
-        in->sy_f_loc = f.nativeString();
+        in->sy_f_loc = f.toCanonicalName();
         return 0;
     } catch (Sylph::Exception ex) {
         strncpy(sy_excp, ex.what(), 255);
@@ -350,7 +350,7 @@ int sy_usr_pldir(sylph_file_t* in) {
             return 1;
         }
         static Sylph::File f = thisapp->userPluginDir();
-        in->sy_f_loc = f.nativeString();
+        in->sy_f_loc = f.toCanonicalName();
         return 0;
     } catch (Sylph::Exception ex) {
         strncpy(sy_excp, ex.what(), 255);
@@ -366,7 +366,7 @@ try {
         return 1;
     }
     static Sylph::File f = thisapp->userPluginDisabledDir();
-    in->sy_f_loc = f.nativeString();
+    in->sy_f_loc = f.toCanonicalName();
     return 0;
 } catch (Sylph::Exception ex) {
     strncpy(sy_excp, ex.what(), 255);
@@ -381,7 +381,7 @@ int sy_usr_rscdir(sylph_file_t* in) {
             return 1;
         }
         static Sylph::File f = thisapp->userResourceDir();
-        in->sy_f_loc = f.nativeString();
+        in->sy_f_loc = f.toCanonicalName();
         return 0;
     } catch (Sylph::Exception ex) {
         strncpy(sy_excp, ex.what(), 255);
@@ -397,7 +397,7 @@ int sy_usr_rsc(sylph_file_t* in, const char* fname) {
             return 1;
         }
         Sylph::File f = thisapp->systemResource(fname);
-        in->sy_f_loc = f.nativeString();
+        in->sy_f_loc = f.toCanonicalName();
         return 0;
     } catch (Sylph::Exception ex) {
         strncpy(sy_excp, ex.what(), 255);
@@ -413,7 +413,7 @@ int sy_prefix(sylph_file_t* in) {
             return 1;
         }
         static Sylph::File f = thisapp->prefix();
-        in->sy_f_loc = f.nativeString();
+        in->sy_f_loc = f.toCanonicalName();
         return 0;
     } catch (Sylph::Exception ex) {
         strncpy(sy_excp, ex.what(), 255);
