@@ -62,22 +62,23 @@ ApplicationSelf * Application::self_app = 0;
 
     ApplicationSelf::~ApplicationSelf() {}
 
-    void ApplicationSelf::fail(const String reason) {
-        _fail(appName(), reason);
+    void ApplicationSelf::fail(const String reason, bool exit) {
+        _fail(appName(), reason, exit);
     }
     void ApplicationSelf::fail(const String reason, const String file,
-            unsigned int line) {
-        _fail(appName(), reason, file, line);
-    }
-    void ApplicationSelf::_fail(const String appName, const String reason) {
-        std::cout << appName <<" error: " << reason << std::endl;
-        exit(1);
+            unsigned int line, bool exit) {
+        _fail(appName(), reason, file, line, exit);
     }
     void ApplicationSelf::_fail(const String appName, const String reason,
-                const String file, unsigned int line) {
+            bool exit) {
+        std::cout << appName <<" error: " << reason << std::endl;
+        if(exit) ::exit(1);
+    }
+    void ApplicationSelf::_fail(const String appName, const String reason,
+                const String file, unsigned int line, bool exit) {
         std::cout << appName <<" error: " << reason << "@" << file << ":" <<
            line << std::endl;
-        exit(1);
+        if(exit) ::exit(1);
     }
 
 SYLPH_END_NAMESPACE

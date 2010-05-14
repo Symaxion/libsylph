@@ -26,24 +26,6 @@
 #include "Iterator.h"
 #include "Iterable.h"
 
-// Adapted from The Boost Libraries, v1.39.0. Original license follows:
-
-//  boost/filesystem/path.hpp  -----------------------------------------------//
-
-//  Copyright Beman Dawes 2002-2005
-//  Copyright Vladimir Prus 2002
-
-//  Distributed under the Boost Software License, Version 1.0. (See accompanying
-//  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
-
-//  See library home page at http://www.boost.org/libs/filesystem
-
-//  basic_path's stem(), extension(), and replace_extension() are based on
-//  basename(), extension(), and change_extension() from the original
-//  filesystem/convenience.hpp header by Vladimir Prus.
-
-//----------------------------------------------------------------------------//
-
 SYLPH_BEGIN_NAMESPACE
 SYLPH_PUBLIC
 
@@ -82,7 +64,7 @@ public:
         bool hasNext() const;
 
         bool equals(const iterator& other) const {
-            return file == other.file && cur == other.cur && pos == other.pos;
+            return file == other.file && pos == other.pos;
         }
 
         iterator(const iterator& other) {
@@ -199,18 +181,29 @@ public:
     Array<File> contents() const;
     static File workingDir();
 
+    inline File& operator=(const File& f) {
+        return operator=(f.path);
+    }
 
-    File & operator=(const String s) {
+    inline File& operator=(const String s) {
         path = "";
         operator/=(s);
         return *this;
     }
 
-    File & operator/=(const File & rhs) {
+    inline File& operator=(const char* s) {
+        return operator=(String(s));
+    }
+
+    File& operator/=(const File & rhs) {
         return operator /=(rhs.toString());
     }
 
-    File & operator/=(const String);
+    File& operator/=(const String);
+
+    inline File& operator/=(const char* s) {
+        return operator/=(String(s));
+    }
 
     static const String Separator;
 
