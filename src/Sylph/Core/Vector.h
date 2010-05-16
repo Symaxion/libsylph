@@ -45,12 +45,12 @@ public:
 
         iterator(bool begin = false, Vector<T>* obj = NULL)
         : super(begin), _obj(obj) {
-            _currentIndex = begin ? 0 : _obj->size();
+            _currentIndex = begin ? 0 : _obj->size()-1;
         }
 
         iterator(bool begin = false, const Vector<T>* obj = NULL)
         : super(begin), _obj(const_cast<Vector<T>*> (obj)) {
-            _currentIndex = begin ? 0 : _obj->size();
+            _currentIndex = begin ? 0 : _obj->size()-1;
         }
 
         bool equals(const iterator& other) const {
@@ -68,7 +68,7 @@ public:
         }
 
         bool hasNext() const {
-            return _currentIndex < _obj->size();
+            return _currentIndex < _obj->size()-1;
         }
 
         void next() const {
@@ -76,7 +76,7 @@ public:
         }
 
         bool hasPrevious() const {
-            return _currentIndex >= 0;
+            return _currentIndex > 0;
         }
 
         void previous() const {
@@ -88,220 +88,122 @@ public:
         }
 
         size_t length() const {
-            return _obj->size();
+            return _obj->size()-1;
         }
     private:
         mutable idx_t _currentIndex;
         Vector<T>* _obj;
     };
     S_ITERABLE(T)
-public:
 
-    explicit Vector(std::size_t initialCount = 16, std::size_t increase = 0) :
-        elements((std::size_t)initialCount), capacityIncrease(increase),
-        elementCount(0) {
-    }
 
-    Vector(const Vector<T> & orig) :
-            elements((std::size_t)orig.elements->length),
-            capacityIncrease(orig.capacityIncrease),
-            elementCount(orig.elementCount) {
-        arraycopy(orig.elements, 0, elements, 0, orig.elements.length);
-    }
-
-    Vector(const Array<T> & orig) : elements((size_t)orig.length << 1),
-            elementCount(orig.length), capacityIncrease(0){
-        arraycopy(orig, 0, elements, 0, orig.length);
-    }
-
-    Vector(const std::initializer_list<T> & orig) : elements(orig.size() << 1),
-            capacityIncrease(0), elementCount(0){
-        for (T * t = orig.begin(); t < orig.end(); t++) {
-            this->push(&t);
-        }
+   explicit Vector(std::size_t initialCount = 16) :
+        elements((std::size_t)initialCount), currentcapacity((std::size_t)initialCount) {
     }
 
     virtual ~Vector() {}
 
-    // vector specific
-    void push(const T & t) {
-        add(t);
+    void add(const T & t) {
+        ensureCapacity(currentsize + 1);
+	currentsize++;
+        set(currentsize-1, t);        
     }
 
-    T pop() {
-        T toReturn = elements[elementCount - 1];
-        elementCount--;
-        return toReturn;
-    }
-
-    T & get(std::size_t idx) {
-        if (idx >= elementCount) sthrow(ArrayException, "Vector out of bounds");
-        else {
-            return elements[idx];
+    void addAll(Vector<T> & c) {
+        for (Vector<int>::iterator it = c.begin();
+                it != c.end(); ++it) {
+                add(*it);
         }
     }
 
-    const T & get(std::size_t idx) const {
-        if (idx >= elementCount) sthrow(ArrayException, "Vector out of bounds");
-        else {
-            return elements[idx];
-        }
-    }
-
-    void set(std::size_t idx, const T & t) {
-        if (idx >= elementCount) sthrow(ArrayException, "Vector out of bounds");
-        else {
-            elements[idx] = t;
-        }
-    }
-
-    void trim() {
-        Array<T> oldElements = elements;
-        elements = Array<T>(elementCount);
-        arraycopy(oldElements, 0, elements, 0, elementCount);
-    }
-
-    bool add(const T & t) {
-        ensureCapacity(elementCount + 1);
-        elements[elementCount] = t;
-        elementCount++;
-        return true;
-    }
-
-    bool addAll(const Vector<T> & c) {
-	Array<T> ar = c.toArray();
-	sforeach(T& t, ar) {
-            this->add(t);
-        }
-        return true;
+    std::size_t capacity() const {
+        return currentcapacity;
     }
 
     void clear() {
-        elementCount = 0;
+        currentcapacity = 0;
+        currentsize = 0;
         elements.clear();
     }
 
-    bool contains(T & t) const {
-        return indexOf(t) != -1;
+    bool contains(const T & t) {
+         return indexOf(t) != -1;
+    }	
+
+    bool empty() {
+        return currentsize == 0;
     }
 
-    bool containsAll(const Vector<T> & c) const {
-        std::size_t amount = 0;
-
-        sforeach(T & t, c) {
-            if (this->contains(t)) amount++;
-        }
-        return amount == c.size();
+    const T & get(std::size_t idx) const {
+        checkIfOutOfBounds(idx);
+        return elements[idx];
     }
 
-    bool operator==(const Vector<T> & c) const {
-        Vector * v = dynamic_cast<Vector> (c);
-        if (v == NULL) return false;
-        else if (this->size() != c.size()) return false;
-        else {
-            for (std::size_t x = 0; x < c.size(); x++) {
-                if (*this[x] != c[x]) return false;
+   T & get(std::size_t idx) {
+       checkIfOutOfBounds(idx);
+       return elements[idx];
+    }
+
+    sidx_t indexOf(const T & t, std::idx_t idx = 0) {
+        static Equals<T> equf;
+        for (std::size_t i = idx; i < currentsize; i++) {
+	  if (equf(get(i), t)) {
+                return i;
             }
-            return true;
         }
+        return -1;
     }
 
-    bool empty() const {
-        return size() == 0;
+    int lastIndexOf(const T & t) {
+        return lastIndexOf(t, currentsize-1);
     }
 
-    bool remove(const T & t) {
-        bool b;
-        (b = indexOf(t) != -1) && removeAt(indexOf(t));
-        return b;
+    sidx_t lastIndexOf(const T & t, std::size_t idx) {
+        static Equals<T> equf;
+        checkIfOutOfBounds(idx);
+        for (std::size_t i = idx; i >= 0; i--) {
+	  if (equf(get(i), t)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    void remove(const T & t) {
+        removeAt(indexOf(t));
     }
 
     void removeAt(std::size_t idx) {
-        if (idx > size()) sthrow(ArrayException, "Vector out of bounds");
-        elementCount--;
-        if (idx < elementCount)
+        currentcapacity--;
+        currentsize--;
+        if (idx < currentcapacity)
             arraycopy(elements, idx + 1, elements, idx,
-                elementCount - idx);
+                currentcapacity - idx);
     }
 
-    bool removeAll(const Vector<T> & c) {
-        std::size_t i;
-        std::size_t j;
-        for (i = 0; i < elementCount; i++) {
-            if (c.contains(elements[i])) break;
-        }
-        if (i == elementCount) return false;
-
-        for (j = i++; i < elementCount; i++) {
-            if (!c.contains(elements[i])) elements[j++] = elements[i];
-        }
-        elementCount -= i - j;
-        return true;
+    void set(std::size_t idx, const T & t) {
+        checkIfOutOfBounds(idx);
+        elements[idx] = t;
     }
 
-    bool retainAll(const Vector<T> & c) {
-        std::size_t i;
-        std::size_t j;
-        for (i = 0; i < elementCount; i++) {
-            if (!c.contains(elements[i])) break;
-        }
-        if (i == elementCount) return false;
-
-        for (j = i++; i < elementCount; i++) {
-            if (c.contains(elements[i])) elements[j++] = elements[i];
-        }
-        elementCount -= i - j;
-        return true;
-    }
-
-    std::size_t size() const {
-        return elementCount;
+   std::size_t size() const {
+        return currentsize;
     }
 
     Array<T> toArray() const {
         return elements;
     }
 
-    // vector specific non-destructive
-
-    T& front() {
-        return elements[0];
-    }
-    const T & front() const {
-        return elements[0];
-    }
-    
-    T& back() {
-        return elements[elementCount - 1];
-    }
-
-    const T & back() const {
-        return elements[elementCount - 1];
-    }
-
-    sidx_t indexOf(T & t, std::idx_t idx = 0) const {
-        static Equals<T> equf;
-        for (std::size_t i = idx; i < size(); i++) {
-            if (equf(*this[i], t)) {
-                return i;
+    bool operator==(const Vector<T> & c) {
+        if (c == NULL) return false;
+	else if (currentcapacity != c->capacity()) return false; 
+        else if (currentsize != c->size()) return false; 
+	else {
+	   for (std::size_t x = 0; x < c->size(); x++) {
+	      if (get(x) != c->get(x)) return false;
             }
+            return true;
         }
-        return -1;
-    }
-
-    inline int lastIndexOf(const T & t) const {
-        return lastIndexOf(t, elementCount);
-    }
-
-    sidx_t lastIndexOf(T & t, std::size_t idx) const {
-        static Equals<T> equf;
-        if (idx > size()) sthrow(ArrayException, "Vector out of bounds");
-        for (std::size_t i = idx; i >= 0; i--) {
-            if (equf((*this)[i], t)) {
-                return i;
-            }
-        }
-        return -1;
     }
 
     T & operator[](std::idx_t idx) {
@@ -312,31 +214,36 @@ public:
         return get(idx);
     }
 
-    Vector<T> & operator=(const Vector<T> & rhs) const {
-        delete elements;
+   void operator=(const Vector<T> & rhs) {
         elements = Array<T>(rhs.elements.length);
-        capacityIncrease = rhs.capacityIncrease;
-        elementCount = rhs.elementCount;
+        currentcapacity = rhs.capacity();
+        currentsize = rhs.size();
         arraycopy(rhs.elements, 0, elements, 0, rhs.elements.length);
-        return *this;
     }
+
 private:
-    std::size_t elementCount;
-    std::size_t capacityIncrease;
+    std::size_t currentcapacity;
+    std::size_t currentsize;
     Array<T> elements;
 
     void ensureCapacity(std::size_t capacity) {
-        if (capacity <= elements->length) return;
-        std::size_t newsize;
-        if (capacityIncrease == 0) newsize = elements->length * 2;
-        else newsize = elements->length + capacityIncrease;
-        Array<T> oldElements = elements;
-        elements = Array<T>(newsize);
-        arraycopy(oldElements, 0, elements, 0, oldElements.length);
-        delete oldElements;
+        if (capacity > elements.length) {
+            std::size_t newsize;
+            newsize = elements.length * 2;
+            currentcapacity = newsize;
+            Array<T> oldElements = elements;
+            elements = Array<T>(newsize);
+            arraycopy(oldElements, 0, elements, 0, oldElements.length);
+        }
     }
+
+    void checkIfOutOfBounds(std::size_t idx) {
+         if (idx >= currentsize) sthrow(ArrayException, "Vector out of bounds");
+    }
+
 };
+
+
 
 SYLPH_END_NAMESPACE
 #endif	/* VECTOR_H_ */
-
