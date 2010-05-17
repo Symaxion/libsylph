@@ -1,6 +1,7 @@
 /*
  * LibSylph Class Library
  * Copyright (C) 2009 Frank "SeySayux" Erens <seysayux@gmail.com>
+ * Copyright (C) 2010 Scott "ernieballsep" Philbrook <ernieballsep@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the LibSylph Pulbic License as published
@@ -39,18 +40,19 @@ SYLPH_PUBLIC
 template<class T>
 class Vector : public Object {
 public:
+
     class iterator : public RandomAccessIterator<T, iterator> {
     public:
         typedef RandomAccessIterator<T, iterator> super;
 
         iterator(bool begin = false, Vector<T>* obj = NULL)
         : super(begin), _obj(obj) {
-            _currentIndex = begin ? 0 : _obj->size()-1;
+            _currentIndex = begin ? 0 : _obj->size() - 1;
         }
 
         iterator(bool begin = false, const Vector<T>* obj = NULL)
         : super(begin), _obj(const_cast<Vector<T>*> (obj)) {
-            _currentIndex = begin ? 0 : _obj->size()-1;
+            _currentIndex = begin ? 0 : _obj->size() - 1;
         }
 
         bool equals(const iterator& other) const {
@@ -68,7 +70,7 @@ public:
         }
 
         bool hasNext() const {
-            return _currentIndex < _obj->size()-1;
+            return _currentIndex < _obj->size() - 1;
         }
 
         void next() const {
@@ -88,31 +90,33 @@ public:
         }
 
         size_t length() const {
-            return _obj->size()-1;
+            return _obj->size() - 1;
         }
     private:
         mutable idx_t _currentIndex;
         Vector<T>* _obj;
     };
+
     S_ITERABLE(T)
 
 
-   explicit Vector(std::size_t initialCount = 16) :
-        elements((std::size_t)initialCount), currentcapacity((std::size_t)initialCount) {
+    explicit Vector(std::size_t initialCount = 16) :
+    elements((std::size_t)initialCount), currentcapacity((std::size_t)initialCount) {
     }
 
-    virtual ~Vector() {}
+    virtual ~Vector() {
+    }
 
     void add(const T & t) {
         ensureCapacity(currentsize + 1);
-	currentsize++;
-        set(currentsize-1, t);        
+        currentsize++;
+        set(currentsize - 1, t);
     }
 
     void addAll(Vector<T> & c) {
         for (Vector<int>::iterator it = c.begin();
                 it != c.end(); ++it) {
-                add(*it);
+            add(*it);
         }
     }
 
@@ -127,27 +131,33 @@ public:
     }
 
     bool contains(const T & t) {
-         return indexOf(t) != -1;
-    }	
+        return indexOf(t) != -1;
+    }
 
     bool empty() {
         return currentsize == 0;
     }
 
     const T & get(std::size_t idx) const {
-        checkIfOutOfBounds(idx);
-        return elements[idx];
+        try {
+            checkIfOutOfBounds(idx);
+            return elements[idx];
+        }
+        straced;
     }
 
-   T & get(std::size_t idx) {
-       checkIfOutOfBounds(idx);
-       return elements[idx];
+    T & get(std::size_t idx) {
+        try {
+            checkIfOutOfBounds(idx);
+            return elements[idx];
+        }
+        straced;
     }
 
     sidx_t indexOf(const T & t, std::idx_t idx = 0) {
         static Equals<T> equf;
         for (std::size_t i = idx; i < currentsize; i++) {
-	  if (equf(get(i), t)) {
+            if (equf(get(i), t)) {
                 return i;
             }
         }
@@ -155,14 +165,14 @@ public:
     }
 
     int lastIndexOf(const T & t) {
-        return lastIndexOf(t, currentsize-1);
+        return lastIndexOf(t, currentsize - 1);
     }
 
     sidx_t lastIndexOf(const T & t, std::size_t idx) {
         static Equals<T> equf;
         checkIfOutOfBounds(idx);
         for (std::size_t i = idx; i >= 0; i--) {
-	  if (equf(get(i), t)) {
+            if (equf(get(i), t)) {
                 return i;
             }
         }
@@ -182,11 +192,14 @@ public:
     }
 
     void set(std::size_t idx, const T & t) {
-        checkIfOutOfBounds(idx);
-        elements[idx] = t;
+        try {
+            checkIfOutOfBounds(idx);
+            elements[idx] = t;
+        }
+        straced;
     }
 
-   std::size_t size() const {
+    std::size_t size() const {
         return currentsize;
     }
 
@@ -196,11 +209,11 @@ public:
 
     bool operator==(const Vector<T> & c) {
         if (c == NULL) return false;
-	else if (currentcapacity != c->capacity()) return false; 
-        else if (currentsize != c->size()) return false; 
-	else {
-	   for (std::size_t x = 0; x < c->size(); x++) {
-	      if (get(x) != c->get(x)) return false;
+        else if (currentcapacity != c->capacity()) return false;
+        else if (currentsize != c->size()) return false;
+        else {
+            for (std::size_t x = 0; x < c->size(); x++) {
+                if (get(x) != c->get(x)) return false;
             }
             return true;
         }
@@ -214,8 +227,8 @@ public:
         return get(idx);
     }
 
-   void operator=(const Vector<T> & rhs) {
-        elements = Array<T>(rhs.elements.length);
+    void operator=(const Vector<T> & rhs) {
+        elements = Array<T > (rhs.elements.length);
         currentcapacity = rhs.capacity();
         currentsize = rhs.size();
         arraycopy(rhs.elements, 0, elements, 0, rhs.elements.length);
@@ -232,13 +245,13 @@ private:
             newsize = elements.length * 2;
             currentcapacity = newsize;
             Array<T> oldElements = elements;
-            elements = Array<T>(newsize);
+            elements = Array<T > (newsize);
             arraycopy(oldElements, 0, elements, 0, oldElements.length);
         }
     }
 
-    void checkIfOutOfBounds(std::size_t idx) {
-         if (idx >= currentsize) sthrow(ArrayException, "Vector out of bounds");
+    inline void checkIfOutOfBounds(std::size_t idx) {
+        if (idx >= currentsize) sthrow(ArrayException, "Vector out of bounds");
     }
 
 };
