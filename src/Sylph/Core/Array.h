@@ -98,7 +98,7 @@ public:
         }
 
         bool hasPrevious() const {
-            return _currentIndex >= 0;
+            return _currentIndex > 0;
         }
 
         void previous() const {
@@ -507,4 +507,5 @@ std::ostream& operator<<(std::ostream& out, const Array<T>& rhs) {
 SYLPH_END_NAMESPACE
 
 #endif	/* ARRAY_H_ */
+
 
