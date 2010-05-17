@@ -32,3 +32,4 @@ add_subdirectory(test)
 configure_file( bin/sylphparams.in bin/sylphparams )
 
 install( PROGRAMS ${SYLPH_BINARY_DIR}/bin/sylphparams DESTINATION bin )
+install( PROGRAMS ${SYLPH_SOURCE_DIR}/bin/sylo DESTINATION bin )
