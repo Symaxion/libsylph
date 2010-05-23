@@ -56,7 +56,10 @@ namespace {
     }
 
     TEST_F(TestHashMap, testEmptyEquality) {
-        SYLPH_STUB_TEST;
+        HashMap<String,String> g;
+        HashMap<String,String> h;
+
+        EXPECT_NO_THROW(EXPECT_TRUE(g == h));
     }
 
     TEST_F(TestHashMap, testRealEquality) {
