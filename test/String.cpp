@@ -32,7 +32,7 @@ namespace {
         EXPECT_EQ(0x00E8, a[1]);
         EXPECT_EQ(0x00E7, a[2]);
         EXPECT_EQ(0x00E0, a[3]);
-        EXPECT_EQ(0x008C, a[4]);
+        EXPECT_EQ(0x0152, a[4]);
         EXPECT_EQ(0x00F9, a[5]);
         EXPECT_EQ(0x00A3, a[6]);
         EXPECT_EQ(0xF8FF, a[7]);
@@ -138,18 +138,18 @@ namespace {
         EXPECT_EQ(0x00E8, s.at(1));
         EXPECT_EQ(0x00E7, s.at(2));
         EXPECT_EQ(0x00E0, s.at(3));
-        EXPECT_EQ(0x008C, s.at(4));
+        EXPECT_EQ(0x0152, s.at(4));
         EXPECT_EQ(0x00F9, s.at(5));
         EXPECT_EQ(0x00A3, s.at(6));
         EXPECT_EQ(0xF8FF, s.at(7));
     }
 
     TEST_F(TestString, testInvalidUnicode) {
-        //SYLPH_STUB_TEST;
+        SYLPH_STUB_TEST;
     }
 
     TEST_F(TestString, testAstralPlaneUnicode) {
-        //SYLPH_STUB_TEST;
+        SYLPH_STUB_TEST;
     }
 
     TEST_F(TestString, testToAscii) {
@@ -234,10 +234,6 @@ namespace {
         });
     }
 
-    TEST_F(TestString, testMerge) {
-        SYLPH_STUB_TEST;
-    }
-
     TEST_F(TestString, testHashUniqueness) {
         String s = "foo";
         String t = "bar";
@@ -304,7 +300,10 @@ namespace {
     }
 
     TEST_F(TestString, testInvoke) {
-        SYLPH_STUB_TEST;
+        String s = "fooBAR";
+        EXPECT_EQ(s.toLowerCase(), s&lc);
+        EXPECT_EQ(s.toUpperCase(), s&uc);
+        EXPECT_EQ(s.trim(), s & t);
     }
 
 } // namespace
