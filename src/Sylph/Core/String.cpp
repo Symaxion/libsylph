@@ -658,7 +658,7 @@ void String::fromUtf8(const char* unicode) const {
                     buf << (uchar)0xFFFD;
                 } else {
                     current += (univalue & 0x3F);
-                    buf << (char)current;
+                    buf << (uchar)current;
                     bytecount = 0;
                 }
                 break;
