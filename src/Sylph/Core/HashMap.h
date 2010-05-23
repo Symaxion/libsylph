@@ -454,7 +454,18 @@ private:
 
 template<class K, class V, class H, class E>
 bool operator==(const HashMap<K,V,H,E>& lhs, const HashMap<K,V,H,E>& rhs) {
-    SYLPH_STUB;
+    static E eq;
+    for(typename HashMap<K,V,H,E>::iterator it = lhs.begin();
+            it != lhs.end(); ++it) {
+        if(!rhs.containsKey(it->key) || !eq(rhs.get(it->key), it->value))
+            return false;
+    }
+    for(typename HashMap<K,V,H,E>::iterator it = rhs.begin();
+            it != rhs.end(); ++it) {
+        if(!lhs.containsKey(it->key) || !eq(lhs.get(it->key), it->value))
+            return false;
+    }
+    return true;
 }
 
 SYLPH_END_NAMESPACE
