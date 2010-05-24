@@ -218,13 +218,13 @@ public:
      * <li>If the magnitude is an integer, i.e. there is no decimal fraction,
      * the actual conversion will be done by the integer conversion algorithm.
      * </li>
-     * <li>If the magnitude is greater than or equal to 10<sup>-3</sup>, but
+     * <li>If the magnitude is greater than or equal to 10<sup>-4</sup>, but
      * less than 10<sup>7</sup> then it is represented as the integer part
      * in decimal form with no leading zeroes, followed by a dot ('.', U+002E),
      * followed by up to 8 digits representing the fractional part. No trailing
      * zeroes will be put in the resulting string.</li>
      * <li>If the magnitude is greater than or equal to 10<sup>7</sup>, or less
-     * than 10<sup>-3</sup>, the number will be represented in scientific
+     * than 10<sup>-4</sup>, the number will be represented in scientific
      * notation. It is composed of a single significant digit, followed by an
      * optional decimal fraction and an exponent. The decimal fraction consists
      * of a dot ('.', U+002E) and up to 8 significant digits without trailing
@@ -258,13 +258,13 @@ public:
      * <li>If the magnitude is an integer, i.e. there is no decimal fraction,
      * the actual conversion will be done by the integer conversion algorithm.
      * </li>
-     * <li>If the magnitude is greater than or equal to 10<sup>-3</sup>, but
+     * <li>If the magnitude is greater than or equal to 10<sup>-4</sup>, but
      * less than 10<sup>7</sup> then it is represented as the integer part
      * in decimal form with no leading zeroes, followed by a dot ('.', U+002E),
      * followed by up to 16 digits representing the fractional part. No trailing
      * zeroes will be put in the resulting string.</li>
      * <li>If the magnitude is greater than or equal to 10<sup>7</sup>, or less
-     * than 10<sup>-3</sup>, the number will be represented in scientific
+     * than 10<sup>-4</sup>, the number will be represented in scientific
      * notation. It is composed of a single significant digit, followed by an
      * optional decimal fraction and an exponent. The decimal fraction consists
      * of a dot ('.', U+002E) and up to 16 significant digits without trailing
@@ -473,6 +473,7 @@ public:
     /**
      * Creates a string from given float in scientific notation. The returned
      * string will match the regex <code>[0-9]+[eE]-?[0-9]{1,2}</code>.
+     * Trailing zeroes will not be removed.
      * @param f A float to represent in scientific notation
      * @param up Whether to print the exponentional @c E in upper case.
      */
@@ -481,6 +482,7 @@ public:
     /**
      * Creates a string from given double in scientific notation. The returned
      * string will match the regex <code>[0-9]+[eE]-?[0-9]{1,2}</code>.
+     * Trailing zeroes will not be removed.
      * @param d A double to represent in scientific notation
      * @param up Whether to print the exponentional @c E in upper case.
      */
