@@ -145,11 +145,17 @@ namespace {
     }
 
     TEST_F(TestString, testInvalidUnicode) {
-        SYLPH_STUB_TEST;
+        char c[] = { char(0x80), 0x00 };
+        String s = c;
+        ASSERT_EQ(s.length(), 1);
+        EXPECT_EQ(0xFFFD, s.at(0));
     }
 
     TEST_F(TestString, testAstralPlaneUnicode) {
-        SYLPH_STUB_TEST;
+        char c[] = { char(0xF0), char(0x80), char(0x80), char(0x80), 0x00 };
+        String s = c;
+        ASSERT_EQ(s.length(), 1);
+        EXPECT_EQ(0xFFFD, s.at(0));
     }
 
     TEST_F(TestString, testToAscii) {
