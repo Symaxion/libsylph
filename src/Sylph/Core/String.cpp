@@ -17,182 +17,6 @@ using std::isnan;
 
 SYLPH_BEGIN_NAMESPACE
 
-const char * float2string(float f) {
-    char * buf = (char*)GC_MALLOC_ATOMIC(20);
-    idx_t idx = 0;
-    ssize_t tot = 9;
-    // first check if it we need no decimal dot...
-    if (int(f) == f) {
-        // no decimal dot. use conversion from int
-        return String(int(f));
-    } else {
-        // Decimal dot...
-
-        // first, get the integral part
-        const char * buf2 = String(int(f));
-        tot -= strlen(buf);
-        carraycopy(buf2, 0, buf, 0, strlen(buf2));
-        idx += strlen(buf2);
-
-        // append a '.'
-        buf[idx] = '.';
-        idx++;
-
-        size_t copyto = 0;
-        char * buf3 = new char[8];
-
-        // now, get the decimal part
-        for (idx_t i = 0; i < 8; i++) {
-            f *= 10;
-            int j = f;
-            if (j != 0) copyto = i + 1;
-            buf3[i] = 0x30 + j;
-            idx++;
-        }
-        carraycopy(buf3, 0, buf, idx, copyto);
-        delete[] buf3;
-        idx += copyto;
-        buf[idx] = 0;
-        idx++;
-    }
-    return buf;
-}
-
-const char * float2stringe(float f, bool u) {
-    char * buf = (char*)GC_MALLOC_ATOMIC(20);
-    // first get the stuff for before the dot...
-    idx_t idx = 0;
-    int numdigits = floor(log10(f));
-    f /= pow(10, numdigits);
-    buf[0] = 0x30 + int(f);
-    idx++;
-
-    size_t copyto = 0;
-    char * buf3 = new char[8];
-
-    // now, get the decimal part
-    for (idx_t i = 0; i < 8; i++) {
-        f *= 10;
-        int j = f;
-        if (j != 0) copyto = i + 1;
-        buf3[i] = 0x30 + j;
-        idx++;
-    }
-    if (copyto) {
-        buf[1] = '.';
-        idx++;
-        carraycopy(buf3, 0, buf, idx, copyto);
-        idx += copyto;
-    }
-    delete[] buf3;
-
-    // Nice, the 'e' part
-    buf[idx] = u ? 'E' : 'e';
-    idx++;
-
-    // hmm, that was lame... oh, but the exponent sounds cool!
-    if (numdigits > 0) {
-        buf[idx] = '+';
-        idx++;
-    } else if (numdigits < 0) {
-        buf[idx] = '-';
-        idx++;
-    }
-    const char * buf2 = String(abs(numdigits));
-    carraycopy(buf2, 0, buf, idx, strlen(buf2));
-    idx += strlen(buf2);
-    buf[idx] = 0;
-
-    return buf;
-}
-
-const char * double2string(double d) {
-    char * buf = (char*)GC_MALLOC_ATOMIC(40);
-    idx_t idx = 0;
-    // first check if it we need no decimal dot...
-    if (int(d) == d) {
-        // no decimal dot. use conversion from int
-        return String(int(d));
-    } else {
-        // Decimal dot...
-
-        // first, get the integral part
-        const char * buf2 = String(int(d));
-        carraycopy(buf2, 0, buf, 0, strlen(buf2));
-        idx += strlen(buf2);
-
-        // append a '.'
-        buf[idx] = '.';
-        idx++;
-
-        size_t copyto = 0;
-        char * buf3 = new char[16];
-
-        // now, get the decimal part
-        for (idx_t i = 0; i < 16; i++) {
-            d *= 10;
-            int j = d;
-            if (j != 0) copyto = i + 1;
-            buf3[i] = 0x30 + j;
-            idx++;
-        }
-        carraycopy(buf3, 0, buf, idx, copyto);
-        delete[] buf3;
-        idx += copyto;
-        buf[idx] = 0;
-        idx++;
-    }
-    return buf;
-}
-
-const char * double2stringe(double d, bool u) {
-    char * buf = (char*)GC_MALLOC_ATOMIC(40);
-    // first get the stuff for before the dot...
-    idx_t idx = 0;
-    int numdigits = floor(log10(d));
-    d /= pow(10, numdigits);
-    buf[0] = 0x30 + int(d);
-    idx++;
-
-    size_t copyto = 0;
-    char * buf3 = new char[16];
-
-    // now, get the decimal part
-    for (idx_t i = 0; i < 16; i++) {
-        d *= 10;
-        int j = d;
-        if (j != 0) copyto = i + 1;
-        buf3[i] = 0x30 + j;
-        idx++;
-    }
-    if (copyto) {
-        buf[1] = '.';
-        idx++;
-        carraycopy(buf3, 0, buf, idx, copyto);
-        idx += copyto;
-    }
-    delete[] buf3;
-
-    // Nice, the 'e' part
-    buf[idx] = u ? 'E' : 'e';
-    idx++;
-
-    // hmm, that was lame... oh, but the exponent sounds cool!
-    if (numdigits > 0) {
-        buf[idx] = '+';
-        idx++;
-    } else if (numdigits < 0) {
-        buf[idx] = '-';
-        idx++;
-    }
-    const char * buf2 = String(abs(numdigits));
-    carraycopy(buf2, 0, buf, idx, strlen(buf2));
-    idx += strlen(buf2);
-    buf[idx] = 0;
-
-    return buf;
-}
-
 bool startsWithHelper(idx_t from, const String& left, const String& right) {
     if (left.length() - from < right.length()) return false;
     suint count = 0;
@@ -297,13 +121,8 @@ String::String(const float f) {
     } else if (isnan(f)) {
         fromAscii("NaN");
     } else {
-        const char * buf;
-        if (f < 1e7f && f >= 1e-3f) {
-            buf = float2string(f);
-        } else {
-            buf = float2stringe(f, false);
-
-        }
+        char * buf = static_cast<char*>(GC_MALLOC_ATOMIC(20));
+        sprintf(buf,"%.7g",f);
         fromAscii(buf);
     }
 }
@@ -318,13 +137,8 @@ String::String(const double d) {
     } else if (isnan(d)) {
         fromAscii("NaN");
     } else {
-        const char * buf;
-        if (d < 1e7f && d >= 1e-3f) {
-            buf = double2string(d);
-        } else {
-            buf = double2stringe(d, false);
-
-        }
+        char * buf = static_cast<char*>(GC_MALLOC_ATOMIC(20));
+        sprintf(buf,"%.16g",d);
         fromAscii(buf);
     }
 }
@@ -522,8 +336,8 @@ String String::fromOct(int i) {
 }
 
 String String::fromSci(float f, bool up) {
-    const char * buf;
-    buf = float2stringe(f,up);
+    char * buf = static_cast<char*>(GC_MALLOC_ATOMIC(20));
+    sprintf(buf, up?"%.6E" : "%6e", f);
     String toReturn;
     delete toReturn.strdata;
     toReturn.fromAscii(buf);
@@ -532,8 +346,8 @@ String String::fromSci(float f, bool up) {
 }
 
 String String::fromSci(double d, bool up) {
-    const char * buf;
-    buf = double2stringe(d,up);
+    char * buf = static_cast<char*>(GC_MALLOC_ATOMIC(20));
+    sprintf(buf, up?"%.15E" : "%15e", d);
     String toReturn;
     delete toReturn.strdata;
     toReturn.fromAscii(buf);
