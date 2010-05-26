@@ -25,23 +25,19 @@
 SYLPH_BEGIN_NAMESPACE
 SYLPH_PUBLIC
 
-/**
- * @todo Write documentation!
- */
-class PointerManager : public virtual Object {
+class PointerManagerImplBase {
 public:
-    PointerManager() {}
-    virtual ~PointerManager() {}
+    virtual ~PointerManagerImplBase() {}
 };
 
 template<class T>
-class PointerManagerImpl : public PointerManager {
+class PointerManagerImpl : public PointerManagerImplBase {
     typedef typename T::iterator itr;
 public:
-    PointerManagerImpl(const T& t) : coll(&t) {}
+    PointerManagerImpl(T& t) : coll(&t) {}
     virtual ~PointerManagerImpl() {
-        for(typename itr::value_type t = coll.begin(); t != coll.end(); t++) {
-            delete t;
+        for(itr t = coll->begin(); t != coll->end(); ++t) {
+            delete *t;
         }
     }
 private:
@@ -49,10 +45,33 @@ private:
 };
 
 template<class T>
-inline PointerManager manage(const T& t) {
-    return PointerManagerImpl<T>(t);
+inline PointerManagerImpl<T>* manage(T& t) {
+    return new PointerManagerImpl<T>(t);
 }
 
+/**
+ * @todo Write documentation!
+ */
+class PointerManager : public virtual Object {
+public:
+    PointerManager() : impl(0) {}
+    template<class T>
+    PointerManager(PointerManagerImpl<T>* rhs) {
+        operator=(rhs);
+    }
+    virtual ~PointerManager() {
+        delete impl;
+    }
+
+    template<class T>
+    PointerManager& operator=(PointerManagerImpl<T>* rhs) {
+        impl = rhs;
+        return *this;
+    }
+
+private:
+    PointerManagerImplBase * impl;
+};
 SYLPH_END_NAMESPACE
 
 #endif	/* POINTERMANAGER_H_ */
