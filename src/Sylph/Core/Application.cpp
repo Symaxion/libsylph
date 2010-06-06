@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <cstdlib>
+#include <unicode/uclean.h>
 
 #include "../OS/LinuxBundleAppSelf.h"
 #include "../OS/LinuxFHSAppSelf.h"
@@ -52,8 +53,12 @@ ApplicationSelf * Application::self_app = 0;
     }
 
     void ApplicationSelf::_preconstruct() {
-        // can be used for preconstruction. Doesn't do anything yet (used for
-        // gc, but Object now handles this)
+        // Unicode stuff
+        UErrorCode err;
+        u_init(err);
+        if(U_FAILURE(err)) {
+            fail(u_errorName(err));
+        }
     }
 
     AppType ApplicationSelf::appType() {
