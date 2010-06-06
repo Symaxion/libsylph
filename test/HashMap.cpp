@@ -52,14 +52,40 @@ namespace {
     }
 
     TEST_F(TestHashMap, testIterator) {
-        SYLPH_STUB_TEST;
+        Array<String> keys(4);
+        Array<String> values(4);
+
+        HashMap<String,String> h;
+        h["English"] = "English";
+        h["French"] = "français";
+        h["Spanish"] = "español";
+        h["Dutch"] = "Nederlands";
+
+        //ASSERT_NO_THROW({
+            idx_t i = 0;
+            for(HashMap<String,String>::iterator it = h.begin();
+                it != h.end(); ++it) {
+                keys[i] = it->key;
+                values[i] = it->key;
+                i++;
+            }
+        //});
+
+        for(idx_t i = 0; i < 4; i++) {
+            EXPECT_TRUE(h[keys[i]] == values[i]);
+        }
     }
 
     TEST_F(TestHashMap, testEmptyEquality) {
         HashMap<String,String> g;
         HashMap<String,String> h;
 
-        EXPECT_NO_THROW(EXPECT_TRUE(g == h));
+        ASSERT_NO_THROW(g == h);
+        EXPECT_TRUE(g == h);
+    }
+
+    TEST_F(TestHashMap, testLengthEquality) {
+
     }
 
     TEST_F(TestHashMap, testRealEquality) {
