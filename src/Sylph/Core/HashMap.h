@@ -116,7 +116,7 @@ public:
         map(obj) {
             if (begin) {
                 count = map->size();
-                idx = map->buckets.length;
+                idx = map->buckets.length - 1;
                 currentPointer = map->buckets[idx];
                 while (currentPointer == NULL) {
                     currentPointer = map->buckets[--idx];
@@ -134,7 +134,7 @@ public:
         map(const_cast<HashMap<key_, value_, hash_, equals_>*> (obj)) {
             if (begin) {
                 count = map->size();
-                idx = map->buckets.length;
+                idx = map->buckets.length - 1;
                 currentPointer = map->buckets[idx];
                 while (currentPointer == NULL) {
                     currentPointer = map->buckets[--idx];
@@ -159,16 +159,17 @@ public:
             while (currentPointer == NULL) {
                 currentPointer = map->buckets[--idx];
             }
+            count--;
         }
 
         bool hasNext() const {
-            return count > 0;
+            return count > 1;
         }
 
         bool equals(const iterator& other) const {
             return map == other.map && ((count == other.count && idx == other.idx
-                    && currentPointer == other.currentPointer) || (count ==
-                    other.count));
+                    && currentPointer == other.currentPointer) || 
+                    (super::_end_reached_&& other.super::_end_reached_));
         }
 
 
