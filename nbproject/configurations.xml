@@ -115,6 +115,7 @@
       <itemPath>test/ByteBuffer.cpp</itemPath>
       <itemPath>test/File.cpp</itemPath>
       <itemPath>test/HashMap.cpp</itemPath>
+      <itemPath>test/PointerManager.cpp</itemPath>
       <itemPath>test/String.cpp</itemPath>
       <itemPath>test/SylphTest.h</itemPath>
       <itemPath>test/Vector.cpp</itemPath>
