@@ -114,7 +114,7 @@ public:
     }
 
     void addAll(Vector<T> & c) {
-        for (Vector<int>::iterator it = c.begin();
+        for (Vector<T>::iterator it = c.begin();
                 it != c.end(); ++it) {
             add(*it);
         }
@@ -204,16 +204,18 @@ public:
     }
 
     Array<T> toArray() const {
-        return elements;
+        Array<T> toReturn(size());
+        for(idx_t i = 0; i < size(); ++i) {
+            toReturn[i] = elements[i];
+        }
+        return toReturn;
     }
 
-    bool operator==(const Vector<T> & c) {
-        if (c == NULL) return false;
-        else if (currentcapacity != c->capacity()) return false;
-        else if (currentsize != c->size()) return false;
+    bool operator==(const Vector<T> & c) const {
+        if (currentsize != c.size()) return false;
         else {
-            for (std::size_t x = 0; x < c->size(); x++) {
-                if (get(x) != c->get(x)) return false;
+            for (std::size_t x = 0; x < c.size(); x++) {
+                if (get(x) != c.get(x)) return false;
             }
             return true;
         }
@@ -242,7 +244,7 @@ private:
     void ensureCapacity(std::size_t capacity) {
         if (capacity > elements.length) {
             std::size_t newsize;
-            newsize = elements.length * 2;
+            newsize = elements.length << 1;
             currentcapacity = newsize;
             Array<T> oldElements = elements;
             elements = Array<T > (newsize);
