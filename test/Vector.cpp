@@ -1,11 +1,9 @@
 #include "SylphTest.h"
 #include <Sylph/Core/Array.h>
 #include <Sylph/Core/Debug.h>
-#include <iostream>
 #include <Sylph/Core/Vector.h>
 
-#include <stdio.h>
-#include <stdlib.h>
+
 #include <time.h>
 
 using namespace Sylph;
@@ -15,7 +13,7 @@ namespace {
     class TestVector : public ::testing::Test {
     };
 
-    TEST_F(TestVector, testcapacity) {
+    TEST_F(TestVector, testCapacity) {
         Vector<int> * testObj1 = new Vector<int>((size_t) 5);
         EXPECT_EQ(5, testObj1->capacity());
         delete testObj1;
@@ -54,7 +52,7 @@ namespace {
         delete testObj1;
     }	
 
-    TEST_F(TestVector, testAddLargeAmountOfnumbers) {
+    TEST_F(TestVector, testAddLargeAmountOfNumbers) {
         Vector<int> * testObj1 = new Vector<int>((size_t) 5);
 	for (std::size_t x =0; x < 1000; x++) {
 	    testObj1->add(x);		
@@ -208,7 +206,7 @@ namespace {
 	delete testObj1;
     }			
 	
-    TEST_F(TestVector, testEqualityofDifferentCapacityVectors) {
+    TEST_F(TestVector, testEqualityOfDifferentCapacityVectors) {
         Vector<int> * testObj1 = new Vector<int>((size_t) 5);
 	Vector<int> * testObj2 = new Vector<int>((size_t) 8);
 	ASSERT_FALSE(testObj1==testObj2); 	        	
