@@ -330,10 +330,10 @@ public:
     }
 
     /**
-     * Swaps the data pointer of this Array with the other Array. The refcount
+     * Sets the data pointer of this Array to the other Array's. The refcount
      * for the current data pointer gets decreased by 1, the refcount for the
      * data pointer of the other array gets increased by 1. In case the this
-     * Array'soriginal data pointer's refcount reaches zero, the original data
+     * Array's original data pointer's refcount reaches zero, the original data
      * will be deleted.
      * @param other The other array from which to use the data pointer
      */
