@@ -8,9 +8,9 @@ include(SourcesList.txt)
 include_directories(${SYLPH_INCLUDE})
 link_directories(${SYLPH_LINK_DIR})
 
-add_library(Sylph SHARED ${SYLPH_ALL_SRC})
-target_link_libraries(Sylph ${SYLPH_ALL_DEPS})
-set_target_properties(Sylph PROPERTIES COMPILE_FLAGS "-std=c++0x -Wno-main")
+add_library(Sylph SHARED ${SYLPH_ALL_SRC} ${SYLPH_PLATFORM_SRC})
+target_link_libraries(Sylph ${SYLPH_LINK})
+set_target_properties(Sylph PROPERTIES COMPILE_FLAGS ${SYLPH_CXXFLAGS} VERSION ${SYLPH_VERSION} SOVERSION ${SYLPH_ABI} )
 
 install( TARGETS Sylph LIBRARY DESTINATION lib )
 install( DIRECTORY . DESTINATION include FILES_MATCHING PATTERN "*.h"
