@@ -21,16 +21,17 @@
 	#include <sys/stat.h>
 	#include <unistd.h>
 #endif /* ENABLE_BINRELOC */
-#include <stdio.h>
-#include <stdlib.h>
-#include <limits.h>
-#include <string.h>
+#include <cstdio>
+#include <cstdlib>
+#include <climits>
+#include <cstring>
 #include "binreloc.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
 
+using namespace std;
 
 
 /** @internal
@@ -385,7 +386,7 @@ br_find_exe_dir (const char *default_dir)
 		if (default_dir != NULL)
 			return strdup (default_dir);
 		else
-			return NULL;
+			return (char*)NULL;
 	}
 
 	return br_dirname (exe);
@@ -754,7 +755,7 @@ br_dirname (const char *path)
 	if (path == (const char *) NULL)
 		return (char *) NULL;
 
-	end = strrchr (path, '/');
+	end = strrchr ((char*)path, '/');
 	if (end == (const char *) NULL)
 		return strdup (".");
 
