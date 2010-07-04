@@ -239,7 +239,10 @@ catch(::Sylph::Exception& ex) { \
 #ifdef SYLPH_DEBUG
 #define straced strace
 #else
-#define straced do{} while(0)
+#define straced \
+catch(::Sylph::Exception& ex) { \
+    throw; \
+} do{} while(0)
 #endif
 
 #define if_nullptr(__x) if(SYLPH_UNLIKELY(__x == 0))
