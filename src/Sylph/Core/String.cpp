@@ -3,6 +3,7 @@
 #include "Hash.h"
 #include "StringBuffer.h"
 #include "Util.h"
+#include "Vector.h"
 
 #include <cctype>
 #include <cstring>
@@ -264,6 +265,25 @@ String String::trim() const {
         else break;
     }
     return substring(beginct, endct);
+}
+
+Array<String> String::split(Array<uchar> delimiters) const {
+    Vector<String> toReturn;
+
+    idx_t start = 0;
+    idx_t end = 0;
+
+    for(idx_t i = 0; i < length(); ++i) {
+        for(idx_t j = 0; j < delimiters.length; ++j) {
+            if(at(i) == delimiters[j]) {
+                end = i;
+                if(start != end) toReturn.add(substring(start,end));
+                start = end + 1;
+            }
+        }
+    }
+
+    return toReturn.toArray();
 }
 
 String String::substring(idx_t begin) const {
