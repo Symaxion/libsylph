@@ -59,7 +59,7 @@ if ( NOT SYLPH_CXXFLAGS )
         endif ( APPLE )
 
         # Enable all warnings
-        #set ( SYLPH_CXXFLAGS "${SYLPH_CXXFLAGS} -Wall -Werror" )
+        set ( SYLPH_CXXFLAGS "${SYLPH_CXXFLAGS} -Wall -Werror" )
     endif ( CXX_GCC )
 
     if ( NOT SYLPH_CXXFLAGS )

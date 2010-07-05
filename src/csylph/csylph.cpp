@@ -64,6 +64,7 @@ int sylph_initm(int argc, char** argv, char** apple, sylph_apptype_t app,
                 break;
         }
         Sylph::Application::init(argc, argv, apple, type, name);
+        return 1;
     } catch (Sylph::Exception ex) {
         strncpy(sy_excp, ex.what(), 255);
         syerror = SYECPPEXC;

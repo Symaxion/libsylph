@@ -8,14 +8,15 @@
 
 SYLPH_BEGIN_NAMESPACE
 
-ByteBuffer::ByteBuffer(Traits traits, size_t bufsize) : _array(bufsize),
-_mark(0), _pos(0), _traits(traits), _size(0) { }
+ByteBuffer::ByteBuffer(Traits traits, size_t bufsize) : _traits(traits), 
+        _array(bufsize), _mark(0), _pos(0),  _size(0) { }
 
-ByteBuffer::ByteBuffer(const Array<byte> & ar) : _array(ar.copy()), _mark(0),
-_pos(0), _traits(RW), _size(ar.length) { }
+ByteBuffer::ByteBuffer(const Array<byte> & ar) : _traits(RW), _array(ar.copy()),
+        _mark(0), _pos(0), _size(ar.length) { }
 
-ByteBuffer::ByteBuffer(const ByteBuffer& orig) : _array(orig._array.copy()),
-_mark(orig._mark), _pos(orig._pos), _traits(orig._traits), _size(orig.size()) { }
+ByteBuffer::ByteBuffer(const ByteBuffer& orig) : _traits(orig._traits), 
+        _array(orig._array.copy()), _mark(orig._mark), _pos(orig._pos),
+        _size(orig.size()) { }
 
 ByteBuffer::~ByteBuffer() { }
 
@@ -43,7 +44,9 @@ void ByteBuffer::mark(fsize_t f) {
 }
 
 fsize_t ByteBuffer::skip(fsize_t f) {
-    _pos += std::min(_pos + available(), _pos + f);
+    fsize_t add = std::min(_pos + available(), _pos + f);
+    _pos += add;
+    return add;
 }
 
 void ByteBuffer::reset() {
@@ -75,7 +78,7 @@ InputStream& ByteBuffer::operator>>(byte& b) {
     if (!eof()) {
         b = _array[_pos];
         _pos++;
-        if (_pos = _markExpires) {
+        if (_pos == _markExpires) {
             _mark = 0;
             _markExpires = 0;
         }
@@ -93,7 +96,7 @@ OutputStream& ByteBuffer::operator<<(const byte b) {
         sthrow(IllegalStateException, "ByteBuffer in wrong state");
     ensureCapacity(_size + 1);
     _array[_pos] = b;
-    if (_pos = _markExpires) {
+    if (_pos == _markExpires) {
         _mark = 0;
         _markExpires = 0;
     }

@@ -47,6 +47,7 @@ const File& LinuxFHSAppSelf::pluginDir() {
 
 const File& LinuxFHSAppSelf::plugindisabledDir() {
     static File f = prefix() / "lib" / appName() / "plugins-disabled";
+    return f;
 }
 
 const File& LinuxFHSAppSelf::systemLibraryDir() {

@@ -142,7 +142,7 @@ public:
      */
     inline static Array<T> fromPointer(std::size_t length, T * orig) {
         Array<T> ar(length);
-        for (int x = 0; x < length; x++)ar[x] = orig[x];
+        for (idx_t x = 0; x < length; x++)ar[x] = orig[x];
         return ar;
     }
 public:

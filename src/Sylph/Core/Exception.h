@@ -145,17 +145,17 @@ public:
         }
     }
 
+protected:
+    const char * _reason;
+public:
+    const char * _file;
+    const unsigned int _line;
+    
     mutable struct TraceMessage {
         mutable const char * message;
         mutable TraceMessage * next;
     } * tracemsg;
-protected:
-    const char * _reason;
-public:
-#ifndef SYLPH_DOXYGEN
-    const char * _file;
-    const unsigned int _line;
-#endif
+
 };
 
 #define S_CREATE_EXCEPTION(Class) \
