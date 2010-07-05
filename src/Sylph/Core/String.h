@@ -396,6 +396,15 @@ public:
     String trim() const;
 
     /**
+     * Tokenizes a string with a given set of delimiters. This will split a
+     * String into tokens, with as boundary any character given in the array.
+     * Empty strings will not be included in the array.
+     * @parem delimiters A set of delimiters, by default equal to @c spacechars.
+     * @return An array of Strings, containing each token.
+     */
+    Array<String> split(Array<uchar> delimiters = spacechars) const;
+
+    /**
      * Returns a new String containing all characters from the given index to
      * the end of the String. The index is 0-based. The length of the new
      * String will be equal to <code>length() - begin - 1</code>.

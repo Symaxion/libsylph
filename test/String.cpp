@@ -215,6 +215,10 @@ namespace {
         EXPECT_EQ("wtf",s.trim());
     }
 
+    TEST_F(TestString, testSplit) {
+        SYLPH_STUB_TEST;
+    }
+
     TEST_F(TestString, testSubstring) {
         String s = "foobar";
         EXPECT_EQ("oba",s.substring(2,4));
