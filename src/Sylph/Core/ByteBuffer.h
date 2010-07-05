@@ -83,11 +83,11 @@ public:
     operator const Array<byte>() const;
 private:
     void ensureCapacity(size_t capacity);
-    Array<byte> _array;
+    Traits _traits;
+    Array<byte> _array;    
+    idx_t _mark;
     idx_t _pos;
     size_t _size;
-    Traits _traits;
-    idx_t _mark;
     size_t _markExpires;
 };
 

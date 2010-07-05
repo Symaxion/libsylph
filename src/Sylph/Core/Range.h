@@ -43,7 +43,7 @@ private:
     T _first;
     T _last;
 };
-typedef basic_range<int> range;
+typedef basic_range<unsigned int> range;
 typedef basic_range<float> frange;
 typedef basic_range<double> drange;
 

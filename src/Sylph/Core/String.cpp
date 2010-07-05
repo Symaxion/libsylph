@@ -405,12 +405,14 @@ const String& String::operator=(const char * orig) const {
     strdata->refcount--;
     if (strdata->refcount == 0) delete strdata;
     fromUtf8(orig);
+    return *this;
 }
 
 const String& String::operator=(const std::string & orig) const {
     strdata->refcount--;
     if (strdata->refcount == 0) delete strdata;
     fromAscii(orig.c_str());
+    return *this;
 }
 
 const String& String::operator=(const String orig) const {
@@ -418,6 +420,7 @@ const String& String::operator=(const String orig) const {
     if (strdata->refcount == 0) delete strdata;
     strdata = orig.strdata;
     strdata->refcount++;
+    return *this;
 }
 
 String::operator const char *() const {
@@ -542,7 +545,7 @@ String operator&(String(*lhs)(const String), const String rhs) {
 
 String operator*(const String lhs, const std::size_t len) {
     StringBuffer buf;
-    for (int i = 0; i < len; i++) {
+    for (idx_t i = 0; i < len; i++) {
         buf << lhs;
     }
     return buf;

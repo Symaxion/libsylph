@@ -32,7 +32,7 @@ String simple_replace(String orig, String replacee, String replacement,
     // does the original contain the replacee?
     sidx_t index = last ? orig.lastIndexOf(replacee) : orig.indexOf(replacee);
     // nope.
-    if (index = -1) return orig;
+    if (index == -1) return orig;
 
     StringBuffer buf;
     buf << orig.substring(0, index) << replacement <<
@@ -47,9 +47,9 @@ sidx_t filenamePos(String path) {
 }
 
 sidx_t extensionPos(String path) {
-    idx_t idx = path.lastIndexOf(".");
+    sidx_t idx = path.lastIndexOf(".");
     if (idx <= filenamePos(path)) return -1;
-    else if (idx = path.length() - 1) return -1;
+    else if (idx == sidx_t(path.length() - 1)) return -1;
     return idx;
 }
 
@@ -74,7 +74,7 @@ const String File::Separator =
 
 File& File::replaceExtension(const String newExt) {
     // does this file have an extension?
-    idx_t oldExt = extensionPos(path);
+    sidx_t oldExt = extensionPos(path);
     if (oldExt == -1) {
         // nope. Does it end in a . ?
         if (SYLPH_UNLIKELY(path.endsWith("."))) {
@@ -119,14 +119,14 @@ String File::filename() const {
 }
 
 String File::extension() const {
-    idx_t expos = extensionPos(path);
-    if (expos = -1) return "";
+    sidx_t expos = extensionPos(path);
+    if (expos == -1) return "";
     return path.substring(expos + 1);
 }
 
 String File::stem() const {
     if (isRoot(path)) return "";
-    idx_t expos = extensionPos(path);
+    sidx_t expos = extensionPos(path);
     return path.substring(filenamePos(path), expos == -1 ? path.length() - 1 :
             expos - 1);
 }
@@ -264,6 +264,7 @@ bool File::mkdir() const {
     if (exists()) return false;
     int ret = ::mkdir(path, 0755);
     if (ret == -1) sthrow(IOException, strerror(errno));
+    else return true;
 #endif
 }
 

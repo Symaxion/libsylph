@@ -41,7 +41,7 @@ public:
 
     virtual void flush() {}
     virtual void write(const Array<byte> b, off_t off = 0, size_t len = 0) {
-        if(len = 0) len = b.length;
+        if(len == 0) len = b.length;
         if(off+len > b.length) sthrow(ArrayException, "Array out of bounds");
         for(idx_t i = off; i < off+len; i++) {
             operator<<(b[i]);
@@ -54,6 +54,7 @@ public:
     virtual OutputStream& operator<<(const byte b) = 0;
     OutputStream& operator<<(const Array<byte> b) {
         write(b);
+        return *this;
     }
 
     OutputStream & operator<<(OutputStream&(*f)(OutputStream&)) {
