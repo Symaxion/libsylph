@@ -248,7 +248,7 @@ private:
         }
     }
 
-    inline void checkIfOutOfBounds(std::size_t idx) {
+    inline void checkIfOutOfBounds(std::size_t idx) const {
         if (idx >= _size) sthrow(ArrayException, "Vector out of bounds");
     }
 
