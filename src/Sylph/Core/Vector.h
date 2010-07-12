@@ -36,6 +36,7 @@ SYLPH_PUBLIC
 
 /**
  * @todo Write documentation!
+ * @tplreqs T DefaultConstructible, CopyConstructible, Assignable
  */
 template<class T>
 class Vector : public Object {
@@ -100,36 +101,83 @@ public:
     S_ITERABLE(T)
 
 
+    /**
+     * Creates an empty vector. By default, the initial capacity is 16, the
+     * size is 0.
+     * @param intialCount The initial capacity of the vector, 16 if none is
+     * provided.
+     */
     explicit Vector(std::size_t initialCount = 16) :
             elements((std::size_t)initialCount), _size(0) {
     }
 
+    /**
+     * Creates a copy of the vector. All elements of the other vector will be
+     * copied into this vector.
+     * @param other The other Vector.
+     */
+    Vector(const Vector<T>& other) {
+
+    }
+
+    /**
+     * Destroys this vector. If this Vector is holding pointers, this destructor
+     * does not deallocate their memory.
+     */
     virtual ~Vector() {
     }
 
+    /**
+     * Appends given element to the Vector. The element will be copied to the
+     * end of the Vector. If the capacity is not sufficient, a new elements
+     * array will be allocated with twice the size of the original array
+     * and all existing data will be copied into the new array. The size
+     * of this Vector will increase by 1.
+     * @param t The element to append.
+     */
     void add(const T & t) {
         ensureCapacity(_size + 1);
         _size++;
         set(_size - 1, t);
     }
 
+    /**
+     * Appends all elements of given Vector to this Vector, in order they
+     * have been inserted in the original Vector. This is the equivalent of
+     * calling add() for each of the elements in the given Vector in the order
+     * they have been inserted.
+     * The size of this Vector will increase by the size of the given Vector.
+     * @param c Another Vector whose elements to append to this one.
+     */
     void addAll(Vector<T> & c) {
+        ensureCapacity(_size + c._size);
         for (Vector<T>::iterator it = c.begin();
                 it != c.end(); ++it) {
             add(*it);
         }
     }
 
+    /**
+     * Returns the current capacity of this Vector. The capacity represents
+     * the maximum size this Vector can have without needing to expand and
+     * copy all elements to a new, bigger array. Therefore, the capacity must
+     * always be greater than or equal to the size of this Vector.
+     * @return The current capacity of this Vector.
+     */
     std::size_t capacity() const {
         return elements.length;
     }
 
+    /**
+     * Removes all elements from this vector. This will clear the underlying
+     * array of the vector and reduces the sice effectively to 0.
+     */
     void clear() {
         _size = 0;
         elements.clear();
     }
 
-    bool contains(const T & t) {
+    bool contains(const T & t) const {
         return indexOf(t) != -1;
     }
 
