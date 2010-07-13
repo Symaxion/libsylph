@@ -181,7 +181,7 @@ public:
         return indexOf(t) != -1;
     }
 
-    bool empty() {
+    bool empty() const {
         return _size == 0;
     }
 
@@ -201,7 +201,7 @@ public:
         straced;
     }
 
-    sidx_t indexOf(const T & t, std::idx_t idx = 0) {
+    sidx_t indexOf(const T & t, std::idx_t idx = 0) const {
         static Equals<T> equf;
         for (std::size_t i = idx; i < _size; i++) {
             if (equf(get(i), t)) {
@@ -211,11 +211,11 @@ public:
         return -1;
     }
 
-    int lastIndexOf(const T & t) {
+    sidx_t lastIndexOf(const T & t) const {
         return lastIndexOf(t, _size - 1);
     }
 
-    sidx_t lastIndexOf(const T & t, std::size_t idx) {
+    sidx_t lastIndexOf(const T & t, std::size_t idx) const {
         static Equals<T> equf;
         checkIfOutOfBounds(idx);
         for (std::size_t i = idx; i >= 0; i--) {
