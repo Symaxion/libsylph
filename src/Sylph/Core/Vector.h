@@ -177,14 +177,17 @@ public:
         elements.clear();
     }
 
+    /** */
     bool contains(const T & t) const {
         return indexOf(t) != -1;
     }
 
+    /** */
     bool empty() const {
         return _size == 0;
     }
 
+    /** */
     const T & get(std::size_t idx) const {
         try {
             checkIfOutOfBounds(idx);
@@ -193,6 +196,7 @@ public:
         straced;
     }
 
+    /** */
     T & get(std::size_t idx) {
         try {
             checkIfOutOfBounds(idx);
@@ -201,6 +205,7 @@ public:
         straced;
     }
 
+    /** */
     sidx_t indexOf(const T & t, std::idx_t idx = 0) const {
         static Equals<T> equf;
         for (std::size_t i = idx; i < _size; i++) {
@@ -211,10 +216,12 @@ public:
         return -1;
     }
 
+    /** */
     sidx_t lastIndexOf(const T & t) const {
         return lastIndexOf(t, _size - 1);
     }
 
+    /** */
     sidx_t lastIndexOf(const T & t, std::size_t idx) const {
         static Equals<T> equf;
         checkIfOutOfBounds(idx);
@@ -226,10 +233,12 @@ public:
         return -1;
     }
 
+    /** */
     void remove(const T & t) {
         removeAt(indexOf(t));
     }
 
+    /** */
     void removeAt(std::size_t idx) {
         _size--;
         if (idx < (elements.length - 1))
@@ -237,6 +246,7 @@ public:
                 elements.length - 1 - idx);
     }
 
+    /** */
     void set(std::size_t idx, const T & t) {
         try {
             checkIfOutOfBounds(idx);
@@ -245,10 +255,12 @@ public:
         straced;
     }
 
+    /** */
     std::size_t size() const {
         return _size;
     }
 
+    /** */
     Array<T> toArray() const {
         Array<T> toReturn(size());
         for(idx_t i = 0; i < size(); ++i) {
@@ -257,6 +269,7 @@ public:
         return toReturn;
     }
 
+    /** */
     bool operator==(const Vector<T> & c) const {
         if (_size != c.size()) return false;
         else {
@@ -267,14 +280,17 @@ public:
         }
     }
 
+    /** */
     T & operator[](std::idx_t idx) {
         return get(idx);
     }
 
+    /** */
     const T & operator[](std::idx_t idx) const {
         return get(idx);
     }
 
+    /** */
     Vector& operator=(const Vector<T> & rhs) {
         elements = Array<T > (rhs.elements.length);
         _size = rhs.size();

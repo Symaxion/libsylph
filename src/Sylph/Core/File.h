@@ -131,80 +131,121 @@ public:
      */
     String rootName() const;
 
+    /** */
     File parent() const;
 
+    /** */
     String filename() const;
 
+    /** */
     String stem() const;
 
+    /** */
     String extension() const;
 
+    /** */
     inline bool empty() const {
         return path == "";
     }
 
+    /** */
     bool absolute() const;
+
+    /** */
     bool canonical() const;
 
+    /** */
     File toAbsolute() const;
+
+    /** */
     inline String toAbsoluteName() const {
         return toAbsolute().toString();
     }
+
+    /** */
     File toCanonical() const;
+
+    /** */
     inline String toCanonicalName() const {
         return toAbsolute().toString();
     }
 
+    /** */
     bool hasFilename() const {
         return path != "";
     }
 
+    /** */
     bool hasParent() const {
         return !parent().empty();
     }
 
+    /** */
     bool exists() const;
+
+    /** */
     bool create() const;
+
+    /** */
     bool remove() const;
 
+    /** */
     bool canRead() const;
+
+    /** */
     bool canWrite() const;
 
     bool mkdir() const;
+
+    /** */
     bool mkdirs() const;
 
+    /** */
     bool isFile() const;
+
+    /** */
     bool isDirectory() const;
 
+    /** */
     bool chmod(suint mode, bool sylphmode = false) const;
 
+    /** */
     Array<File> contents() const;
+
+    /** */
     static File workingDir();
 
+    /** */
     inline File& operator=(const File& f) {
         return operator=(f.path);
     }
 
+    /** */
     inline File& operator=(const String s) {
         path = "";
         operator/=(s);
         return *this;
     }
 
+    /** */
     inline File& operator=(const char* s) {
         return operator=(String(s));
     }
 
+    /** */
     File& operator/=(const File & rhs) {
         return operator /=(rhs.toString());
     }
 
+    /** */
     File& operator/=(const String);
 
+    /** */
     inline File& operator/=(const char* s) {
         return operator/=(String(s));
     }
 
+    /** */
     static const String Separator;
 
 private:
@@ -212,18 +253,24 @@ private:
     String path;
 };
 
+/** */
 inline bool operator==(const File& lhs, const File& rhs) {
     return lhs.toCanonicalName() == rhs.toCanonicalName();
 }
+
+/** */
 inline bool operator<(const File& lhs, const File& rhs) {
     return lhs.toCanonicalName() < rhs.toCanonicalName();
 }
 
 S_CMP_SEQ(const File&)
 
+/** */
 inline File operator/(const File& lhs, const File& rhs) {
     return File(lhs) /= rhs;
 }
+
+/** */
 inline std::ostream& operator<<(std::ostream& lhs, const File& rhs) {
     return lhs << rhs.toString();
 }
