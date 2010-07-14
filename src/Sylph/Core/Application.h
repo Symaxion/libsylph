@@ -132,36 +132,59 @@ public:
      */
     AppType appType();
 
+    /** */
     void fail(const String reason, bool exit = true);
+    /** */
     void fail(const String reason, const String file, unsigned int line,
         bool exit = true);
 
 
+    /** */
     virtual const File& bundle() = 0;
+    /** */
     virtual const File& resourceDir() = 0;
+    /** */
     virtual const File resource(String rsc) = 0;
+    /** */
     virtual const File& libraryDir() = 0;
+    /** */
     virtual const File& pluginDir() = 0;
+    /** */
     virtual const File& plugindisabledDir() = 0;
 
+    /** */
     virtual const File& systemLibraryDir() = 0;
+    /** */
     virtual const File& systemSettings() = 0;
+    /** */
     virtual const File& systemSettingsDir() = 0;
+    /** */
     virtual const File& systemPluginDir() = 0;
+    /** */
     virtual const File& systemPluginDisabledDir() = 0;
+    /** */
     virtual const File& systemResourceDir() = 0;
+    /** */
     virtual const File systemResource(String rsc) = 0;
 
     virtual const File& userHome() = 0;
 
+    /** */
     virtual const File& userLibraryDir() = 0;
+    /** */
     virtual const File& userSettings() = 0;
+    /** */
     virtual const File& userSettingsDir() = 0;
+    /** */
     virtual const File& userPluginDir() = 0;
+    /** */
     virtual const File& userPluginDisabledDir() = 0;
+    /** */
     virtual const File& userResourceDir() = 0;
+    /** */
     virtual const File userResource(String rsc) = 0;
 
+    /** */
     virtual const File& prefix() = 0;
 
 protected:
