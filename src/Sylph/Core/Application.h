@@ -60,7 +60,7 @@ public:
      * Returns the location of the file containing the object code of the
      * application.<p>
      * In case the application for which the location is requested is
-     * @c thisapp, he exact method used to determine the location is
+     * @c thisapp, the exact method used to determine the location is
      * platform-dependant and may fail. In this case, the value is either set
      * to an empty string or a garbage value. Depending on the implementation,
      * an error may be raised as well during initialisation.
@@ -74,11 +74,12 @@ public:
 
     /**
      * Initialize the current application. This function will give the correct
-     * value to @c thisapp. Note that if you use int SylphMain(Array<String>)
-     * as the entry point for your application (the default), you do not need
-     * to call this function explicitly. Instead, it will be called for you
-     * before the SylphMain function. Depending on the implementation, this
-     * function may or may not set up other important resources.
+     * value to @c thisapp. Note that if you use <code>int
+     * SylphMain(Array<String>)</code> as the entry point for your application
+     * (the default), you do not need  to call this function explicitly.
+     * Instead, it will be called for you  before the SylphMain function.
+     * Depending on the implementation, this function may or may not set up
+     * other important resources.
      * @param argc The number of arguments passed to the entry point designated
      * by the platform.
      * @param argv An array of C strings containing the arguments passed to
