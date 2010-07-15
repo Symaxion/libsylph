@@ -93,14 +93,14 @@ public:
      * Creates a file from given path.
      */
     File(const String s) {
-        operator/=(s);
+        append(s,true);
     }
 
     /**
      * Creates a file from given path as a C string.
      */
     File(const char* s) {
-        operator/=(String(s));
+        append(String(s),true);
     }
 
     virtual ~File() {
@@ -233,7 +233,7 @@ public:
     }
 
     /** */
-    File& operator/=(const File & rhs) {
+    File& operator/=(const File& rhs) {
         return operator /=(rhs.toString());
     }
 
@@ -249,6 +249,7 @@ public:
     static const String Separator;
 
 private:
+    File& append(String, bool);
 
     String path;
 };
