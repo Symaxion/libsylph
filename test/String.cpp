@@ -218,6 +218,9 @@ namespace {
     TEST_F(TestString, testSubstring) {
         String s = "foobar";
         EXPECT_EQ("oba",s.substring(2,4));
+        EXPECT_NO_THROW({
+            EXPECT_EQ("bar",s.substring(3));
+        });
     }
 
     TEST_F(TestString, testIndexOf) {
@@ -237,6 +240,7 @@ namespace {
         EXPECT_EQ(2,s.lastIndexOf("ob"));
         EXPECT_EQ(-1,s.lastIndexOf("zaz"));
         EXPECT_EQ(-1,s.lastIndexOf("z"));
+        EXPECT_EQ(0,s.lastIndexOf("f"));
         });
     }
 

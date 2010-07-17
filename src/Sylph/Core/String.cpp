@@ -31,7 +31,7 @@ bool startsWithHelper(idx_t from, const String& left, const String& right) {
 }
 
 bool endsWithHelper(idx_t from, const String& left, const String& right) {
-    if (from < right.length()) {
+    if (from < right.length() - 1) {
         return false;
     }
     suint count = 0;
@@ -267,7 +267,7 @@ String String::trim() const {
 }
 
 String String::substring(idx_t begin) const {
-    return substring(begin, length());
+    return substring(begin, length()-1);
 }
 
 String String::substring(idx_t begin, idx_t end) const {
@@ -292,7 +292,7 @@ sidx_t String::lastIndexOf(const String substr, idx_t start) const {
     if (start < substr.length()) { 
         return -1;
     }
-    for (idx_t i = start; i >= substr.length(); i--) {
+    for (sidx_t i = start; i >= sidx_t(substr.length() - 1); i--) {
         if(endsWithHelper(i,*this,substr)) {
             return i-substr.length() + 1;
         }
