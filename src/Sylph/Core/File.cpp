@@ -358,7 +358,6 @@ bool File::chmod(suint mode, bool sylphmode) const {
 }
 
 Array<File> File::contents() const {
-    SYLPH_STUB;
     if (!isDirectory()) return Array<File > (0);
     DIR* dir;
     struct dirent* ent;
