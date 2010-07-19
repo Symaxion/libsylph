@@ -39,7 +39,7 @@ public:
     bool eof() const;
     bool markSupported() const { return true; }
     void mark(fsize_t);
-    fsize_t skip(fsize_t) = 0;
+    fsize_t skip(fsize_t);
     void reset();
 
     InputStream& operator>>(byte&);
