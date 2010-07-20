@@ -277,7 +277,7 @@ Array<String> String::split(Array<uchar> delimiters) const {
         for(idx_t j = 0; j < delimiters.length; ++j) {
             if(at(i) == delimiters[j]) {
                 end = i;
-                if(start != end) toReturn.add(substring(start,end));
+                if(start != end) toReturn.add(substring(start,end-1));
                 start = end + 1;
             }
         }
