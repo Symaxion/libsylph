@@ -155,7 +155,7 @@ std::size_t String::length() const {
     return strdata->data.length;
 }
 
-const uchar String::at(sidx_t idx) const {
+const uchar String::at(sidx_t idx) const throw(ArrayException) {
     try {
         return strdata->data[idx];
     } straced;
@@ -266,15 +266,16 @@ String String::trim() const {
     return substring(beginct, endct);
 }
 
-String String::substring(idx_t begin) const {
+String String::substring(idx_t begin) const throw(ArrayException) {
     return substring(begin, length()-1);
 }
 
-String String::substring(idx_t begin, idx_t end) const {
+String String::substring(idx_t begin, idx_t end) const throw(ArrayException) {
     return String(strdata->data[range(begin, end)]);
 }
 
-sidx_t String::indexOf(const String substr, idx_t start) const {
+sidx_t String::indexOf(const String substr, idx_t start) const
+        throw(ArrayException) {
     if (this->length() - start < substr.length()) return -1;
     for (idx_t i = start; i < (this->length() - substr.length()); i++) {
         if(startsWithHelper(i,*this,substr)) {
@@ -288,7 +289,8 @@ sidx_t String::lastIndexOf(const String substr) const {
     return lastIndexOf(substr, length() - 1);
 }
 
-sidx_t String::lastIndexOf(const String substr, idx_t start) const {
+sidx_t String::lastIndexOf(const String substr, idx_t start) const
+        throw(ArrayException) {
     if (start < substr.length()) { 
         return -1;
     }

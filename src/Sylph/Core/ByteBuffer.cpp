@@ -72,7 +72,8 @@ void ByteBuffer::setTraits(Traits traits) {
 
 // Read methods
 
-InputStream& ByteBuffer::operator>>(byte& b) {
+InputStream& ByteBuffer::operator>>(byte& b) 
+        throw(IllegalStateException, IOException) {
     if (!(_traits & Read))
         sthrow(IllegalStateException, "ByteBuffer in wrong state");
     if (!eof()) {
@@ -91,7 +92,8 @@ InputStream& ByteBuffer::operator>>(byte& b) {
 
 // Write methods and operators
 
-OutputStream& ByteBuffer::operator<<(const byte b) {
+OutputStream& ByteBuffer::operator<<(const byte b)
+        throw(IllegalStateException) {
     if (!(_traits & Write))
         sthrow(IllegalStateException, "ByteBuffer in wrong state");
     ensureCapacity(_size + 1);
@@ -103,7 +105,8 @@ OutputStream& ByteBuffer::operator<<(const byte b) {
     return *this;
 }
 
-ByteBuffer& ByteBuffer::fromString(const String s) {
+ByteBuffer& ByteBuffer::fromString(const String s) 
+          throw(IllegalStateException) {
     if (!(_traits & Write))
         sthrow(IllegalStateException, "ByteBuffer in wrong state");
     if (s.length() % 2) return *this;

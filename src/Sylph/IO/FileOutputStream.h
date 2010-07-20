@@ -32,15 +32,16 @@ SYLPH_PUBLIC
 class FileOutputStream : public OutputStream {
 public:
 
-    FileOutputStream(File& f, IO::IOType t = IO::Normal);
+    FileOutputStream(File& f, IO::IOType t = IO::Normal) throw(IOException);
     virtual ~FileOutputStream();
 
-    void write(const Array<byte> b, off_t off = 0, size_t len = 0);
+    void write(const Array<byte> b, off_t off = 0, size_t len = 0)
+        throw(IOException,ArrayException);
     void close();
 
     void flush();
 
-    OutputStream & operator<<(const byte b);
+    OutputStream & operator<<(const byte b) throw(IOException);
 
 private:
     FILE* fptr;

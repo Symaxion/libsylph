@@ -188,7 +188,7 @@ public:
     }
 
     /** */
-    const T & get(std::size_t idx) const {
+    const T & get(std::size_t idx) const throw(ArrayException) {
         try {
             checkIfOutOfBounds(idx);
             return elements[idx];
@@ -197,7 +197,7 @@ public:
     }
 
     /** */
-    T & get(std::size_t idx) {
+    T & get(std::size_t idx) throw(ArrayException) {
         try {
             checkIfOutOfBounds(idx);
             return elements[idx];
@@ -206,7 +206,10 @@ public:
     }
 
     /** */
-    sidx_t indexOf(const T & t, std::idx_t idx = 0) const {
+    sidx_t indexOf(const T & t, std::idx_t idx = 0) const throw(ArrayException) {
+        try {
+            checkIfOutOfBounds(idx);
+        } straced;
         static Equals<T> equf;
         for (std::size_t i = idx; i < _size; i++) {
             if (equf(get(i), t)) {
@@ -222,9 +225,12 @@ public:
     }
 
     /** */
-    sidx_t lastIndexOf(const T & t, std::size_t idx) const {
+    sidx_t lastIndexOf(const T & t, std::size_t idx) const 
+            throw(ArrayException) {
         static Equals<T> equf;
-        checkIfOutOfBounds(idx);
+        try {
+            checkIfOutOfBounds(idx);
+        } straced;
         for (std::size_t i = idx; i >= 0; i--) {
             if (equf(get(i), t)) {
                 return i;
@@ -239,7 +245,10 @@ public:
     }
 
     /** */
-    void removeAt(std::size_t idx) {
+    void removeAt(std::size_t idx) throw(ArrayException) {
+        try {
+            checkIfOutOfBounds(idx);
+        } straced;
         _size--;
         if (idx < (elements.length - 1))
             arraycopy(elements, idx + 1, elements, idx,
@@ -247,7 +256,7 @@ public:
     }
 
     /** */
-    void set(std::size_t idx, const T & t) {
+    void set(std::size_t idx, const T & t) throw(ArrayException) {
         try {
             checkIfOutOfBounds(idx);
             elements[idx] = t;
@@ -281,13 +290,17 @@ public:
     }
 
     /** */
-    T & operator[](std::idx_t idx) {
-        return get(idx);
+    T & operator[](std::idx_t idx) throw(ArrayException) {
+        try {
+            return get(idx);
+        } straced;
     }
 
     /** */
-    const T & operator[](std::idx_t idx) const {
-        return get(idx);
+    const T & operator[](std::idx_t idx) const throw(ArrayException) {
+        try {
+            return get(idx);
+        } straced;
     }
 
     /** */
@@ -312,7 +325,8 @@ private:
         }
     }
 
-    inline void checkIfOutOfBounds(std::size_t idx) const {
+    inline void checkIfOutOfBounds(std::size_t idx) const 
+            throw(ArrayException) {
         if (idx >= _size) sthrow(ArrayException, "Vector out of bounds");
     }
 

@@ -184,7 +184,7 @@ File File::toCanonical() const {
 #endif
 }
 
-bool File::exists() const {
+bool File::exists() const throw(IOException) {
 #ifdef SYLPH_OS_WINDOWS
     SYLPH_STUB;
     return true;
@@ -198,7 +198,7 @@ bool File::exists() const {
 #endif
 }
 
-bool File::create() const {
+bool File::create() const throw(IOException) {
 #ifdef SYLPH_OS_WINDOWS
     SYLPH_STUB;
     return false;
@@ -215,7 +215,7 @@ bool File::create() const {
 
 }
 
-bool File::remove() const {
+bool File::remove() const throw(IOException) {
 #ifdef SYLPH_OS_WINDOWS
     SYLPH_STUB;
     return false;
@@ -226,7 +226,7 @@ bool File::remove() const {
 #endif
 }
 
-bool File::canRead() const {
+bool File::canRead() const throw(IOException) {
 #ifdef SYLPH_OS_WINDOWS
     SYLPH_STUB;
     return true;
@@ -241,7 +241,7 @@ bool File::canRead() const {
 #endif
 }
 
-bool File::canWrite() const {
+bool File::canWrite() const throw(IOException) {
 #ifdef SYLPH_OS_WINDOWS
     SYLPH_STUB;
     return true;
@@ -256,7 +256,7 @@ bool File::canWrite() const {
 #endif
 }
 
-bool File::mkdir() const {
+bool File::mkdir() const throw(IOException) {
 #if SYLPH_OS_WINDOWS
     SYLPH_STUB;
     return false;
@@ -268,7 +268,7 @@ bool File::mkdir() const {
 #endif
 }
 
-bool File::mkdirs() const {
+bool File::mkdirs() const throw(IOException) {
     File f;
     for (iterator it = begin(); it != end(); ++it) {
         if (f.exists()) {
@@ -282,7 +282,7 @@ bool File::mkdirs() const {
     return true;
 }
 
-bool File::isFile() const {
+bool File::isFile() const throw(IOException) {
 #ifdef SYLPH_OS_WINDOWS
     SYLPH_STUB_FUNCTION;
     return false;
@@ -295,7 +295,7 @@ bool File::isFile() const {
 #endif
 }
 
-bool File::isDirectory() const {
+bool File::isDirectory() const throw(IOException) {
 #ifdef SYLPH_OS_WINDOWS
     SYLPH_STUB_FUNCTION;
     return false;
@@ -308,7 +308,7 @@ bool File::isDirectory() const {
 #endif
 }
 
-bool File::chmod(suint mode, bool sylphmode) const {
+bool File::chmod(suint mode, bool sylphmode) const throw(IOException) {
 #ifdef SYLPH_OS_WINDOWS
     // windows doesn't support chmodding. ever.
     return false;
@@ -357,7 +357,7 @@ bool File::chmod(suint mode, bool sylphmode) const {
 #endif
 }
 
-Array<File> File::contents() const {
+Array<File> File::contents() const throw(IOException) {
     if (!isDirectory()) return Array<File > (0);
     DIR* dir;
     struct dirent* ent;
@@ -377,7 +377,7 @@ Array<File> File::contents() const {
     return toReturn.toArray();
 }
 
-File File::workingDir() {
+File File::workingDir() throw(IOException) {
     char buf[MAXPATHLEN];
     char* ret = getcwd(buf, MAXPATHLEN);
     if (ret == 0) {

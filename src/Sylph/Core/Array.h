@@ -360,7 +360,8 @@ public:
             return idx >= 0 ? data->_carray[idx] : data->_carray[length + idx];
         } else {
             char buf[2048];
-            sprintf(buf, "Array overflow - index: %d , length: %d", idx, length);
+            sprintf(buf, "Array overflow - index: %d , length: %u",
+                    signed(idx), unsigned(length));
             sthrow(ArrayException, buf);
         }
     }
@@ -377,7 +378,8 @@ public:
             return idx >= 0 ? data->_carray[idx] : data->_carray[length + idx];
         } else {
             char buf[2048];
-            sprintf(buf, "Array overflow - index: %d , length: %d", idx, length);
+            sprintf(buf, "Array overflow - index: %d , length: %u",
+                    signed(idx), unsigned(length));
             sthrow(ArrayException, buf);
         }
     }
@@ -391,10 +393,10 @@ public:
      * @throw ArrayException if ran.last() > length
      */
     Array<T> operator[](const range & ran) throw (Exception) {
-        if (ran.first() < 0 || ran.last() >= length) {
+        if (ran.last() >= length) {
             char buf[2048];
-            sprintf(buf, "Array overflow - range: %d - %d , length: %d",
-                    ran.first(), ran.last(), length);
+            sprintf(buf, "Array overflow - range: %u - %u , length: %u",
+                    ran.first(), ran.last(), unsigned(length));
             sthrow(ArrayException, buf);
         }
 
@@ -409,10 +411,10 @@ public:
      * @throw ArrayException if ran.last() > length
      */
     const Array<T> operator[](const range & ran) const throw (Exception) {
-        if (ran.first() < 0 || ran.last() >= length) {
+        if (ran.last() >= length) {
             char buf[2048];
-            sprintf(buf, "Array overflow - range: %d - %d , length: %d",
-                    ran.first(), ran.last(), length);
+            sprintf(buf, "Array overflow - range: %u - %u , length: %u",
+                    ran.first(), ran.last(), unsigned(length));
             sthrow(ArrayException, buf);
         }
 
