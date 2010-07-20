@@ -216,7 +216,13 @@ namespace {
     }
 
     TEST_F(TestString, testSplit) {
-        SYLPH_STUB_TEST;
+        String s = " a   beta ccc\td ";
+        Array<String> result = s.split();
+        ASSERT_EQ(4,result.length);
+        EXPECT_EQ("a",result[0]);
+        EXPECT_EQ("beta",result[1]);
+        EXPECT_EQ("ccc",result[2]);
+        EXPECT_EQ("d",result[4]);
     }
 
     TEST_F(TestString, testSubstring) {
