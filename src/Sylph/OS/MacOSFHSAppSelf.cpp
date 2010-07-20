@@ -37,6 +37,7 @@ const File& MacOSFHSAppSelf::pluginDir() {
 
 const File& MacOSFHSAppSelf::plugindisabledDir() {
     static File f = prefix() / "lib" / appName() / "plugins-disabled";
+    return f;
 }
 
 const File& MacOSFHSAppSelf::systemLibraryDir() {

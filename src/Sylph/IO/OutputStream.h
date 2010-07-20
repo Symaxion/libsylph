@@ -47,7 +47,8 @@ public:
     /** */
     virtual void flush() {}
     /** */
-    virtual void write(const Array<byte> b, off_t off = 0, size_t len = 0) {
+    virtual void write(const Array<byte> b, off_t off = 0, size_t len = 0)
+            throw(ArrayException, IOException) {
         if(len == 0) len = b.length;
         if(off+len > b.length) sthrow(ArrayException, "Array out of bounds");
         for(idx_t i = off; i < off+len; i++) {
@@ -56,19 +57,19 @@ public:
     }
 
     /** */
-    virtual void write(const byte b) {
+    virtual void write(const byte b) throw(IOException) {
         operator<<(b);
     }
 
     /** */
     virtual OutputStream& operator<<(const byte b) = 0;
-    OutputStream& operator<<(const Array<byte> b) {
+    OutputStream& operator<<(const Array<byte> b) throw(IOException) {
         write(b);
         return *this;
     }
 
     /** */
-    OutputStream & operator<<(OutputStream&(*f)(OutputStream&)) {
+    OutputStream & operator<<(OutputStream&(*f)(OutputStream&)){
         return f(*this);
     }
 

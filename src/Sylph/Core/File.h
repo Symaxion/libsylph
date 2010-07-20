@@ -181,39 +181,39 @@ public:
     }
 
     /** */
-    bool exists() const;
+    bool exists() const throw(IOException);
 
     /** */
-    bool create() const;
+    bool create() const throw(IOException);
 
     /** */
-    bool remove() const;
+    bool remove() const throw(IOException);
 
     /** */
-    bool canRead() const;
+    bool canRead() const throw(IOException);
 
     /** */
-    bool canWrite() const;
+    bool canWrite() const throw(IOException);
 
-    bool mkdir() const;
-
-    /** */
-    bool mkdirs() const;
+    bool mkdir() const throw(IOException);
 
     /** */
-    bool isFile() const;
+    bool mkdirs() const throw(IOException);
 
     /** */
-    bool isDirectory() const;
+    bool isFile() const throw(IOException);
 
     /** */
-    bool chmod(suint mode, bool sylphmode = false) const;
+    bool isDirectory() const throw(IOException);
 
     /** */
-    Array<File> contents() const;
+    bool chmod(suint mode, bool sylphmode = false) const throw(IOException);
 
     /** */
-    static File workingDir();
+    Array<File> contents() const throw(IOException);
+
+    /** */
+    static File workingDir() throw(IOException);
 
     /** */
     inline File& operator=(const File& f) {

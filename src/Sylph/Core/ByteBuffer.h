@@ -64,12 +64,12 @@ public:
     void setTraits(Traits traits);
 
     // Read methods
-    InputStream& operator>>(byte& b);
+    InputStream& operator>>(byte& b) throw(IOException, IllegalStateException);
 
     // Write methods and operators
-    OutputStream& operator<<(const byte b);
+    OutputStream& operator<<(const byte b) throw(IllegalStateException);
 
-    ByteBuffer& fromString(const String s);
+    ByteBuffer& fromString(const String s) throw(IllegalStateException);
 
     // Operators:
     ByteBuffer& operator=(const ByteBuffer & rhs);
