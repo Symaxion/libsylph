@@ -2,7 +2,7 @@
 #include "../Core/File.h"
 
 SYLPH_BEGIN_NAMESPACE
-FileInputStream::FileInputStream(File& f, IO::IOType t) {
+FileInputStream::FileInputStream(File& f, IO::IOType t) throw(IOException) {
     fptr = fopen(f.toCanonicalName(), t & IO::Binary ? "rb" : "r");
     if (!fptr) sthrow(IOException,
             String("Unable to open file ") + f.toCanonicalName());
@@ -20,7 +20,8 @@ fsize_t FileInputStream::available() const {
     return end - cur;
 }
 
-fssize_t FileInputStream::read(Array<byte>& b, off_t offset, size_t len) {
+fssize_t FileInputStream::read(Array<byte>& b, off_t offset, size_t len)
+        throw(ArrayException,IOException) {
     if (!len) len = b.length;
     if (offset + len > b.length) sthrow(ArrayException, "Index out of bounds");
     if (eof()) return -1;

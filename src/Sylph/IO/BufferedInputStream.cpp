@@ -45,6 +45,7 @@ InputStream & BufferedInputStream::operator>>(byte& b) {
     b = buffer[currentIdx];
     if(marklen > 0) marklen--;
     else if(marklen == 0) markpos = 0;
+    return *this;
 }
 
 void BufferedInputStream::readNext() {

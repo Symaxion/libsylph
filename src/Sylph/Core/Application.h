@@ -60,7 +60,7 @@ public:
      * Returns the location of the file containing the object code of the
      * application.<p>
      * In case the application for which the location is requested is
-     * @c thisapp, he exact method used to determine the location is
+     * @c thisapp, the exact method used to determine the location is
      * platform-dependant and may fail. In this case, the value is either set
      * to an empty string or a garbage value. Depending on the implementation,
      * an error may be raised as well during initialisation.
@@ -74,11 +74,12 @@ public:
 
     /**
      * Initialize the current application. This function will give the correct
-     * value to @c thisapp. Note that if you use int SylphMain(Array<String>)
-     * as the entry point for your application (the default), you do not need
-     * to call this function explicitly. Instead, it will be called for you
-     * before the SylphMain function. Depending on the implementation, this
-     * function may or may not set up other important resources.
+     * value to @c thisapp. Note that if you use <code>int
+     * SylphMain(Array<String>)</code> as the entry point for your application
+     * (the default), you do not need  to call this function explicitly.
+     * Instead, it will be called for you  before the SylphMain function.
+     * Depending on the implementation, this function may or may not set up
+     * other important resources.
      * @param argc The number of arguments passed to the entry point designated
      * by the platform.
      * @param argv An array of C strings containing the arguments passed to
@@ -132,36 +133,59 @@ public:
      */
     AppType appType();
 
+    /** */
     void fail(const String reason, bool exit = true);
+    /** */
     void fail(const String reason, const String file, unsigned int line,
         bool exit = true);
 
 
+    /** */
     virtual const File& bundle() = 0;
+    /** */
     virtual const File& resourceDir() = 0;
+    /** */
     virtual const File resource(String rsc) = 0;
+    /** */
     virtual const File& libraryDir() = 0;
+    /** */
     virtual const File& pluginDir() = 0;
+    /** */
     virtual const File& plugindisabledDir() = 0;
 
+    /** */
     virtual const File& systemLibraryDir() = 0;
+    /** */
     virtual const File& systemSettings() = 0;
+    /** */
     virtual const File& systemSettingsDir() = 0;
+    /** */
     virtual const File& systemPluginDir() = 0;
+    /** */
     virtual const File& systemPluginDisabledDir() = 0;
+    /** */
     virtual const File& systemResourceDir() = 0;
+    /** */
     virtual const File systemResource(String rsc) = 0;
 
     virtual const File& userHome() = 0;
 
+    /** */
     virtual const File& userLibraryDir() = 0;
+    /** */
     virtual const File& userSettings() = 0;
+    /** */
     virtual const File& userSettingsDir() = 0;
+    /** */
     virtual const File& userPluginDir() = 0;
+    /** */
     virtual const File& userPluginDisabledDir() = 0;
+    /** */
     virtual const File& userResourceDir() = 0;
+    /** */
     virtual const File userResource(String rsc) = 0;
 
+    /** */
     virtual const File& prefix() = 0;
 
 protected:

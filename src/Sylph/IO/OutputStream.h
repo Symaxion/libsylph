@@ -27,39 +27,53 @@
 SYLPH_BEGIN_NAMESPACE
 SYLPH_PUBLIC
 
+/** */
 class OutputStream : public virtual Object {
 public:
 
+    /** */
     OutputStream() : closed(false) {
     }
+    /** */
     virtual ~OutputStream() {
 
     }
+
+    /** */
     virtual void close() {
         closed = true;
     }
 
+    /** */
     virtual void flush() {}
-    virtual void write(const Array<byte> b, off_t off = 0, size_t len = 0) {
-        if(len = 0) len = b.length;
+    /** */
+    virtual void write(const Array<byte> b, off_t off = 0, size_t len = 0)
+            throw(ArrayException, IOException) {
+        if(len == 0) len = b.length;
         if(off+len > b.length) sthrow(ArrayException, "Array out of bounds");
         for(idx_t i = off; i < off+len; i++) {
             operator<<(b[i]);
         }
     }
-    virtual void write(const byte b) {
+
+    /** */
+    virtual void write(const byte b) throw(IOException) {
         operator<<(b);
     }
 
+    /** */
     virtual OutputStream& operator<<(const byte b) = 0;
-    OutputStream& operator<<(const Array<byte> b) {
+    OutputStream& operator<<(const Array<byte> b) throw(IOException) {
         write(b);
+        return *this;
     }
 
-    OutputStream & operator<<(OutputStream&(*f)(OutputStream&)) {
+    /** */
+    OutputStream & operator<<(OutputStream&(*f)(OutputStream&)){
         return f(*this);
     }
 
+    /** */
     bool toBool() const {
         return !closed;
     }

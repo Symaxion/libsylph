@@ -64,12 +64,12 @@ public:
     void setTraits(Traits traits);
 
     // Read methods
-    InputStream& operator>>(byte& b);
+    InputStream& operator>>(byte& b) throw(IOException, IllegalStateException);
 
     // Write methods and operators
-    OutputStream& operator<<(const byte b);
+    OutputStream& operator<<(const byte b) throw(IllegalStateException);
 
-    ByteBuffer& fromString(const String s);
+    ByteBuffer& fromString(const String s) throw(IllegalStateException);
 
     // Operators:
     ByteBuffer& operator=(const ByteBuffer & rhs);
@@ -83,11 +83,11 @@ public:
     operator const Array<byte>() const;
 private:
     void ensureCapacity(size_t capacity);
-    Array<byte> _array;
+    Traits _traits;
+    Array<byte> _array;    
+    idx_t _mark;
     idx_t _pos;
     size_t _size;
-    Traits _traits;
-    idx_t _mark;
     size_t _markExpires;
 };
 
