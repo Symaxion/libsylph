@@ -32,7 +32,7 @@ String simple_replace(String orig, String replacee, String replacement,
     // does the original contain the replacee?
     sidx_t index = last ? orig.lastIndexOf(replacee) : orig.indexOf(replacee);
     // nope.
-    if (index = -1) return orig;
+    if (index == -1) return orig;
 
     StringBuffer buf;
     buf << orig.substring(0, index) << replacement <<
@@ -47,9 +47,9 @@ sidx_t filenamePos(String path) {
 }
 
 sidx_t extensionPos(String path) {
-    idx_t idx = path.lastIndexOf(".");
+    sidx_t idx = path.lastIndexOf(".");
     if (idx <= filenamePos(path)) return -1;
-    else if (idx = path.length() - 1) return -1;
+    else if (idx == sidx_t(path.length() - 1)) return -1;
     return idx;
 }
 
@@ -70,11 +70,11 @@ const String File::Separator =
 #else
         uchar('/')
 #endif
-        ;
+;
 
 File& File::replaceExtension(const String newExt) {
     // does this file have an extension?
-    idx_t oldExt = extensionPos(path);
+    sidx_t oldExt = extensionPos(path);
     if (oldExt == -1) {
         // nope. Does it end in a . ?
         if (SYLPH_UNLIKELY(path.endsWith("."))) {
@@ -119,14 +119,14 @@ String File::filename() const {
 }
 
 String File::extension() const {
-    idx_t expos = extensionPos(path);
-    if (expos = -1) return "";
+    sidx_t expos = extensionPos(path);
+    if (expos == -1) return "";
     return path.substring(expos + 1);
 }
 
 String File::stem() const {
     if (isRoot(path)) return "";
-    idx_t expos = extensionPos(path);
+    sidx_t expos = extensionPos(path);
     return path.substring(filenamePos(path), expos == -1 ? path.length() - 1 :
             expos - 1);
 }
@@ -184,7 +184,7 @@ File File::toCanonical() const {
 #endif
 }
 
-bool File::exists() const {
+bool File::exists() const throw(IOException) {
 #ifdef SYLPH_OS_WINDOWS
     SYLPH_STUB;
     return true;
@@ -198,7 +198,7 @@ bool File::exists() const {
 #endif
 }
 
-bool File::create() const {
+bool File::create() const throw(IOException) {
 #ifdef SYLPH_OS_WINDOWS
     SYLPH_STUB;
     return false;
@@ -215,7 +215,7 @@ bool File::create() const {
 
 }
 
-bool File::remove() const {
+bool File::remove() const throw(IOException) {
 #ifdef SYLPH_OS_WINDOWS
     SYLPH_STUB;
     return false;
@@ -226,7 +226,7 @@ bool File::remove() const {
 #endif
 }
 
-bool File::canRead() const {
+bool File::canRead() const throw(IOException) {
 #ifdef SYLPH_OS_WINDOWS
     SYLPH_STUB;
     return true;
@@ -241,7 +241,7 @@ bool File::canRead() const {
 #endif
 }
 
-bool File::canWrite() const {
+bool File::canWrite() const throw(IOException) {
 #ifdef SYLPH_OS_WINDOWS
     SYLPH_STUB;
     return true;
@@ -256,7 +256,7 @@ bool File::canWrite() const {
 #endif
 }
 
-bool File::mkdir() const {
+bool File::mkdir() const throw(IOException) {
 #if SYLPH_OS_WINDOWS
     SYLPH_STUB;
     return false;
@@ -264,10 +264,11 @@ bool File::mkdir() const {
     if (exists()) return false;
     int ret = ::mkdir(path, 0755);
     if (ret == -1) sthrow(IOException, strerror(errno));
+    else return true;
 #endif
 }
 
-bool File::mkdirs() const {
+bool File::mkdirs() const throw(IOException) {
     File f;
     for (iterator it = begin(); it != end(); ++it) {
         if (f.exists()) {
@@ -281,7 +282,7 @@ bool File::mkdirs() const {
     return true;
 }
 
-bool File::isFile() const {
+bool File::isFile() const throw(IOException) {
 #ifdef SYLPH_OS_WINDOWS
     SYLPH_STUB_FUNCTION;
     return false;
@@ -294,7 +295,7 @@ bool File::isFile() const {
 #endif
 }
 
-bool File::isDirectory() const {
+bool File::isDirectory() const throw(IOException) {
 #ifdef SYLPH_OS_WINDOWS
     SYLPH_STUB_FUNCTION;
     return false;
@@ -307,7 +308,7 @@ bool File::isDirectory() const {
 #endif
 }
 
-bool File::chmod(suint mode, bool sylphmode) const {
+bool File::chmod(suint mode, bool sylphmode) const throw(IOException) {
 #ifdef SYLPH_OS_WINDOWS
     // windows doesn't support chmodding. ever.
     return false;
@@ -356,30 +357,27 @@ bool File::chmod(suint mode, bool sylphmode) const {
 #endif
 }
 
-Array<File> File::contents() const {
-    SYLPH_STUB;
-    /*if (!isDirectory())*/ return Array<File > (0);
-    /*DIR* dir;
+Array<File> File::contents() const throw(IOException) {
+    if (!isDirectory()) return Array<File > (0);
+    DIR* dir;
     struct dirent* ent;
 
     if (!(dir = opendir(path))) {
         sthrow(IOException, strerror(errno));
     }
 
-    // God, please forgive me for my insolence...
-    // Oh, wait, I'm an atheist, go ahead.
     Vector<File> toReturn;
 
-    while (ent = readdir(dir)) {
+    while ((ent = readdir(dir))) {
         String name = ent->d_name;
         if (name == "." || name == "..") continue;
-        toReturn.push(*this / name);
+        toReturn.add(*this / name);
     }
 
-    return toReturn.toArray();*/
+    return toReturn.toArray();
 }
 
-File File::workingDir() {
+File File::workingDir() throw(IOException) {
     char buf[MAXPATHLEN];
     char* ret = getcwd(buf, MAXPATHLEN);
     if (ret == 0) {
@@ -388,13 +386,23 @@ File File::workingDir() {
     return buf;
 }
 
-File & File::operator/=(const String rhs) {
+File& File::operator/=(const String rhs) {
+    return append(rhs, false);
+}
+
+File& File::append(const String rhs, bool initial) {
     // is THIS path EMPTY?
     if (empty()) {
         // is OTHER path EMPTY?
         if (rhs == "") {
-            // set to '/'
-            path = "/";
+            // is this INITIAL?
+            if (initial) {
+                // set EMPTY
+                path = "";
+            } else {
+                // set to '/'
+                path = "/";
+            }
             return *this;
         } else {
             // does OTHER start with ROOT?
@@ -402,8 +410,14 @@ File & File::operator/=(const String rhs) {
                 // set THIS to OTHER
                 path = rhs;
             } else {
-                // set THIS to '/' + OTHER
-                path = "/" + rhs;
+                // is this INITIAL?
+                if (initial) {
+                    // set THIS to OTHER
+                    path = rhs;
+                } else {
+                    // set THIS to '/' + OTHER
+                    path = "/" + rhs;
+                }
             }
         }
         // is THIS path ROOT?
@@ -431,8 +445,8 @@ File & File::operator/=(const String rhs) {
             path += ("/" + rhs);
         }
     }
-    
-    if(path != "/") {
+
+    if (path != "/") {
         // REMOVE extra '/' on end
         while (path.endsWith("/")) {
             path = path.substring(0, path.length() - 2);
@@ -444,24 +458,24 @@ File & File::operator/=(const String rhs) {
 // iterator
 
 File::iterator::iterator(bool begin, const File* obj) : super(begin) {
-    file = const_cast<File*>(obj);
+    file = const_cast<File*> (obj);
     pos = begin ? 0 : file->path.length() - 1;
-    if(begin) next();
+    if (begin) next();
 }
 
 File::iterator::iterator(bool begin, File* obj) : super(begin) {
     file = obj;
     pos = begin ? 0 : file->path.length() - 1;
-    if(begin) next();
+    if (begin) next();
 }
 
 void File::iterator::next() const {
     sidx_t start = 0;
-    if(pos == 0) {
+    if (pos == 0) {
         start = 1;
     } else {
-        start = file->path.indexOf(File::Separator,pos);
-        if(start == -1) {
+        start = file->path.indexOf(File::Separator, pos);
+        if (start == -1) {
             pos = file->path.length();
             return;
         } else {
@@ -469,14 +483,14 @@ void File::iterator::next() const {
         }
     }
 
-    sidx_t end = file->path.indexOf(File::Separator,start);
-    if(end == -1) {
+    sidx_t end = file->path.indexOf(File::Separator, start);
+    if (end == -1) {
         end = file->path.length();
     }
 
     --end;
 
-    cur = file->path.substring(start,end);
+    cur = file->path.substring(start, end);
     pos = end;
 }
 

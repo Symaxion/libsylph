@@ -298,7 +298,7 @@ public:
      * @param idx the index of the character to return
      * @return the character at the specified index, in UTF-16.
      */
-    const uchar at(sidx_t idx) const;
+    const uchar at(sidx_t idx) const throw(ArrayException);
 
     /**
      * Converts the String to ASCII. The conversion algorithm goes as follows:
@@ -412,7 +412,7 @@ public:
      * @return A string containing all characters from the given begin index.
      * @throw ArrayException if <code>begin >= length()</code>.
      */
-    String substring(std::idx_t begin) const;
+    String substring(std::idx_t begin) const throw(ArrayException);
 
     /**
      * Returns a new String containing all characters from the given begin index
@@ -425,7 +425,8 @@ public:
      * @throw ArrayException if <code>begin >= length() || end >= length() ||
      * begin > end</code>.
      */
-    String substring(std::idx_t begin, std::idx_t end) const;
+    String substring(std::idx_t begin, std::idx_t end) const
+            throw(ArrayException);
 
     /**
      * Returns the first index from given start index in this String on which
@@ -436,7 +437,8 @@ public:
      * first character of that substring is returned, else -1 is returned.
      * @throw ArrayException if <code>start >= length()</code>
      */
-    sidx_t indexOf(const String substr, idx_t start = 0) const;
+    sidx_t indexOf(const String substr, idx_t start = 0) const
+            throw(ArrayException);
 
     /**
      * Returns the last index in this String on which the specified substring
@@ -456,7 +458,8 @@ public:
      * first character of that substring is returned, else -1 is returned.
      * @throw ArrayException if <code>end >= length()</code>
      */
-    sidx_t lastIndexOf(const String substr, idx_t end) const;
+    sidx_t lastIndexOf(const String substr, idx_t end) const
+            throw(ArrayException);
 
     String copy() const;
     bool merge(String other) const;

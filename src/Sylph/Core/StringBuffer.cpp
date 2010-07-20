@@ -3,8 +3,8 @@
 #include "Util.h"
 
 SYLPH_BEGIN_NAMESPACE
-StringBuffer::StringBuffer(const String s) : _length(s.length()),
-        buf(s.length()+16) {
+StringBuffer::StringBuffer(const String s) : buf(s.length()+16),
+        _length(s.length()) {
 }
 
 StringBuffer::~StringBuffer() {

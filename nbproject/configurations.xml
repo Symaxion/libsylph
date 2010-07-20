@@ -6,13 +6,6 @@
         <itemPath>bin/sylo</itemPath>
         <itemPath>bin/sylphparams.in</itemPath>
       </logicalFolder>
-      <logicalFolder name="f1" displayName="binreloc" projectFiles="true">
-        <itemPath>deps/binreloc/CMakeLists.txt</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f3" displayName="gc" projectFiles="true">
-        <itemPath>deps/gc-cmake/CMakeLists.txt</itemPath>
-        <itemPath>deps/gc-cmake/build-gc.sh</itemPath>
-      </logicalFolder>
       <logicalFolder name="f2" displayName="src" projectFiles="true">
         <itemPath>src/CMakeLists.txt</itemPath>
       </logicalFolder>

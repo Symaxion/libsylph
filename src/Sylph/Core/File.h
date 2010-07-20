@@ -93,14 +93,14 @@ public:
      * Creates a file from given path.
      */
     File(const String s) {
-        operator/=(s);
+        append(s,true);
     }
 
     /**
      * Creates a file from given path as a C string.
      */
     File(const char* s) {
-        operator/=(String(s));
+        append(String(s),true);
     }
 
     virtual ~File() {
@@ -131,99 +131,147 @@ public:
      */
     String rootName() const;
 
+    /** */
     File parent() const;
 
+    /** */
     String filename() const;
 
+    /** */
     String stem() const;
 
+    /** */
     String extension() const;
 
+    /** */
     inline bool empty() const {
         return path == "";
     }
 
+    /** */
     bool absolute() const;
+
+    /** */
     bool canonical() const;
 
+    /** */
     File toAbsolute() const;
+
+    /** */
     inline String toAbsoluteName() const {
         return toAbsolute().toString();
     }
+
+    /** */
     File toCanonical() const;
+
+    /** */
     inline String toCanonicalName() const {
         return toAbsolute().toString();
     }
 
+    /** */
     bool hasFilename() const {
         return path != "";
     }
 
+    /** */
     bool hasParent() const {
         return !parent().empty();
     }
 
-    bool exists() const;
-    bool create() const;
-    bool remove() const;
+    /** */
+    bool exists() const throw(IOException);
 
-    bool canRead() const;
-    bool canWrite() const;
+    /** */
+    bool create() const throw(IOException);
 
-    bool mkdir() const;
-    bool mkdirs() const;
+    /** */
+    bool remove() const throw(IOException);
 
-    bool isFile() const;
-    bool isDirectory() const;
+    /** */
+    bool canRead() const throw(IOException);
 
-    bool chmod(suint mode, bool sylphmode = false) const;
+    /** */
+    bool canWrite() const throw(IOException);
 
-    Array<File> contents() const;
-    static File workingDir();
+    bool mkdir() const throw(IOException);
 
+    /** */
+    bool mkdirs() const throw(IOException);
+
+    /** */
+    bool isFile() const throw(IOException);
+
+    /** */
+    bool isDirectory() const throw(IOException);
+
+    /** */
+    bool chmod(suint mode, bool sylphmode = false) const throw(IOException);
+
+    /** */
+    Array<File> contents() const throw(IOException);
+
+    /** */
+    static File workingDir() throw(IOException);
+
+    /** */
     inline File& operator=(const File& f) {
         return operator=(f.path);
     }
 
+    /** */
     inline File& operator=(const String s) {
         path = "";
         operator/=(s);
         return *this;
     }
 
+    /** */
     inline File& operator=(const char* s) {
         return operator=(String(s));
     }
 
-    File& operator/=(const File & rhs) {
+    /** */
+    File& operator/=(const File& rhs) {
         return operator /=(rhs.toString());
     }
 
+    /** */
     File& operator/=(const String);
 
+    /** */
     inline File& operator/=(const char* s) {
         return operator/=(String(s));
     }
 
+    /** */
     static const String Separator;
 
 private:
+    File& append(String, bool);
 
     String path;
 };
 
+/** */
 inline bool operator==(const File& lhs, const File& rhs) {
     return lhs.toCanonicalName() == rhs.toCanonicalName();
 }
+
+/** */
 inline bool operator<(const File& lhs, const File& rhs) {
     return lhs.toCanonicalName() < rhs.toCanonicalName();
 }
 
 S_CMP_SEQ(const File&)
 
+/** */
 inline File operator/(const File& lhs, const File& rhs) {
     return File(lhs) /= rhs;
 }
+
+/** */
 inline std::ostream& operator<<(std::ostream& lhs, const File& rhs) {
     return lhs << rhs.toString();
 }

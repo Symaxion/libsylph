@@ -31,15 +31,16 @@ SYLPH_BEGIN_NAMESPACE
 SYLPH_PUBLIC
 class FileInputStream : public InputStream {
 public:
-    FileInputStream(File& f, IO::IOType t = IO::Normal);
+    FileInputStream(File& f, IO::IOType t = IO::Normal) throw(IOException);
     virtual ~FileInputStream();
 
     fsize_t available() const;
-    fssize_t read(Array<byte>& b, off_t offset = 0, size_t len = 0);
+    fssize_t read(Array<byte>& b, off_t offset = 0, size_t len = 0)
+            throw(ArrayException, IOException);
     bool eof() const;
     bool markSupported() const { return true; }
     void mark(fsize_t);
-    fsize_t skip(fsize_t) = 0;
+    fsize_t skip(fsize_t);
     void reset();
 
     InputStream& operator>>(byte&);
