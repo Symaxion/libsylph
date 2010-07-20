@@ -5,6 +5,22 @@
 using namespace Sylph;
 
 namespace {
+
+    void testEqualityHelper(HashMap<String,String>& h,
+            bool order = true) {
+        if(order) {
+            h["a"] = "alpha";
+            h["b"] = "beta";
+            h["g"] = "gamma";
+            h["d"] = "delta";
+        } else {
+            h["g"] = "gamma";
+            h["d"] = "delta";
+            h["b"] = "beta";
+            h["a"] = "alpha";
+        }
+    }
+
     class TestHashMap : public ::testing::Test {
 
     };
@@ -48,7 +64,16 @@ namespace {
     }
 
     TEST_F(TestHashMap, testRehash) {
-        SYLPH_STUB_TEST;
+        HashMap<String,String> h((size_t) 3);
+        h["English"] = "English";
+        h["French"] = "français";
+        h["Spanish"] = "español";
+        h["Dutch"] = "Nederlands";
+        ASSERT_EQ(4,h.size());
+        EXPECT_EQ(String("English"),h["English"]);
+        EXPECT_EQ(String("français"),h["French"]);
+        EXPECT_EQ(String("español"),h["Spanish"]);
+        EXPECT_EQ(String("Nederlands"),h["Dutch"]);
     }
 
     TEST_F(TestHashMap, testIterator) {
@@ -76,6 +101,17 @@ namespace {
         }
     }
 
+    TEST_F(TestHashMap, testEmptyIterator) {
+        HashMap<String, String> h;
+
+        ASSERT_NO_THROW({
+           for(HashMap<String,String>::iterator it = h.begin();
+                it != h.end(); ++it) {
+               // hopefully not optimised out...
+           }
+        });
+    }
+
     TEST_F(TestHashMap, testEmptyEquality) {
         HashMap<String,String> g;
         HashMap<String,String> h;
@@ -84,20 +120,37 @@ namespace {
         EXPECT_TRUE(g == h);
     }
 
-    TEST_F(TestHashMap, testLengthEquality) {
-
-    }
-
     TEST_F(TestHashMap, testRealEquality) {
-        SYLPH_STUB_TEST;
+        HashMap<String, String> h;
+        HashMap<String, String> g;
+
+        testEqualityHelper(h);
+        testEqualityHelper(g);
+
+        ASSERT_NO_THROW(g == h);
+        EXPECT_TRUE(g == h);
     }
 
     TEST_F(TestHashMap, testInequality) {
-        SYLPH_STUB_TEST;
+        HashMap<String, String> h;
+        HashMap<String, String> g;
+
+        testEqualityHelper(h);
+        g["a"] = "aleph";
+
+        ASSERT_NO_THROW(g == h);
+        EXPECT_FALSE(g == h);
     }
 
     TEST_F(TestHashMap, testSequenceEquality) {
-        SYLPH_STUB_TEST;
+        HashMap<String, String> h;
+        HashMap<String, String> g;
+
+        testEqualityHelper(h);
+        testEqualityHelper(g, false);
+
+        ASSERT_NO_THROW(g == h);
+        EXPECT_TRUE(g == h);
     }
 
 
