@@ -222,7 +222,7 @@ namespace {
         EXPECT_EQ("a",result[0]);
         EXPECT_EQ("beta",result[1]);
         EXPECT_EQ("ccc",result[2]);
-        EXPECT_EQ("d",result[4]);
+        EXPECT_EQ("d",result[3]);
     }
 
     TEST_F(TestString, testSubstring) {
