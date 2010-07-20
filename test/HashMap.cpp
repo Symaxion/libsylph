@@ -66,13 +66,13 @@ namespace {
             for(HashMap<String,String>::iterator it = h.begin();
                 it != h.end(); ++it) {
                 keys[i] = it->key;
-                values[i] = it->key;
+                values[i] = *(it->value);
                 i++;
             }
         //});
 
         for(idx_t i = 0; i < 4; i++) {
-            EXPECT_TRUE(h[keys[i]] == values[i]);
+            EXPECT_EQ(h[keys[i]],values[i]);
         }
     }
 
