@@ -114,7 +114,7 @@ public:
         iterator(bool begin = false,
                 HashMap<key_, value_, hash_, equals_>* obj = null) : super(begin),
         map(obj) {
-            if (begin) {
+            if (begin && !map->empty()) {
                 count = map->size();
                 idx = map->buckets.length - 1;
                 currentPointer = map->buckets[idx];
@@ -132,7 +132,7 @@ public:
                 const HashMap<key_, value_, hash_, equals_>* obj = null) :
         super(begin),
         map(const_cast<HashMap<key_, value_, hash_, equals_>*> (obj)) {
-            if (begin) {
+            if (begin && !map->empty()) {
                 count = map->size();
                 idx = map->buckets.length - 1;
                 currentPointer = map->buckets[idx];
@@ -143,6 +143,7 @@ public:
                 count = 0;
                 idx = 0;
                 currentPointer = null;
+                super::_end_reached_ = true;
             }
         }
 
@@ -450,7 +451,7 @@ private:
         threshold = (int) (newcapacity * loadFactor);
         buckets = Array<EntryPtr > (newcapacity);
 
-        for (idx_t i = oldBuckets.length - 1; i >= 0; i--) {
+        for (sidx_t i = oldBuckets.length - 1; i >= 0; i--) {
             EntryPtr entry = oldBuckets[i];
             while (entry != null) {
                 idx_t idx = hash(entry->key);
