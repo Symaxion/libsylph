@@ -48,8 +48,7 @@ public:
     }
 
     /** */
-    virtual fssize_t read(Array<byte>& b, off_t offset = 0, size_t len = 0)
-            throw(ArrayException, IOException) {
+    virtual fssize_t read(Array<byte>& b, off_t offset = 0, size_t len = 0) {
         if(!len) len = b.length;
         if(offset + len > b.length)
             sthrow(ArrayException, "Index out of bounds");
@@ -82,8 +81,7 @@ public:
     virtual InputStream& operator>>(byte&) = 0;
 
     /** */
-    virtual InputStream& operator>>(Array<byte>& b) 
-            throw(ArrayException,IOException) {
+    virtual InputStream& operator>>(Array<byte>& b) {
         read(b);
         return *this;
     }

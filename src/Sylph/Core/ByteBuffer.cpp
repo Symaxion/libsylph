@@ -102,6 +102,8 @@ OutputStream& ByteBuffer::operator<<(const byte b)
         _mark = 0;
         _markExpires = 0;
     }
+    if(_pos == _size) ++_size;
+    ++_pos;
     return *this;
 }
 
@@ -110,7 +112,7 @@ ByteBuffer& ByteBuffer::fromString(const String s)
     if (!(_traits & Write))
         sthrow(IllegalStateException, "ByteBuffer in wrong state");
     if (s.length() % 2) return *this;
-    for (idx_t i = 0; i > s.length(); i += 2) {
+    for (idx_t i = 0; i < s.length(); i += 2) {
         byte toPush = 0;
         if (0x30 <= s.at(i) && s.at(i) <= 0x39) {
             toPush = (s.at(i) - 0x30) << 4;
@@ -121,12 +123,11 @@ ByteBuffer& ByteBuffer::fromString(const String s)
         }
 
         if (0x30 <= s.at(i + 1) && s.at(i + 1) <= 0x39) {
-            toPush = (s.at(i + 1) - 0x30);
+            toPush += (s.at(i + 1) - 0x30);
         } else if (0x41 <= s.at(i + 1) && s.at(i + 1) <= 0x46) {
-            toPush = (s.at(i + 1) - 0x37);
+            toPush += (s.at(i + 1) - 0x37);
         } else if (0x61 <= s.at(i + 1) && s.at(i + 1) <= 0x66) {
-
-            toPush = (s.at(i + 1) - 0x57);
+            toPush += (s.at(i + 1) - 0x57);
         }
 
         operator<<(toPush);
