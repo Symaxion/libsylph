@@ -35,16 +35,42 @@ class ByteBuffer : public InputStream, public OutputStream {
     friend OutputStream& operator<<(OutputStream&, ByteBuffer&);
     friend InputStream& operator>>(InputStream&, ByteBuffer&);
 public:
+    /**
+     * Describes the I/O capabilities of the ByteBuffer. Attempting to use
+     * a restricted capability will cause an IllegalStateException to be
+     * thrown.
+     */
     enum Traits {
-        Closed = 0x00,
-        Read = 0x01,
-        Write = 0x02,
-        ReadWrite = 0x03,
-        RW = ReadWrite
+        Closed = 0x00, /**< ByteBuffer is closed. No input or output is
+                        * possible.  */
+        Read = 0x01, /**< ByteBuffer is read-only. Only input from the
+                      * %ByteBuffer is possible. */
+        Write = 0x02, /**< ByteBuffer is write-only. Only output to the
+                       %ByteBuffer is possible. */
+        ReadWrite = 0x03, /**< ByteBuffer is read-write. This is the default.
+                           The %ByteBuffer acts both as an InputStream and an
+                           OutputStream. */
+        RW = ReadWrite /**< Aiias for ReadWrite. */
     };
+
+    /**
+     * Creates a new, empty ByteBuffer.
+     * @param traits The access traits this ByteBuffer is created with. By
+     * default all ByteBuffers have full access, that is to say, read-write
+     * access.
+     * @param bufsize The initial capacity of the buffer. By default, this
+     * is equal to 16. An internal array of this length has to be allocated.
+     */
     ByteBuffer(Traits traits = RW, size_t bufsize = 16);
+
+    /**
+     * 
+     */
     ByteBuffer(const Array<byte> & ar);
     ByteBuffer(const ByteBuffer& orig);
+    /**
+     * Default destructor.
+     */
     virtual ~ByteBuffer();
 
     // common methods

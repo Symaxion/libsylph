@@ -399,7 +399,7 @@ public:
      * Tokenizes a string with a given set of delimiters. This will split a
      * String into tokens, with as boundary any character given in the array.
      * Empty strings will not be included in the array.
-     * @parem delimiters A set of delimiters, by default equal to @c spacechars.
+     * @param delimiters A set of delimiters, by default equal to @c spacechars.
      * @return An array of Strings, containing each token.
      */
     Array<String> split(Array<uchar> delimiters = spacechars) const;
