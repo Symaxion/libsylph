@@ -104,7 +104,7 @@ public:
     /**
      * Creates an empty vector. By default, the initial capacity is 16, the
      * size is 0.
-     * @param intialCount The initial capacity of the vector, 16 if none is
+     * @param initialCount The initial capacity of the vector, 16 if none is
      * provided.
      */
     explicit Vector(std::size_t initialCount = 16) :
