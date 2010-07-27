@@ -6,6 +6,7 @@
 # Invisible files
 .*
 !.gitignore
+!.devctl
 
 # Built files
 a.out
