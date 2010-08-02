@@ -29,8 +29,11 @@
 #include "Primitives.h"
 
 #include <algorithm>
-#include <initializer_list>
 #include <iostream>
+
+#ifndef SYLPH_NO_CXX0X
+#include <initializer_list>
+#endif
 
 SYLPH_BEGIN_NAMESPACE
 class Any;
@@ -157,6 +160,7 @@ public:
             data(new Data(len)) {
     }
 
+#ifndef SYLPH_NO_CXX0X
     /**
      * Creates an Array from an intializer list. This constructor allows the
      * easier, more familiar syntax of Array creation, but requires C++0x. Using
@@ -173,6 +177,7 @@ public:
             data->_carray[i] = il.begin()[i];
         }
     }
+#endif
 
     /**
      * Creates an Array from an existing C-style array. Note that you can only
@@ -355,7 +360,7 @@ public:
      * @param idx the index in the array from which to return an element
      * @throw ArrayException if <code>idx > length</code>
      */
-    T & operator[](std::sidx_t idx) throw (Exception) {
+    T & operator[](sidx_t idx) throw (Exception) {
         if ((idx < (sidx_t)length) && (idx >= -(sidx_t)length)) {
             return idx >= 0 ? data->_carray[idx] : data->_carray[length + idx];
         } else {
@@ -373,7 +378,7 @@ public:
      * @param idx the index in the array from which to return an element
      * @throw ArrayException if <code>idx > length</code>
      */
-    const T & operator[](std::sidx_t idx) const throw (Exception) {
+    const T & operator[](sidx_t idx) const throw (Exception) {
         if ((idx < (sidx_t)length) && (idx >= -(sidx_t)length)) {
             return idx >= 0 ? data->_carray[idx] : data->_carray[length + idx];
         } else {

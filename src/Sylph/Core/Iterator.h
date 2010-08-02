@@ -453,7 +453,7 @@ public:
      * @note This method requires the backing iterator to be a random-access
      * iterator.
      */
-    virtual std::idx_t nextIndex() const {
+    virtual idx_t nextIndex() const {
         return itr.currentIndex();
     }
 
@@ -464,7 +464,7 @@ public:
      * @note This method requires the backing iterator to be a random-access
      * iterator.
      */
-    virtual std::idx_t previousIndex() const {
+    virtual idx_t previousIndex() const {
         return itr.currentIndex() - 1;
     }
 

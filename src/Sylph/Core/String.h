@@ -30,7 +30,6 @@
 // for convenience
 #include "I18N.h"
 
-#include <cstdint>
 #include <string>
 
 SYLPH_BEGIN_NAMESPACE
@@ -40,7 +39,7 @@ SYLPH_PUBLIC
 /**
  * A integral type for storing an UTF-16 character
  */
-typedef std::uint16_t uchar;
+typedef sushort uchar;
 
 /**
  * This array contains the characters that are considered to be whitespace
@@ -412,7 +411,7 @@ public:
      * @return A string containing all characters from the given begin index.
      * @throw ArrayException if <code>begin >= length()</code>.
      */
-    String substring(std::idx_t begin) const throw(ArrayException);
+    String substring(idx_t begin) const throw(ArrayException);
 
     /**
      * Returns a new String containing all characters from the given begin index
@@ -425,7 +424,7 @@ public:
      * @throw ArrayException if <code>begin >= length() || end >= length() ||
      * begin > end</code>.
      */
-    String substring(std::idx_t begin, std::idx_t end) const
+    String substring(idx_t begin, idx_t end) const
             throw(ArrayException);
 
     /**

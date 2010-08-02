@@ -12,6 +12,7 @@ option(SYLPH_DEBUG "Enable assertions and exception line info")
 set(SYLPH_CONFIG_DEFS "" CACHE STRING "Add extra preprocessor definitions")
 option(SYLPH_COMPILER_SUFFICIENT "Set a manual override to make your compiler pass all tests")
 set(SYLPH_CXXFLAGS "" CACHE STRING "Add a manual override to the C++ flags needed to activate C++0x and other stuff")
+option(SYLPH_NO_CXX0X "Disable C++0x support (experimental)")
 
 #Version & platform checks...
 macro (get_gcc_version version)
@@ -27,6 +28,14 @@ endif ( UNIX AND NOT APPLE )
 
 # Get Versions
 get_gcc_version ( S_GCC_VERSION )
+
+# C++0x disabled
+# Assume each compiler can compile at least C++99 or C++03
+set( SYLPH_TARGET "Sylph")
+if( SYLPH_NO_CXX0X )
+    SET ( SYLPH_COMPILER_SUFFICIENT 1 )
+    SET ( SYLPH_TARGET "Sylph03" )
+endif ( SYLPH_NO_CXX0X )
 
 # Check if compiler supports all constructs
 if ( NOT SYLPH_COMPILER_SUFFICIENT ) # manual override
@@ -47,11 +56,14 @@ endif ( NOT SYLPH_COMPILER_SUFFICIENT )
 
 # CXXFlags
 if ( NOT SYLPH_CXXFLAGS )
+    set ( SYLPH_CXXFLAGS "" )
 
     # GCC >= 4.4.0
     # Enable C++0x and disable some warnings
     if ( CXX_GCC )
-        set( SYLPH_CXXFLAGS "-std=c++0x")
+        if( NOT SYLPH_NO_CXX0X )
+            set( SYLPH_CXXFLAGS "-std=c++0x")
+        endif ( NOT SYLPH_NO_CXX0X )
 
         if ( APPLE )
             # disable warning for 4-param main
@@ -59,13 +71,16 @@ if ( NOT SYLPH_CXXFLAGS )
         endif ( APPLE )
 
         # Enable all warnings
-        set ( SYLPH_CXXFLAGS "${SYLPH_CXXFLAGS} -Wall -Werror" )
+        set ( SYLPH_CXXFLAGS "${SYLPH_CXXFLAGS} -Wall -Werror -fno-strict-aliasing" )
     endif ( CXX_GCC )
 
     if ( NOT SYLPH_CXXFLAGS )
     endif ( NOT SYLPH_CXXFLAGS )
 
 endif ( NOT SYLPH_CXXFLAGS )
+
+# documentation
+add_custom_target(docs doxygen)
 
 # platform extras
 set(SYLPH_PLATFORM_INCLUDE "")

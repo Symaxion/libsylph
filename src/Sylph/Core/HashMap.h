@@ -260,7 +260,7 @@ public:
      * @return <i>true</i> iff this HashMap contains given key.
      */
     bool containsKey(Key key) const {
-        std::idx_t idx = hash(key);
+        idx_t idx = hash(key);
         EntryPtr entry = buckets[idx];
         while (entry != null) {
             if (key == entry->key) return true;
@@ -275,7 +275,7 @@ public:
      */
     bool containsValue(const Value * value) const {
         if(buckets.length == 0) return false;
-        for (std::idx_t i = (buckets.length - 1); (signed)i >= 0; --i) {
+        for (idx_t i = (buckets.length - 1); (signed)i >= 0; --i) {
             EntryPtr entry = buckets[i];
             while (entry != null) {
                 if (equf(value, entry->value)) return true;
@@ -406,7 +406,7 @@ public:
      * @return The old value of the key if it existed, null otherwise.
      */
     Value * remove(Key key) {
-        std::idx_t idx = hash(key);
+        idx_t idx = hash(key);
         EntryPtr entry = buckets[idx];
         EntryPtr last = null;
 

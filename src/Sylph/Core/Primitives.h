@@ -22,9 +22,9 @@
 #define	PRIMITIVES_H_
 
 #include "Object.h"
-#include <cstdint>
+#include <stdint.h>
 #define __STDC_FORMAT_MACROS
-#include <cinttypes>
+#include <inttypes.h>
 
 SYLPH_BEGIN_NAMESPACE
 SYLPH_PUBLIC
@@ -66,14 +66,6 @@ typedef sulong ptr_t;
 
 typedef sulong fsize_t;
 typedef slong fssize_t;
-
-namespace std {
-    using ::sidx_t;
-    using ::idx_t;
-    using ::fsize_t;
-    using ::fssize_t;
-    using ::ptr_t;
-}
 
 #ifndef SYLPH_LIKELY
     #if __GNUC__ - 0 >= 3
