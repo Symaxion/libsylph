@@ -134,6 +134,7 @@ private:
 #endif
 };
 
+#ifndef SYLPH_NO_CXX0X
 /**
  * Creates a new (non-LibSylph) object using the LibSylph garbage
  * collection. Example (using Qt):
@@ -156,6 +157,7 @@ template<class T, class... Args> T * newgc(const Args&... args);
 template<class T> void deletegc(const T * t);
 // Undocumented, do not use directly! 
 template<class T> void cleanupgc(void *obj, void *displ);
+#endif
 SYLPH_END_NAMESPACE
 
 #endif	/* OBJECT_H_ */

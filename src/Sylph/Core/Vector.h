@@ -206,7 +206,7 @@ public:
     }
 
     /** */
-    sidx_t indexOf(const T & t, std::idx_t idx = 0) const throw(ArrayException) {
+    sidx_t indexOf(const T & t, idx_t idx = 0) const throw(ArrayException) {
         try {
             checkIfOutOfBounds(idx);
         } straced;
@@ -290,14 +290,14 @@ public:
     }
 
     /** */
-    T & operator[](std::idx_t idx) throw(ArrayException) {
+    T & operator[](idx_t idx) throw(ArrayException) {
         try {
             return get(idx);
         } straced;
     }
 
     /** */
-    const T & operator[](std::idx_t idx) const throw(ArrayException) {
+    const T & operator[](idx_t idx) const throw(ArrayException) {
         try {
             return get(idx);
         } straced;

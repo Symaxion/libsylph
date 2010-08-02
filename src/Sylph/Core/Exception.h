@@ -24,6 +24,8 @@
 #include "Object.h"
 
 #include <exception>
+#include <cstdio>
+
 #include "Primitives.h"
 #include "CurrentFunction.h"
 
