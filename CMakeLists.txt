@@ -96,10 +96,19 @@ endif ( LINLIKE )
 set(SYLPH_LINK ${SYLPH_PLATFORM_LINK} ${SYLPH_DEP_LINK})
 set(SYLPH_INCLUDE ${SYLPH_PLATFORM_INCLUDE} ${SYLPH_DEP_INCLUDE})
 
+# Subdirs
+
 add_subdirectory(src)
 add_subdirectory(test)
+
+# Scripts and helpers
 
 configure_file( bin/sylphparams.in bin/sylphparams )
 
 install( PROGRAMS ${SYLPH_BINARY_DIR}/bin/sylphparams DESTINATION bin )
 install( PROGRAMS ${SYLPH_SOURCE_DIR}/bin/sylo DESTINATION bin )
+
+# PkgConfig
+
+configure_file ( sylph.pc.in sylph.pc )
+install( FILES ${SYLPH_BINARY_DIR}/sylph.pc DESTINATION lib/pkgconfig )
