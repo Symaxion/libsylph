@@ -1,0 +1,11 @@
+prefix=@CMAKE_INSTALL_PREFIX@
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: LibSylph
+Description: Cross-platform C++ Class Library
+Version: @SYLPH_VERSION@
+URL: http://libsylph.sourceforge.net
+Libs: -L${libdir} -lSylph -std=c++0x
+Cflags: -I${includedir} -std=c++0x -Wno-main
