@@ -110,5 +110,5 @@ install( PROGRAMS ${SYLPH_SOURCE_DIR}/bin/sylo DESTINATION bin )
 
 # PkgConfig
 
-configure_file ( sylph.pc.in sylph.pc )
+configure_file ( sylph.pc.in sylph.pc @ONLY )
 install( FILES ${SYLPH_BINARY_DIR}/sylph.pc DESTINATION lib/pkgconfig )
