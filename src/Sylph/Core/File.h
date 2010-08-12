@@ -172,7 +172,7 @@ public:
 
     /** */
     bool hasFilename() const {
-        return path.fiename() != "";
+        return filename() != "";
     }
 
     /** */
