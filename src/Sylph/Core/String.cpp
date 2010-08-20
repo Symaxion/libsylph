@@ -378,7 +378,8 @@ String String::fromSci(double d, bool up) {
 }
 
 bool String::boolValue() const {
-    return (*this&lc) == "true";
+    String l = (*this & lc);
+    return l == "true" || l == "1" || l == "yes" || l == "on";
 }
 
 sint String::intValue() const {
@@ -464,7 +465,7 @@ void String::fromAscii(const char* ascii) const {
 void String::fromUtf8(const char* unicode) const {
     size_t len = std::strlen(unicode);
     StringBuffer buf;
-    uchar current;
+    uchar current = 0;
     byte bytecount = 0;
     for (idx_t i = 0; i < len; i++) {
         unsigned char univalue = static_cast<unsigned char> (unicode[i]);
