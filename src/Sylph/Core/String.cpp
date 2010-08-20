@@ -378,7 +378,8 @@ String String::fromSci(double d, bool up) {
 }
 
 bool String::boolValue() const {
-    return (*this&lc) == "true";
+    String l = *this & lc;
+    return l == "true" || l == "1" || l == "yes" || l = "on";
 }
 
 sint String::intValue() const {
