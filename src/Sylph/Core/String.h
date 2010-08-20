@@ -501,8 +501,9 @@ public:
 
     /**
      * Interprets this string as a bool.
-     * @return <i>true</i> iff this string equals ignoring case
-     * <code>"true"</code>, false otherwise.
+     * @return <i>true</i> iff this string equals ignoring case either
+     * <code>"true"</code>, <code>"yes"</code>, </code>"on"</code> or
+     * <code>"1</code>, false otherwise.
      */
     bool boolValue() const;
 
