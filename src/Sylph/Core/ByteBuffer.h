@@ -64,7 +64,11 @@ public:
     ByteBuffer(Traits traits = RW, size_t bufsize = 16);
 
     /**
-     * 
+     * Creates a new ByteBuffer and fills it with the contents of a
+     * pre-existing array. The traits will be set to RW, and the capacity of
+     * the buffer will be double the length of the original array. The size
+     * of the new ByteBuffer will be equal to the length of the array.
+     * @param ar An array to copy the intial dat a from.
      */
     ByteBuffer(const Array<byte> & ar);
     ByteBuffer(const ByteBuffer& orig);
@@ -98,7 +102,7 @@ public:
     ByteBuffer& fromString(const String s) throw(IllegalStateException);
 
     // Operators:
-    ByteBuffer& operator=(const ByteBuffer & rhs);
+    ByteBuffer& operator=(const ByteBuffer& rhs);
 
     // Convertors:
     

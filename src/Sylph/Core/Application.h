@@ -43,11 +43,22 @@ class String;
 SYLPH_PUBLIC
 
 /**
- * Class representing an application. An application is any file containing
- * executable object code that can be directly invoked by the operating system
- * through a well-defined entry point. Probably the most famous example is the
- * @c thisapp instance of this class, a pointer to an Application object
- * representing the application accessing the pointer.<p>
+ * Class representing an application. An application a combination of an
+ * executable file with any resources required to run it.<p>
+ * An executable file is any file containing executable object code that can be
+ * directly invoked by the operating system through a well-defined entry point.
+ * Probably the most important example of an instance of this class is
+ * @c a pointer to an Application object representing the application from
+ * which it is dereferenced.<p>
+ * An application is considered <i>relocatable</i> if and only if, once built
+ * for a specific target, the application can be run from any absolute path
+ * on that target and can be run on any other compatible system, without
+ * needing to be rebuilt.
+ * An application is considered <i>self-contained</i> if and only if the
+ * application ships with all required resources and frameworks, except for
+ * standard or very common libraries, all these files are in one directory
+ * hierarchy and this directory hierarchy is not shared with other applications.
+ * Futhermore, each self-contained application must be relocatable.
  * It is not possible to directly instantiate an Application object. Future
  * releases may contain functions to create Application objects and run the
  * accompanying object code.
@@ -133,20 +144,53 @@ public:
      */
     AppType appType();
 
-    /** */
+    /**
+     * Closes the application with a given error message. The exact way this
+     * error message is displayed is not specified, however, it is usually
+     * displayed on the terminal. The application will send a failure status
+     * code to the operating system.
+     * @param reason The error message that will be displayed to the user.
+     * @param exit Whether the application will exit after showing the failure.
+     * This is useful to do some manual clean-up before exiting. Not exiting
+     * after using this function is undefined behavior.
+     */
     void fail(const String reason, bool exit = true);
-    /** */
+    /**
+     * Closes the application with a given error message. The exact way this
+     * error message is displayed is not specified, however, it is usually
+     * displayed on the terminal. The application will send a failure status
+     * code to the operating system.<p>
+     * This function is usually called as <code>fail("Error", __FILE__,
+     * __LINE__)</code> so that the preprocessor may substitute the parameters.
+     * @param reason The error message that will be displayed to the user.
+     * @param file The source code file this error occured in.
+     * @param line The source code line this error occured on.
+     * @param exit Whether the application will exit after showing the failure.
+     * This is useful to do some manual clean-up before exiting. Not exiting
+     * after using this function is undefined behavior.
+     */
     void fail(const String reason, const String file, unsigned int line,
         bool exit = true);
 
 
-    /** */
+    /**
+     * Returns the canonical path to the bundle this executable is part of.
+     * If this application isn't part of a bundle, the empty file will be
+     * returned. 
+     * @return the canonical path to the bundle this executable is part of.
+     */
     virtual const File& bundle() = 0;
-    /** */
+    /**
+     * Returns the path to the resource directory specific for this application.
+     */
     virtual const File& resourceDir() = 0;
-    /** */
+    /**
+     * Returns the path to a resource specific to this application.
+     */
     virtual const File resource(String rsc) = 0;
-    /** */
+    /**
+     * Returns the path to the library directory specific for this application.
+     */
     virtual const File& libraryDir() = 0;
     /** */
     virtual const File& pluginDir() = 0;
