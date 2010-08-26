@@ -127,20 +127,35 @@ public:
     }
 
     /**
-     * @return the root this file is on, as a string
+     * @return The root this file is on, as a string.
      */
     String rootName() const;
 
-    /** */
+    /** 
+     * @return The parent directory of this file.
+     */
     File parent() const;
 
-    /** */
+    /** 
+     * Returns the name of the file itself. The file name is defined as 
+     * everything in the path from the last file seperator to the end.
+     * E.g, <code>/var/log/foo</code> would give <code>foo</code>, 
+     * <code>/var/cache/</code> would give <code>cache</code>.
+     * @return The file name component of the path.
+     */
     String filename() const;
 
-    /** */
+    /**
+     * Returns the file name without the extension.
+     * @return The file name without the extension.
+     */
     String stem() const;
 
-    /** */
+    /**
+     * Returns the extension of this file. The extension is everything from the
+     * last dot to the end, unless the file name starts with a dot.
+     * @return The file extension.
+     */
     String extension() const;
 
     /** */
@@ -180,13 +195,25 @@ public:
         return !parent().empty();
     }
 
-    /** */
+    /**
+     * Checks wheter a given pathname exists.
+     * @return true if and only if the pathname exists
+     * @throw IOException If an IO error occurs.
+     */
     bool exists() const throw(IOException);
 
-    /** */
+    /**
+     * Creates an empty file if it doesn't exist. 
+     * @return <i>true</i> if a new file is created, <i>false</i> otherwise.
+     * @throw IOException If an IO error occurs.
+     */
     bool create() const throw(IOException);
 
-    /** */
+    /** 
+     * Attempts to remove this file if it exists.
+     * @return <i>true</i> if the file was successfully removed.
+     * @throw IOException if an IO error occurs.
+     */
     bool remove() const throw(IOException);
 
     /** */
