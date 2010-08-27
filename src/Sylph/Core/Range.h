@@ -33,20 +33,28 @@ template<class T>
 class basic_range {
 public:
     /** */
-    inline basic_range(T first, T last) {
-        if(first>last) std::swap(first,last);
-        _first = first;
-        _last = last;
+    inline basic_range(T _first, T _last) : first(_first), last(_last) {
     }
     /** */
     inline virtual ~basic_range() {}
-    /** */
-    inline T first() const { return _first; }
-    /** */
-    inline T last() const { return _last; }
-private:
-    T _first;
-    T _last;
+
+    inline bool sequential() const {
+        return first <= last;
+    }
+
+    inline bool inverse() const {
+        return !sequential();
+    }
+
+    inline bool singleton() {
+        return first == last;
+    }
+
+    inline void swap() {
+        std::swap(first,last);
+    }
+    T first;
+    T last;
 };
 
 /** */
