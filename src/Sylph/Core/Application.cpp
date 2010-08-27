@@ -54,7 +54,7 @@ ApplicationSelf * Application::self_app = 0;
 
     void ApplicationSelf::_preconstruct() {
         // Unicode stuff
-        UErrorCode err;
+        UErrorCode err = U_ZERO_ERROR;
         u_init(&err);
         if(U_FAILURE(err)) {
             fail(u_errorName(err));
