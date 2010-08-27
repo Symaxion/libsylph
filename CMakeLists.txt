@@ -103,10 +103,9 @@ add_subdirectory(test)
 
 # Scripts and helpers
 
-install( PROGRAMS ${SYLPH_BINARY_DIR}/bin/sylphparams DESTINATION bin )
 install( PROGRAMS ${SYLPH_SOURCE_DIR}/bin/sylo DESTINATION bin )
 
 # PkgConfig
 
 configure_file ( Sylph.pc.in Sylph.pc @ONLY )
-install( FILES ${SYLPH_BINARY_DIR}/sylph.pc DESTINATION lib/pkgconfig )
+install( FILES ${SYLPH_BINARY_DIR}/Sylph.pc DESTINATION lib/pkgconfig )
