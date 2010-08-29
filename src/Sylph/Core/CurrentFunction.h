@@ -39,7 +39,6 @@
 #include "Object.h"
 
 SYLPH_BEGIN_NAMESPACE
-SYLPH_PUBLIC
 inline void currentFunctionHelper() {
 #if defined(__GNUC__) || (defined(__MWERKS__) && (__MWERKS__ >= 0x3000)) || (defined(__ICC) && (__ICC >= 600))
 #define S_CURRENT_FUNCTION __PRETTY_FUNCTION__

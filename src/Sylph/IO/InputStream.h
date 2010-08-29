@@ -28,7 +28,6 @@
 #include "../Core/String.h"
 
 SYLPH_BEGIN_NAMESPACE
-SYLPH_PUBLIC
 
 /** */
 class InputStream : public virtual Object {

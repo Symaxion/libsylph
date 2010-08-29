@@ -23,7 +23,6 @@
 
 #include "Object.h"
 SYLPH_BEGIN_NAMESPACE
-SYLPH_PUBLIC
 
 class PointerManagerImplBase {
 public:

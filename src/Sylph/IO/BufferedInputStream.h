@@ -25,7 +25,6 @@
 #include "../Core/Primitives.h"
 
 SYLPH_BEGIN_NAMESPACE
-SYLPH_PUBLIC
 class BufferedInputStream : public InputStream {
 public:
     BufferedInputStream(InputStream& _orig, size_t bufsize = 1024);

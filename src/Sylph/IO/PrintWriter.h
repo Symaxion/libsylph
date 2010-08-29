@@ -26,7 +26,6 @@
 #include "OutputStream.h"
 
 SYLPH_BEGIN_NAMESPACE
-SYLPH_PUBLIC
 
 class PrintWriter : public virtual Object {
     friend PrintWriter& dec(PrintWriter&);

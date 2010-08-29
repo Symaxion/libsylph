@@ -28,7 +28,6 @@
 #include <math.h>
 
 SYLPH_BEGIN_NAMESPACE
-SYLPH_PUBLIC
 
 template<class T>
 inline void carraycopy(const T src[], std::size_t srcPos, T dest[],

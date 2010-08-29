@@ -24,7 +24,6 @@
 #include "../Core/Object.h"
 
 SYLPH_BEGIN_NAMESPACE
-SYLPH_PUBLIC
 
 namespace IO {
     enum IOType {

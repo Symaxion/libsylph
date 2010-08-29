@@ -26,7 +26,6 @@
 #include <algorithm>
 
 SYLPH_BEGIN_NAMESPACE
-SYLPH_PUBLIC
 
 /** */
 template<class T>

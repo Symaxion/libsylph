@@ -27,7 +27,6 @@
 #include "String.h"
 
 SYLPH_BEGIN_NAMESPACE
-SYLPH_PUBLIC
 typedef uint16_t uchar;
 
 /**

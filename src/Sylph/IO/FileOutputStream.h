@@ -27,7 +27,6 @@
 #include <cstdio>
 
 SYLPH_BEGIN_NAMESPACE
-SYLPH_PUBLIC
 
 class FileOutputStream : public OutputStream {
 public:

@@ -28,7 +28,6 @@
 #include <typeinfo>
 
 SYLPH_BEGIN_NAMESPACE
-SYLPH_PUBLIC
 
 /**
  * Wrapper class for any kind of class. Any allows you to wrap any kind of class

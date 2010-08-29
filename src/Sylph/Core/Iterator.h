@@ -28,7 +28,6 @@
 //#include "Foreach.h" -- this line is at the bottom of the file ;)
 
 SYLPH_BEGIN_NAMESPACE
-SYLPH_PUBLIC
 
 S_CREATE_EXCEPTION(IteratorException);
 

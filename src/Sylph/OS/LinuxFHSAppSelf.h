@@ -24,7 +24,6 @@
 #include "../Core/Application.h"
 
 SYLPH_BEGIN_NAMESPACE
-SYLPH_PUBLIC
 
 class LinuxFHSAppSelf : public ApplicationSelf {
 public:

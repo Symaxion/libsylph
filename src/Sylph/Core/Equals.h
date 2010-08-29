@@ -26,7 +26,6 @@
 #include <cstring>
 
 SYLPH_BEGIN_NAMESPACE
-SYLPH_PUBLIC
 
 /**
  * @todo Write documentation!

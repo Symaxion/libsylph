@@ -28,7 +28,6 @@
 #include <cstdio>
 
 SYLPH_BEGIN_NAMESPACE
-SYLPH_PUBLIC
 class FileInputStream : public InputStream {
 public:
     FileInputStream(File& f, IO::IOType t = IO::Normal) throw(IOException);

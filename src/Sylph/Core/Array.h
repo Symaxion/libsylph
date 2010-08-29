@@ -39,7 +39,6 @@ SYLPH_BEGIN_NAMESPACE
 class Any;
 template<class T> class Array;
 
-SYLPH_PUBLIC
 
 /**
  * Array provides a safe array. It works the same like a c-style array (not like
