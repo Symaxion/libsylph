@@ -24,7 +24,6 @@
 #include "OutputStream.h"
 
 SYLPH_BEGIN_NAMESPACE
-SYLPH_PUBLIC
 class BufferedOutputStream : public OutputStream {
 public:
     BufferedOutputStream(OutputStream& _orig, size_t bufsize = 1024) :

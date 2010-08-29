@@ -26,7 +26,6 @@
 #include "Primitives.h"
 
 SYLPH_BEGIN_NAMESPACE
-SYLPH_PUBLIC
 inline sint hash_internal(const byte * b, std::size_t len) {
     suint hash = 0;
     suint x = 0;

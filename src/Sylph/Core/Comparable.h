@@ -33,7 +33,6 @@
  */
 
 SYLPH_BEGIN_NAMESPACE
-SYLPH_PUBLIC
 
 #define S_CMP_NE_2_UNI(Left, Right) \
 inline bool operator!=(Left lhs, Right rhs) {\

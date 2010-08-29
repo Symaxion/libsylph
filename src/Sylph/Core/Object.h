@@ -23,11 +23,6 @@
 #ifndef OBJECT_H_
 #define	OBJECT_H_
 
-#ifdef SYLPH_PUBLIC
-#undef SYLPH_PUBLIC
-#endif /* SYLPH_PUBLIC */
-#define SYLPH_PUBLIC
-
 #define SYLPH_BEGIN_NAMESPACE namespace Sylph {
 #define SYLPH_END_NAMESPACE }
 
@@ -40,7 +35,6 @@
 
 
 SYLPH_BEGIN_NAMESPACE
-SYLPH_PUBLIC
 
 /**
  * null is a safe %null pointer. It can only be assigned to pointers, not to

@@ -26,7 +26,6 @@
 #include "Any.h"
 
 SYLPH_BEGIN_NAMESPACE
-SYLPH_PUBLIC
 /**
  * A Dictionary is a HashMap that maps Strings to Anys. This typedef is provided
  * because this is the most commonly used instance of a HashMap -- that is,

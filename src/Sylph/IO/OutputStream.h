@@ -25,7 +25,6 @@
 #include "../Core/Array.h"
 
 SYLPH_BEGIN_NAMESPACE
-SYLPH_PUBLIC
 
 /** */
 class OutputStream : public virtual Object {

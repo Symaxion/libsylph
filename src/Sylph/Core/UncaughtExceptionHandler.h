@@ -28,7 +28,6 @@
 
 SYLPH_BEGIN_NAMESPACE
 
-SYLPH_PUBLIC
 
 class UncaughtExceptionHandler : public Object {
 public:

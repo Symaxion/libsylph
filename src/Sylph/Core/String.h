@@ -34,7 +34,6 @@
 
 SYLPH_BEGIN_NAMESPACE
 
-SYLPH_PUBLIC
 
 /**
  * A integral type for storing an UTF-16 character

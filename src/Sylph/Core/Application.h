@@ -40,7 +40,6 @@ class File;
 template<class T> class Array;
 class String;
 
-SYLPH_PUBLIC
 
 /**
  * Class representing an application. An application a combination of an

@@ -27,7 +27,6 @@
 #include "Iterable.h"
 
 SYLPH_BEGIN_NAMESPACE
-SYLPH_PUBLIC
 
 // chmod constants
 const suint S_MOD_OWN = 0x100;

@@ -24,7 +24,6 @@
 #include "Object.h"
 
 SYLPH_BEGIN_NAMESPACE
-SYLPH_PUBLIC
 /**
  * This enumeration contains the possible Application Types. Each element
  * is backed by an implementation of @c ApplicationSelf in @c Sylph::OS.<p>
