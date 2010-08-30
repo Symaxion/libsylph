@@ -39,6 +39,8 @@ set(SYLPH_CONFIG_DEFS "" CACHE STRING "Add extra preprocessor definitions")
 option(SYLPH_COMPILER_SUFFICIENT "Set a manual override to make your compiler pass all tests")
 set(SYLPH_CXXFLAGS "" CACHE STRING "Add a manual override to the C++ flags needed to activate C++0x and other stuff")
 option(SYLPH_NO_CXX0X "Disable C++0x support (experimental)")
+option(SYLPH_ENABLE_COVERAGE "Enable code coverage support [developers]")
+option(SYLPH_ENABLE_PROFILING "Enable profiling support [developers]")
 
 #Version & platform checks...
 macro (get_gcc_version version)
@@ -83,6 +85,7 @@ endif ( NOT SYLPH_COMPILER_SUFFICIENT )
 # CXXFlags
 if ( NOT SYLPH_CXXFLAGS )
     set ( SYLPH_CXXFLAGS "" )
+    set ( COVERAGE_LIBS "" )
 
     # GCC >= 4.4.0
     # Enable C++0x and disable some warnings
@@ -90,6 +93,15 @@ if ( NOT SYLPH_CXXFLAGS )
         if( NOT SYLPH_NO_CXX0X )
             set( SYLPH_CXXFLAGS "-std=c++0x")
         endif ( NOT SYLPH_NO_CXX0X )
+
+        if( SYLPH_ENABLE_COVERAGE )
+            set( SYLPH_CXXFLAGS "${SYLPH_CXXFLAGS} -fprofile-arcs -ftest-coverage" )
+            set( COVERAGE_LIBS "gcov" )
+        endif( SYLPH_ENABLE_COVERAGE )
+
+        if( SYLPH_ENABLE_PROFILING )
+            set( SYLPH_CXXFLAGS "${SYLPH_CXXFLAGS} -pg" )
+        endif( SYLPH_ENABLE_PROFILING )
 
         if ( APPLE )
             # disable warning for 4-param main

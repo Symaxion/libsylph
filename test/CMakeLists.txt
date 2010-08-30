@@ -12,7 +12,7 @@ add_definitions(${SYLPH_CONFIG_DEFS})
 endif( SYLPH_DEBUG )
 
 add_executable( SylphTestExe EXCLUDE_FROM_ALL ${STEST_ALL_SRC})
-target_link_libraries( SylphTestExe ${SYLPH_TARGET} gtest )
+target_link_libraries( SylphTestExe ${SYLPH_TARGET} gtest ${COVERAGE_LIBS})
 add_custom_target(test SylphTestExe DEPENDS SylphTestExe)
 
 set_target_properties(SylphTestExe PROPERTIES COMPILE_FLAGS "${SYLPH_CXXFLAGS}")
