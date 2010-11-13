@@ -8,6 +8,11 @@
 !.gitignore
 !.devctl
 
+# Eclipse project files
+!.settings
+!.cproject
+!.project
+
 # Built files
 a.out
 *.o
@@ -29,6 +34,7 @@ CMakeCache.txt
 CMakeFiles/**
 Makefile
 cmake_install.cmake
+/build
 
 # OS Specific
 .DS_Store
