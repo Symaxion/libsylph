@@ -51,12 +51,12 @@ class Thread : public virtual Object {
 private:
 #ifdef SYLPH_OS_WINDOWS
 #else
-    static HashMap<pthread_t*,String> implString;
-    static HashMap<String,pthread_t*> stringImpl;
+    static HashMap<pthread_t,String> implString;
+    static HashMap<String,pthread_t> stringImpl;
 
-    static void addStringImpl(pthread_t* i, String s);
+    static void addStringImpl(pthread_t i, String s);
     static void removeString(String s);
-    static void removeImpl(pthread_t* i);
+    static void removeImpl(pthread_t i);
 #endif
 public:
     template<class Callable>
@@ -83,14 +83,14 @@ public:
 private:
 #ifdef SYLPH_OS_WINDOWS
 #else
-    pthread_t* threadImpl;
+    pthread_t threadImpl;
 
-    Thread(pthread_t* impl);
+    Thread(pthread_t impl);
 #endif
 };
 
-HashMap<pthread_t*,String> Thread::implString;
-HashMap<String,pthread_t*> Thread::stringImpl;
+HashMap<pthread_t,String> Thread::implString;
+HashMap<String,pthread_t> Thread::stringImpl;
 
 template<class Callable>
 void* callCallable(Callable c);

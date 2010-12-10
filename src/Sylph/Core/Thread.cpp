@@ -33,16 +33,16 @@ void* callCallable(Callable c) {
     pthread_exit(null);
 }
 
-void Thread::addStringImpl(pthread_t* impl, String s) {
+void Thread::addStringImpl(pthread_t impl, String s) {
     implString[impl] = s;
     stringImpl[s] = impl;
 }
 void Thread::removeString(String s) {
-    pthread* toRemove = stringImpl[s];
+    pthread_t toRemove = stringImpl[s];
     stringImpl.remove(s);
     implString.remove(toRemove);
 }
-void Thread::removeImpl(pthread_t* i) {
+void Thread::removeImpl(pthread_t i) {
     String toRemove = implString[i];
     stringImpl.remove(toRemove);
     implString.remove(i);
@@ -50,7 +50,7 @@ void Thread::removeImpl(pthread_t* i) {
 
 template<class Callable>
 Thread::Thread(Callable c) {
-    pthread_create(impl,null,callCallable,Callable);
+    pthread_create(&threadImpl,null,Sylph::callCallable,c);
     Thread::addStringImpl(threadImpl,"");
 }
 template<class Callable, class... Args>
@@ -63,10 +63,10 @@ Thread::~Thread() {
 }
 
 void Thread::join() {
-    pthread_join(*threadImpl,null);
+    pthread_join(threadImpl,null);
 }
 void Thread::detach() {
-    pthread_detach(*threadImpl);
+    pthread_detach(threadImpl);
 }
 bool Thread::joinable() const {
     SYLPH_STUB;
@@ -74,18 +74,18 @@ bool Thread::joinable() const {
 }
 
 void Thread::exit() {
-    Thread::removeImpl(&pthread_self());
+    Thread::removeImpl(pthread_self());
     pthread_exit(null);
 }
 Thread Thread::current() {
-    return Thread(&pthread_self());
+    return Thread(pthread_self());
 }
 
 String Thread::name() const {
     return implString[threadImpl];
 }
 void Thread::setName(String name) {
-    addStringImpl(threadImpl,String);
+    addStringImpl(threadImpl,name);
 }
 
 void Thread::sleep(long millis, int nanos) {
@@ -98,10 +98,10 @@ void Thread::yield() {
     sched_yield();
 }
 
-Thread::Thread(pthread* _impl) : threadImpl(_impl){
+Thread::Thread(pthread_t _impl) : threadImpl(_impl){
 }
 
 bool Thread::operator==(const Thread& other) const {
-    return pthread_equal(*threadImpl,*other.threadImpl);
+    return pthread_equal(threadImpl,other.threadImpl);
 }
 SYLPH_END_NAMESPACE
