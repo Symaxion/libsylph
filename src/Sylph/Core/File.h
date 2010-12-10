@@ -1,19 +1,25 @@
 /*
  * LibSylph Class Library
- * Copyright (C) 2009 Frank "SeySayux" Erens <seysayux@gmail.com>
+ * Copyright (C) 2010 Frank "SeySayux" Erens <seysayux@gmail.com>
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the LibSylph Pulbic License as published
- * by the LibSylph Developers; either version 1.0 of the License, or
- * (at your option) any later version.
+ * This software is provided 'as-is', without any express or implied
+ * warranty. In no event will the authors be held liable for any damages
+ * arising from the use of this software.
  *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the LibSylph
- * Public License for more details.
+ * Permission is granted to anyone to use this software for any purpose,
+ * including commercial applications, and to alter it and redistribute it
+ * freely, subject to the following restrictions:
  *
- * You should have received a copy of the LibSylph Public License
- * along with this Library, if not, contact the LibSylph Developers.
+ *   1. The origin of this software must not be misrepresented; you must not
+ *   claim that you wrote the original software. If you use this software
+ *   in a product, an acknowledgment in the product documentation would be
+ *   appreciated but is not required.
+ *
+ *   2. Altered source versions must be plainly marked as such, and must not be
+ *   misrepresented as being the original software.
+ *
+ *   3. This notice may not be removed or altered from any source
+ *   distribution.
  *
  * Created on 16 juli 2009, 14:41
  */
@@ -27,7 +33,6 @@
 #include "Iterable.h"
 
 SYLPH_BEGIN_NAMESPACE
-SYLPH_PUBLIC
 
 // chmod constants
 const suint S_MOD_OWN = 0x100;
@@ -127,20 +132,35 @@ public:
     }
 
     /**
-     * @return the root this file is on, as a string
+     * @return The root this file is on, as a string.
      */
     String rootName() const;
 
-    /** */
+    /** 
+     * @return The parent directory of this file.
+     */
     File parent() const;
 
-    /** */
+    /** 
+     * Returns the name of the file itself. The file name is defined as 
+     * everything in the path from the last file seperator to the end.
+     * E.g, <code>/var/log/foo</code> would give <code>foo</code>, 
+     * <code>/var/cache/</code> would give <code>cache</code>.
+     * @return The file name component of the path.
+     */
     String filename() const;
 
-    /** */
+    /**
+     * Returns the file name without the extension.
+     * @return The file name without the extension.
+     */
     String stem() const;
 
-    /** */
+    /**
+     * Returns the extension of this file. The extension is everything from the
+     * last dot to the end, unless the file name starts with a dot.
+     * @return The file extension.
+     */
     String extension() const;
 
     /** */
@@ -180,13 +200,25 @@ public:
         return !parent().empty();
     }
 
-    /** */
+    /**
+     * Checks wheter a given pathname exists.
+     * @return true if and only if the pathname exists
+     * @throw IOException If an IO error occurs.
+     */
     bool exists() const throw(IOException);
 
-    /** */
+    /**
+     * Creates an empty file if it doesn't exist. 
+     * @return <i>true</i> if a new file is created, <i>false</i> otherwise.
+     * @throw IOException If an IO error occurs.
+     */
     bool create() const throw(IOException);
 
-    /** */
+    /** 
+     * Attempts to remove this file if it exists.
+     * @return <i>true</i> if the file was successfully removed.
+     * @throw IOException if an IO error occurs.
+     */
     bool remove() const throw(IOException);
 
     /** */

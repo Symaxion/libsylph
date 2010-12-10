@@ -1,3 +1,28 @@
+/*
+ * LibSylph Class Library
+ * Copyright (C) 2010 Frank "SeySayux" Erens <seysayux@gmail.com>
+ *
+ * This software is provided 'as-is', without any express or implied
+ * warranty. In no event will the authors be held liable for any damages
+ * arising from the use of this software.
+ *
+ * Permission is granted to anyone to use this software for any purpose,
+ * including commercial applications, and to alter it and redistribute it
+ * freely, subject to the following restrictions:
+ *
+ *   1. The origin of this software must not be misrepresented; you must not
+ *   claim that you wrote the original software. If you use this software
+ *   in a product, an acknowledgment in the product documentation would be
+ *   appreciated but is not required.
+ *
+ *   2. Altered source versions must be plainly marked as such, and must not be
+ *   misrepresented as being the original software.
+ *
+ *   3. This notice may not be removed or altered from any source
+ *   distribution.
+ *
+ */
+
 #include "String.h"
 #include "Array.h"
 #include "Hash.h"
@@ -378,8 +403,8 @@ String String::fromSci(double d, bool up) {
 }
 
 bool String::boolValue() const {
-    String l = *this & lc;
-    return l == "true" || l == "1" || l == "yes" || l = "on";
+    String l = (*this & lc);
+    return l == "true" || l == "1" || l == "yes" || l == "on";
 }
 
 sint String::intValue() const {
@@ -465,7 +490,7 @@ void String::fromAscii(const char* ascii) const {
 void String::fromUtf8(const char* unicode) const {
     size_t len = std::strlen(unicode);
     StringBuffer buf;
-    uchar current;
+    uchar current = 0;
     byte bytecount = 0;
     for (idx_t i = 0; i < len; i++) {
         unsigned char univalue = static_cast<unsigned char> (unicode[i]);

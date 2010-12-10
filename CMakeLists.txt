@@ -1,3 +1,29 @@
+#
+# LibSylph Class Library (build script)
+# Copyright (C) 2010 Frank "SeySayux" Erens <seysayux@gmail.com>
+#
+# This software is provided 'as-is', without any express or implied
+# warranty. In no event will the authors be held liable for any damages
+# arising from the use of this software.
+#
+# Permission is granted to anyone to use this software for any purpose,
+# including commercial applications, and to alter it and redistribute it
+# freely, subject to the following restrictions:
+#
+#     1. The origin of this software must not be misrepresented; you must not
+#     claim that you wrote the original software. If you use this software
+#     in a product, an acknowledgment in the product documentation would be
+#     appreciated but is not required.
+#
+#     2. Altered source versions must be plainly marked as such, and must not be
+#     misrepresented as being the original software.
+#
+#     3. This notice may not be removed or altered from any source
+#     distribution.
+#
+
+#########################################################################
+
 cmake_minimum_required(VERSION 2.6)
 project(SYLPH)
 
@@ -13,6 +39,8 @@ set(SYLPH_CONFIG_DEFS "" CACHE STRING "Add extra preprocessor definitions")
 option(SYLPH_COMPILER_SUFFICIENT "Set a manual override to make your compiler pass all tests")
 set(SYLPH_CXXFLAGS "" CACHE STRING "Add a manual override to the C++ flags needed to activate C++0x and other stuff")
 option(SYLPH_NO_CXX0X "Disable C++0x support (experimental)")
+option(SYLPH_ENABLE_COVERAGE "Enable code coverage support [developers]")
+option(SYLPH_ENABLE_PROFILING "Enable profiling support [developers]")
 
 #Version & platform checks...
 macro (get_gcc_version version)
@@ -57,6 +85,7 @@ endif ( NOT SYLPH_COMPILER_SUFFICIENT )
 # CXXFlags
 if ( NOT SYLPH_CXXFLAGS )
     set ( SYLPH_CXXFLAGS "" )
+    set ( COVERAGE_LIBS "" )
 
     # GCC >= 4.4.0
     # Enable C++0x and disable some warnings
@@ -64,6 +93,15 @@ if ( NOT SYLPH_CXXFLAGS )
         if( NOT SYLPH_NO_CXX0X )
             set( SYLPH_CXXFLAGS "-std=c++0x")
         endif ( NOT SYLPH_NO_CXX0X )
+
+        if( SYLPH_ENABLE_COVERAGE )
+            set( SYLPH_CXXFLAGS "${SYLPH_CXXFLAGS} -fprofile-arcs -ftest-coverage" )
+            set( COVERAGE_LIBS "gcov" )
+        endif( SYLPH_ENABLE_COVERAGE )
+
+        if( SYLPH_ENABLE_PROFILING )
+            set( SYLPH_CXXFLAGS "${SYLPH_CXXFLAGS} -pg" )
+        endif( SYLPH_ENABLE_PROFILING )
 
         if ( APPLE )
             # disable warning for 4-param main
@@ -103,12 +141,9 @@ add_subdirectory(test)
 
 # Scripts and helpers
 
-configure_file( bin/sylphparams.in bin/sylphparams )
-
-install( PROGRAMS ${SYLPH_BINARY_DIR}/bin/sylphparams DESTINATION bin )
 install( PROGRAMS ${SYLPH_SOURCE_DIR}/bin/sylo DESTINATION bin )
 
 # PkgConfig
 
-configure_file ( sylph.pc.in sylph.pc @ONLY )
-install( FILES ${SYLPH_BINARY_DIR}/sylph.pc DESTINATION lib/pkgconfig )
+configure_file ( Sylph.pc.in Sylph.pc @ONLY )
+install( FILES ${SYLPH_BINARY_DIR}/Sylph.pc DESTINATION lib/pkgconfig )

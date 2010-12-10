@@ -1,19 +1,25 @@
 /*
  * LibSylph Class Library
- * Copyright (C) 2009 Frank "SeySayux" Erens <seysayux@gmail.com>
+ * Copyright (C) 2010 Frank "SeySayux" Erens <seysayux@gmail.com>
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the LibSylph Pulbic License as published
- * by the LibSylph Developers; either version 1.0 of the License, or
- * (at your option) any later version.
+ * This software is provided 'as-is', without any express or implied
+ * warranty. In no event will the authors be held liable for any damages
+ * arising from the use of this software.
  *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the LibSylph
- * Public License for more details.
+ * Permission is granted to anyone to use this software for any purpose,
+ * including commercial applications, and to alter it and redistribute it
+ * freely, subject to the following restrictions:
  *
- * You should have received a copy of the LibSylph Public License
- * along with this Library, if not, contact the LibSylph Developers.
+ *   1. The origin of this software must not be misrepresented; you must not
+ *   claim that you wrote the original software. If you use this software
+ *   in a product, an acknowledgment in the product documentation would be
+ *   appreciated but is not required.
+ *
+ *   2. Altered source versions must be plainly marked as such, and must not be
+ *   misrepresented as being the original software.
+ *
+ *   3. This notice may not be removed or altered from any source
+ *   distribution.
  *
  * Created on 8 februari 2009, 14:18
  */
@@ -39,7 +45,6 @@ SYLPH_BEGIN_NAMESPACE
 class Any;
 template<class T> class Array;
 
-SYLPH_PUBLIC
 
 /**
  * Array provides a safe array. It works the same like a c-style array (not like
@@ -397,16 +402,21 @@ public:
      * @param ran The range describing the slice.
      * @throw ArrayException if ran.last() > length
      */
-    Array<T> operator[](const range & ran) throw (Exception) {
-        if (ran.last() >= length) {
+    Array<T> operator[](const range & r) throw (Exception) {
+        range ran = r;
+        if(ran.inverse()) sthrow(ArrayException, "Inversed range");
+        ran.last = ran.last < 0 ? length + ran.last : ran.last;
+        ran.first = ran.first < 0 ? length + ran.first : ran.first;
+        if(ran.inverse()) ran.swap();
+        if (ran.first < 0 || ran.last >= length) {
             char buf[2048];
             sprintf(buf, "Array overflow - range: %u - %u , length: %u",
-                    ran.first(), ran.last(), unsigned(length));
+                    ran.first, ran.last, unsigned(length));
             sthrow(ArrayException, buf);
         }
 
-        Array<T> toReturn = Array<T>::fromPointer((ran.last() - ran.first())+1,
-                data->_carray + ran.first());
+        Array<T> toReturn = Array<T>::fromPointer((ran.last - ran.first)+1,
+                data->_carray + ran.first);
         return toReturn;
     }
 
@@ -415,16 +425,20 @@ public:
      * @param ran The range describing the slice
      * @throw ArrayException if ran.last() > length
      */
-    const Array<T> operator[](const range & ran) const throw (Exception) {
-        if (ran.last() >= length) {
+    const Array<T> operator[](const range & r) const throw (Exception) {
+        range ran = r;
+        ran.last = ran.last < 0 ? length + ran.last : ran.last;
+        ran.first = ran.first < 0 ? length + ran.first : ran.first;
+        if(ran.inverse()) ran.swap();
+        if (ran.first < 0 || ran.last >= length) {
             char buf[2048];
             sprintf(buf, "Array overflow - range: %u - %u , length: %u",
-                    ran.first(), ran.last(), unsigned(length));
+                    ran.first, ran.last, unsigned(length));
             sthrow(ArrayException, buf);
         }
 
-        Array<T> toReturn = Array<T>::fromPointer((ran.last() - ran.first())+1,
-                data->_carray + ran.first());
+        Array<T> toReturn = Array<T>::fromPointer((ran.last - ran.first)+1,
+                data->_carray + ran.first);
         return toReturn;
     }
 

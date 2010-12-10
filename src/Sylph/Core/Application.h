@@ -1,19 +1,25 @@
 /*
  * LibSylph Class Library
- * Copyright (C) 2009 Frank "SeySayux" Erens <seysayux@gmail.com>
+ * Copyright (C) 2010 Frank "SeySayux" Erens <seysayux@gmail.com>
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the LibSylph Pulbic License as published
- * by the LibSylph Developers; either version 1.0 of the License, or
- * (at your option) any later version.
+ * This software is provided 'as-is', without any express or implied
+ * warranty. In no event will the authors be held liable for any damages
+ * arising from the use of this software.
  *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the LibSylph
- * Public License for more details.
+ * Permission is granted to anyone to use this software for any purpose,
+ * including commercial applications, and to alter it and redistribute it
+ * freely, subject to the following restrictions:
  *
- * You should have received a copy of the LibSylph Public License
- * along with this Library, if not, contact the LibSylph Developers.
+ *   1. The origin of this software must not be misrepresented; you must not
+ *   claim that you wrote the original software. If you use this software
+ *   in a product, an acknowledgment in the product documentation would be
+ *   appreciated but is not required.
+ *
+ *   2. Altered source versions must be plainly marked as such, and must not be
+ *   misrepresented as being the original software.
+ *
+ *   3. This notice may not be removed or altered from any source
+ *   distribution.
  *
  * Created on 9 november 2008, 11:48
  */
@@ -40,14 +46,24 @@ class File;
 template<class T> class Array;
 class String;
 
-SYLPH_PUBLIC
 
 /**
- * Class representing an application. An application is any file containing
- * executable object code that can be directly invoked by the operating system
- * through a well-defined entry point. Probably the most famous example is the
- * @c thisapp instance of this class, a pointer to an Application object
- * representing the application accessing the pointer.<p>
+ * Class representing an application. An application a combination of an
+ * executable file with any resources required to run it.<p>
+ * An executable file is any file containing executable object code that can be
+ * directly invoked by the operating system through a well-defined entry point.
+ * Probably the most important example of an instance of this class is
+ * @c a pointer to an Application object representing the application from
+ * which it is dereferenced.<p>
+ * An application is considered <i>relocatable</i> if and only if, once built
+ * for a specific target, the application can be run from any absolute path
+ * on that target and can be run on any other compatible system, without
+ * needing to be rebuilt.
+ * An application is considered <i>self-contained</i> if and only if the
+ * application ships with all required resources and frameworks, except for
+ * standard or very common libraries, all these files are in one directory
+ * hierarchy and this directory hierarchy is not shared with other applications.
+ * Futhermore, each self-contained application must be relocatable.
  * It is not possible to directly instantiate an Application object. Future
  * releases may contain functions to create Application objects and run the
  * accompanying object code.
@@ -133,20 +149,53 @@ public:
      */
     AppType appType();
 
-    /** */
+    /**
+     * Closes the application with a given error message. The exact way this
+     * error message is displayed is not specified, however, it is usually
+     * displayed on the terminal. The application will send a failure status
+     * code to the operating system.
+     * @param reason The error message that will be displayed to the user.
+     * @param exit Whether the application will exit after showing the failure.
+     * This is useful to do some manual clean-up before exiting. Not exiting
+     * after using this function is undefined behavior.
+     */
     void fail(const String reason, bool exit = true);
-    /** */
+    /**
+     * Closes the application with a given error message. The exact way this
+     * error message is displayed is not specified, however, it is usually
+     * displayed on the terminal. The application will send a failure status
+     * code to the operating system.<p>
+     * This function is usually called as <code>fail("Error", __FILE__,
+     * __LINE__)</code> so that the preprocessor may substitute the parameters.
+     * @param reason The error message that will be displayed to the user.
+     * @param file The source code file this error occured in.
+     * @param line The source code line this error occured on.
+     * @param exit Whether the application will exit after showing the failure.
+     * This is useful to do some manual clean-up before exiting. Not exiting
+     * after using this function is undefined behavior.
+     */
     void fail(const String reason, const String file, unsigned int line,
         bool exit = true);
 
 
-    /** */
+    /**
+     * Returns the canonical path to the bundle this executable is part of.
+     * If this application isn't part of a bundle, the empty file will be
+     * returned. 
+     * @return the canonical path to the bundle this executable is part of.
+     */
     virtual const File& bundle() = 0;
-    /** */
+    /**
+     * Returns the path to the resource directory specific for this application.
+     */
     virtual const File& resourceDir() = 0;
-    /** */
+    /**
+     * Returns the path to a resource specific to this application.
+     */
     virtual const File resource(String rsc) = 0;
-    /** */
+    /**
+     * Returns the path to the library directory specific for this application.
+     */
     virtual const File& libraryDir() = 0;
     /** */
     virtual const File& pluginDir() = 0;

@@ -85,7 +85,6 @@
           <itemPath>src/Sylph/IO/PrintWriter.h</itemPath>
         </logicalFolder>
         <logicalFolder name="f4" displayName="Math" projectFiles="true">
-          <itemPath>src/Math/internal_base.h</itemPath>
         </logicalFolder>
         <logicalFolder name="f1" displayName="OS" projectFiles="true">
           <itemPath>src/Sylph/OS/GuessOS.h</itemPath>
