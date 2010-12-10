@@ -63,22 +63,22 @@ Thread::~Thread() {
 }
 
 void Thread::join() {
-    pthread_join(threadImpl,null);
+    pthread_join(*threadImpl,null);
 }
 void Thread::detach() {
-    pthread_detach(threadImpl);
+    pthread_detach(*threadImpl);
 }
 bool Thread::joinable() const {
     SYLPH_STUB;
     return true;
 }
 
-static void Thread::exit() {
-    Thread::removeImpl(pthread_self());
+void Thread::exit() {
+    Thread::removeImpl(&pthread_self());
     pthread_exit(null);
 }
-static Thread Thread::current() {
-    return Thread(pthread_self());
+Thread Thread::current() {
+    return Thread(&pthread_self());
 }
 
 String Thread::name() const {
@@ -88,13 +88,13 @@ void Thread::setName(String name) {
     addStringImpl(threadImpl,String);
 }
 
-static void Thread::sleep(long millis, int nanos) {
+void Thread::sleep(long millis, int nanos) {
     time_t seconds = millis / 1000;
-    long nanos = (millis-seconds) * 1000000 + nanos;
-    timespec ts{seconds,nanos};
+    long nns = (millis-seconds) * 1000000 + nanos;
+    timespec ts{seconds,nns};
     nanosleep(&ts,null);
 }
-static void Thread::yield() {
+void Thread::yield() {
     sched_yield();
 }
 
@@ -102,6 +102,6 @@ Thread::Thread(pthread* _impl) : threadImpl(_impl){
 }
 
 bool Thread::operator==(const Thread& other) const {
-    return pthread_equal(threadImpl,other.threadImpl);
+    return pthread_equal(*threadImpl,*other.threadImpl);
 }
 SYLPH_END_NAMESPACE

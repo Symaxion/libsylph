@@ -85,9 +85,12 @@ private:
 #else
     pthread_t* threadImpl;
 
-    Thread(pthread* impl);
+    Thread(pthread_t* impl);
 #endif
 };
+
+HashMap<pthread_t*,String> Thread::implString;
+HashMap<String,pthread_t*> Thread::stringImpl;
 
 template<class Callable>
 void* callCallable(Callable c);
