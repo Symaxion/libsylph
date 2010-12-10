@@ -101,7 +101,7 @@ public:
         }
 
         inline void operator=(Value& value) {
-            map->put(key, &value);
+            map->put(key, new Value(value));
         }
 
         inline void operator=(Value&& value) {
