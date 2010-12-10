@@ -156,13 +156,13 @@ namespace {
     TEST_F(TestHashMap, testAssignExisting) {
         HashMap<String, String> h;
 
-        s = "foo";
+        String s = "foo";
         ASSERT_NO_THROW(h["bar"] = s);
         ASSERT_EQ(s, h["bar"]);
         ASSERT_EQ("foo", h["bar"]);
     }
 
-    TEST_f(TestHashMap, testStringKeyIntValue) {
+    TEST_F(TestHashMap, testStringKeyIntValue) {
         HashMap<String, int> h;
 
         ASSERT_NO_THROW(h["foo"] = 9);
@@ -181,15 +181,15 @@ namespace {
         ASSERT_NO_THROW(h[2] = s);
         ASSERT_EQ("foo",h[4]);
         ASSERT_EQ("abc",h[2]);
-        ASSERT_EQ(s, h[2])
+        ASSERT_EQ(s, h[2]);
     }
 
-    TEST_F(TestHashMap, testPointerKey) {
-        class SomeClass { int i; };
+    class SomeClass { int i; };
 
+    TEST_F(TestHashMap, testPointerKey) {
         HashMap<SomeClass*, String> h;
 
-        SomeClass sc = new SomeClass;
+        SomeClass* sc = new SomeClass;
 
         ASSERT_NO_THROW(h[sc] = "foobar");
 
