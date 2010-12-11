@@ -153,5 +153,48 @@ namespace {
         EXPECT_TRUE(g == h);
     }
 
+    TEST_F(TestHashMap, testAssignExisting) {
+        HashMap<String, String> h;
+
+        String s = "foo";
+        ASSERT_NO_THROW(h["bar"] = s);
+        ASSERT_EQ(s, h["bar"]);
+        ASSERT_EQ("foo", h["bar"]);
+    }
+
+    TEST_F(TestHashMap, testStringKeyIntValue) {
+        HashMap<String, int> h;
+
+        ASSERT_NO_THROW(h["foo"] = 9);
+        int i = 42;
+        ASSERT_NO_THROW(h["bar"] = i);
+        ASSERT_EQ(9, h["foo"]);
+        ASSERT_EQ(42,h["bar"]);
+        ASSERT_EQ(i, h["bar"]);
+    }
+
+    TEST_F(TestHashMap, testIntKeyStringValue) {
+        HashMap<int, String> h;
+
+        ASSERT_NO_THROW(h[4] = "foo");
+        String s = "abc";
+        ASSERT_NO_THROW(h[2] = s);
+        ASSERT_EQ("foo",h[4]);
+        ASSERT_EQ("abc",h[2]);
+        ASSERT_EQ(s, h[2]);
+    }
+
+    class SomeClass { int i; };
+
+    TEST_F(TestHashMap, testPointerKey) {
+        HashMap<SomeClass*, String> h;
+
+        SomeClass* sc = new SomeClass;
+
+        ASSERT_NO_THROW(h[sc] = "foobar");
+
+        delete sc;
+    }
+
 
 } // namespace

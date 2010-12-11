@@ -101,10 +101,10 @@ public:
         }
 
         inline void operator=(Value& value) {
-            map->put(key, &value);
+            map->put(key, new Value(value));
         }
 
-        inline void operator=(Value value) {
+        inline void operator=(Value&& value) {
             map->put(key, new Value(value));
         }
 
@@ -417,7 +417,7 @@ public:
         EntryPtr last = null;
 
         while (entry != null) {
-            if (equf(key, entry->key)) {
+            if (key == entry->key) {
                 if (last == null) {
                     buckets[idx] = entry->next;
                 } else {
