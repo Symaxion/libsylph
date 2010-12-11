@@ -170,7 +170,7 @@ namespace {
         ASSERT_NO_THROW(h["bar"] = i);
         ASSERT_EQ(9, h["foo"]);
         ASSERT_EQ(42,h["bar"]);
-        ASSERT_EQ(i, h["foo"]);
+        ASSERT_EQ(i, h["bar"]);
     }
 
     TEST_F(TestHashMap, testIntKeyStringValue) {
