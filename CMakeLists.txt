@@ -43,7 +43,7 @@ option(SYLPH_ENABLE_COVERAGE "Enable code coverage support [developers]")
 option(SYLPH_ENABLE_PROFILING "Enable profiling support [developers]")
 
 # Dependencies
-find_package(PTHREAD)
+find_package(Threads)
 
 #Version & platform checks...
 macro (get_gcc_version version)
