@@ -34,6 +34,7 @@
 #include "Sylph/Core/Common.h"
 #include "Sylph/Core/AppType.h"
 #include "Sylph/Core/UncaughtExceptionHandler.h"
+#include "Sylph/Core/Thread.h"
 
 #ifndef SYLPH_NO_SYLPHMAIN
 #ifndef SYLPH_APP_NAME
@@ -48,6 +49,7 @@ int main(int argc, char * argv[]);
 static inline void SylphInit(int argc, char * argv[], char * apple[]) {
     Sylph::Application::init(argc, argv, apple, Sylph::SYLPH_APP_TYPE,
             SYLPH_APP_NAME);
+    Sylph::Thread::current().setName("Main");
 }
 #ifdef SYLPH_MAIN_CLASSIC_PARAMS
 extern int SylphMain(int argc, char** argv);
@@ -61,13 +63,13 @@ int main(int argc, char * argv[], char * envp[], char * apple[]) {
     try {
         SylphInit(argc, argv, apple);
         #ifdef SYLPH_MAIN_CLASSIC_PARAMS
-        return SylphMain(argc, argv);
+        Sylph::Thread::exit(SylphMain(argc, argv));
         #else
         Array<String> args(argc);
         for(int i = 0; i < argc; ++i) {
             args[i] = argv[i];
         }
-        return SylphMain(args);
+        Sylph::Thread::exit(SylphMain(args));
         #endif
     } catch(const Sylph::Assertion& as) {
         Sylph::UncaughtExceptionHandler::handler->handleAssertion(as);
@@ -83,13 +85,13 @@ int main(int argc, char * argv[]) {
     try {
         SylphInit(argc, argv, Sylph::null);
         #ifdef SYLPH_MAIN_CLASSIC_PARAMS
-        return SylphMain(argc, argv);
+        Sylph::Thread::exit(SylphMain(argc, argv));
         #else
         Array<String> args(argc);
         for(int i = 0; i < argc; ++i) {
             args[i] = argv[i];
         }
-        return SylphMain(args);
+        Sylph::Thread::exit(SylphMain(args));
         #endif
     } catch(const Sylph::Assertion& as) {
         Sylph::UncaughtExceptionHandler::handler->handleAssertion(as);

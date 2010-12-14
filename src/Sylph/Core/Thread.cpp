@@ -26,36 +26,23 @@
 
 SYLPH_BEGIN_NAMESPACE
 
-template<class Callable>
-void* callCallable(Callable c) {
-    c();
-    Thread::removeImpl(pthread_self());
-    pthread_exit(null);
-}
-
-void Thread::addStringImpl(pthread_t impl, String s) {
+void Thread::addStringImpl(Thread impl, String s) {
     implString[impl] = s;
     stringImpl[s] = impl;
 }
 void Thread::removeString(String s) {
-    pthread_t toRemove = stringImpl[s];
+    Thread toRemove = stringImpl[s];
     stringImpl.remove(s);
     implString.remove(toRemove);
 }
-void Thread::removeImpl(pthread_t i) {
+void Thread::removeImpl(Thread i) {
     String toRemove = implString[i];
     stringImpl.remove(toRemove);
     implString.remove(i);
 }
 
-template<class Callable>
-Thread::Thread(Callable c) {
-    pthread_create(&threadImpl,null,Sylph::callCallable,c);
-    Thread::addStringImpl(threadImpl,"");
-}
-template<class Callable, class... Args>
-Thread::Thread(Callable c, Args... a) {
-    SYLPH_STUB;
+Thread::Thread(const Thread& other) : threadImpl(other.threadImpl) {
+
 }
 
 Thread::~Thread() {
@@ -73,9 +60,9 @@ bool Thread::joinable() const {
     return true;
 }
 
-void Thread::exit() {
+void Thread::exit(int i) {
     Thread::removeImpl(pthread_self());
-    pthread_exit(null);
+    pthread_exit(static_cast<void*>(&i));
 }
 Thread Thread::current() {
     return Thread(pthread_self());
@@ -86,6 +73,10 @@ String Thread::name() const {
 }
 void Thread::setName(String name) {
     addStringImpl(threadImpl,name);
+}
+
+Thread Thread::forName(String name) {
+    return stringImpl[name];
 }
 
 void Thread::sleep(long millis, int nanos) {

@@ -277,19 +277,23 @@
 					</profile>
 				</scannerConfigBuildInfo>
 			</storageModule>
+			<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
+			<storageModule moduleId="org.eclipse.cdt.core.language.mapping"/>
 			<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets">
 				<buildTargets>
 					<target name="Run CMake (Debug)" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
 						<buildCommand>cmake</buildCommand>
-						<buildArguments>-E chdir build/ cmake -G "Unix Makefiles"  -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=$HOME/sylph \
+						<buildArguments>-E chdir build/ cmake -G "Unix Makefiles"  -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=/usr \
  -DSYLPH_DEBUG=1 -DCMAKE_CXX_COMPILER=/usr/local/bin/g++ ../</buildArguments>
+						<buildTarget/>
 						<stopOnError>true</stopOnError>
 						<useDefaultCommand>false</useDefaultCommand>
 						<runAllBuilders>true</runAllBuilders>
 					</target>
 					<target name="Run CMake (Release)" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
 						<buildCommand>cmake</buildCommand>
-						<buildArguments>-E chdir build/ cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$HOME/sylph -DCMAKE_CXX_COMPILER=/usr/local/bin/g++ ../</buildArguments>
+						<buildArguments>-E chdir build/ cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_CXX_COMPILER=/usr/local/bin/g++ ../</buildArguments>
+						<buildTarget/>
 						<stopOnError>true</stopOnError>
 						<useDefaultCommand>false</useDefaultCommand>
 						<runAllBuilders>true</runAllBuilders>
@@ -308,6 +312,14 @@
 						<stopOnError>true</stopOnError>
 						<useDefaultCommand>true</useDefaultCommand>
 						<runAllBuilders>true</runAllBuilders>
+					</target>
+					<target name="Install" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
+						<buildCommand>osascript</buildCommand>
+						<buildArguments>-e "do shell script \"make -C ${ProjDirPath}/build VERBOSE=1 install\" with administrator privileges"</buildArguments>
+						<buildTarget/>
+						<stopOnError>true</stopOnError>
+						<useDefaultCommand>false</useDefaultCommand>
+						<runAllBuilders>false</runAllBuilders>
 					</target>
 					<target name="Build Test cases" path="src/Sylph/Core" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
 						<buildCommand>make</buildCommand>

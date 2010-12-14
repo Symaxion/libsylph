@@ -33,6 +33,8 @@
 
 #include "../OS/OS.h"
 
+#include <functional>
+
 #ifdef SYLPH_OS_WINDOWS
 #else
 #include <pthread.h>
@@ -40,40 +42,64 @@
 #include <time.h>
 #endif
 
-#define dispatch
-#define dispatch_if
+#define dispatch(FUNCTION,...) do { struct sylph__dp { template <class... T> \
+    void operator()(std::tuple<T...> _A) FUNCTION  \
+    }; sylph__dp dp; ::Sylph::Thread t(dp, ## __VA_ARGS__); \
+    t.setName("Dispatch: "+t.name()); } while(0)
+#define dispatch_if(COND,FUNCTION, ...) { struct sylph__dp { template <class... T> \
+    void operator()(std::tuple<T...> _A) { if(COND) FUNCTION Thread::sleep(50); }  \
+    }; sylph__dp dp; ::Sylph::Thread t(dp, ## __VA_ARGS__); \
+    t.setName("Dispatch: "+t.name()); } while(0)
 
 SYLPH_BEGIN_NAMESPACE
 
 class Thread : public virtual Object {
     template<class Callable>
-    friend void* callCallable(Callable c);
+    friend void* callCallable(void*);
 private:
 #ifdef SYLPH_OS_WINDOWS
 #else
-    static HashMap<pthread_t,String> implString;
-    static HashMap<String,pthread_t> stringImpl;
+    static HashMap<Thread,String> implString;
+    static HashMap<String,Thread> stringImpl;
 
-    static void addStringImpl(pthread_t i, String s);
+    static void addStringImpl(Thread i, String s);
     static void removeString(String s);
-    static void removeImpl(pthread_t i);
+    static void removeImpl(Thread i);
+
+    static idx_t threadCt;
 #endif
 public:
     template<class Callable>
-    Thread(Callable c);
+    explicit Thread(Callable c) {
+#ifdef SYLPH_OS_WINDOWS
+#else
+        pthread_create(&threadImpl,null,Sylph::callCallable<Callable>,(void*)(c));
+        Thread::addStringImpl(threadImpl,String(threadCt++));
+#endif
+    }
     template<class Callable, class... Args>
-    Thread(Callable c, Args... a);
+    explicit Thread(Callable c, Args&... a) {
+#ifdef SYLPH_OS_WINDOWS
+#else
+        auto f = std::bind<void*>(c, a...);
+        //pthread_create(&threadImpl,null,Sylph::callCallable<typeof(f)>,static_cast<void*>(f));
+        Thread::addStringImpl(threadImpl,String(threadCt++));
+#endif
+    }
+
+    Thread(const Thread& other);
     virtual ~Thread();
 
     void join();
     void detach();
     bool joinable() const;
 
-    static void exit();
+    static void exit(int i = 0);
     static Thread current();
 
     String name() const;
     void setName(String name);
+    static Thread forName(String name);
 
     static void sleep(long millis = 0, int nanos = 0);
     static void yield();
@@ -89,11 +115,20 @@ private:
 #endif
 };
 
-HashMap<pthread_t,String> Thread::implString;
-HashMap<String,pthread_t> Thread::stringImpl;
+HashMap<Thread,String> Thread::implString;
+HashMap<String,Thread> Thread::stringImpl;
+idx_t Thread::threadCt = 1;
 
 template<class Callable>
-void* callCallable(Callable c);
+void* callCallable(void* c) {
+#ifdef SYLPH_OS_WINDOWS
+#else
+    Callable c2 = (Callable)(c);
+    c2();
+    Thread::removeImpl(Thread::current());
+    pthread_exit(null);
+#endif
+}
 
 SYLPH_END_NAMESPACE
 
