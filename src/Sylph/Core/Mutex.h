@@ -35,7 +35,7 @@
 
 SYLPH_BEGIN_NAMESPACE
 
-class Mutex : public Object {
+class Mutex : public virtual Object {
 public:
     Mutex();
     virtual ~Mutex();
@@ -43,10 +43,26 @@ public:
     void lock();
     bool tryLock();
     void unlock();
-private:
+protected:
 #ifdef SYLPH_OS_WINDOWS
 #else
     pthread_mutex_t* impl;
+#endif
+};
+
+class RecursiveMutex : public virtual Object {
+public:
+    RecursiveMutex();
+    virtual ~RecursiveMutex();
+
+    void lock();
+    bool tryLock();
+    void unlock();
+protected:
+#ifdef SYLPH_OS_WINDOWS
+#else
+    pthread_mutex_t* impl;
+    pthread_mutexattr_t* attr;
 #endif
 };
 

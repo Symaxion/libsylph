@@ -43,4 +43,24 @@ void Mutex::unlock() {
     pthread_mutex_unlock(impl);
 }
 
+RecursiveMutex::RecursiveMutex() {
+    pthread_mutexattr_init(attr);
+    pthread_mutexattr_settype(attr,PTHREAD_MUTEX_RECURSIVE);
+    pthread_mutex_init(impl,null);
+}
+RecursiveMutex::~RecursiveMutex() {
+    pthread_mutex_destroy(impl);
+    pthread_mutexattr_destroy(attr);
+}
+
+void RecursiveMutex::lock() {
+    pthread_mutex_lock(impl);
+}
+bool RecursiveMutex::tryLock() {
+    return pthread_mutex_unlock(impl) != 0;
+}
+void RecursiveMutex::unlock() {
+    pthread_mutex_unlock(impl);
+}
+
 SYLPH_END_NAMESPACE
