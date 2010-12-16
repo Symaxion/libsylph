@@ -42,15 +42,6 @@
 #include <time.h>
 #endif
 
-#define dispatch(FUNCTION,...) do { struct sylph__dp { template <class... T> \
-    void operator()(std::tuple<T...> _A) FUNCTION  \
-    }; sylph__dp dp; ::Sylph::Thread t(dp, ## __VA_ARGS__); \
-    t.setName("Dispatch: "+t.name()); } while(0)
-#define dispatch_if(COND,FUNCTION, ...) { struct sylph__dp { template <class... T> \
-    void operator()(std::tuple<T...> _A) { if(COND) FUNCTION Thread::sleep(50); }  \
-    }; sylph__dp dp; ::Sylph::Thread t(dp, ## __VA_ARGS__); \
-    t.setName("Dispatch: "+t.name()); } while(0)
-
 SYLPH_BEGIN_NAMESPACE
 
 class Thread : public virtual Object {
