@@ -83,7 +83,7 @@ public:
 #ifdef SYLPH_OS_WINDOWS
 #else
         auto f = std::bind<void*>(c, a...);
-        //pthread_create(&threadImpl,null,Sylph::callCallable<typeof(f)>,static_cast<void*>(f));
+        pthread_create(&threadImpl,null,f,null);
         Thread::addStringImpl(threadImpl,String(threadCt++));
         Thread::implJoinable[*this] = true;
 #endif
