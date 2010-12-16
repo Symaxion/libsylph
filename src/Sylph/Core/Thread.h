@@ -61,6 +61,7 @@ private:
 #else
     static HashMap<Thread,String> implString;
     static HashMap<String,Thread> stringImpl;
+    static HashMap<Thread,bool> implJoinable;
 
     static void addStringImpl(Thread i, String s);
     static void removeString(String s);
@@ -84,6 +85,7 @@ public:
         auto f = std::bind<void*>(c, a...);
         //pthread_create(&threadImpl,null,Sylph::callCallable<typeof(f)>,static_cast<void*>(f));
         Thread::addStringImpl(threadImpl,String(threadCt++));
+        Thread::implJoinable[*this] = true;
 #endif
     }
 
@@ -117,6 +119,7 @@ private:
 
 HashMap<Thread,String> Thread::implString;
 HashMap<String,Thread> Thread::stringImpl;
+HashMap<Thread,bool> Thread::implJoinable;
 idx_t Thread::threadCt = 1;
 
 template<class Callable>

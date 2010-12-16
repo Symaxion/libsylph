@@ -29,16 +29,19 @@ SYLPH_BEGIN_NAMESPACE
 void Thread::addStringImpl(Thread impl, String s) {
     implString[impl] = s;
     stringImpl[s] = impl;
+    implJoinable[impl] = true;
 }
 void Thread::removeString(String s) {
     Thread toRemove = stringImpl[s];
     stringImpl.remove(s);
     implString.remove(toRemove);
+    implJoinable.remove(toRemove);
 }
 void Thread::removeImpl(Thread i) {
     String toRemove = implString[i];
     stringImpl.remove(toRemove);
     implString.remove(i);
+    implJoinable.remove(i);
 }
 
 Thread::Thread(const Thread& other) : threadImpl(other.threadImpl) {
@@ -54,9 +57,10 @@ void Thread::join() {
 }
 void Thread::detach() {
     pthread_detach(threadImpl);
+    Thread::implJoinable[*this] = false;
 }
 bool Thread::joinable() const {
-    SYLPH_STUB;
+    return Thread::implJoinable[*this];
     return true;
 }
 
