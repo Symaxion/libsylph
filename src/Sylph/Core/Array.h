@@ -177,23 +177,21 @@ public:
      * internal C array is allocated to have the specified length.
      * @param len The length of the new Array.
      */
-    explicit Array(std::size_t len = 0) : _length(len), length(_length),
-            data(new Data(len)) {
-    }
+    explicit Array(std::size_t len = 0) : length(len), data(new Data(len)) {}
 
 #ifndef SYLPH_NO_CXX0X
     /**
-     * Creates an Array from an intializer list. This constructor allows the
+     * Creates an Array from an initializer list. This constructor allows the
      * easier, more familiar syntax of Array creation, but requires C++0x. Using
      * this constructor, arrays can be initialized as following:
      * <pre>Array<int> myarr = {5,4,7,9};</pre>
      * A new instance of the reference counted data is created, the reference
-     * count is set to 1, the length is set to the length of the intializer
+     * count is set to 1, the length is set to the length of the initializer
      * list, and all data is copied into a newly allocated C array.
      * @param il The initializer_list used to create the array.
      */
-    Array(const std::initializer_list<T> & il) : _length(il.size()), 
-            length(_length), data(new Data(_length)) {
+    Array(const std::initializer_list<T> & il) : length(il.size()),
+            data(new Data(_length)) {
         for (idx_t i = 0; i < il.size(); i++) {
             data->_carray[i] = il.begin()[i];
         }
@@ -212,7 +210,7 @@ public:
      * @param array A traditional, C-style array to create this Array from.
      */
     template<size_t N>
-    Array(const T(&array)[N]) : _length(N), length(_length), data(new Data(N)) {
+    Array(const T(&array)[N]) : length(N), data(new Data(N)) {
         for (idx_t i = 0; i < _length; i++) {
             data->_carray[i] = array[i];
         }
@@ -226,8 +224,7 @@ public:
      * remain unmodified.
      * @param other An other Array from which to use the reference counted data.
      */
-    Array(const Array<T> & other) : _length(other._length), length(_length),
-        data(other.data){
+    Array(const Array<T> & other) : length(other.length), data(other.data) {
         data->refcount++;
     }
 
@@ -242,8 +239,8 @@ public:
      * @tplreqs T operator++, LessThanComparable
      */
 
-    Array(const basic_range<T> & ran) : _length(ran.last() - ran.first()),
-    length(_length), data(new Data(length)) {
+    Array(const basic_range<T> & ran) : length(ran.last() - ran.first()),
+            data(new Data(length)) {
         idx_t idx = 0;
         for (T x = ran.first(); x < ran.last(); x++) {
             *this[idx] = x;
@@ -261,8 +258,7 @@ public:
      * object remains unmodified.
      * @param t An object to create a length-1 array from.
      */
-    explicit Array(const T& t) : _length(1), length(_length),
-            data(new Data(1)) {
+    explicit Array(const T& t) : length(1), data(new Data(1)) {
         data->_carray[0] = t;
     }
 
@@ -352,7 +348,7 @@ public:
      */
     void clear() {
         delete this->data->_carray;
-        this->data->_carray = new T[this->data->_length];
+        this->data->_carray = new T[this->data->length];
     }
 
     /**
@@ -368,7 +364,7 @@ public:
         this->data->refcount--;
         if (!this->data->refcount) delete this->data;
         this->data = other.data;
-        this->_length = other.data->_length;
+        this->length = other.data->length;
         data->refcount++;
         return *this;
     }
