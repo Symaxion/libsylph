@@ -148,19 +148,19 @@ public:
     /**
      * The length of the array. This variable is 1-based, while the array itself
      * is 0-based, i.e. if length == N the highest entry in this array is N-1.
-     * E.g if array.length == 5, then the higest entry is array[4]
+     * E.g if array.length == 5, then the highest entry is array[4]
      */
 #ifdef SYLPH_DOXYGEN
     const size_t length;
 #else
-    const LengthProxy length;
+    LengthProxy length;
 #endif
 
     /**
      * Creates an Array<T> from a pointer to T and a length. The new array will
      * have the length specified in <code>length</code>. The original array will
      * not be modified, the contents are copied. No bounds-checking
-     * is done, therefore, use this function at your own responsability!
+     * is done, therefore, use this function at your own responsibility!
      * @param length The length of the original C array
      * @param orig The original C array, supplied as a pointer.
      */
