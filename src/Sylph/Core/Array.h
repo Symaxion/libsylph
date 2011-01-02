@@ -62,9 +62,21 @@ template<class T> class Array;
  */
 template<class T>
 class Array : public virtual Object {
-private:
-    size_t _length;
 public:
+
+    class LengthProxy {
+        friend class Array<T>;
+    public:
+        operator const size_t&() const {
+            return lp;
+        }
+    private:
+        LengthProxy(const size_t& _lp) : lp(_lp) {}
+        operator size_t&() {
+            return lp;
+        }
+        size_t lp;
+    };
 
     /**
      * @todo Write documentation!
@@ -138,7 +150,11 @@ public:
      * is 0-based, i.e. if length == N the highest entry in this array is N-1.
      * E.g if array.length == 5, then the higest entry is array[4]
      */
-    const size_t & length;
+#ifdef SYLPH_DOXYGEN
+    const size_t length;
+#else
+    const LengthProxy length;
+#endif
 
     /**
      * Creates an Array<T> from a pointer to T and a length. The new array will
