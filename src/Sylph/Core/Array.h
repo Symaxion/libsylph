@@ -218,7 +218,7 @@ public:
 
     /**
      * Creates an Array from another instance of the Array class. The data is
-     * not copied, instead, the pointer to the refernce counted data will be
+     * not copied, instead, the pointer to the reference counted data will be
      * set to the reference counted data of the other Array, and the reference
      * count will increase by 1. Other fields of the reference counted data
      * remain unmodified.
@@ -348,7 +348,7 @@ public:
      */
     void clear() {
         delete this->data->_carray;
-        this->data->_carray = new T[this->data->length];
+        this->data->_carray = new T[this->data->_length];
     }
 
     /**
@@ -364,7 +364,7 @@ public:
         this->data->refcount--;
         if (!this->data->refcount) delete this->data;
         this->data = other.data;
-        this->length = other.data->length;
+        this->length = other.data->_length;
         data->refcount++;
         return *this;
     }
