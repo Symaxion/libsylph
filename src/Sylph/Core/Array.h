@@ -191,7 +191,7 @@ public:
      * @param il The initializer_list used to create the array.
      */
     Array(const std::initializer_list<T> & il) : length(il.size()),
-            data(new Data(_length)) {
+            data(new Data(length)) {
         for (idx_t i = 0; i < il.size(); i++) {
             data->_carray[i] = il.begin()[i];
         }
@@ -211,7 +211,7 @@ public:
      */
     template<size_t N>
     Array(const T(&array)[N]) : length(N), data(new Data(N)) {
-        for (idx_t i = 0; i < _length; i++) {
+        for (idx_t i = 0; i < length; i++) {
             data->_carray[i] = array[i];
         }
     }
