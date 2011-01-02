@@ -28,39 +28,48 @@ SYLPH_BEGIN_NAMESPACE
 
 Mutex::Mutex() {
     pthread_mutex_init(impl,null);
+    pthread_cond_init(cond,null);
 }
 Mutex::~Mutex() {
     pthread_mutex_destroy(impl);
-}
-
-void Mutex::lock() {
-    pthread_mutex_lock(impl);
-}
-bool Mutex::tryLock() {
-    return pthread_mutex_unlock(impl) != 0;
-}
-void Mutex::unlock() {
-    pthread_mutex_unlock(impl);
+    pthread_cond_destroy(cond);
 }
 
 RecursiveMutex::RecursiveMutex() {
     pthread_mutexattr_init(attr);
     pthread_mutexattr_settype(attr,PTHREAD_MUTEX_RECURSIVE);
     pthread_mutex_init(impl,null);
+    pthread_cond_init(cond,null);
 }
 RecursiveMutex::~RecursiveMutex() {
     pthread_mutex_destroy(impl);
     pthread_mutexattr_destroy(attr);
+    pthread_cond_destroy(cond);
 }
 
-void RecursiveMutex::lock() {
-    pthread_mutex_lock(impl);
+#define MUTEX_IMPL(MUTEX) \
+void MUTEX::lock() { \
+    pthread_mutex_lock(impl); \
+} \
+bool MUTEX::tryLock() { \
+    return pthread_mutex_unlock(impl) != 0; \
+} \
+void MUTEX::unlock() { \
+    pthread_mutex_unlock(impl); \
+} \
+void MUTEX::wait() { \
+    pthread_cond_wait(cond,impl); \
+} \
+void MUTEX::notify() { \
+    pthread_cond_signal(cond); \
+} \
+void MUTEX::notifyAll() { \
+    pthread_cond_broadcast(cond); \
 }
-bool RecursiveMutex::tryLock() {
-    return pthread_mutex_unlock(impl) != 0;
-}
-void RecursiveMutex::unlock() {
-    pthread_mutex_unlock(impl);
-}
+
+MUTEX_IMPL(Mutex)
+MUTEX_IMPL(RecursiveMutex)
+
+#undef MUTEX_IMPL
 
 SYLPH_END_NAMESPACE

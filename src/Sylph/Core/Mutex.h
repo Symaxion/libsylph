@@ -43,10 +43,15 @@ public:
     void lock();
     bool tryLock();
     void unlock();
+
+    void wait();
+    void notify();
+    void notifyAll();
 protected:
 #ifdef SYLPH_OS_WINDOWS
 #else
     pthread_mutex_t* impl;
+    pthread_cond_t* cond;
 #endif
 };
 
@@ -63,6 +68,11 @@ protected:
 #else
     pthread_mutex_t* impl;
     pthread_mutexattr_t* attr;
+    pthread_cond_t* cond;
+
+    void wait();
+    void notify();
+    void notifyAll();
 #endif
 };
 
