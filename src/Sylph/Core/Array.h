@@ -136,7 +136,7 @@ public:
     /**
      * The length of the array. This variable is 1-based, while the array itself
      * is 0-based, i.e. if length == N the highest entry in this array is N-1.
-     * E.g if array.length == 5, then the higest entry is array[4]
+     * E.g if array.length == 5, then the highest entry is array[4]
      */
     const size_t & length;
 
@@ -144,7 +144,7 @@ public:
      * Creates an Array<T> from a pointer to T and a length. The new array will
      * have the length specified in <code>length</code>. The original array will
      * not be modified, the contents are copied. No bounds-checking
-     * is done, therefore, use this function at your own responsability!
+     * is done, therefore, use this function at your own responsibility!
      * @param length The length of the original C array
      * @param orig The original C array, supplied as a pointer.
      */
@@ -167,12 +167,12 @@ public:
 
 #ifndef SYLPH_NO_CXX0X
     /**
-     * Creates an Array from an intializer list. This constructor allows the
+     * Creates an Array from an initializer list. This constructor allows the
      * easier, more familiar syntax of Array creation, but requires C++0x. Using
      * this constructor, arrays can be initialized as following:
      * <pre>Array<int> myarr = {5,4,7,9};</pre>
      * A new instance of the reference counted data is created, the reference
-     * count is set to 1, the length is set to the length of the intializer
+     * count is set to 1, the length is set to the length of the initializer
      * list, and all data is copied into a newly allocated C array.
      * @param il The initializer_list used to create the array.
      */
@@ -204,7 +204,7 @@ public:
 
     /**
      * Creates an Array from another instance of the Array class. The data is
-     * not copied, instead, the pointer to the refernce counted data will be
+     * not copied, instead, the pointer to the reference counted data will be
      * set to the reference counted data of the other Array, and the reference
      * count will increase by 1. Other fields of the reference counted data
      * remain unmodified.
@@ -358,7 +358,7 @@ public:
     }
 
     /**
-     * Used for accessing the Array's contents. Its behaviour is identical to
+     * Used for accessing the Array's contents. Its behavior is identical to
      * that of c-style arrays, but throws an exception instead of overflowing
      * or causing segfaults. <p>
      * The Array will assume ownership over any pointers entered in this way.
@@ -377,7 +377,7 @@ public:
     }
 
     /**
-     * This is the <code>const</code> version of T& operator[] . Its behaviour
+     * This is the <code>const</code> version of T& operator[] . Its behavior
      * is identical to that of c-style const arrays, but throws an exception
      * instead of overflowing or causing segfaults.
      * @param idx the index in the array from which to return an element
