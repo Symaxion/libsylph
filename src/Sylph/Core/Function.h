@@ -34,6 +34,10 @@ SYLPH_BEGIN_NAMESPACE
 // Function
 using std::function;
 
+// Noop
+template<class... T>
+void noop(T...) {}
+
 // Map
 template<class T, class R>class MappedFunction {
 public:
@@ -62,6 +66,11 @@ function<T(V...)> chain(function<T(U)> a, function<U(V...)> b) {
     return [=](V... v) -> T { return a(b(v)); }
 }
 
+// Call
+template<class C, class R, class... P>
+function<R(C&)> call(R(C::*)(P...) f, P... p) {
+    return [=](C& c) -> R { return (c.*f)(p); }
+}
 SYLPH_END_NAMESPACE
 
 #endif /* SYLPH_CORE_FUNCTION_H_ */
