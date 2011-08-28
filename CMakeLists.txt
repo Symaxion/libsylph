@@ -45,7 +45,7 @@ option(SYLPH_ENABLE_PROFILING "Enable profiling support [developers]")
 #Version & platform checks...
 macro (get_gcc_version version)
     if (CMAKE_COMPILER_IS_GNUCC)
-        exec_program( ${SYLPH_SOURCE_DIR}/gccver.sh ARGS ${CMAKE_CXX_COMPILER} OUTPUT_VARIABLE ${version})
+        exec_program( ${SYLPH_SOURCE_DIR}/deps/bin/gccver.sh ARGS ${CMAKE_CXX_COMPILER} OUTPUT_VARIABLE ${version})
     endif(CMAKE_COMPILER_IS_GNUCC)
 endmacro (get_gcc_version)
 
