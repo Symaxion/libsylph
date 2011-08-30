@@ -137,6 +137,8 @@ set(SYLPH_INCLUDE ${SYLPH_PLATFORM_INCLUDE} ${SYLPH_DEP_INCLUDE})
 # Subdirs
 
 add_subdirectory(src)
+
+add_subdirectory(deps/gtest EXCLUDE_FROM_ALL)
 add_subdirectory(test)
 
 # Scripts and helpers

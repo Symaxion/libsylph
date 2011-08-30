@@ -102,10 +102,10 @@ public:
         if (_end_reached_) sthrow(IteratorException, "End of iterator");
         else if (!hasNext()) {
             _end_reached_ = true;
-            return *static_cast<I*> (this);
+            return *static_cast<const I*> (this);
         } else {
             next();
-            return *static_cast<I*> (this);
+            return *static_cast<const I*> (this);
         }
     }
 
@@ -121,7 +121,7 @@ public:
     }
 
     const I operator++(int) const {
-        I toReturn(*static_cast<I*> (this));
+        I toReturn(*static_cast<const I*> (this));
         if (_end_reached_) sthrow(IteratorException, "End of iterator");
         else if (!hasNext()) {
             _end_reached_ = true;
@@ -226,12 +226,12 @@ public:
     const I & operator--() const {
         if (super::_end_reached_) {
             super::_end_reached_ = false;
-            return *static_cast<I*> (this);
+            return *static_cast<const I*> (this);
         } else if (!hasPrevious()) {
             sthrow(IteratorException, "Begin of iterator");
         } else {
             previous();
-            return *static_cast<I*> (this);
+            return *static_cast<const I*> (this);
         }
     }
 
@@ -249,7 +249,7 @@ public:
     }
 
     const I operator--(int) const {
-        I toReturn(*static_cast<I*> (this));
+        I toReturn(*static_cast<const I*> (this));
         if (super::_end_reached_) {
             super::_end_reached_ = false;
             return toReturn;
@@ -307,7 +307,7 @@ public:
     }
 
     const I & operator-=(unsigned int i) const {
-        return &*static_cast<I*>(&(*this += -i));
+        return &*static_cast<const I*>(&(*this += -i));
     }
 
     const I operator+(unsigned int i) const {

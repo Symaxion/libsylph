@@ -12,7 +12,7 @@ namespace {
     TEST_F(TestByteBuffer, testRead) {
         Array<byte> src = {0x13, 0x68, 0x22, 0x90, 0xA3, 0x27};
         ByteBuffer buf(src);
-        ASSERT_EQ(6, buf.size());
+        ASSERT_EQ(6u, buf.size());
         Array<byte> dest((size_t)6);
         buf.read(dest);
         EXPECT_EQ(dest,src);
@@ -23,10 +23,10 @@ namespace {
         Array<byte> src = {0x13, 0x68, 0x22, 0x90, 0xA3, 0x27};
         ByteBuffer buf;
         buf.write(src);
-        ASSERT_EQ(6, buf.size());
+        ASSERT_EQ(6u, buf.size());
 
         Array<byte> dest = buf.toArray();
-        ASSERT_EQ(6, dest.length);
+        ASSERT_EQ(6u, dest.length);
         EXPECT_EQ(dest, src);
 
     }
@@ -35,10 +35,10 @@ namespace {
         ByteBuffer buf(ByteBuffer::RW, 2);
         Array<byte> src = {0x13, 0x68, 0x22, 0x90, 0xA3, 0x27};
         buf.write(src);
-        ASSERT_EQ(6, buf.size());
+        ASSERT_EQ(6u, buf.size());
 
         Array<byte> dest = buf.toArray();
-        ASSERT_EQ(6, dest.length);
+        ASSERT_EQ(6u, dest.length);
         EXPECT_EQ(dest, src);
     }
 
@@ -49,10 +49,10 @@ namespace {
         ByteBuffer buf;
         buf.fromString(s);
 
-        ASSERT_EQ(6, buf.size());
+        ASSERT_EQ(6u, buf.size());
 
         Array<byte> dest = buf.toArray();
-        ASSERT_EQ(6, dest.length);
+        ASSERT_EQ(6u, dest.length);
         EXPECT_EQ(dest, src);
     }
 

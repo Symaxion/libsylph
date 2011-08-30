@@ -31,7 +31,7 @@ namespace {
         h["French"] = "français";
         h["Spanish"] = "español";
         h["Dutch"] = "Nederlands";
-        ASSERT_EQ(4,h.size());
+        ASSERT_EQ(4u,h.size());
         EXPECT_EQ(String("English"),h["English"]);
         EXPECT_EQ(String("français"),h["French"]);
         EXPECT_EQ(String("español"),h["Spanish"]);
@@ -58,9 +58,9 @@ namespace {
         h["French"] = "français";
         h["Spanish"] = "español";
         h["Dutch"] = "Nederlands";
-        ASSERT_EQ(4,h.size());
+        ASSERT_EQ(4u,h.size());
         h.clear();
-        EXPECT_EQ(0,h.size());
+        EXPECT_EQ(0u,h.size());
     }
 
     TEST_F(TestHashMap, testRehash) {
@@ -69,7 +69,7 @@ namespace {
         h["French"] = "français";
         h["Spanish"] = "español";
         h["Dutch"] = "Nederlands";
-        ASSERT_EQ(4,h.size());
+        ASSERT_EQ(4u,h.size());
         EXPECT_EQ(String("English"),h["English"]);
         EXPECT_EQ(String("français"),h["French"]);
         EXPECT_EQ(String("español"),h["Spanish"]);

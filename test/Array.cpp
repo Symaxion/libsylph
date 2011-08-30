@@ -41,14 +41,14 @@ namespace {
     };
 
     TEST_F(TestArray, testCorrectConstructed) {
-        EXPECT_EQ(5, testObj1->length);
-        EXPECT_EQ(4, testObj2->length);
-        EXPECT_EQ(4, ar1->length);
-        EXPECT_EQ(4, ar2->length);
-        EXPECT_EQ(7, ar3->length);
-        EXPECT_EQ(5, arfilled1.length);
-        EXPECT_EQ(6, arfilled2.length);
-        EXPECT_EQ(6, arfilled3.length);
+        EXPECT_EQ(5u, testObj1->length);
+        EXPECT_EQ(4u, testObj2->length);
+        EXPECT_EQ(4u, ar1->length);
+        EXPECT_EQ(4u, ar2->length);
+        EXPECT_EQ(7u, ar3->length);
+        EXPECT_EQ(5u, arfilled1.length);
+        EXPECT_EQ(6u, arfilled2.length);
+        EXPECT_EQ(6u, arfilled3.length);
     }
 
     TEST_F(TestArray, testNulled) {
@@ -72,7 +72,7 @@ namespace {
     }
 
     TEST_F(TestArray, testInitlistFill) {
-        ASSERT_EQ(5, arfilled1.length);
+        ASSERT_EQ(5u, arfilled1.length);
         EXPECT_EQ(5, arfilled1[0]);
         EXPECT_EQ(2, arfilled1[1]);
         EXPECT_EQ(9, arfilled1[2]);
@@ -86,7 +86,7 @@ namespace {
 
     TEST_F(TestArray, testLength) {
         Array<bool> lengthtest((size_t) 6);
-        ASSERT_EQ(6, lengthtest.length);
+        ASSERT_EQ(6u, lengthtest.length);
     }
 
     TEST_F(TestArray, testLengthOverflow) {
@@ -125,9 +125,9 @@ namespace {
 
         for (Array<int>::iterator it = arfilled1.begin();
                 it != arfilled1.end(); ++it) {
-                EXPECT_EQ(*it, arfilled1[cur]);
-                cur++;
-            }
+            EXPECT_EQ(*it, arfilled1[cur]);
+            cur++;
+        }
     }
 
     TEST_F(TestArray, testNegativeIndices) {
@@ -142,7 +142,7 @@ namespace {
 
     TEST_F(TestArray, testRanges) {
         Array<int> section = arfilled2[range(2, 4)];
-        ASSERT_EQ(3, section.length);
+        ASSERT_EQ(3u, section.length);
         EXPECT_EQ(2, section[0]);
         EXPECT_EQ(3, section[1]);
         EXPECT_EQ(4, section[2]);

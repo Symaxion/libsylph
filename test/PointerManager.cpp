@@ -30,6 +30,6 @@ namespace {
 
     TEST_F(TestPointerManager,testPointerManager) {
         ASSERT_NO_THROW(testPointerManagerHelper());
-        EXPECT_EQ(5,DestructorCounting::destroyed);
+        EXPECT_EQ(5u,DestructorCounting::destroyed);
     }
 }
