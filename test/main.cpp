@@ -1,6 +1,6 @@
 /*
  * LibSylph Class Library
- * Copyright (C) 2009 Frank "SeySayux" Erens <seysayux@gmail.com>
+ * Copyright (C) 2011 Frank "SeySayux" Erens <seysayux@gmail.com>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the LibSylph Pulbic License as published
