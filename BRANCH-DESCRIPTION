@@ -26,6 +26,8 @@ Description: >
 # - Broken
 # - Complete
 # - Stable
+# - Breaks API
+# - Breaks ABI
 Status:
     - Stable
 
