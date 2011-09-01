@@ -66,9 +66,9 @@ function<T(V...)> chain(function<T(U)> a, function<U(V...)> b) {
     return [=](V... v) -> T { return a(b(v)); }
 }
 
-// Call
+// Invoke
 template<class C, class R, class... P>
-function<R(C&)> call(R(C::*)(P...) f, P... p) {
+function<R(C&)> invoke(R(C::*)(P...) f, P... p) {
     return [=](C& c) -> R { return (c.*f)(p); }
 }
 SYLPH_END_NAMESPACE
