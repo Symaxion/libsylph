@@ -24,8 +24,8 @@
  * Created on 17 januari 2009, 15:17
  */
 
-#ifndef OS_H_
-#define	OS_H_
+#ifndef SYLPH_OS_OS_H_
+#define	SYLPH_OS_OS_H_
 
 #include "GuessOS.h"
 
@@ -48,5 +48,5 @@
 #define S_INIT_PARAMS argc, argv, 0
 #endif
 
-#endif	/* OS_H_ */
+#endif	/* SYLPH_OS_OS_H_ */
 

@@ -24,8 +24,8 @@
  * Created on 27 april 2009, 17:41
  */
 
-#ifndef OUTPUTSTREAM_H_
-#define	OUTPUTSTREAM_H_
+#ifndef SYLPH_IO_OUTPUTSTREAM_H_
+#define	SYLPH_IO_OUTPUTSTREAM_H_
 
 #include "../Core/Exception.h"
 #include "../Core/Array.h"
@@ -92,5 +92,5 @@ inline OutputStream& flush(OutputStream& s) {
 
 
 SYLPH_END_NAMESPACE
-#endif	/* OUTPUTSTREAM_H_ */
+#endif	/* SYLPH_IO_OUTPUTSTREAM_H_ */
 

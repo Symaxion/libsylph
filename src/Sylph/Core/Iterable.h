@@ -24,8 +24,8 @@
  * Created on 6 december 2008, 17:15
  */
 
-#ifndef ITERABLE_H_
-#define	ITERABLE_H_
+#ifndef SYLPH_CORE_ITERABLE_H_
+#define	SYLPH_CORE_ITERABLE_H_
 
 #include "Object.h"
 #include "Iterator.h"
@@ -46,5 +46,5 @@ typedef const iterator const_iterator; \
     virtual const_iterator end() const { return iterator(false, this); }
 
 
-#endif	/* ITERABLE_H_ */
+#endif	/* SYLPH_CORE_ITERABLE_H_ */
 

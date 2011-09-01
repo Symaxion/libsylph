@@ -24,8 +24,8 @@
  * Created on 25 april 2009, 15:59
  */
 
-#ifndef BYTEBUFFER_H_
-#define	BYTEBUFFER_H_
+#ifndef SYLPH_CORE_BYTEBUFFER_H_
+#define	SYLPH_CORE_BYTEBUFFER_H_
 
 #include "Common.h"
 #include "../IO/InputStream.h"
@@ -131,4 +131,4 @@ InputStream& operator>>(InputStream&, ByteBuffer&);
 
 SYLPH_END_NAMESPACE
 
-#endif	/* BYTEBUFFER_H_ */
+#endif	/* SYLPH_CORE_BYTEBUFFER_H_ */

@@ -24,8 +24,8 @@
  * Created on 14 november 2008, 8:07
  */
 
-#ifndef EXCEPTION_H_
-#define	EXCEPTION_H_
+#ifndef SYLPH_CORE_EXCEPTION_H_
+#define	SYLPH_CORE_EXCEPTION_H_
 
 #include "Object.h"
 
@@ -257,5 +257,5 @@ catch(::Sylph::Exception& ex) { \
 #define check_nullptr(__x) if_nullptr(__x) sthrow (NullPointerException, \
     "Dereferenced a null pointer")
         
-#endif	/* EXCEPTION_H_ */
+#endif	/* SYLPH_CORE_EXCEPTION_H_ */
 

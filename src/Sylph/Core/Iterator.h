@@ -24,8 +24,8 @@
  * Created on 6 december 2008, 17:16
  */
 
-#ifndef ITERATOR_H_
-#define	ITERATOR_H_
+#ifndef SYLPH_CORE_ITERATOR_H_
+#define	SYLPH_CORE_ITERATOR_H_
 
 #include "Object.h"
 #include "Exception.h"
@@ -532,5 +532,5 @@ SYLPH_END_NAMESPACE
 // Previously defined here, now defined elsewhere
 #include "Foreach.h"
 
-#endif	/* ITERATOR_H_ */
+#endif	/* SYLPH_CORE_ITERATOR_H_ */
 

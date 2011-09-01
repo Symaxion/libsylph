@@ -24,8 +24,8 @@
  * Created on 31 juli 2009, 21:21
  */
 
-#ifndef FOREACH_H_
-#define	FOREACH_H_
+#ifndef SYLPH_CORE_FOREACH_H_
+#define	SYLPH_CORE_FOREACH_H_
 
 #include "Object.h"
 #include <cstddef>
@@ -77,5 +77,5 @@ for (const ::foreach_container_base& _container_ = \
             --::foreach_cast(&_container_, true ? 0 : \
             ::foreach_pointer(container))->brk)
 
-#endif	/* FOREACH_H_ */
+#endif	/* SYLPH_CORE_FOREACH_H_ */
 

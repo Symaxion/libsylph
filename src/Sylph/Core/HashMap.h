@@ -24,8 +24,8 @@
  * Created on 13 april 2009, 13:15
  */
 
-#ifndef HASHMAP_H_
-#define	HASHMAP_H_
+#ifndef SYLPH_CORE_HASHMAP_H_
+#define	SYLPH_CORE_HASHMAP_H_
 
 #include "Object.h"
 #include "Debug.h"
@@ -487,5 +487,5 @@ bool operator==(const HashMap<K,V,H,E>& lhs, const HashMap<K,V,H,E>& rhs) {
 }
 
 SYLPH_END_NAMESPACE
-#endif	/* HASHMAP_H_ */
+#endif	/* SYLPH_CORE_HASHMAP_H_ */
 

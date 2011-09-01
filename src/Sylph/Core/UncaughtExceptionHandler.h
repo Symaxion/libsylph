@@ -24,8 +24,8 @@
  * Created on 12 februari 2009, 19:21
  */
 
-#ifndef _UNCAUGHTEXCEPTIONHANDLER_H
-#define	_UNCAUGHTEXCEPTIONHANDLER_H
+#ifndef SYLPH_CORE_UNCAUGHTEXCEPTIONHANDLER_H
+#define	SYLPH_CORE_UNCAUGHTEXCEPTIONHANDLER_H
 
 #include "Object.h"
 #include "Exception.h"
@@ -58,5 +58,5 @@ struct DebugUncaughtExceptionHandler : public UncaughtExceptionHandler {
 };
 SYLPH_END_NAMESPACE
 
-#endif	/* _UNCAUGHTEXCEPTIONHANDLER_H */
+#endif	/* SYLPH_CORE_UNCAUGHTEXCEPTIONHANDLER_H */
 

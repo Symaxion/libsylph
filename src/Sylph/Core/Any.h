@@ -24,8 +24,8 @@
  * Created on 22 maart 2009, 16:40
  */
 
-#ifndef ANY_H_
-#define	ANY_H_
+#ifndef SYLPH_CORE_ANY_H_
+#define	SYLPH_CORE_ANY_H_
 
 #include "Object.h"
 #include "Exception.h"
@@ -179,5 +179,5 @@ template<class T> T * any_cast(Any & any) {
 }
 SYLPH_END_NAMESPACE
 
-#endif	/* ANY_H_ */
+#endif	/* SYLPH_CORE_ANY_H_ */
 

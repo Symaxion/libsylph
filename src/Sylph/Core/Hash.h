@@ -24,8 +24,8 @@
  * Created on 4 maart 2009, 12:45
  */
 
-#ifndef HASH_H_
-#define	HASH_H_
+#ifndef SYLPH_CORE_HASH_H_
+#define	SYLPH_CORE_HASH_H_
 
 #include "Object.h"
 #include "Exception.h"
@@ -71,5 +71,5 @@ struct Hash<int> {
 
 SYLPH_END_NAMESPACE
 
-#endif	/* HASH_H_ */
+#endif	/* SYLPH_CORE_HASH_H_ */
 

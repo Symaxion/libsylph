@@ -24,8 +24,8 @@
  * Created on: 26 november 2008
  */
 
-#ifndef STRING_H_
-#define STRING_H_
+#ifndef SYLPH_CORE_STRING_H_
+#define SYLPH_CORE_STRING_H_
 
 #include "Object.h"
 #include "Comparable.h"
@@ -658,4 +658,4 @@ S_CMP_SEQ_2(const String,const char*)
 
 SYLPH_END_NAMESPACE
 
-#endif /* STRING_H_ */
+#endif /* SYLPH_CORE_STRING_H_ */

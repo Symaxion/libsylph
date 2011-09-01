@@ -24,9 +24,8 @@
  * Created on 24 april 2009, 19:19
  */
 
-#ifndef RANGE_H_
-#define	RANGE_H_
-
+#ifndef SYLPH_CORE_RANGE_H_
+#define	SYLPH_CORE_RANGE_H_
 
 #include "Object.h"
 #include <algorithm>
@@ -71,5 +70,5 @@ typedef basic_range<double> drange;
 
 SYLPH_END_NAMESPACE
 
-#endif	/* RANGE_H_ */
+#endif	/* SYLPH_CORE_RANGE_H_ */
 

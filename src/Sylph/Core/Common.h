@@ -24,8 +24,8 @@
  * Created on 25 april 2009, 15:42
  */
 
-#ifndef COMMON_H_
-#define	COMMON_H_
+#ifndef SYLPH_CORE_COMMON_H_
+#define	SYLPH_CORE_COMMON_H_
 
 /**
  * @file
@@ -70,5 +70,5 @@ using Sylph::range;
 #endif
 
 
-#endif	/* COMMON_H_ */
+#endif	/* SYLPH_CORE_COMMON_H_ */
 

@@ -24,8 +24,8 @@
  * Created on 30 januari 2009, 9:20
  */
 
-#ifndef _LINUXFHSAPPSELF_H
-#define	_LINUXFHSAPPSELF_H
+#ifndef SYLPH_OS_LINUXFHSAPPSELF_H
+#define	SYLPH_OS_LINUXFHSAPPSELF_H
 
 #include "../Core/Application.h"
 
@@ -65,5 +65,5 @@ public:
 
 SYLPH_END_NAMESPACE
 
-#endif	/* _LINUXFHSAPPSELF_H */
+#endif	/* SYLPH_OS_LINUXFHSAPPSELF_H */
 

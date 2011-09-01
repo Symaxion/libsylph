@@ -24,8 +24,8 @@
  * Created on 7 april 2009, 20:19
  */
 
-#ifndef PRIMITIVES_H_
-#define	PRIMITIVES_H_
+#ifndef SYLPH_CORE_PRIMITIVES_H_
+#define	SYLPH_CORE_PRIMITIVES_H_
 
 #include "Object.h"
 #include <stdint.h>
@@ -133,5 +133,5 @@ namespace Convert {
 }
 SYLPH_END_NAMESPACE
 
-#endif	/* PRIMITIVES_H_ */
+#endif	/* SYLPH_CORE_PRIMITIVES_H_ */
 

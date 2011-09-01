@@ -37,8 +37,8 @@
 
 //  See http://www.boost.org for most recent version.
 
-#ifndef GUESSOS_H_
-#define	GUESSOS_H_
+#ifndef SYLPH_OS_GUESSOS_H_
+#define	SYLPH_OS_GUESSOS_H_
 
 #if defined(linux) || defined(__linux) || defined(__linux__)
 // linux:
@@ -76,5 +76,5 @@
 #endif
 
 
-#endif	/* GUESSOS_H_ */
+#endif	/* SYLPH_OS_GUESSOS_H_ */
 

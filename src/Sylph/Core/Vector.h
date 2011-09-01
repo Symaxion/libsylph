@@ -340,4 +340,4 @@ private:
 
 
 SYLPH_END_NAMESPACE
-#endif	/* VECTOR_H_ */
+#endif	/* SYLPH_CORE_VECTOR_H_ */

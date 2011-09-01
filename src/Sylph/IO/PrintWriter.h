@@ -24,8 +24,8 @@
  * Created on 30 juni 2009, 12:06
  */
 
-#ifndef PRINTWRITER_H_
-#define	PRINTWRITER_H_
+#ifndef SYLPH_IO_PRINTWRITER_H_
+#define	SYLPH_IO_PRINTWRITER_H_
 
 #include "../Core/Primitives.h"
 #include "../Core/String.h"
@@ -81,5 +81,5 @@ PrintWriter& nouppercase(PrintWriter&);
 
 SYLPH_END_NAMESPACE
 
-#endif	/* PRINTWRITER_H_ */
+#endif	/* SYLPH_IO_PRINTWRITER_H_ */
 

@@ -39,8 +39,8 @@
 //
 
 
-#ifndef CURRENTFUNCTION_H_
-#define	CURRENTFUNCTION_H_
+#ifndef SYLPH_CORE_CURRENTFUNCTION_H_
+#define	SYLPH_CORE_CURRENTFUNCTION_H_
 
 #include "Object.h"
 
@@ -67,5 +67,5 @@ inline void currentFunctionHelper() {
 SYLPH_END_NAMESPACE
 
 
-#endif	/* CURRENTFUNCTION_H_ */
+#endif	/* SYLPH_CORE_CURRENTFUNCTION_H_ */
 

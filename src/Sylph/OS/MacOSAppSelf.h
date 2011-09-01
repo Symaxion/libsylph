@@ -24,8 +24,8 @@
  * Created on 30 januari 2009, 9:19
  */
 
-#ifndef MACOSAPPSELF_H_
-#define	MACOSAPPSELF_H_
+#ifndef SYLPH_OS_MACOSAPPSELF_H_
+#define	SYLPH_OS_MACOSAPPSELF_H_
 
 #include "../Core/Application.h"
 
@@ -66,4 +66,4 @@ public:
 
 SYLPH_END_NAMESPACE
 
-#endif	/* MACOSAPPSELF_H_ */
+#endif	/* SYLPH_OS_MACOSAPPSELF_H_ */

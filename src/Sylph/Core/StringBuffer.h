@@ -24,8 +24,8 @@
  * Created on 9 juli 2009, 16:19
  */
 
-#ifndef STRINGBUFFER_H_
-#define	STRINGBUFFER_H_
+#ifndef SYLPH_CORE_STRINGBUFFER_H_
+#define	SYLPH_CORE_STRINGBUFFER_H_
 
 #include "Object.h"
 #include "Array.h"
@@ -105,5 +105,5 @@ private:
 };
 SYLPH_END_NAMESPACE
 
-#endif	/* STRINGBUFFER_H_ */
+#endif	/* SYLPH_CORE_STRINGBUFFER_H_ */
 

@@ -26,8 +26,8 @@
 
 
 
-#ifndef OBJECT_H_
-#define	OBJECT_H_
+#ifndef SYLPH_CORE_OBJECT_H_
+#define	SYLPH_CORE_OBJECT_H_
 
 #define SYLPH_BEGIN_NAMESPACE namespace Sylph {
 #define SYLPH_END_NAMESPACE }
@@ -160,5 +160,5 @@ template<class T> void cleanupgc(void *obj, void *displ);
 #endif
 SYLPH_END_NAMESPACE
 
-#endif	/* OBJECT_H_ */
+#endif	/* SYLPH_CORE_OBJECT_H_ */
 

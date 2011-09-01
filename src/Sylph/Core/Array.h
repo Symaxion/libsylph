@@ -24,8 +24,8 @@
  * Created on 8 februari 2009, 14:18
  */
 
-#ifndef ARRAY_H_
-#define	ARRAY_H_
+#ifndef SYLPH_CORE_ARRAY_H_
+#define	SYLPH_CORE_ARRAY_H_
 
 #include "Iterable.h"
 #include "Iterator.h"
@@ -527,6 +527,6 @@ std::ostream& operator<<(std::ostream& out, const Array<T>& rhs) {
 
 SYLPH_END_NAMESPACE
 
-#endif	/* ARRAY_H_ */
+#endif	/* SYLPH_CORE_ARRAY_H_ */
 
 

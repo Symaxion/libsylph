@@ -24,8 +24,9 @@
  * Created on 14 december 2009, 16:19
  */
 
-#ifndef SYLPH_DEBUG_H_
-#define	SYLPH_DEBUG_H_
+#ifndef SYLPH_CORE_DEBUG_H_
+#define	SYLPH_CORE_DEBUG_H_
+
 #include "Exception.h"
 #include "String.h"
 #include "CurrentFunction.h"
@@ -62,5 +63,5 @@ inline void Assert(bool b, String s) {
 SYLPH_END_NAMESPACE
 
 
-#endif	/* SYLPH_DEBUG_H_ */
+#endif	/* SYLPH_CORE_DEBUG_H_ */
 

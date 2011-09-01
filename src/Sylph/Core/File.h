@@ -24,8 +24,8 @@
  * Created on 16 juli 2009, 14:41
  */
 
-#ifndef FILE_H_
-#define	FILE_H_
+#ifndef SYLPH_CORE_FILE_H_
+#define	SYLPH_CORE_FILE_H_
 
 #include "Object.h"
 #include "String.h"
@@ -310,5 +310,5 @@ inline std::ostream& operator<<(std::ostream& lhs, const File& rhs) {
 
 SYLPH_END_NAMESPACE
 
-#endif	/* FILE_H_ */
+#endif	/* SYLPH_CORE_FILE_H_ */
 

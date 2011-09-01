@@ -24,8 +24,8 @@
  * Created on 30 juni 2009, 12:07
  */
 
-#ifndef BUFFEREDOUTPUTSTREAM_H_
-#define	BUFFEREDOUTPUTSTREAM_H_
+#ifndef SYLPH_IO_BUFFEREDOUTPUTSTREAM_H_
+#define	SYLPH_IO_BUFFEREDOUTPUTSTREAM_H_
 
 #include "OutputStream.h"
 
@@ -47,5 +47,5 @@ private:
 
 SYLPH_END_NAMESPACE
 
-#endif	/* BUFFEREDOUTPUTSTREAM_H_ */
+#endif	/* SYLPH_IO_BUFFEREDOUTPUTSTREAM_H_ */
 

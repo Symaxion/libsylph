@@ -24,8 +24,8 @@
  * Created on 6 augustus 2009, 17:26
  */
 
-#ifndef FILEOUTPUTSTREAM_H_
-#define	FILEOUTPUTSTREAM_H_
+#ifndef SYLPH_IO_FILEOUTPUTSTREAM_H_
+#define	SYLPH_IO_FILEOUTPUTSTREAM_H_
 
 #include "OutputStream.h"
 #include "../Core/File.h"
@@ -53,5 +53,5 @@ private:
 };
 SYLPH_END_NAMESPACE
 
-#endif	/* FILEOUTPUTSTREAM_H_ */
+#endif	/* SYLPH_IO_FILEOUTPUTSTREAM_H_ */
 

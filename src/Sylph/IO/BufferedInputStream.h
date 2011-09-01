@@ -24,8 +24,8 @@
  * Created on 30 juni 2009, 12:07
  */
 
-#ifndef BUFFEREDINPUTSTREAM_H_
-#define	BUFFEREDINPUTSTREAM_H_
+#ifndef SYLPH_IO_BUFFEREDINPUTSTREAM_H_
+#define	SYLPH_IO_BUFFEREDINPUTSTREAM_H_
 
 #include "InputStream.h"
 #include "../Core/Primitives.h"
@@ -56,5 +56,5 @@ private:
 };
 SYLPH_END_NAMESPACE
 
-#endif	/* BUFFEREDINPUTSTREAM_H_ */
+#endif	/* SYLPH_IO_BUFFEREDINPUTSTREAM_H_ */
 

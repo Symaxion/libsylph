@@ -24,8 +24,8 @@
  * Created on 27 april 2009, 17:39
  */
 
-#ifndef INPUTSTREAM_H_
-#define	INPUTSTREAM_H_
+#ifndef SYLPH_IO_INPUTSTREAM_H_
+#define	SYLPH_IO_INPUTSTREAM_H_
 
 
 #include "../Core/Object.h"
@@ -98,4 +98,4 @@ protected:
 };
 SYLPH_END_NAMESPACE
 
-#endif	/* INPUTSTREAM_H_ */
+#endif	/* SYLPH_IO_INPUTSTREAM_H_ */

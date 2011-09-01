@@ -24,8 +24,8 @@
  * Created on 1 augustus 2009, 9:15
  */
 
-#ifndef APPTYPE_H_
-#define	APPTYPE_H_
+#ifndef SYLPH_CORE_APPTYPE_H_
+#define	SYLPH_CORE_APPTYPE_H_
 
 #include "Object.h"
 
@@ -69,5 +69,5 @@ enum AppType {
 };
 SYLPH_END_NAMESPACE
 
-#endif	/* APPTYPE_H_ */
+#endif	/* SYLPH_CORE_APPTYPE_H_ */
 
