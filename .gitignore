@@ -22,6 +22,11 @@ a.out
 *.dylib
 *.dll
 test/SylphTestExe
+test/SylphTestExe.exe
+Default/**
+
+# Generated documenation
+docs/html/**
 
 # Backup and patch files
 *~
