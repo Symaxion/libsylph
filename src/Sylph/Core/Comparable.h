@@ -1,6 +1,6 @@
 /*
  * LibSylph Class Library
- * Copyright (C) 2010 Frank "SeySayux" Erens <seysayux@gmail.com>
+ * Copyright (C) 2011 Frank "SeySayux" Erens <seysayux@gmail.com>
  *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -24,8 +24,8 @@
  * Created on 24 december 2008, 10:40
  */
 
-#ifndef COMPARABLE_H_
-#define	COMPARABLE_H_
+#ifndef SYLPH_CORE_COMPARABLE_H_
+#define	SYLPH_CORE_COMPARABLE_H_
 
 #include "Object.h"
 
@@ -74,5 +74,5 @@ S_CMP_SEQ_2_UNI(Class, Class)
         
 SYLPH_END_NAMESPACE
 
-#endif	/* _COMPARABLE_H_ */
+#endif	/* SYLPH_CORE_COMPARABLE_H_ */
 

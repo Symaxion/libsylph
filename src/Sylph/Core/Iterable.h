@@ -1,6 +1,6 @@
 /*
  * LibSylph Class Library
- * Copyright (C) 2010 Frank "SeySayux" Erens <seysayux@gmail.com>
+ * Copyright (C) 2011 Frank "SeySayux" Erens <seysayux@gmail.com>
  *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -24,8 +24,8 @@
  * Created on 6 december 2008, 17:15
  */
 
-#ifndef ITERABLE_H_
-#define	ITERABLE_H_
+#ifndef SYLPH_CORE_ITERABLE_H_
+#define	SYLPH_CORE_ITERABLE_H_
 
 #include "Object.h"
 #include "Iterator.h"
@@ -46,5 +46,5 @@ typedef const iterator const_iterator; \
     virtual const_iterator end() const { return iterator(false, this); }
 
 
-#endif	/* ITERABLE_H_ */
+#endif	/* SYLPH_CORE_ITERABLE_H_ */
 

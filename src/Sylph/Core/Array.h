@@ -1,6 +1,6 @@
 /*
  * LibSylph Class Library
- * Copyright (C) 2010 Frank "SeySayux" Erens <seysayux@gmail.com>
+ * Copyright (C) 2011 Frank "SeySayux" Erens <seysayux@gmail.com>
  *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -24,8 +24,8 @@
  * Created on 8 februari 2009, 14:18
  */
 
-#ifndef ARRAY_H_
-#define	ARRAY_H_
+#ifndef SYLPH_CORE_ARRAY_H_
+#define	SYLPH_CORE_ARRAY_H_
 
 #include "Iterable.h"
 #include "Iterator.h"
@@ -527,6 +527,6 @@ std::ostream& operator<<(std::ostream& out, const Array<T>& rhs) {
 
 SYLPH_END_NAMESPACE
 
-#endif	/* ARRAY_H_ */
+#endif	/* SYLPH_CORE_ARRAY_H_ */
 
 

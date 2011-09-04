@@ -1,6 +1,6 @@
 /*
  * LibSylph Class Library
- * Copyright (C) 2010 Frank "SeySayux" Erens <seysayux@gmail.com>
+ * Copyright (C) 2011 Frank "SeySayux" Erens <seysayux@gmail.com>
  *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -24,8 +24,8 @@
  * Created on 6 maart 2009, 17:15
  */
 
-#ifndef EQUALS_H_
-#define	EQUALS_H_
+#ifndef SYLPH_CORE_EQUALS_H_
+#define	SYLPH_CORE_EQUALS_H_
 
 #include "Object.h"
 
@@ -58,5 +58,5 @@ struct Equals<T*> {
 };
 SYLPH_END_NAMESPACE
 
-#endif	/* EQUALS_H_ */
+#endif	/* SYLPH_CORE_EQUALS_H_ */
 

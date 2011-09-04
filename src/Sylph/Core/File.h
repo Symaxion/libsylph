@@ -1,6 +1,6 @@
 /*
  * LibSylph Class Library
- * Copyright (C) 2010 Frank "SeySayux" Erens <seysayux@gmail.com>
+ * Copyright (C) 2011 Frank "SeySayux" Erens <seysayux@gmail.com>
  *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -24,8 +24,8 @@
  * Created on 16 juli 2009, 14:41
  */
 
-#ifndef FILE_H_
-#define	FILE_H_
+#ifndef SYLPH_CORE_FILE_H_
+#define	SYLPH_CORE_FILE_H_
 
 #include "Object.h"
 #include "String.h"
@@ -310,5 +310,5 @@ inline std::ostream& operator<<(std::ostream& lhs, const File& rhs) {
 
 SYLPH_END_NAMESPACE
 
-#endif	/* FILE_H_ */
+#endif	/* SYLPH_CORE_FILE_H_ */
 
