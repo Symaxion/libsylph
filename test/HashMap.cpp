@@ -138,12 +138,11 @@ namespace {
     }
 
     TEST_F(TestHashMap, testEmptyEquality) {
-        /*HashMap<String,String> g;
+        HashMap<String,String> g;
         HashMap<String,String> h;
 
         ASSERT_NO_THROW(g == h);
-        EXPECT_TRUE(g == h);*/
-        SYLPH_STUB_TEST;
+        EXPECT_TRUE(g == h);
     }
 
     TEST_F(TestHashMap, testRealEquality) {

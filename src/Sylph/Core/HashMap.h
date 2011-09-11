@@ -463,6 +463,7 @@ private:
 template<class K, class V, class H, class E>
 bool operator==(const HashMap<K,V,H,E>& lhs, const HashMap<K,V,H,E>& rhs) {
     static E eq;
+    if(lhs.size() == 0 && lhs.size() == 0) return true;
     for(typename HashMap<K,V,H,E>::const_iterator it = lhs.begin();
             it != lhs.end(); ++it) {
         if(!rhs.containsKey(it->key) || !eq(rhs.get(it->key), it->value))
