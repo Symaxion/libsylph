@@ -55,6 +55,8 @@ public:
     typedef hash_ HashFunction;
     typedef equals_ EqualsFunction;
     typedef Entry* EntryPtr;
+
+    typedef HashMap<Key,Value,HashFunction,EqualsFunction> Self;
 public:
 
     struct EntryHelper {
@@ -63,8 +65,8 @@ public:
     };
 
     class Entry {
-        friend class HashMap;
-        friend class iterator;
+        friend class HashMap<Key,Value,HashFunction,EqualsFunction>;
+        friend class Self::iterator;
     public:
 
         Entry(Key & _key, Value * _value) : key(_key), value(_value),
@@ -113,13 +115,13 @@ public:
         HashMap * map;
     };
 
-    class iterator : public ForwardIterator<Entry, iterator> {
-        typedef ForwardIterator<Entry, iterator> super;
+    template<class C, class V>
+    class S_ITERATOR : public ForwardIterator<V, S_ITERATOR<C,V> > {
+        typedef ForwardIterator<V, S_ITERATOR<C,V> > super;
     public:
 
-        iterator(bool begin = false,
-                HashMap<key_, value_, hash_, equals_>* obj = null) : super(begin),
-        map(obj) {
+        S_ITERATOR(bool begin = false, C* obj = null) : super(begin),
+                map(obj) {
             if (begin && !map->empty()) {
                 count = map->size();
                 idx = map->buckets.length - 1;
@@ -134,34 +136,21 @@ public:
             }
         }
 
-        iterator(bool begin = false,
-                const HashMap<key_, value_, hash_, equals_>* obj = null) :
-        super(begin),
-        map(const_cast<HashMap<key_, value_, hash_, equals_>*> (obj)) {
-            if (begin && !map->empty()) {
-                count = map->size();
-                idx = map->buckets.length - 1;
-                currentPointer = map->buckets[idx];
-                while (currentPointer == null) {
-                    currentPointer = map->buckets[--idx];
-                }
-            } else {
-                count = 0;
-                idx = 0;
-                currentPointer = null;
-                super::_end_reached_ = true;
-            }
+        template<class C1, class V1>
+        S_ITERATOR(const S_ITERATOR<C1, V1>& other) : map(other.map),
+                count(other.count), idx(other.idx),
+                currentPointer(other.currentPointer) {
         }
 
-        iterator(const iterator& other) : map(other.map), count(other.count),
-        idx(other.idx), currentPointer(other.currentPointer) {
-        }
-
-        typename super::reference current() const {
+        typename super::value_type& current() {
             return *currentPointer;
         }
 
-        void next() const {
+        typename super::const_reference current() const {
+            return *currentPointer;
+        }
+
+        void next() {
             currentPointer = currentPointer->next;
             while (currentPointer == null) {
                 currentPointer = map->buckets[--idx];
@@ -173,21 +162,22 @@ public:
             return count > 1;
         }
 
-        bool equals(const iterator& other) const {
+        template<class C1, class V1>
+        bool equals(const S_ITERATOR<C1,V1>& other) const {
             return map == other.map && ((count == other.count && idx == other.idx
                     && currentPointer == other.currentPointer) || 
                     (super::_end_reached_&& other.super::_end_reached_));
         }
 
 
-    private:
-        HashMap * map;
-        mutable idx_t count;
-        mutable idx_t idx;
-        mutable EntryPtr currentPointer;
+    //private:
+        C* map;
+        idx_t count;
+        idx_t idx;
+        V* currentPointer;
     };
 
-    S_ITERABLE(Entry)
+    S_ITERABLE(Self,Entry)
 
 public:
 
@@ -473,12 +463,12 @@ private:
 template<class K, class V, class H, class E>
 bool operator==(const HashMap<K,V,H,E>& lhs, const HashMap<K,V,H,E>& rhs) {
     static E eq;
-    for(typename HashMap<K,V,H,E>::iterator it = lhs.begin();
+    for(typename HashMap<K,V,H,E>::const_iterator it = lhs.begin();
             it != lhs.end(); ++it) {
         if(!rhs.containsKey(it->key) || !eq(rhs.get(it->key), it->value))
             return false;
     }
-    for(typename HashMap<K,V,H,E>::iterator it = rhs.begin();
+    for(typename HashMap<K,V,H,E>::const_iterator it = rhs.begin();
             it != rhs.end(); ++it) {
         if(!lhs.containsKey(it->key) || !eq(lhs.get(it->key), it->value))
             return false;

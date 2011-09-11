@@ -69,31 +69,33 @@ public:
     /**
      * @todo Write documentation!
      */
-    class iterator : public RandomAccessIterator<T, iterator> {
+    template<class C, class V>
+    class S_ITERATOR : public RandomAccessIterator<V, S_ITERATOR<C,V> > {
     public:
-        typedef RandomAccessIterator<T, iterator> super;
+        typedef RandomAccessIterator<V, S_ITERATOR<C,V> > super;
 
-        iterator(bool begin = false, Array<T>* obj = null)
-        : super(begin), _obj(obj) {
+        S_ITERATOR(bool begin = false, C* obj = null) : super(begin),
+                _obj(obj) {
             _currentIndex = begin ? 0 : (_obj->length - 1);
         }
 
-        iterator(bool begin = false, const Array<T>* obj = null)
-        : super(begin), _obj(const_cast<Array<T>*> (obj)) {
-            _currentIndex = begin ? 0 : (_obj->length - 1);
-        }
-
-        bool equals(const iterator& other) const {
+        template<class C1, class V1>
+        bool equals(const S_ITERATOR<C1,V1>& other) const {
             return _currentIndex == other._currentIndex &&
                     _obj == other._obj;
         }
 
-        iterator(const iterator& other) {
+        template<class C1, class V1>
+        S_ITERATOR(const S_ITERATOR<C1,V1>& other) {
             _currentIndex = other._currentIndex;
             _obj = other._obj;
         }
 
-        typename super::reference current() const {
+        typename super::value_type& current() {
+            return (*_obj)[_currentIndex];
+        }
+
+        typename super::const_reference current() const {
             return (*_obj)[_currentIndex];
         }
 
@@ -101,7 +103,7 @@ public:
             return _currentIndex < (_obj->length - 1);
         }
 
-        void next() const {
+        void next() {
             _currentIndex++;
         }
 
@@ -109,7 +111,7 @@ public:
             return _currentIndex > 0;
         }
 
-        void previous() const {
+        void previous() {
             _currentIndex--;
         }
 
@@ -120,11 +122,13 @@ public:
         size_t length() const {
             return _obj->length;
         }
-    private:
-        mutable idx_t _currentIndex;
-        Array<T>* _obj;
+    //private:
+        idx_t _currentIndex;
+        C* _obj;
     };
-    S_ITERABLE(T)
+
+    S_ITERABLE(Array<T>,T)
+    S_REVERSE_ITERABLE(Array<T>,T)
 public:
     /**
      * A function that is used for filtering by the filter() method. This
