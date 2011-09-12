@@ -660,15 +660,17 @@
 				<buildTargets>
 					<target name="Run CMake (Debug)" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
 						<buildCommand>cmake</buildCommand>
-						<buildArguments>-E chdir build/ cmake -G "Unix Makefiles"  -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=$HOME/sylph \
+						<buildArguments>-E chdir build/ cmake -G "Unix Makefiles"  -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=/Users/frank/sylph \
  -DSYLPH_DEBUG=1 -DCMAKE_CXX_COMPILER=/usr/local/bin/g++ ../</buildArguments>
+						<buildTarget/>
 						<stopOnError>true</stopOnError>
 						<useDefaultCommand>false</useDefaultCommand>
 						<runAllBuilders>true</runAllBuilders>
 					</target>
 					<target name="Run CMake (Release)" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
 						<buildCommand>cmake</buildCommand>
-						<buildArguments>-E chdir build/ cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$HOME/sylph -DCMAKE_CXX_COMPILER=/usr/local/bin/g++ ../</buildArguments>
+						<buildArguments>-E chdir build/ cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_CXX_COMPILER=/usr/local/bin/g++ ../</buildArguments>
+						<buildTarget/>
 						<stopOnError>true</stopOnError>
 						<useDefaultCommand>false</useDefaultCommand>
 						<runAllBuilders>true</runAllBuilders>
@@ -684,7 +686,6 @@
 					<target name="Create CMake Files" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
 						<buildCommand>${ProjDirPath}/developer.sh</buildCommand>
 						<buildArguments>cmake</buildArguments>
-						<buildTarget/>
 						<stopOnError>true</stopOnError>
 						<useDefaultCommand>false</useDefaultCommand>
 						<runAllBuilders>true</runAllBuilders>

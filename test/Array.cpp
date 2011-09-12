@@ -1,3 +1,28 @@
+/*
+ * LibSylph Class Library
+ * Copyright (C) 2011 Frank "SeySayux" Erens <seysayux@gmail.com>
+ *
+ * This software is provided 'as-is', without any express or implied
+ * warranty. In no event will the authors be held liable for any damages
+ * arising from the use of this software.
+ *
+ * Permission is granted to anyone to use this software for any purpose,
+ * including commercial applications, and to alter it and redistribute it
+ * freely, subject to the following restrictions:
+ *
+ *   1. The origin of this software must not be misrepresented; you must not
+ *   claim that you wrote the original software. If you use this software
+ *   in a product, an acknowledgment in the product documentation would be
+ *   appreciated but is not required.
+ *
+ *   2. Altered source versions must be plainly marked as such, and must not be
+ *   misrepresented as being the original software.
+ *
+ *   3. This notice may not be removed or altered from any source
+ *   distribution.
+ *
+ */
+
 #include "SylphTest.h"
 #include <Sylph/Core/Array.h>
 #include <Sylph/Core/Debug.h>
@@ -41,14 +66,14 @@ namespace {
     };
 
     TEST_F(TestArray, testCorrectConstructed) {
-        EXPECT_EQ(5, testObj1->length);
-        EXPECT_EQ(4, testObj2->length);
-        EXPECT_EQ(4, ar1->length);
-        EXPECT_EQ(4, ar2->length);
-        EXPECT_EQ(7, ar3->length);
-        EXPECT_EQ(5, arfilled1.length);
-        EXPECT_EQ(6, arfilled2.length);
-        EXPECT_EQ(6, arfilled3.length);
+        EXPECT_EQ(5u, testObj1->length);
+        EXPECT_EQ(4u, testObj2->length);
+        EXPECT_EQ(4u, ar1->length);
+        EXPECT_EQ(4u, ar2->length);
+        EXPECT_EQ(7u, ar3->length);
+        EXPECT_EQ(5u, arfilled1.length);
+        EXPECT_EQ(6u, arfilled2.length);
+        EXPECT_EQ(6u, arfilled3.length);
     }
 
     TEST_F(TestArray, testNulled) {
@@ -72,7 +97,7 @@ namespace {
     }
 
     TEST_F(TestArray, testInitlistFill) {
-        ASSERT_EQ(5, arfilled1.length);
+        ASSERT_EQ(5u, arfilled1.length);
         EXPECT_EQ(5, arfilled1[0]);
         EXPECT_EQ(2, arfilled1[1]);
         EXPECT_EQ(9, arfilled1[2]);
@@ -86,7 +111,7 @@ namespace {
 
     TEST_F(TestArray, testLength) {
         Array<bool> lengthtest((size_t) 6);
-        ASSERT_EQ(6, lengthtest.length);
+        ASSERT_EQ(6u, lengthtest.length);
     }
 
     TEST_F(TestArray, testLengthOverflow) {
@@ -125,9 +150,9 @@ namespace {
 
         for (Array<int>::iterator it = arfilled1.begin();
                 it != arfilled1.end(); ++it) {
-                EXPECT_EQ(*it, arfilled1[cur]);
-                cur++;
-            }
+            EXPECT_EQ(*it, arfilled1[cur]);
+            cur++;
+        }
     }
 
     TEST_F(TestArray, testNegativeIndices) {
@@ -142,7 +167,7 @@ namespace {
 
     TEST_F(TestArray, testRanges) {
         Array<int> section = arfilled2[range(2, 4)];
-        ASSERT_EQ(3, section.length);
+        ASSERT_EQ(3u, section.length);
         EXPECT_EQ(2, section[0]);
         EXPECT_EQ(3, section[1]);
         EXPECT_EQ(4, section[2]);

@@ -1,0 +1,64 @@
+# This file contains a description of the current branch.
+# If you are a developer, please see
+# http://seysayux.sytes.net/projects/issues/issues/5 for proper information
+# on how to use and update this file.
+
+# Name of the branch, in the form of User/branch
+Branch: SeySayux/sylphmain
+
+# Human readable name
+Name: SylphMain.h
+
+# ID of the Blueprint for this branch, if it has one. Omit otherwise.
+# Blueprint:
+
+# Long description
+Description: >
+    This branch will make following changes:
+    * Rename Sylph.h to SylphMain.h
+    * Rename Sylph/Core/Common.h to Sylph.h
+    * Include following headers in Sylph.h:
+    >>>> * Application
+    >>>> * ByteBuffer
+    >>>> * I18N
+    >>>> * PointerManager
+    >>>> * StringBuffer
+    >>>> * Util
+    >>>> * Vector
+    * Include following headers in Sylph.h in their respective branches:
+    >>>> * SeySayux/collection
+    >>>>>>>> * LinkedList
+    >>>>>>>> * HashSet
+    >>>>>>>> * HashTree
+    >>>> * SeySayux/function:
+    >>>>>>>> * Function
+    >>>>>>>> * In
+    >>>> * SeySayux/thread
+    >>>>>>>> * Thread
+    >>>>>>>> * Mutex
+    >>>> * SeySayux/variant
+    >>>>>>>> * Variant
+    * Deprecate and eliminate the SYLPH_NO_SYLPHMAIN macro
+    
+    This will allow for easier programming (include Sylph.h in all files and
+    SylphMain.h only in files containing the SylphMain function), at the 
+    expense of breaking 0.1 API.
+
+# Status. The following statuses are recognised:
+# - Planning
+# - In development
+# - No documentation
+# - No tests
+# - Broken
+# - Complete
+# - Stable
+# - Breaks API
+# - Breaks ABI
+Status:
+    - In development
+    - No Documentation
+    - Breaks API
+
+# List all branches from which this branch pulls.
+# Must at least contain SeySayux/master
+Dependencies: SeySayux/master

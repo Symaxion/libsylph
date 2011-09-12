@@ -1,6 +1,6 @@
 /*
  * LibSylph Class Library
- * Copyright (C) 2010 Frank "SeySayux" Erens <seysayux@gmail.com>
+ * Copyright (C) 2011 Frank "SeySayux" Erens <seysayux@gmail.com>
  *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -24,8 +24,8 @@
  * Created on: 26 november 2008
  */
 
-#ifndef STRING_H_
-#define STRING_H_
+#ifndef SYLPH_CORE_STRING_H_
+#define SYLPH_CORE_STRING_H_
 
 #include "Object.h"
 #include "Comparable.h"
@@ -658,4 +658,4 @@ S_CMP_SEQ_2(const String,const char*)
 
 SYLPH_END_NAMESPACE
 
-#endif /* STRING_H_ */
+#endif /* SYLPH_CORE_STRING_H_ */

@@ -1,6 +1,6 @@
 /*
  * LibSylph Class Library
- * Copyright (C) 2010 Frank "SeySayux" Erens <seysayux@gmail.com>
+ * Copyright (C) 2011 Frank "SeySayux" Erens <seysayux@gmail.com>
  *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -24,8 +24,8 @@
  * Created on 6 december 2008, 17:16
  */
 
-#ifndef ITERATOR_H_
-#define	ITERATOR_H_
+#ifndef SYLPH_CORE_ITERATOR_H_
+#define	SYLPH_CORE_ITERATOR_H_
 
 #include "Object.h"
 #include "Exception.h"
@@ -102,10 +102,10 @@ public:
         if (_end_reached_) sthrow(IteratorException, "End of iterator");
         else if (!hasNext()) {
             _end_reached_ = true;
-            return *static_cast<I*> (this);
+            return *static_cast<const I*> (this);
         } else {
             next();
-            return *static_cast<I*> (this);
+            return *static_cast<const I*> (this);
         }
     }
 
@@ -121,7 +121,7 @@ public:
     }
 
     const I operator++(int) const {
-        I toReturn(*static_cast<I*> (this));
+        I toReturn(*static_cast<const I*> (this));
         if (_end_reached_) sthrow(IteratorException, "End of iterator");
         else if (!hasNext()) {
             _end_reached_ = true;
@@ -226,12 +226,12 @@ public:
     const I & operator--() const {
         if (super::_end_reached_) {
             super::_end_reached_ = false;
-            return *static_cast<I*> (this);
+            return *static_cast<const I*> (this);
         } else if (!hasPrevious()) {
             sthrow(IteratorException, "Begin of iterator");
         } else {
             previous();
-            return *static_cast<I*> (this);
+            return *static_cast<const I*> (this);
         }
     }
 
@@ -249,7 +249,7 @@ public:
     }
 
     const I operator--(int) const {
-        I toReturn(*static_cast<I*> (this));
+        I toReturn(*static_cast<const I*> (this));
         if (super::_end_reached_) {
             super::_end_reached_ = false;
             return toReturn;
@@ -307,7 +307,7 @@ public:
     }
 
     const I & operator-=(unsigned int i) const {
-        return &*static_cast<I*>(&(*this += -i));
+        return &*static_cast<const I*>(&(*this += -i));
     }
 
     const I operator+(unsigned int i) const {
@@ -532,5 +532,5 @@ SYLPH_END_NAMESPACE
 // Previously defined here, now defined elsewhere
 #include "Foreach.h"
 
-#endif	/* ITERATOR_H_ */
+#endif	/* SYLPH_CORE_ITERATOR_H_ */
 

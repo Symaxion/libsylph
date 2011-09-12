@@ -1,3 +1,28 @@
+/*
+ * LibSylph Class Library
+ * Copyright (C) 2011 Frank "SeySayux" Erens <seysayux@gmail.com>
+ *
+ * This software is provided 'as-is', without any express or implied
+ * warranty. In no event will the authors be held liable for any damages
+ * arising from the use of this software.
+ *
+ * Permission is granted to anyone to use this software for any purpose,
+ * including commercial applications, and to alter it and redistribute it
+ * freely, subject to the following restrictions:
+ *
+ *   1. The origin of this software must not be misrepresented; you must not
+ *   claim that you wrote the original software. If you use this software
+ *   in a product, an acknowledgment in the product documentation would be
+ *   appreciated but is not required.
+ *
+ *   2. Altered source versions must be plainly marked as such, and must not be
+ *   misrepresented as being the original software.
+ *
+ *   3. This notice may not be removed or altered from any source
+ *   distribution.
+ *
+ */
+
 #include "SylphTest.h"
 #include <Sylph/Core/String.h>
 #include <Sylph/Core/Debug.h>
@@ -15,7 +40,7 @@ namespace {
     TEST_F(TestString, testFromAscii) {
         String s = "foobar";
         Array<uchar> a = s.utf16();
-        ASSERT_EQ(6, a.length);
+        ASSERT_EQ(6u, a.length);
         EXPECT_EQ('f', a[0]);
         EXPECT_EQ('o', a[1]);
         EXPECT_EQ('o', a[2]);
@@ -27,7 +52,7 @@ namespace {
     TEST_F(TestString, testFromUtf8) {
         String s = "éèçàŒù£";
         Array<uchar> a = s.utf16();
-        ASSERT_EQ(8, a.length);
+        ASSERT_EQ(8u, a.length);
         EXPECT_EQ(0x00E9, a[0]);
         EXPECT_EQ(0x00E8, a[1]);
         EXPECT_EQ(0x00E7, a[2]);
@@ -116,14 +141,14 @@ namespace {
 
     TEST_F(TestString, testLength) {
         String s = "foobar";
-        EXPECT_EQ(6, s.length());
+        EXPECT_EQ(6u, s.length());
         String t = "éèçàŒù£";
-        EXPECT_EQ(8, t.length());
+        EXPECT_EQ(8u, t.length());
     }
 
     TEST_F(TestString, testCharAt) {
         String s = "foobar";
-        ASSERT_EQ(6, s.length());
+        ASSERT_EQ(6u, s.length());
         EXPECT_EQ('f', s.at(0));
         EXPECT_EQ('o', s.at(1));
         EXPECT_EQ('o', s.at(2));
@@ -147,14 +172,14 @@ namespace {
     TEST_F(TestString, testInvalidUnicode) {
         char c[] = { char(0x80), 0x00 };
         String s = c;
-        ASSERT_EQ(s.length(), 1);
+        ASSERT_EQ(1u, s.length());
         EXPECT_EQ(0xFFFD, s.at(0));
     }
 
     TEST_F(TestString, testAstralPlaneUnicode) {
         char c[] = { char(0xF0), char(0x80), char(0x80), char(0x80), 0x00 };
         String s = c;
-        ASSERT_EQ(s.length(), 1);
+        ASSERT_EQ(1u, s.length());
         EXPECT_EQ(0xFFFD, s.at(0));
     }
 
@@ -218,7 +243,7 @@ namespace {
     TEST_F(TestString, testSplit) {
         String s = " a   beta ccc\td ";
         Array<String> result = s.split();
-        ASSERT_EQ(4,result.length);
+        ASSERT_EQ(4u,result.length);
         EXPECT_EQ("a",result[0]);
         EXPECT_EQ("beta",result[1]);
         EXPECT_EQ("ccc",result[2]);
