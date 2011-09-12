@@ -253,7 +253,7 @@
 // mentioned above.
 # include <unistd.h>
 # if !GTEST_OS_NACL
-// TODO(vladl@google.com): Remove this condition when Native Client SDK adds
+// TUDU(vladl@google.com): Remove this condition when Native Client SDK adds
 // strings.h (tracked in
 // http://code.google.com/p/nativeclient/issues/detail?id=1175).
 #  include <strings.h>  // Native Client doesn't provide strings.h.
@@ -345,7 +345,7 @@
 #ifndef GTEST_HAS_STD_WSTRING
 // The user didn't tell us whether ::std::wstring is available, so we need
 // to figure it out.
-// TODO(wan@google.com): uses autoconf to detect whether ::std::wstring
+// TUDU(wan@google.com): uses autoconf to detect whether ::std::wstring
 //   is available.
 
 // Cygwin 1.7 and below doesn't support ::std::wstring.
@@ -832,7 +832,7 @@ class GTEST_API_ RE {
   // PartialMatch(str, re) returns true iff regular expression re
   // matches a substring of str (including str itself).
   //
-  // TODO(wan@google.com): make FullMatch() and PartialMatch() work
+  // TUDU(wan@google.com): make FullMatch() and PartialMatch() work
   // when str contains NUL characters.
   static bool FullMatch(const ::std::string& str, const RE& re) {
     return FullMatch(str.c_str(), re);
@@ -1758,7 +1758,7 @@ typedef TypeWithSize<8>::Int TimeInMillis;  // Represents time in milliseconds.
 // Parses 'str' for a 32-bit signed integer.  If successful, writes the result
 // to *value and returns true; otherwise leaves *value unchanged and returns
 // false.
-// TODO(chandlerc): Find a better way to refactor flag and environment parsing
+// TUDU(chandlerc): Find a better way to refactor flag and environment parsing
 // out of both gtest-port.cc and gtest.cc to avoid exporting this utility
 // function.
 bool ParseInt32(const Message& src_text, const char* str, Int32* value);

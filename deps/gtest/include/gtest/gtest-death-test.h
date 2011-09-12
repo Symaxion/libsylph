@@ -149,7 +149,7 @@ GTEST_DECLARE_string_(death_test_style);
 //   is rarely a problem as people usually don't put the test binary
 //   directory in PATH.
 //
-// TODO(wan@google.com): make thread-safe death tests search the PATH.
+// TUDU(wan@google.com): make thread-safe death tests search the PATH.
 
 // Asserts that a given statement causes the program to exit, with an
 // integer exit status that satisfies predicate, and emitting error output
