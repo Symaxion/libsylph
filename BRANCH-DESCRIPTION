@@ -4,18 +4,18 @@
 # on how to use and update this file.
 
 # Name of the branch, in the form of User/branch
-Branch: SeySayux/iterfix
+Branch: SeySayux/collection
 
 # Human readable name
-Name: Fix for Iterator
+Name: Collections
 
 # ID of the Blueprint for this branch, if it has one. Omit otherwise.
 # Blueprint:
 
 # Long description
 Description: >
-	This branch will attempt to fix the various issues with Iterator, that 
-	would otherwise break API in 0.1.
+	Additional containers and a generic format for passing containers to
+	functions or converting containers.
 
 # Status. The following statuses are recognised:
 # - Planning
@@ -28,13 +28,15 @@ Description: >
 # - Breaks API
 # - Breaks ABI
 Status:
+    - Planning
     - In development
-    - No Documentation
-    - Breaks API
-    - Broken
+    - No documentation
+    - No tests
 
 # List all branches from which this branch pulls.
 # Must at least contain SeySayux/master
 Dependencies: 
     - SeySayux/master
     - SeySayux/sylphmain
+    - SeySayux/iterfix
+    - SeySayux/thread
