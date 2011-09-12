@@ -1,6 +1,6 @@
 /*
  * LibSylph Class Library
- * Copyright (C) 2010 Frank "SeySayux" Erens <seysayux@gmail.com>
+ * Copyright (C) 2011 Frank "SeySayux" Erens <seysayux@gmail.com>
  *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -24,8 +24,8 @@
  * Created on 9 november 2008, 11:48
  */
 
-#ifndef APPLICATION_H_
-#define	APPLICATION_H_
+#ifndef SYLPH_CORE_APPLICATION_H_
+#define	SYLPH_CORE_APPLICATION_H_
 
 #include "Object.h"
 #include "Array.h"
@@ -257,5 +257,5 @@ private:
 
 SYLPH_END_NAMESPACE
 
-#endif	/* APPLICATION_H_ */
+#endif	/* SYLPH_CORE_APPLICATION_H_ */
 

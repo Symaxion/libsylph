@@ -1,6 +1,6 @@
 #
 # LibSylph Class Library (build script)
-# Copyright (C) 2010 Frank "SeySayux" Erens <seysayux@gmail.com>
+# Copyright (C) 2011 Frank "SeySayux" Erens <seysayux@gmail.com>
 #
 # This software is provided 'as-is', without any express or implied
 # warranty. In no event will the authors be held liable for any damages
@@ -48,7 +48,7 @@ find_package(Threads)
 #Version & platform checks...
 macro (get_gcc_version version)
     if (CMAKE_COMPILER_IS_GNUCC)
-        exec_program( ${SYLPH_SOURCE_DIR}/gccver.sh ARGS ${CMAKE_CXX_COMPILER} OUTPUT_VARIABLE ${version})
+        exec_program( ${SYLPH_SOURCE_DIR}/deps/bin/gccver.sh ARGS ${CMAKE_CXX_COMPILER} OUTPUT_VARIABLE ${version})
     endif(CMAKE_COMPILER_IS_GNUCC)
 endmacro (get_gcc_version)
 
@@ -140,6 +140,8 @@ set(SYLPH_INCLUDE ${SYLPH_PLATFORM_INCLUDE} ${SYLPH_DEP_INCLUDE})
 # Subdirs
 
 add_subdirectory(src)
+
+add_subdirectory(deps/gtest EXCLUDE_FROM_ALL)
 add_subdirectory(test)
 
 # Scripts and helpers

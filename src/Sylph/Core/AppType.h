@@ -1,6 +1,6 @@
 /*
  * LibSylph Class Library
- * Copyright (C) 2010 Frank "SeySayux" Erens <seysayux@gmail.com>
+ * Copyright (C) 2011 Frank "SeySayux" Erens <seysayux@gmail.com>
  *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -24,8 +24,8 @@
  * Created on 1 augustus 2009, 9:15
  */
 
-#ifndef APPTYPE_H_
-#define	APPTYPE_H_
+#ifndef SYLPH_CORE_APPTYPE_H_
+#define	SYLPH_CORE_APPTYPE_H_
 
 #include "Object.h"
 
@@ -69,5 +69,5 @@ enum AppType {
 };
 SYLPH_END_NAMESPACE
 
-#endif	/* APPTYPE_H_ */
+#endif	/* SYLPH_CORE_APPTYPE_H_ */
 

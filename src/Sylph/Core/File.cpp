@@ -1,6 +1,6 @@
 /*
  * LibSylph Class Library
- * Copyright (C) 2010 Frank "SeySayux" Erens <seysayux@gmail.com>
+ * Copyright (C) 2011 Frank "SeySayux" Erens <seysayux@gmail.com>
  *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -198,7 +198,7 @@ File File::toCanonical() const {
     if (absolutePath.endsWith("/."))
         absolutePath = absolutePath.substring(0, absolutePath.length() - 3);
     File toReturn;
-    for (iterator it = begin(); it != end(); ++it) {
+    for (const_iterator it = begin(); it != end(); ++it) {
         if (*it == "..") toReturn = toReturn.parent();
         else if (*it == ".") continue;
         else toReturn /= *it;
@@ -295,7 +295,7 @@ bool File::mkdir() const throw(IOException) {
 
 bool File::mkdirs() const throw(IOException) {
     File f;
-    for (iterator it = begin(); it != end(); ++it) {
+    for (const_iterator it = begin(); it != end(); ++it) {
         if (f.exists()) {
             f /= *it;
             continue;
@@ -482,19 +482,15 @@ File& File::append(const String rhs, bool initial) {
 
 // iterator
 
-File::iterator::iterator(bool begin, const File* obj) : super(begin) {
-    file = const_cast<File*> (obj);
-    pos = begin ? 0 : file->path.length() - 1;
-    if (begin) next();
-}
-
-File::iterator::iterator(bool begin, File* obj) : super(begin) {
+template<class C, class V>
+File::S_ITERATOR<C,V>::S_ITERATOR(bool begin, C* obj) : super(begin) {
     file = obj;
     pos = begin ? 0 : file->path.length() - 1;
     if (begin) next();
 }
 
-void File::iterator::next() const {
+template<class C, class V>
+void File::S_ITERATOR<C,V>::next() {
     sidx_t start = 0;
     if (pos == 0) {
         start = 1;
@@ -519,15 +515,18 @@ void File::iterator::next() const {
     pos = end;
 }
 
-bool File::iterator::hasNext() const {
+template<class C, class V>
+bool File::S_ITERATOR<C,V>::hasNext() const {
     return pos < file->path.length() - 1;
 }
 
-bool File::iterator::hasPrevious() const {
+template<class C, class V>
+bool File::S_ITERATOR<C,V>::hasPrevious() const {
     return pos != 0;
 }
 
-void File::iterator::previous() const {
+template<class C, class V>
+void File::S_ITERATOR<C,V>::previous() {
     SYLPH_STUB;
 }
 

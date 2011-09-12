@@ -1,6 +1,6 @@
 /*
  * LibSylph Class Library
- * Copyright (C) 2010 Frank "SeySayux" Erens <seysayux@gmail.com>
+ * Copyright (C) 2011 Frank "SeySayux" Erens <seysayux@gmail.com>
  *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -24,8 +24,8 @@
  * Created on 30 januari 2009, 9 : 21
  */
 
-#ifndef MACOSFHSAPPSELF_H_
-#define	MACOSFHSAPPSELF_H_
+#ifndef SYLPH_OS_MACOSFHSAPPSELF_H_
+#define	SYLPH_OS_MACOSFHSAPPSELF_H_
 
 #include "../Core/Application.h"
 
@@ -66,4 +66,4 @@ public:
 
 SYLPH_END_NAMESPACE
 
-#endif	/* MACOSFHSAPPSELF_H_ */
+#endif	/* SYLPH_OS_MACOSFHSAPPSELF_H_ */

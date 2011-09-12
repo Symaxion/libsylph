@@ -36,73 +36,12 @@
 #include "Sylph/Core/UncaughtExceptionHandler.h"
 #include "Sylph/Core/Thread.h"
 
-#ifndef SYLPH_NO_SYLPHMAIN
-#ifndef SYLPH_APP_NAME
-#define SYLPH_APP_NAME "Application"
+#ifndef SYLPH_NO_COMMON_USING
+using Sylph::Array;
+using Sylph::Dictionary;
+using Sylph::String;
+using Sylph::range;
 #endif
 
-#ifdef SYLPH_OS_MACOSX
-int main(int argc, char * argv[], char * envp[], char * apple[]);
-#else
-int main(int argc, char * argv[]);
-#endif
-static inline void SylphInit(int argc, char * argv[], char * apple[]) {
-    Sylph::Application::init(argc, argv, apple, Sylph::SYLPH_APP_TYPE,
-            SYLPH_APP_NAME);
-    Sylph::Thread::current().setName("Main");
-}
-#ifdef SYLPH_MAIN_CLASSIC_PARAMS
-extern int SylphMain(int argc, char** argv);
-#else
-extern int SylphMain(Sylph::Array<Sylph::String> argv);
-#endif
-
-#ifdef SYLPH_OS_MACOSX
-
-int main(int argc, char * argv[], char * envp[], char * apple[]) {
-    try {
-        SylphInit(argc, argv, apple);
-        #ifdef SYLPH_MAIN_CLASSIC_PARAMS
-        Sylph::Thread::exit(SylphMain(argc, argv));
-        #else
-        Array<String> args(argc);
-        for(int i = 0; i < argc; ++i) {
-            args[i] = argv[i];
-        }
-        Sylph::Thread::exit(SylphMain(args));
-        #endif
-    } catch(const Sylph::Assertion& as) {
-        Sylph::UncaughtExceptionHandler::handler->handleAssertion(as);
-        abort();
-    } catch (const Sylph::Exception & ex) {
-        Sylph::UncaughtExceptionHandler::handler->handle(ex);
-        abort();
-    }
-}
-#else
-
-int main(int argc, char * argv[]) {
-    try {
-        SylphInit(argc, argv, Sylph::null);
-        #ifdef SYLPH_MAIN_CLASSIC_PARAMS
-        Sylph::Thread::exit(SylphMain(argc, argv));
-        #else
-        Array<String> args(argc);
-        for(int i = 0; i < argc; ++i) {
-            args[i] = argv[i];
-        }
-        Sylph::Thread::exit(SylphMain(args));
-        #endif
-    } catch(const Sylph::Assertion& as) {
-        Sylph::UncaughtExceptionHandler::handler->handleAssertion(as);
-        abort();
-    } catch (const Sylph::Exception & ex) {
-        Sylph::UncaughtExceptionHandler::handler->handle(ex);
-        abort();
-    }
-}
-#endif
-
-#endif
-#endif	/* SYLPH_H_ */
+#endif	/* SYLPH_CORE_COMMON_H_ */
 

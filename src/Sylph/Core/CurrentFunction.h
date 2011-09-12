@@ -1,6 +1,6 @@
 /*
  * LibSylph Class Library
- * Copyright (C) 2010 Frank "SeySayux" Erens <seysayux@gmail.com>
+ * Copyright (C) 2011 Frank "SeySayux" Erens <seysayux@gmail.com>
  *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -39,8 +39,8 @@
 //
 
 
-#ifndef CURRENTFUNCTION_H_
-#define	CURRENTFUNCTION_H_
+#ifndef SYLPH_CORE_CURRENTFUNCTION_H_
+#define	SYLPH_CORE_CURRENTFUNCTION_H_
 
 #include "Object.h"
 
@@ -67,5 +67,5 @@ inline void currentFunctionHelper() {
 SYLPH_END_NAMESPACE
 
 
-#endif	/* CURRENTFUNCTION_H_ */
+#endif	/* SYLPH_CORE_CURRENTFUNCTION_H_ */
 

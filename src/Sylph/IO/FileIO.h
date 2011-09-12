@@ -1,6 +1,6 @@
 /*
  * LibSylph Class Library
- * Copyright (C) 2010 Frank "SeySayux" Erens <seysayux@gmail.com>
+ * Copyright (C) 2011 Frank "SeySayux" Erens <seysayux@gmail.com>
  *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -24,8 +24,8 @@
  * Created on 7 augustus 2009, 13:21
  */
 
-#ifndef FILEIO_H_
-#define	FILEIO_H_
+#ifndef SYLPH_IO_FILEIO_H_
+#define	SYLPH_IO_FILEIO_H_
 
 #include "../Core/Object.h"
 
@@ -41,5 +41,5 @@ namespace IO {
 }
 SYLPH_END_NAMESPACE
 
-#endif	/* FILEIO_H_ */
+#endif	/* SYLPH_IO_FILEIO_H_ */
 

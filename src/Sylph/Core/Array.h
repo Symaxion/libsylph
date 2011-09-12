@@ -1,6 +1,6 @@
 /*
  * LibSylph Class Library
- * Copyright (C) 2010 Frank "SeySayux" Erens <seysayux@gmail.com>
+ * Copyright (C) 2011 Frank "SeySayux" Erens <seysayux@gmail.com>
  *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -24,8 +24,8 @@
  * Created on 8 februari 2009, 14:18
  */
 
-#ifndef ARRAY_H_
-#define	ARRAY_H_
+#ifndef SYLPH_CORE_ARRAY_H_
+#define	SYLPH_CORE_ARRAY_H_
 
 #include "Iterable.h"
 #include "Iterator.h"
@@ -81,31 +81,33 @@ public:
     /**
      * @todo Write documentation!
      */
-    class iterator : public RandomAccessIterator<T, iterator> {
+    template<class C, class V>
+    class S_ITERATOR : public RandomAccessIterator<V, S_ITERATOR<C,V> > {
     public:
-        typedef RandomAccessIterator<T, iterator> super;
+        typedef RandomAccessIterator<V, S_ITERATOR<C,V> > super;
 
-        iterator(bool begin = false, Array<T>* obj = null)
-        : super(begin), _obj(obj) {
+        S_ITERATOR(bool begin = false, C* obj = null) : super(begin),
+                _obj(obj) {
             _currentIndex = begin ? 0 : (_obj->length - 1);
         }
 
-        iterator(bool begin = false, const Array<T>* obj = null)
-        : super(begin), _obj(const_cast<Array<T>*> (obj)) {
-            _currentIndex = begin ? 0 : (_obj->length - 1);
-        }
-
-        bool equals(const iterator& other) const {
+        template<class C1, class V1>
+        bool equals(const S_ITERATOR<C1,V1>& other) const {
             return _currentIndex == other._currentIndex &&
                     _obj == other._obj;
         }
 
-        iterator(const iterator& other) {
+        template<class C1, class V1>
+        S_ITERATOR(const S_ITERATOR<C1,V1>& other) {
             _currentIndex = other._currentIndex;
             _obj = other._obj;
         }
 
-        typename super::reference current() const {
+        typename super::value_type& current() {
+            return (*_obj)[_currentIndex];
+        }
+
+        typename super::const_reference current() const {
             return (*_obj)[_currentIndex];
         }
 
@@ -113,7 +115,7 @@ public:
             return _currentIndex < (_obj->length - 1);
         }
 
-        void next() const {
+        void next() {
             _currentIndex++;
         }
 
@@ -121,7 +123,7 @@ public:
             return _currentIndex > 0;
         }
 
-        void previous() const {
+        void previous() {
             _currentIndex--;
         }
 
@@ -132,11 +134,13 @@ public:
         size_t length() const {
             return _obj->length;
         }
-    private:
-        mutable idx_t _currentIndex;
-        Array<T>* _obj;
+    //private:
+        idx_t _currentIndex;
+        C* _obj;
     };
-    S_ITERABLE(T)
+
+    S_ITERABLE(Array<T>,T)
+    S_REVERSE_ITERABLE(Array<T>,T)
 public:
     /**
      * A function that is used for filtering by the filter() method. This
@@ -370,7 +374,7 @@ public:
     }
 
     /**
-     * Used for accessing the Array's contents. Its behaviour is identical to
+     * Used for accessing the Array's contents. Its behavior is identical to
      * that of c-style arrays, but throws an exception instead of overflowing
      * or causing segfaults. <p>
      * The Array will assume ownership over any pointers entered in this way.
@@ -389,7 +393,7 @@ public:
     }
 
     /**
-     * This is the <code>const</code> version of T& operator[] . Its behaviour
+     * This is the <code>const</code> version of T& operator[] . Its behavior
      * is identical to that of c-style const arrays, but throws an exception
      * instead of overflowing or causing segfaults.
      * @param idx the index in the array from which to return an element
@@ -539,6 +543,6 @@ std::ostream& operator<<(std::ostream& out, const Array<T>& rhs) {
 
 SYLPH_END_NAMESPACE
 
-#endif	/* ARRAY_H_ */
+#endif	/* SYLPH_CORE_ARRAY_H_ */
 
 

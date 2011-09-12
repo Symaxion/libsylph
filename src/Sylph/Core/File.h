@@ -1,6 +1,6 @@
 /*
  * LibSylph Class Library
- * Copyright (C) 2010 Frank "SeySayux" Erens <seysayux@gmail.com>
+ * Copyright (C) 2011 Frank "SeySayux" Erens <seysayux@gmail.com>
  *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -24,8 +24,8 @@
  * Created on 16 juli 2009, 14:41
  */
 
-#ifndef FILE_H_
-#define	FILE_H_
+#ifndef SYLPH_CORE_FILE_H_
+#define	SYLPH_CORE_FILE_H_
 
 #include "Object.h"
 #include "String.h"
@@ -53,39 +53,48 @@ const suint S_MOD_K = 0x0;
 class File : public virtual Object {
 public:
 
-    class iterator;
-    friend class iterator;
-    class iterator : public BidirectionalIterator<String, iterator> {
+    template<class C, class V> class S_ITERATOR;
+    template<class C, class V> friend class S_ITERATOR;
+
+    template<class C, class V>
+    class S_ITERATOR : public BidirectionalIterator<V, S_ITERATOR<C,V> > {
 	friend class File;
     public:
-        typedef BidirectionalIterator<String,iterator> super;
-        iterator(bool begin = false, const File* obj = null);
-        iterator(bool begin = false, File* obj = null);
+        typedef BidirectionalIterator<V,S_ITERATOR<C,V> > super;
 
-        reference current() const {
+        S_ITERATOR(bool begin = false, C* obj = null);
+
+        typename super::value_type& current() {
             return cur;
         }
-        void next() const;
+
+        typename super::const_reference current() const {
+            return cur;
+        }
+
+        void next();
         bool hasNext() const;
 
-        bool equals(const iterator& other) const {
+        template<class C1, class V1>
+        bool equals(const S_ITERATOR<C1,V1>& other) const {
             return file == other.file && pos == other.pos;
         }
 
-        iterator(const iterator& other) {
+        template<class C1, class V1>
+        S_ITERATOR(const S_ITERATOR<C1,V1> & other) {
             file = other.file;
             cur = other.cur;
             pos = other.pos;
         }
         bool hasPrevious() const;
-        void previous() const;
-    private:
-        File * file;
-        mutable String cur;
-        mutable idx_t pos;
+        void previous();
+    //private:
+        C* file;
+        String cur;
+        idx_t pos;
     };
 
-    S_ITERABLE(String)
+    S_ITERABLE(File, String)
 public:
 
     /**
@@ -310,5 +319,5 @@ inline std::ostream& operator<<(std::ostream& lhs, const File& rhs) {
 
 SYLPH_END_NAMESPACE
 
-#endif	/* FILE_H_ */
+#endif	/* SYLPH_CORE_FILE_H_ */
 
