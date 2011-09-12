@@ -32,6 +32,7 @@ Status:
     - In development
     - No documentation
     - No tests
+    - Broken
 
 # List all branches from which this branch pulls.
 # Must at least contain SeySayux/master
