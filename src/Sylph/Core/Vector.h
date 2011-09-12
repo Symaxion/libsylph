@@ -25,8 +25,8 @@
  * Created on 6 december 2008, 12:07
  */
 
-#ifndef VECTOR_H_
-#define	VECTOR_H_
+#ifndef SYLPH_CORE_VECTOR_H_
+#define	SYLPH_CORE_VECTOR_H_
 
 #include "Array.h"
 #include "Util.h"

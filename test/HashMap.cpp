@@ -178,5 +178,23 @@ namespace {
         EXPECT_TRUE(g == h);
     }
 
+    TEST_F(TestHashMap, testUpdateInt) {
+        HashMap<String, int> h;
+        h["foo"] = 3;
+        h["foo"]++;
+
+        EXPECT_EQ(4,h["foo"]);
+    }
+
+    TEST_F(TestHashMap, testValueOutOfScope) {
+        HashMap<String, String> h;
+
+        {
+            h["foo"] = "bar";
+        }
+
+        EXPECT_EQ("bar",h["foo"]);
+    }
+
 
 } // namespace
