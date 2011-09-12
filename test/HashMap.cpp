@@ -196,5 +196,12 @@ namespace {
         EXPECT_EQ("bar",h["foo"]);
     }
 
+    TEST_F(TestHashMap, testNoInsertKeyOnIndex) {
+        HashMap<String, String> h;
+
+        EXPECT_EQ(null,h["foo"]);
+        EXPECT_FALSE(h.containsKey("foo"));
+    }
+
 
 } // namespace
