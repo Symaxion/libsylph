@@ -71,6 +71,22 @@ template<class C, class R, class... P>
 function<R(C&)> invoke(R(C::*)(P...) f, P... p) {
     return [=](C& c) -> R { return (c.*f)(p); }
 }
+
+template<class C<class>, class T>
+bool forany(const C<T>& c, function<bool(const T&)> f) {
+    sforeach(const T& t, c) {
+        if(f(t)) return true;
+    }
+    return false;
+}
+
+template<class C<class> class T>
+bool forall(const C<T>& c, function<bool(const T&)> f) {
+    sforeach(const T& t, c) {
+        if(!f(t)) return false;
+    }
+    return true;
+}
 SYLPH_END_NAMESPACE
 
 #endif /* SYLPH_CORE_FUNCTION_H_ */
