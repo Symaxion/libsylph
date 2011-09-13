@@ -72,9 +72,6 @@ public:
         }
     private:
         LengthProxy(const size_t& _lp) : lp(_lp) {}
-        operator size_t&() {
-            return lp;
-        }
         size_t lp;
     };
 
