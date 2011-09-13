@@ -58,7 +58,7 @@ namespace internal {
 //
 // For historic reasons, we don't use std::string.
 //
-// TODO(wan@google.com): replace this class with std::string or
+// TUDU(wan@google.com): replace this class with std::string or
 // implement it in terms of the latter.
 //
 // Note that String can represent both NULL and the empty string,

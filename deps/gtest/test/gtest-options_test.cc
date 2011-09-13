@@ -111,7 +111,7 @@ TEST(OutputFileHelpersTest, GetCurrentExecutableName) {
       _strcmpi("gtest_all_test", exe_str.c_str()) == 0 ||
       _strcmpi("gtest_dll_test", exe_str.c_str()) == 0;
 #else
-  // TODO(wan@google.com): remove the hard-coded "lt-" prefix when
+  // TUDU(wan@google.com): remove the hard-coded "lt-" prefix when
   //   Chandler Carruth's libtool replacement is ready.
   const bool success =
       exe_str == "gtest-options_test" ||

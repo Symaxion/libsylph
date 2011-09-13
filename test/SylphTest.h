@@ -26,9 +26,43 @@
 
 #ifndef SYLPHTEST_H_
 #define	SYLPHTEST_H_
+
+#ifndef ECLIPSE_PARSER
 #include <gtest/gtest.h>
+#endif
 
 #define SYLPH_STUB_TEST ADD_FAILURE() << "FIXME: this is a stub testcase!"
+
+// Eclipse stuff
+#ifdef ECLIPSE_PARSER
+namespace testing {
+    class Test {};
+    void InitGoogleTest(int*,char**) {}
+}
+#define RUN_ALL_TESTS() 0
+
+#define TEST_F(X,Y) void ssylph__ ## X ## Y ()
+
+#define ASSERT_EQ(X,Y)
+#define EXPECT_EQ(X,Y)
+#define ASSERT_NE(X,Y)
+#define EXPECT_NE(X,Y)
+#define ASSERT_TRUE(X)
+#define EXPECT_TRUE(X)
+#define ASSERT_FALSE(X)
+#define EXPECT_FALSE(X)
+
+#define EXPECT_STREQ(X,Y)
+#define ASSERT_STREQ(X,Y)
+
+#define EXPECT_FLOAT_EQ(X,Y)
+
+#define ASSERT_NO_THROW(X) X
+#define EXPECT_NO_THROW(X) X
+
+#define ASSERT_THROW(X,Y) X
+#define EXPECT_THROW(X,Y) X
+#endif
 
 #endif	/* SYLPHTEST_H_ */
 

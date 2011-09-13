@@ -198,7 +198,7 @@ TEST(ScopedPtrTest, DefinesElementType) {
   StaticAssertTypeEq<int, ::testing::internal::scoped_ptr<int>::element_type>();
 }
 
-// TODO(vladl@google.com): Implement THE REST of scoped_ptr tests.
+// TUDU(vladl@google.com): Implement THE REST of scoped_ptr tests.
 
 TEST(GtestCheckSyntaxTest, BehavesLikeASingleStatement) {
   if (AlwaysFalse())
@@ -281,7 +281,7 @@ TEST(GetThreadCountTest, ReturnsCorrectValue) {
   pthread_attr_t  attr;
   pthread_t       thread_id;
 
-  // TODO(vladl@google.com): turn mutex into internal::Mutex for automatic
+  // TUDU(vladl@google.com): turn mutex into internal::Mutex for automatic
   // destruction.
   pthread_mutex_init(&mutex, NULL);
   pthread_mutex_lock(&mutex);
