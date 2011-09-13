@@ -24,7 +24,11 @@
  * Created on 19 augustus 2009, 13:12
  */
 
+#ifndef ECLIPSE_PARSER
 #include <gtest/gtest.h>
+#else
+#include "SylphTest.h"
+#endif
 
 #include <Sylph/OS/OS.h>
 #include <Sylph/Core/Application.h>
