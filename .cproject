@@ -38,12 +38,16 @@
 								</option>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.1739197034" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="ECLIPSE_PARSER=1"/>
+									<listOptionValue builtIn="false" value="__GXX_WEAK__=1"/>
+									<listOptionValue builtIn="false" value="__GXX_ABI_VERSION=1002"/>
+									<listOptionValue builtIn="false" value="__GXX_EXPERIMENTAL_CXX0X__=1"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.1899176849" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.c.compiler.macosx.base.1460775580" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.macosx.base">
 								<option id="gnu.c.compiler.option.preprocessor.def.symbols.1689285121" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="ECLIPSE_PARSER=1"/>
+									<listOptionValue builtIn="false" value="__GXX_EXPERIMENTAL_CXX0X__=1"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.379967507" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
@@ -125,6 +129,10 @@
 	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
 		<project id="sylph.null.1132307032" name="sylph"/>
 	</storageModule>
+	<storageModule moduleId="refreshScope" versionNumber="1">
+		<resource resourceType="PROJECT" workspacePath="/sylph"/>
+	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
 	<storageModule moduleId="scannerConfiguration">
 		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
 		<scannerConfigBuildInfo instanceId="cdt.managedbuild.toolchain.gnu.macosx.base.764618825;cdt.managedbuild.toolchain.gnu.macosx.base.764618825.486496402;cdt.managedbuild.tool.gnu.cpp.compiler.macosx.base.380898152;cdt.managedbuild.tool.gnu.cpp.compiler.input.1130840241">
@@ -145,15 +153,11 @@
 		<scannerConfigBuildInfo instanceId="cdt.managedbuild.toolchain.gnu.macosx.base.764618825;cdt.managedbuild.toolchain.gnu.macosx.base.764618825.486496402;cdt.managedbuild.tool.gnu.c.compiler.macosx.base.1460775580;cdt.managedbuild.tool.gnu.c.compiler.input.379967507">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileC"/>
 		</scannerConfigBuildInfo>
-		<scannerConfigBuildInfo instanceId="cdt.managedbuild.toolchain.gnu.macosx.base.764618825;cdt.managedbuild.toolchain.gnu.macosx.base.764618825.1134256472;cdt.managedbuild.tool.gnu.cpp.compiler.macosx.base.1348664311;cdt.managedbuild.tool.gnu.cpp.compiler.input.2039267033">
-			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileCPP"/>
-		</scannerConfigBuildInfo>
 		<scannerConfigBuildInfo instanceId="cdt.managedbuild.toolchain.gnu.macosx.base.764618825;cdt.managedbuild.toolchain.gnu.macosx.base.764618825.1600995325;cdt.managedbuild.tool.gnu.cpp.compiler.macosx.base.9644053;cdt.managedbuild.tool.gnu.cpp.compiler.input.1586268499">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileCPP"/>
 		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.toolchain.gnu.macosx.base.764618825;cdt.managedbuild.toolchain.gnu.macosx.base.764618825.1134256472;cdt.managedbuild.tool.gnu.cpp.compiler.macosx.base.1348664311;cdt.managedbuild.tool.gnu.cpp.compiler.input.2039267033">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfileCPP"/>
+		</scannerConfigBuildInfo>
 	</storageModule>
-	<storageModule moduleId="refreshScope" versionNumber="1">
-		<resource resourceType="PROJECT" workspacePath="/sylph"/>
-	</storageModule>
-	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
 </cproject>

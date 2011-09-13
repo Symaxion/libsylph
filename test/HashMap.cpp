@@ -199,7 +199,7 @@ namespace {
     TEST_F(TestHashMap, testNoInsertKeyOnIndex) {
         HashMap<String, String> h;
 
-        EXPECT_EQ(0,h["foo"]);
+        EXPECT_THROW(h["foo"],NullPointerException);
         EXPECT_FALSE(h.containsKey("foo"));
     }
 
