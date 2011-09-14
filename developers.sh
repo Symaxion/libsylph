@@ -132,10 +132,8 @@ do-update-copyright() {
             if [ $(uname -s) == "Darwin" ]; then
                 sed -i '' "s/Copyright (C) 20[0-9][0-9] $name/Copyright (C) $year $name/" $file
             else 
-                sed -i '' "s/Copyright (C) 20[0-9][0-9] $name/Copyright (C) $year $name/" $file
+                sed -i "s/Copyright (C) 20[0-9][0-9] $name/Copyright (C) $year $name/" $file
             fi
-        else
-            #echo "Skipping $file..."
         fi
     done           
 }
