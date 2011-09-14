@@ -70,6 +70,9 @@ public:
         operator const size_t&() const {
             return lp;
         }
+        const size_t& operator()() const {
+            return lp;
+        }
     private:
         LengthProxy(const size_t& _lp) : lp(_lp) {}
         size_t lp;
