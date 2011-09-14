@@ -151,7 +151,7 @@
 			</target>
 			<target name="Generate CMake Files" path="" targetID="org.eclipse.cdt.build.MakeTargetBuilder">
 				<buildCommand>bash</buildCommand>
-				<buildArguments>${ProjDirPath}/developer.sh cmake</buildArguments>
+				<buildArguments>${ProjDirPath}/developers.sh cmake</buildArguments>
 				<buildTarget/>
 				<stopOnError>true</stopOnError>
 				<useDefaultCommand>false</useDefaultCommand>
