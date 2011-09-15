@@ -239,4 +239,20 @@ namespace {
         EXPECT_EQ("bar",h["foo"]);
     }
 
+    TEST_F(TestHashMap, testInitializerListConstruction) {
+        HashMap<String,String> h = {{"a","alpha"},
+                                    {"b","beta"},
+                                    {"g","gamma"},
+                                    {"d","delta"}};
+
+        ASSERT_EQ(4u,h.size());
+
+        ASSERT_NO_THROW({
+            EXPECT_EQ("alpha", h["a"]);
+            EXPECT_EQ("beta" , h["b"]);
+            EXPECT_EQ("gamma", h["g"]);
+            EXPECT_EQ("delta", h["d"]);
+        });
+    }
+
 } // namespace

@@ -37,6 +37,7 @@
 
 #include <cmath>
 #include <initializer_list>
+#include <utility>
 
 SYLPH_BEGIN_NAMESPACE
 
@@ -215,12 +216,13 @@ public:
      * All parameters will be initialized to default.
      * @param init An initializer list
      */
-    HashMap(const std::initializer_list<EntryHelper>& init) : loadFactor(.75f),
-    _size(init.size()), buckets((init.size() << 1) + 1),
+    // TODO Replace with a Sylph type ;)
+    HashMap(std::initializer_list<std::pair<Key,Value> > init) : loadFactor(.75f),
+    _size(0), buckets((init.size() << 1) + 1),
     threshold(buckets.length*loadFactor), hashf(Hash<Key>()),
     equf(Equals<Value*>()) {
-        for (EntryHelper* it = init.begin(); it != init.end(); ++it) {
-            put(it->key, &(it->value));
+        for (const std::pair<Key,Value>* it = init.begin(); it != init.end(); ++it) {
+            put(it->first, new Value(it->second));
         }
     }
 
