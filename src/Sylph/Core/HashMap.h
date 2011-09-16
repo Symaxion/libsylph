@@ -33,6 +33,7 @@
 #include "Equals.h"
 #include "Util.h"
 #include "Tuple.h"
+#include "Pointer.h"
 
 #include "Array.h"
 
@@ -60,12 +61,6 @@ public:
 
     typedef HashMap<Key,Value,HashFunction,EqualsFunction> Self;
 public:
-
-    struct EntryHelper {
-        Key key;
-        Value& value;
-    };
-
     class Entry {
         friend class HashMap<Key,Value,HashFunction,EqualsFunction>;
         friend class Self::iterator;
@@ -104,7 +99,6 @@ public:
             return *v;
         }
 
-        // TODO figure out a way to get rid of the new Value() call
         inline void operator=(Value& value) {
             map->put(key, new Value(value));
         }
@@ -362,7 +356,7 @@ public:
      * @param value The value for this new key
      * @return The old value if the key already existed, null otherwise.
      */
-    Value * put(Key key, Value * value) {
+    unique_ptr<Value> put(Key key, Value * value) {
         idx_t idx = hash(key);
         EntryPtr entry = buckets[idx];
 
@@ -370,7 +364,7 @@ public:
             if (key == entry->key) {
                 Value * val = entry->value;
                 entry->value = value;
-                return val;
+                return unique_ptr<Value>(val);
             } else {
                 entry = entry->next;
             }
@@ -384,7 +378,7 @@ public:
         newEnt->next = buckets[idx];
         buckets[idx] = newEnt;
 
-        return null;
+        return unique_ptr<Value>(null);
     }
 
     /**
@@ -404,7 +398,7 @@ public:
      * the associated value. If it was not, return null.
      * @return The old value of the key if it existed, null otherwise.
      */
-    Value * remove(Key key) {
+    unique_ptr<Value> remove(Key key) {
         idx_t idx = hash(key);
         EntryPtr entry = buckets[idx];
         EntryPtr last = null;
@@ -418,12 +412,12 @@ public:
                     last->next = entry->next;
                 }
                 _size--;
-                return entry->value;
+                return unique_ptr<Value>(entry->value);
             }
             last = entry;
             entry = entry->next;
         }
-        return null;
+        return unique_ptr<Value>(null);
     }
 
     HashMap & operator<<(const Pair<Key,Value>& eh) {

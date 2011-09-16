@@ -283,7 +283,7 @@ namespace {
         HashMap<String, String> h;
 
         ASSERT_NO_THROW(h.remove("foo"));
-        EXPECT_EQ(0, h.remove("foo"));
+        EXPECT_EQ((String*)0, h.remove("foo"));
         EXPECT_EQ(0u, h.size());
     }
 
