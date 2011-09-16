@@ -224,10 +224,15 @@ public:
         }
         n->prev = newNode;
     }
+
+    // TODO implement List::insertAfter(iterator, const T&)
     void insertAfter(iterator i, const T& t) {}
+    // TODO implement List::insertBefore(iterator, const T&)
     void insertBefore(iterator i, const T& t) {}
 
+    // TODO implement List::remove(idx_t)
     void remove(idx_t i) {}
+    // TODO implement List::iterator(iterator)
     void remove(iterator i) {}
 
     T& at(idx_t i) {
@@ -282,6 +287,8 @@ private:
     ListNode* _first;
     ListNode* _last;
 };
+
+// TODO finish implementation of List
 SYLPH_END_NAMESPACE
 
 #endif /* SYLPH_CORE_LIST_H_ */

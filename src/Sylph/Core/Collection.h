@@ -31,6 +31,8 @@
 
 SYLPH_BEGIN_NAMESPACE
 
+// TODO find a way to generalize Collections
+
 class Collection : public virtual Object {
 
 };
