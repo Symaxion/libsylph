@@ -255,4 +255,43 @@ namespace {
         });
     }
 
+    TEST_F(TestHashMap, testReplaceKey) {
+        HashMap<String,String> h;
+
+        h["a"] = "alpha";
+        EXPECT_EQ("alpha",h["a"]);
+
+        h["a"] = "aleph";
+        EXPECT_NE("alpha",h["a"]);
+        EXPECT_EQ("aleph",h["a"]);
+    }
+
+    TEST_F(TestHashMap, testRemove) {
+        HashMap<String, String> h;
+
+        h["foo"] = "bar";
+        EXPECT_EQ(1u, h.size());
+        EXPECT_EQ("bar",h["foo"]);
+
+        EXPECT_EQ("bar", *h.remove("foo"));
+        EXPECT_EQ(0u, h.size());
+        EXPECT_EQ(0, h.get("foo"));
+        EXPECT_THROW((String)h["foo"], NullPointerException);
+    }
+
+    TEST_F(TestHashMap, testRemoveNonExisting) {
+        HashMap<String, String> h;
+
+        ASSERT_NO_THROW(h.remove("foo"));
+        EXPECT_EQ(0, h.remove("foo"));
+        EXPECT_EQ(0u, h.size());
+    }
+
+    TEST_F(TestHashMap, testThrowOnlyOnConvert) {
+        HashMap<String, String> h;
+
+        EXPECT_NO_THROW(h["foo"]);
+        EXPECT_THROW((String)h["foo"], NullPointerException);
+    }
+
 } // namespace
