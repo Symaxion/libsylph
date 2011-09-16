@@ -32,6 +32,7 @@
 #include "Hash.h"
 #include "Equals.h"
 #include "Util.h"
+#include "Tuple.h"
 
 #include "Array.h"
 
@@ -103,6 +104,7 @@ public:
             return *v;
         }
 
+        // TODO figure out a way to get rid of the new Value() call
         inline void operator=(Value& value) {
             map->put(key, new Value(value));
         }
@@ -216,12 +218,11 @@ public:
      * All parameters will be initialized to default.
      * @param init An initializer list
      */
-    // TODO Replace with a Sylph type ;)
-    HashMap(std::initializer_list<std::pair<Key,Value> > init) : loadFactor(.75f),
+    HashMap(std::initializer_list<Pair<Key,Value> > init) : loadFactor(.75f),
     _size(0), buckets((init.size() << 1) + 1),
     threshold(buckets.length*loadFactor), hashf(Hash<Key>()),
     equf(Equals<Value*>()) {
-        for (const std::pair<Key,Value>* it = init.begin(); it != init.end(); ++it) {
+        for (const Pair<Key,Value>* it = init.begin(); it != init.end(); ++it) {
             put(it->first, new Value(it->second));
         }
     }
@@ -368,7 +369,7 @@ public:
         while (entry != null) {
             if (key == entry->key) {
                 Value * val = entry->value;
-                entry->value = val;
+                entry->value = value;
                 return val;
             } else {
                 entry = entry->next;
@@ -425,8 +426,8 @@ public:
         return null;
     }
 
-    HashMap & operator<<(const EntryHelper& eh) {
-        put(eh.key, &(eh.value));
+    HashMap & operator<<(const Pair<Key,Value>& eh) {
+        put(eh.first, new Value(eh.last));
         return *this;
     }
 
