@@ -28,7 +28,20 @@
 #define SYLPH_CORE_POINTER_H_
 
 #include "Object.h"
-#include <utility>
+#include <memory>
+
+// XXX hack to get around std discrepancy
+namespace std {
+    template<class T, class D>
+    bool operator==(const unique_ptr<T,D>& ptr, T* obj) {
+        return ptr.get() == obj;
+    }
+
+    template<class T, class D>
+    bool operator==(T* obj, const unique_ptr<T,D>& ptr) {
+        return ptr.get() == obj;
+    }
+}
 
 SYLPH_BEGIN_NAMESPACE
 
