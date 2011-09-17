@@ -283,7 +283,7 @@ class GTEST_API_ AssertionResult {
   const char* message() const {
     return message_.get() != NULL ?  message_->c_str() : "";
   }
-  // TODO(vladl@google.com): Remove this after making sure no clients use it.
+  // TUDU(vladl@google.com): Remove this after making sure no clients use it.
   // Deprecated; please use message() instead.
   const char* failure_message() const { return message(); }
 
@@ -576,7 +576,7 @@ class GTEST_API_ TestResult {
 
   // Adds a failure if the key is a reserved attribute of Google Test
   // testcase tags.  Returns true if the property is valid.
-  // TODO(russr): Validate attribute names are legal and human readable.
+  // TUDU(russr): Validate attribute names are legal and human readable.
   static bool ValidateTestProperty(const TestProperty& test_property);
 
   // Adds a test part result to the list.

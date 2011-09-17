@@ -61,7 +61,7 @@ namespace internal {
 namespace {
 
 #if GTEST_OS_WINDOWS_MOBILE
-// TODO(wan@google.com): Move these to the POSIX adapter section in
+// TUDU(wan@google.com): Move these to the POSIX adapter section in
 // gtest-port.h.
 
 // Windows CE doesn't have the remove C function.
