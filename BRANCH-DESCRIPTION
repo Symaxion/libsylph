@@ -14,8 +14,10 @@ Name: Function
 
 # Long description
 Description: >
-	This branch attempts to implement and/or improve functional programming
-	support in LibSylph.
+    This branch attempts to implement and/or improve functional programming
+    support in LibSylph.
+    
+    This branch requires at least GCC 4.5.3 to compile.
 
 # Status. The following statuses are recognised:
 # - Planning
@@ -35,5 +37,5 @@ Status:
 # List all branches from which this branch pulls.
 # Must at least contain SeySayux/master
 Dependencies: 
-	- SeySayux/master
-	- SeySayux/sylphmain
+    - SeySayux/master
+    - SeySayux/sylphmain
