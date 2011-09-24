@@ -18,6 +18,8 @@ Description: >
     support in LibSylph.
     
     This branch requires at least GCC 4.5.3 to compile.
+    
+    This branch does not compile on GCC 4.6.X.
 
 # Status. The following statuses are recognised:
 # - Planning
