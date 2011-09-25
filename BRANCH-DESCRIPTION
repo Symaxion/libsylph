@@ -4,22 +4,18 @@
 # on how to use and update this file.
 
 # Name of the branch, in the form of User/branch
-Branch: SeySayux/function
+Branch: SeySayux/collection
 
 # Human readable name
-Name: Function
+Name: Collections
 
 # ID of the Blueprint for this branch, if it has one. Omit otherwise.
 # Blueprint:
 
 # Long description
 Description: >
-    This branch attempts to implement and/or improve functional programming
-    support in LibSylph.
-    
-    This branch requires at least GCC 4.5.3 to compile.
-    
-    This branch does not compile on GCC 4.6.X.
+	Additional containers and a generic format for passing containers to
+	functions or converting containers.
 
 # Status. The following statuses are recognised:
 # - Planning
@@ -32,12 +28,16 @@ Description: >
 # - Breaks API
 # - Breaks ABI
 Status:
+    - Planning
     - In development
     - No documentation
     - No tests
+    - Broken
 
 # List all branches from which this branch pulls.
 # Must at least contain SeySayux/master
 Dependencies: 
     - SeySayux/master
     - SeySayux/sylphmain
+    - SeySayux/iterfix
+    - SeySayux/thread
