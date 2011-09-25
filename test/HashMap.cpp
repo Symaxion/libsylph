@@ -178,6 +178,49 @@ namespace {
         EXPECT_TRUE(g == h);
     }
 
+    TEST_F(TestHashMap, testAssignExisting) {
+        HashMap<String, String> h;
+
+        String s = "foo";
+        ASSERT_NO_THROW(h["bar"] = s);
+        ASSERT_EQ(s, h["bar"]);
+        ASSERT_EQ("foo", h["bar"]);
+    }
+
+    TEST_F(TestHashMap, testStringKeyIntValue) {
+        HashMap<String, int> h;
+
+        ASSERT_NO_THROW(h["foo"] = 9);
+        int i = 42;
+        ASSERT_NO_THROW(h["bar"] = i);
+        ASSERT_EQ(9, h["foo"]);
+        ASSERT_EQ(42,h["bar"]);
+        ASSERT_EQ(i, h["bar"]);
+    }
+
+    TEST_F(TestHashMap, testIntKeyStringValue) {
+        HashMap<int, String> h;
+
+        ASSERT_NO_THROW(h[4] = "foo");
+        String s = "abc";
+        ASSERT_NO_THROW(h[2] = s);
+        ASSERT_EQ("foo",h[4]);
+        ASSERT_EQ("abc",h[2]);
+        ASSERT_EQ(s, h[2]);
+    }
+
+    class SomeClass { int i; };
+
+    TEST_F(TestHashMap, testPointerKey) {
+        HashMap<SomeClass*, String> h;
+
+        SomeClass* sc = new SomeClass;
+
+        ASSERT_NO_THROW(h[sc] = "foobar");
+
+        delete sc;
+    }
+
     TEST_F(TestHashMap, testUpdateInt) {
         HashMap<String, int> h;
         h["foo"] = 3;
@@ -204,5 +247,59 @@ namespace {
         EXPECT_FALSE(h.containsKey("foo"));
     }
 
+    TEST_F(TestHashMap, testInitializerListConstruction) {
+        HashMap<String,String> h = {{"a","alpha"},
+                                    {"b","beta"},
+                                    {"g","gamma"},
+                                    {"d","delta"}};
+
+        ASSERT_EQ(4u,h.size());
+
+        ASSERT_NO_THROW({
+            EXPECT_EQ("alpha", h["a"]);
+            EXPECT_EQ("beta" , h["b"]);
+            EXPECT_EQ("gamma", h["g"]);
+            EXPECT_EQ("delta", h["d"]);
+        });
+    }
+
+    TEST_F(TestHashMap, testReplaceKey) {
+        HashMap<String,String> h;
+
+        h["a"] = "alpha";
+        EXPECT_EQ("alpha",h["a"]);
+
+        h["a"] = "aleph";
+        EXPECT_NE("alpha",h["a"]);
+        EXPECT_EQ("aleph",h["a"]);
+    }
+
+    TEST_F(TestHashMap, testRemove) {
+        HashMap<String, String> h;
+
+        h["foo"] = "bar";
+        EXPECT_EQ(1u, h.size());
+        EXPECT_EQ("bar",h["foo"]);
+
+        EXPECT_EQ("bar", *h.remove("foo"));
+        EXPECT_EQ(0u, h.size());
+        EXPECT_EQ(0, h.get("foo"));
+        EXPECT_THROW((String)h["foo"], NullPointerException);
+    }
+
+    TEST_F(TestHashMap, testRemoveNonExisting) {
+        HashMap<String, String> h;
+
+        ASSERT_NO_THROW(h.remove("foo"));
+        EXPECT_EQ((String*)0, h.remove("foo"));
+        EXPECT_EQ(0u, h.size());
+    }
+
+    TEST_F(TestHashMap, testThrowOnlyOnConvert) {
+        HashMap<String, String> h;
+
+        EXPECT_NO_THROW(h["foo"]);
+        EXPECT_THROW((String)h["foo"], NullPointerException);
+    }
 
 } // namespace

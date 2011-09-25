@@ -42,6 +42,9 @@ option(SYLPH_NO_CXX0X "Disable C++0x support (experimental)")
 option(SYLPH_ENABLE_COVERAGE "Enable code coverage support [developers]")
 option(SYLPH_ENABLE_PROFILING "Enable profiling support [developers]")
 
+# Dependencies
+find_package(Threads)
+
 #Version & platform checks...
 macro (get_gcc_version version)
     if (CMAKE_COMPILER_IS_GNUCC)

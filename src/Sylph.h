@@ -73,6 +73,7 @@
 #include "Sylph/Core/Range.h"
 #include "Sylph/Core/String.h"
 #include "Sylph/Core/StringBuffer.h"
+#include "Sylph/Core/Thread.h"
 #include "Sylph/Core/Util.h"
 #include "Sylph/Core/Vector.h"
 

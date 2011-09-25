@@ -249,24 +249,20 @@ namespace {
     }		
 
     TEST_F(TestVector, testReverseIterator) {
-        // This will be fixed in 0.2
-        /*sidx_t cur = 1000;
+        idx_t cur = 1000u;
         Vector<int> testObj1 ((size_t) 5);
         for(std::size_t x = 0; x < 1000; x++) {
             testObj1.add(x);
         }
 
-        typedef std::reverse_iterator<Vector<int>::iterator> reverse_iterator;
+        typedef Vector<int>::reverse_iterator reverse_iterator;
 
-        reverse_iterator it(testObj1.end());
-        reverse_iterator rend(testObj1.begin());
-
-        for(;it != rend; ++it) {
-            EXPECT_EQ(testObj1[cur],*it);
+        for(reverse_iterator it = testObj1.rbegin();
+                it != testObj1.rend(); ++it) {
             cur--;
+            EXPECT_EQ(testObj1[cur],*it);
         }
-        EXPECT_EQ(-1, cur);*/
-        //FAIL() << "Error with reverse_iterator";
+        EXPECT_EQ(0u, cur);
     }	
 
     TEST_F(TestVector, testAddAll) {
