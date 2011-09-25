@@ -10,7 +10,8 @@
 !.gitattributes
 
 # Eclipse project files
-!.settings
+!.settings/
+!.settings/*
 !.cproject
 !.project
 
