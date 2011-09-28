@@ -29,6 +29,7 @@
 
 #include "Object.h"
 #include <memory>
+#include <utility>
 
 // XXX hack to get around std discrepancy
 namespace std {
@@ -44,6 +45,12 @@ namespace std {
 }
 
 SYLPH_BEGIN_NAMESPACE
+
+// Move
+using std::move;
+
+// Forward
+using std::forward;
 
 // TODO Sylph-based implementations of these
 using std::shared_ptr;
