@@ -139,6 +139,7 @@ public:
      * and all existing data will be copied into the new array. The size
      * of this Vector will increase by 1.
      * @param t The element to append.
+     * @complexity O(1)
      */
     void add(const T & t) {
         ensureCapacity(_size + 1);
@@ -153,6 +154,7 @@ public:
      * they have been inserted.
      * The size of this Vector will increase by the size of the given Vector.
      * @param c Another Vector whose elements to append to this one.
+     * @complexity O(n)
      */
     void addAll(Vector<T> & c) {
         ensureCapacity(_size + c._size);
@@ -168,6 +170,7 @@ public:
      * copy all elements to a new, bigger array. Therefore, the capacity must
      * always be greater than or equal to the size of this Vector.
      * @return The current capacity of this Vector.
+     * @complexity O(0)
      */
     std::size_t capacity() const {
         return elements.length;
@@ -176,23 +179,32 @@ public:
     /**
      * Removes all elements from this vector. This will clear the underlying
      * array of the vector and reduces the sice effectively to 0.
+     * @complexity O(n)
      */
     void clear() {
         _size = 0;
         elements.clear();
     }
 
-    /** */
+    /**
+     * @param An object @c t
+     * @returns if this Vector has an element equal to @c t
+     * @complexity O(n)
+     */
     bool contains(const T & t) const {
         return indexOf(t) != -1;
     }
 
-    /** */
+    /**
+     * @complexity O(1)
+     */
     bool empty() const {
         return _size == 0;
     }
 
-    /** */
+    /**
+     * @complexity O(1)
+     */
     const T & get(std::size_t idx) const throw(ArrayException) {
         try {
             checkIfOutOfBounds(idx);
@@ -201,7 +213,9 @@ public:
         straced;
     }
 
-    /** */
+    /**
+     * @complexity O(1)
+     */
     T & get(std::size_t idx) throw(ArrayException) {
         try {
             checkIfOutOfBounds(idx);
@@ -210,7 +224,9 @@ public:
         straced;
     }
 
-    /** */
+    /**
+     * @complexity O(n)
+     */
     sidx_t indexOf(const T & t, idx_t idx = 0) const throw(ArrayException) {
         try {
             checkIfOutOfBounds(idx);
@@ -224,12 +240,16 @@ public:
         return -1;
     }
 
-    /** */
+    /**
+     * @complexity O(n)
+     */
     sidx_t lastIndexOf(const T & t) const {
         return lastIndexOf(t, _size - 1);
     }
 
-    /** */
+    /**
+     * @complexity O(n)
+     */
     sidx_t lastIndexOf(const T & t, std::size_t idx) const 
             throw(ArrayException) {
         static Equals<T> equf;
@@ -244,12 +264,16 @@ public:
         return -1;
     }
 
-    /** */
+    /**
+     * @complexity O(n)
+     */
     void remove(const T & t) {
         removeAt(indexOf(t));
     }
 
-    /** */
+    /**
+     * @complexity O(n)
+     */
     void removeAt(std::size_t idx) throw(ArrayException) {
         try {
             checkIfOutOfBounds(idx);
@@ -260,7 +284,9 @@ public:
                 elements.length - 1 - idx);
     }
 
-    /** */
+    /**
+     * @complexity O(1)
+     */
     void set(std::size_t idx, const T & t) throw(ArrayException) {
         try {
             checkIfOutOfBounds(idx);
@@ -269,12 +295,16 @@ public:
         straced;
     }
 
-    /** */
+    /**
+     * @complexity O(0)
+     */
     std::size_t size() const {
         return _size;
     }
 
-    /** */
+    /**
+     * @complexity O(n)
+     */
     Array<T> toArray() const {
         Array<T> toReturn(size());
         for(idx_t i = 0; i < size(); ++i) {
@@ -283,7 +313,9 @@ public:
         return toReturn;
     }
 
-    /** */
+    /**
+     * @complexity O(n)
+     */
     bool operator==(const Vector<T> & c) const {
         if (_size != c.size()) return false;
         else {
@@ -294,21 +326,27 @@ public:
         }
     }
 
-    /** */
+    /**
+     * @complexity O(1)
+     */
     T & operator[](idx_t idx) throw(ArrayException) {
         try {
             return get(idx);
         } straced;
     }
 
-    /** */
+    /**
+     * @complexity O(1)
+     */
     const T & operator[](idx_t idx) const throw(ArrayException) {
         try {
             return get(idx);
         } straced;
     }
 
-    /** */
+    /**
+     * @complexity O(n)
+     */
     Vector& operator=(const Vector<T> & rhs) {
         elements = Array<T > (rhs.elements.length);
         _size = rhs.size();

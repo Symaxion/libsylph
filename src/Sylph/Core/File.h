@@ -96,6 +96,7 @@ public:
 
     /**
      * Creates a file from given path.
+     * @param s A path in the notational conventions of the current OS.
      */
     File(const String s) {
         append(s,true);
@@ -103,6 +104,8 @@ public:
 
     /**
      * Creates a file from given path as a C string.
+     * @param s A path, as a C string, in the notational conventions of the
+     * current OS.
      */
     File(const char* s) {
         append(String(s),true);
@@ -113,12 +116,13 @@ public:
 
     /**
      * Replaces the extension of this abstract pathname with given, or none.
-     * @return this
+     * @return A reference to this File object.
      */
     File& replaceExtension(const String newExt = String());
 
     /**
-     * @return internal representation of this pathname
+     * @return A string, containg the internal representation of this pathname,
+     * in the notational conventions of the current OS.
      */
     const String toString() const {
         return path;
@@ -126,6 +130,7 @@ public:
 
     /**
      * @return the root this file is on (unix: '/')
+     * @crossplatform Does not work on Windows.
      */
     inline File rootPath() const {
         return File(rootName());
@@ -133,6 +138,7 @@ public:
 
     /**
      * @return The root this file is on, as a string.
+     * @crossplatform Does not work on Windows.
      */
     String rootName() const;
 
@@ -163,12 +169,19 @@ public:
      */
     String extension() const;
 
-    /** */
+    /**
+     * @return If this File's path is equal to the emtpy path.
+     */
     inline bool empty() const {
         return path == "";
     }
 
-    /** */
+    /**
+     * Returns if this File's pathname is absolute. A pathname is absolute if
+     * and only if it's location is not relative to the current working
+     * directory, in other words it starts with a root.
+     * @return @c true if the path of this file is absolute
+     */
     bool absolute() const;
 
     /** */
@@ -201,9 +214,10 @@ public:
     }
 
     /**
-     * Checks wheter a given pathname exists.
+     * Checks whether a given pathname exists.
      * @return true if and only if the pathname exists
      * @throw IOException If an IO error occurs.
+     * @crossplatform Does not work on Windows.
      */
     bool exists() const throw(IOException);
 
