@@ -478,6 +478,13 @@ protected:
 #endif
 };
 
+template<class T>
+Array<T> makeArray(std::initializer_list<T>& t) {
+    return t;
+}
+
+#define A_(...) makeArray({__VA_ARGS__})
+
 /**
  * Compares the two Arrays on equality. To Arrays compare equal when their
  * lengths are identical and each of the items compare equal to the item on the
