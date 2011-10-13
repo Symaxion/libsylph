@@ -96,6 +96,13 @@ namespace {
         EXPECT_FALSE(forany(a) > 9);
     }
 
+    TEST_F(TestFunction, testCountPred) {
+        Array<int> a { 1, 7, 5, 2, 4 };
+        function<bool(int)> mt3 = bind(Op::grt<int,int>,P::_1,3);
+        EXPECT_EQ(3u,countpred(a,mt3));
+        EXPECT_EQ(3u,countpred(a) > 3);
+    }
+
     TEST_F(TestFunction, testCall) {
         int i = call(square,3);
         EXPECT_EQ(9,i);

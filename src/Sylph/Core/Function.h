@@ -266,7 +266,7 @@ public:
 
     explicit operator bool() const {
         sforeach(const T& t, c) {
-                if(!t) return false;
+            if(!t) return false;
         }
         return true;
     }
@@ -278,6 +278,93 @@ template<template<class> class C, class T>
 ForallHelper<C,T> forall(const C<T>& c) {
     return ForallHelper<C,T>(c);
 }
+
+// Countpred
+
+template<template<class> class C, class T, class U>
+std::size_t countpred(const C<T>& c, function<bool(U)> f) {
+    std::size_t toReturn = 0;
+    sforeach(const T& t, c) {
+            if(f(t)) toReturn++;
+    }
+    return toReturn;
+}
+
+template<template<class> class C, class T>
+class CountpredHelper {
+public:
+    CountpredHelper(const C<T>& _c) : c(_c) {}
+
+    template<class U>
+    std::size_t operator==(const U& u) {
+        std::size_t toReturn = 0;
+        sforeach(const T& t, c) {
+            if(t == u) toReturn++;
+        }
+        return toReturn;
+    }
+
+    template<class U>
+    std::size_t operator!=(const U& u) {
+        std::size_t toReturn = 0;
+        sforeach(const T& t, c) {
+            if(t != u) toReturn++;
+        }
+        return toReturn;
+    }
+
+    template<class U>
+    std::size_t operator<=(const U& u) {
+        std::size_t toReturn = 0;
+        sforeach(const T& t, c) {
+            if(t <= u) toReturn++;
+        }
+        return toReturn;
+    }
+
+    template<class U>
+    std::size_t operator>=(const U& u) {
+        std::size_t toReturn = 0;
+        sforeach(const T& t, c) {
+            if(t >= u) toReturn++;
+        }
+        return toReturn;
+    }
+
+    template<class U>
+    std::size_t operator<(const U& u) {
+        std::size_t toReturn = 0;
+        sforeach(const T& t, c) {
+            if(t < u) toReturn++;
+        }
+        return toReturn;
+    }
+
+    template<class U>
+    std::size_t operator>(const U& u) {
+        std::size_t toReturn = 0;
+        sforeach(const T& t, c) {
+            if(t > u) toReturn++;
+        }
+        return toReturn;
+    }
+
+    explicit operator std::size_t() {
+        std::size_t toReturn = 0;
+        sforeach(const T& t, c) {
+            if(t) toReturn++;
+        }
+        return toReturn;
+    }
+private:
+    const C<T>& c;
+};
+
+template<template<class> class C, class T>
+CountpredHelper<C,T> countpred(const C<T>& c) {
+    return CountpredHelper<C,T>(c);
+}
+
 
 // Operator wrappers
 namespace Op {
