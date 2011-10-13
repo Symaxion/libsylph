@@ -46,12 +46,12 @@ namespace {
 
     TEST_F(TestVector, testOverflowCapacity) {
         Vector<int> testObj1((size_t) 5);
-        EXPECT_THROW(testObj1[7] = 1, ArrayException);
+        EXPECT_THROW(testObj1[7] = 1, IndexException);
     }
     TEST_F(TestVector, testOverflowSize) {
         Vector<int> testObj1((size_t) 5);
         testObj1.add(1); testObj1.add(2); testObj1.add(3);
-        EXPECT_THROW(testObj1[3] = 1, ArrayException);
+        EXPECT_THROW(testObj1[3] = 1, IndexException);
     }
 
     TEST_F(TestVector, testCapacityIncreaseCondition) {

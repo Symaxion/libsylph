@@ -191,11 +191,11 @@ public: \
 }
 
 /**
- * A generic Exception when an error occurs with an Array. Examples of such
+ * A generic Exception when an error occurs with a Collection. Examples of such
  * errors are Array overflow or underflow, Array length too short or too long,
  * ...
  */
-S_CREATE_EXCEPTION(ArrayException);
+S_CREATE_EXCEPTION(IndexException);
 /**
  * A generic exception for an unexpected value supplied to a parser.
  */

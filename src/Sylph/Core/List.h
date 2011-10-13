@@ -195,7 +195,7 @@ public:
     }
 
     void insertAfter(idx_t i, const T& t) {
-        if(i > size()) sthrow(ArrayException,"List out of bounds!");
+        if(i > size()) sthrow(IndexException,"List out of bounds!");
         ListNode* n = _first;
         for(idx_t j = 0; j < i; ++j) {
             n = n->next;
@@ -210,7 +210,7 @@ public:
         n->next = newNode;
     }
     void insertBefore(idx_t i, const T& t) {
-        if(i > size()) sthrow(ArrayException,"List out of bounds!");
+        if(i > size()) sthrow(IndexException,"List out of bounds!");
         ListNode* n = _first;
         for(idx_t j = 0; j < i; ++j) {
             n = n->next;
@@ -236,7 +236,7 @@ public:
     void remove(iterator i) {}
 
     T& at(idx_t i) {
-        if(i > size()) sthrow(ArrayException,"List out of bounds!");
+        if(i > size()) sthrow(IndexException,"List out of bounds!");
         ListNode* n = _first;
         for(idx_t j = 0; j < i; ++j) {
             n = n->next;
@@ -244,7 +244,7 @@ public:
         return n->value;
     }
     const T& at(idx_t i) const {
-        if(i > size()) sthrow(ArrayException,"List out of bounds!");
+        if(i > size()) sthrow(IndexException,"List out of bounds!");
         ListNode* n = _first;
         for(idx_t j = 0; j < i; ++j) {
             n = n->next;
@@ -252,7 +252,7 @@ public:
     }
 
     sidx_t indexOf(const T& t, idx_t off = 0) const {
-        if(off > size()) sthrow(ArrayException, "List out of bounds!");
+        if(off > size()) sthrow(IndexException, "List out of bounds!");
         idx_t i = 0;
         for(const_iterator it = begin(); it != end(); ++it) {
             while(off--) continue;
@@ -267,7 +267,7 @@ public:
     }
 
     sidx_t lastIndexOf(const T& t, idx_t off) const {
-        if(off > size()) sthrow(ArrayException, "List out of bounds!");
+        if(off > size()) sthrow(IndexException, "List out of bounds!");
         idx_t i = size() - 1;
         for(const_reverse_iterator it = rbegin(); it != rend(); ++it) {
             while(off++ != size() - 1) continue;

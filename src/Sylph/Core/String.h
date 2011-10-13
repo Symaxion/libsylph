@@ -302,7 +302,7 @@ public:
      * @param idx the index of the character to return
      * @return the character at the specified index, in UTF-16.
      */
-    const uchar at(sidx_t idx) const throw(ArrayException);
+    const uchar at(sidx_t idx) const throw(IndexException);
 
     /**
      * Converts the String to ASCII. The conversion algorithm goes as follows:
@@ -416,7 +416,7 @@ public:
      * @return A string containing all characters from the given begin index.
      * @throw ArrayException if <code>begin >= length()</code>.
      */
-    String substring(idx_t begin) const throw(ArrayException);
+    String substring(idx_t begin) const throw(IndexException);
 
     /**
      * Returns a new String containing all characters from the given begin index
@@ -430,7 +430,7 @@ public:
      * begin > end</code>.
      */
     String substring(idx_t begin, idx_t end) const
-            throw(ArrayException);
+            throw(IndexException);
 
     /**
      * Returns the first index from given start index in this String on which
@@ -442,7 +442,7 @@ public:
      * @throw ArrayException if <code>start >= length()</code>
      */
     sidx_t indexOf(const String substr, idx_t start = 0) const
-            throw(ArrayException);
+            throw(IndexException);
 
     /**
      * Returns the last index in this String on which the specified substring
@@ -463,7 +463,7 @@ public:
      * @throw ArrayException if <code>end >= length()</code>
      */
     sidx_t lastIndexOf(const String substr, idx_t end) const
-            throw(ArrayException);
+            throw(IndexException);
 
     String copy() const;
     bool merge(String other) const;

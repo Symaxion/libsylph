@@ -41,7 +41,7 @@ public:
 
     fsize_t available() const;
     fssize_t read(Array<byte>& b, off_t offset = 0, size_t len = 0)
-            throw(ArrayException, IOException);
+            throw(IndexException, IOException);
     bool eof() const;
     bool markSupported() const { return true; }
     void mark(fsize_t);

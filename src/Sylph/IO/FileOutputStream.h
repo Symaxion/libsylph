@@ -41,7 +41,7 @@ public:
     virtual ~FileOutputStream();
 
     void write(const Array<byte> b, off_t off = 0, size_t len = 0)
-        throw(IOException,ArrayException);
+        throw(IOException,IndexException);
     void close();
 
     void flush();

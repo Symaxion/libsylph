@@ -388,7 +388,7 @@ public:
             char buf[2048];
             sprintf(buf, "Array overflow - index: %d , length: %u",
                     signed(idx), unsigned(length));
-            sthrow(ArrayException, buf);
+            sthrow(IndexException, buf);
         }
     }
 
@@ -406,7 +406,7 @@ public:
             char buf[2048];
             sprintf(buf, "Array overflow - index: %d , length: %u",
                     signed(idx), unsigned(length));
-            sthrow(ArrayException, buf);
+            sthrow(IndexException, buf);
         }
     }
 
@@ -420,7 +420,7 @@ public:
      */
     Array<T> operator[](const range & r) throw (Exception) {
         range ran = r;
-        if(ran.inverse()) sthrow(ArrayException, "Inversed range");
+        if(ran.inverse()) sthrow(IndexException, "Inversed range");
         ran.last = ran.last < 0 ? length + ran.last : ran.last;
         ran.first = ran.first < 0 ? length + ran.first : ran.first;
         if(ran.inverse()) ran.swap();
@@ -428,7 +428,7 @@ public:
             char buf[2048];
             sprintf(buf, "Array overflow - range: %u - %u , length: %u",
                     ran.first, ran.last, unsigned(length));
-            sthrow(ArrayException, buf);
+            sthrow(IndexException, buf);
         }
 
         Array<T> toReturn = Array<T>::fromPointer((ran.last - ran.first)+1,
@@ -450,7 +450,7 @@ public:
             char buf[2048];
             sprintf(buf, "Array overflow - range: %u - %u , length: %u",
                     ran.first, ran.last, unsigned(length));
-            sthrow(ArrayException, buf);
+            sthrow(IndexException, buf);
         }
 
         Array<T> toReturn = Array<T>::fromPointer((ran.last - ran.first)+1,

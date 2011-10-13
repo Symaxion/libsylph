@@ -106,7 +106,7 @@ namespace {
     }
 
     TEST_F(TestArray, testOverflow) {
-        ASSERT_THROW((*testObj1)[7] = 1, ArrayException);
+        ASSERT_THROW((*testObj1)[7] = 1, IndexException);
     }
 
     TEST_F(TestArray, testLength) {
@@ -116,7 +116,7 @@ namespace {
 
     TEST_F(TestArray, testLengthOverflow) {
         Array<bool> lengthtest((size_t) 6);
-        ASSERT_THROW(lengthtest[6] = false, ArrayException);
+        ASSERT_THROW(lengthtest[6] = false, IndexException);
     }
 
     TEST_F(TestArray, testSelfEquality) {
@@ -172,7 +172,7 @@ namespace {
     }
 
     TEST_F(TestArray, testNegativeOverflow) {
-        ASSERT_THROW(arfilled1[-(arfilled1.length + 1)] = 3, ArrayException);
+        ASSERT_THROW(arfilled1[-(arfilled1.length + 1)] = 3, IndexException);
     }
 
     TEST_F(TestArray, testRanges) {

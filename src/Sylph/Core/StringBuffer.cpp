@@ -42,7 +42,7 @@ size_t StringBuffer::length() const {
 
 void StringBuffer::deleteSubstring(idx_t start, idx_t end) {
     if(start > _length || end > _length || start > end)
-        sthrow(ArrayException, "StringBuffer out of bounds!");
+        sthrow(IndexException, "StringBuffer out of bounds!");
     if(start == end) return;
 
     arraycopy(buf,end,buf,start,end-start);

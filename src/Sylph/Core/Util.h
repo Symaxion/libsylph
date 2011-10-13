@@ -50,8 +50,8 @@ inline void arraycopy(const Array<T> & src, std::size_t srcPos, Array<T> & dest,
 
     std::size_t srcSize = src.length;
     std::size_t destSize = dest.length;
-    if (srcPos + length > srcSize) sthrow(ArrayException, "Source array too short");
-    if (destPos + length > destSize) sthrow(ArrayException, "Dest array too short");
+    if (srcPos + length > srcSize) sthrow(IndexException, "Source array too short");
+    if (destPos + length > destSize) sthrow(IndexException, "Dest array too short");
 
     for (size_t i = 0; i < length; i++) {
         dest[destPos + i] = src[srcPos + i];
