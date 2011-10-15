@@ -128,7 +128,7 @@ namespace {
     TEST_F(TestString, testIntConstructor) {
         String s = 12345678;
         EXPECT_EQ("12345678", s);
-        String t = 12345678901234LL;
+        String t = SLC(12345678901234);
         EXPECT_EQ("12345678901234", t);
     }
 
