@@ -1,8 +1,34 @@
+/*
+ * LibSylph Class Library
+ * Copyright (C) 2011 Frank "SeySayux" Erens <seysayux@gmail.com>
+ *
+ * This software is provided 'as-is', without any express or implied
+ * warranty. In no event will the authors be held liable for any damages
+ * arising from the use of this software.
+ *
+ * Permission is granted to anyone to use this software for any purpose,
+ * including commercial applications, and to alter it and redistribute it
+ * freely, subject to the following restrictions:
+ *
+ *   1. The origin of this software must not be misrepresented; you must not
+ *   claim that you wrote the original software. If you use this software
+ *   in a product, an acknowledgment in the product documentation would be
+ *   appreciated but is not required.
+ *
+ *   2. Altered source versions must be plainly marked as such, and must not be
+ *   misrepresented as being the original software.
+ *
+ *   3. This notice may not be removed or altered from any source
+ *   distribution.
+ *
+ */
+
 #include "String.h"
 #include "Array.h"
 #include "Hash.h"
 #include "StringBuffer.h"
 #include "Util.h"
+#include "Vector.h"
 
 #include <cctype>
 #include <cstring>
@@ -17,191 +43,31 @@ using std::isnan;
 
 SYLPH_BEGIN_NAMESPACE
 
-const char * float2string(float f) {
-    char * buf = (char*)GC_MALLOC_ATOMIC(20);
-    idx_t idx = 0;
-    ssize_t tot = 9;
-    // first check if it we need no decimal dot...
-    if (int(f) == f) {
-        // no decimal dot. use conversion from int
-        return String(int(f));
-    } else {
-        // Decimal dot...
-
-        // first, get the integral part
-        const char * buf2 = String(int(f));
-        tot -= strlen(buf);
-        carraycopy(buf2, 0, buf, 0, strlen(buf2));
-        idx += strlen(buf2);
-
-        // append a '.'
-        buf[idx] = '.';
-        idx++;
-
-        size_t copyto = 0;
-        char * buf3 = new char[8];
-
-        // now, get the decimal part
-        for (idx_t i = 0; i < 8; i++) {
-            f *= 10;
-            int j = f;
-            if (j != 0) copyto = i + 1;
-            buf3[i] = 0x30 + j;
-            idx++;
-        }
-        carraycopy(buf3, 0, buf, idx, copyto);
-        delete[] buf3;
-        idx += copyto;
-        buf[idx] = 0;
-        idx++;
-    }
-    return buf;
-}
-
-const char * float2stringe(float f, bool u) {
-    char * buf = (char*)GC_MALLOC_ATOMIC(20);
-    // first get the stuff for before the dot...
-    idx_t idx = 0;
-    int numdigits = floor(log10(f));
-    f /= pow(10, numdigits);
-    buf[0] = 0x30 + int(f);
-    idx++;
-
-    size_t copyto = 0;
-    char * buf3 = new char[8];
-
-    // now, get the decimal part
-    for (idx_t i = 0; i < 8; i++) {
-        f *= 10;
-        int j = f;
-        if (j != 0) copyto = i + 1;
-        buf3[i] = 0x30 + j;
-        idx++;
-    }
-    if (copyto) {
-        buf[1] = '.';
-        idx++;
-        carraycopy(buf3, 0, buf, idx, copyto);
-        idx += copyto;
-    }
-    delete[] buf3;
-
-    // Nice, the 'e' part
-    buf[idx] = u ? 'E' : 'e';
-    idx++;
-
-    // hmm, that was lame... oh, but the exponent sounds cool!
-    if (numdigits > 0) {
-        buf[idx] = '+';
-        idx++;
-    } else if (numdigits < 0) {
-        buf[idx] = '-';
-        idx++;
-    }
-    const char * buf2 = String(abs(numdigits));
-    carraycopy(buf2, 0, buf, idx, strlen(buf2));
-    idx += strlen(buf2);
-    buf[idx] = 0;
-
-    return buf;
-}
-
-const char * double2string(double d) {
-    char * buf = (char*)GC_MALLOC_ATOMIC(40);
-    idx_t idx = 0;
-    // first check if it we need no decimal dot...
-    if (int(d) == d) {
-        // no decimal dot. use conversion from int
-        return String(int(d));
-    } else {
-        // Decimal dot...
-
-        // first, get the integral part
-        const char * buf2 = String(int(d));
-        carraycopy(buf2, 0, buf, 0, strlen(buf2));
-        idx += strlen(buf2);
-
-        // append a '.'
-        buf[idx] = '.';
-        idx++;
-
-        size_t copyto = 0;
-        char * buf3 = new char[16];
-
-        // now, get the decimal part
-        for (idx_t i = 0; i < 16; i++) {
-            d *= 10;
-            int j = d;
-            if (j != 0) copyto = i + 1;
-            buf3[i] = 0x30 + j;
-            idx++;
-        }
-        carraycopy(buf3, 0, buf, idx, copyto);
-        delete[] buf3;
-        idx += copyto;
-        buf[idx] = 0;
-        idx++;
-    }
-    return buf;
-}
-
-const char * double2stringe(double d, bool u) {
-    char * buf = (char*)GC_MALLOC_ATOMIC(40);
-    // first get the stuff for before the dot...
-    idx_t idx = 0;
-    int numdigits = floor(log10(d));
-    d /= pow(10, numdigits);
-    buf[0] = 0x30 + int(d);
-    idx++;
-
-    size_t copyto = 0;
-    char * buf3 = new char[16];
-
-    // now, get the decimal part
-    for (idx_t i = 0; i < 16; i++) {
-        d *= 10;
-        int j = d;
-        if (j != 0) copyto = i + 1;
-        buf3[i] = 0x30 + j;
-        idx++;
-    }
-    if (copyto) {
-        buf[1] = '.';
-        idx++;
-        carraycopy(buf3, 0, buf, idx, copyto);
-        idx += copyto;
-    }
-    delete[] buf3;
-
-    // Nice, the 'e' part
-    buf[idx] = u ? 'E' : 'e';
-    idx++;
-
-    // hmm, that was lame... oh, but the exponent sounds cool!
-    if (numdigits > 0) {
-        buf[idx] = '+';
-        idx++;
-    } else if (numdigits < 0) {
-        buf[idx] = '-';
-        idx++;
-    }
-    const char * buf2 = String(abs(numdigits));
-    carraycopy(buf2, 0, buf, idx, strlen(buf2));
-    idx += strlen(buf2);
-    buf[idx] = 0;
-
-    return buf;
-}
-
 bool startsWithHelper(idx_t from, const String& left, const String& right) {
     if (left.length() - from < right.length()) return false;
     suint count = 0;
-    for (idx_t i = 0; i < (left.length() - from); i++) {
-        if(i >= right.length()) break;
-        if (left.at(i + from) == right.at(i)) count++;
+    for (idx_t i = 0; i < right.length(); i++) {
+        if (left.at(i + from) == right.at(i)) {
+            count++;
+            if(count == right.length()) return true;
+        }
         else break;
     }
-    return count == right.length();
+    return false;
+}
+
+bool endsWithHelper(idx_t from, const String& left, const String& right) {
+    if (from < right.length() - 1) {
+        return false;
+    }
+    suint count = 0;
+    for (idx_t i = 0; i < right.length(); i++) {
+        if (left.at(from - i) == right.at(-i-1)) {
+            count++;
+            if(count == right.length()) return true;
+        } else break;
+    }
+    return false;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -281,13 +147,8 @@ String::String(const float f) {
     } else if (isnan(f)) {
         fromAscii("NaN");
     } else {
-        const char * buf;
-        if (f < 1e7f && f >= 1e-3f) {
-            buf = float2string(f);
-        } else {
-            buf = float2stringe(f, false);
-
-        }
+        char * buf = static_cast<char*>(GC_MALLOC_ATOMIC(20));
+        sprintf(buf,"%.7g",f);
         fromAscii(buf);
     }
 }
@@ -302,13 +163,8 @@ String::String(const double d) {
     } else if (isnan(d)) {
         fromAscii("NaN");
     } else {
-        const char * buf;
-        if (d < 1e7f && d >= 1e-3f) {
-            buf = double2string(d);
-        } else {
-            buf = double2stringe(d, false);
-
-        }
+        char * buf = static_cast<char*>(GC_MALLOC_ATOMIC(20));
+        sprintf(buf,"%.16g",d);
         fromAscii(buf);
     }
 }
@@ -325,8 +181,10 @@ std::size_t String::length() const {
     return strdata->data.length;
 }
 
-const uchar String::at(std::size_t idx) const {
-    return strdata->data[idx];
+const uchar String::at(sidx_t idx) const throw(ArrayException) {
+    try {
+        return strdata->data[idx];
+    } straced;
 }
 
 const char * String::ascii() const {
@@ -409,13 +267,7 @@ bool String::equalsIgnoreCase(const String other) const {
 }
 
 bool String::endsWith(const String other) const {
-    if (this->length() < other.length()) return false;
-    suint count = 0;
-    for (idx_t i = this->length() - 1; i > this->length() - other.length(); i--) {
-        if (this->at(i) == other.at(i)) count++;
-        else break;
-    }
-    return count == other.length();
+    return endsWithHelper(-1,*this,other);
 }
 
 bool String::startsWith(const String other) const {
@@ -440,15 +292,35 @@ String String::trim() const {
     return substring(beginct, endct);
 }
 
-String String::substring(std::idx_t begin) const {
-    return substring(begin, length());
+Array<String> String::split(Array<uchar> delimiters) const {
+    Vector<String> toReturn;
+
+    idx_t start = 0;
+    idx_t end = 0;
+
+    for(idx_t i = 0; i < length(); ++i) {
+        for(idx_t j = 0; j < delimiters.length; ++j) {
+            if(at(i) == delimiters[j]) {
+                end = i;
+                if(start != end) toReturn.add(substring(start,end-1));
+                start = end + 1;
+            }
+        }
+    }
+
+    return toReturn.toArray();
 }
 
-String String::substring(std::idx_t begin, std::idx_t end) const {
+String String::substring(idx_t begin) const throw(ArrayException) {
+    return substring(begin, length()-1);
+}
+
+String String::substring(idx_t begin, idx_t end) const throw(ArrayException) {
     return String(strdata->data[range(begin, end)]);
 }
 
-sidx_t String::indexOf(const String substr, idx_t start) const {
+sidx_t String::indexOf(const String substr, idx_t start) const
+        throw(ArrayException) {
     if (this->length() - start < substr.length()) return -1;
     for (idx_t i = start; i < (this->length() - substr.length()); i++) {
         if(startsWithHelper(i,*this,substr)) {
@@ -462,22 +334,17 @@ sidx_t String::lastIndexOf(const String substr) const {
     return lastIndexOf(substr, length() - 1);
 }
 
-sidx_t String::lastIndexOf(const String substr, idx_t start) const {
-    if (start < substr.length()) return -1;
-    suint currentidx = substr.length();
-    suint idxexport = 0;
-    for (idx_t i = start; i >= 0; i--) {
-        if (this->at(i) == substr.at(currentidx - 1)) {
-            currentidx--;
-        } else {
-            currentidx = substr.length();
-        }
-        if (currentidx == 0) {
-            idxexport = i;
-            break;
+sidx_t String::lastIndexOf(const String substr, idx_t start) const
+        throw(ArrayException) {
+    if (start < substr.length()) { 
+        return -1;
+    }
+    for (sidx_t i = start; i >= sidx_t(substr.length() - 1); i--) {
+        if(endsWithHelper(i,*this,substr)) {
+            return i-substr.length() + 1;
         }
     }
-    return currentidx == 0 ? idxexport : -1;
+    return -1;
 }
 
 String String::copy() const {
@@ -516,8 +383,8 @@ String String::fromOct(int i) {
 }
 
 String String::fromSci(float f, bool up) {
-    const char * buf;
-    buf = float2stringe(f,up);
+    char * buf = static_cast<char*>(GC_MALLOC_ATOMIC(20));
+    sprintf(buf, up?"%.6E" : "%6e", f);
     String toReturn;
     delete toReturn.strdata;
     toReturn.fromAscii(buf);
@@ -526,8 +393,8 @@ String String::fromSci(float f, bool up) {
 }
 
 String String::fromSci(double d, bool up) {
-    const char * buf;
-    buf = double2stringe(d,up);
+    char * buf = static_cast<char*>(GC_MALLOC_ATOMIC(20));
+    sprintf(buf, up?"%.15E" : "%15e", d);
     String toReturn;
     delete toReturn.strdata;
     toReturn.fromAscii(buf);
@@ -536,7 +403,8 @@ String String::fromSci(double d, bool up) {
 }
 
 bool String::boolValue() const {
-    return (*this&lc) == "true";
+    String l = (*this & lc);
+    return l == "true" || l == "1" || l == "yes" || l == "on";
 }
 
 sint String::intValue() const {
@@ -585,12 +453,14 @@ const String& String::operator=(const char * orig) const {
     strdata->refcount--;
     if (strdata->refcount == 0) delete strdata;
     fromUtf8(orig);
+    return *this;
 }
 
 const String& String::operator=(const std::string & orig) const {
     strdata->refcount--;
     if (strdata->refcount == 0) delete strdata;
     fromAscii(orig.c_str());
+    return *this;
 }
 
 const String& String::operator=(const String orig) const {
@@ -598,6 +468,7 @@ const String& String::operator=(const String orig) const {
     if (strdata->refcount == 0) delete strdata;
     strdata = orig.strdata;
     strdata->refcount++;
+    return *this;
 }
 
 String::operator const char *() const {
@@ -619,7 +490,7 @@ void String::fromAscii(const char* ascii) const {
 void String::fromUtf8(const char* unicode) const {
     size_t len = std::strlen(unicode);
     StringBuffer buf;
-    uchar current;
+    uchar current = 0;
     byte bytecount = 0;
     for (idx_t i = 0; i < len; i++) {
         unsigned char univalue = static_cast<unsigned char> (unicode[i]);
@@ -652,7 +523,7 @@ void String::fromUtf8(const char* unicode) const {
                     buf << (uchar)0xFFFD;
                 } else {
                     current += (univalue & 0x3F);
-                    buf << (char)current;
+                    buf << (uchar)current;
                     bytecount = 0;
                 }
                 break;
@@ -722,7 +593,7 @@ String operator&(String(*lhs)(const String), const String rhs) {
 
 String operator*(const String lhs, const std::size_t len) {
     StringBuffer buf;
-    for (int i = 0; i < len; i++) {
+    for (idx_t i = 0; i < len; i++) {
         buf << lhs;
     }
     return buf;

@@ -1,58 +1,60 @@
 /*
  * LibSylph Class Library
- * Copyright (C) 2009 Frank "SeySayux" Erens <seysayux@gmail.com>
+ * Copyright (C) 2011 Frank "SeySayux" Erens <seysayux@gmail.com>
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the LibSylph Pulbic License as published
- * by the LibSylph Developers; either version 1.0 of the License, or
- * (at your option) any later version.
+ * This software is provided 'as-is', without any express or implied
+ * warranty. In no event will the authors be held liable for any damages
+ * arising from the use of this software.
  *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the LibSylph
- * Public License for more details.
+ * Permission is granted to anyone to use this software for any purpose,
+ * including commercial applications, and to alter it and redistribute it
+ * freely, subject to the following restrictions:
  *
- * You should have received a copy of the LibSylph Public License
- * along with this Library, if not, contact the LibSylph Developers.
+ *   1. The origin of this software must not be misrepresented; you must not
+ *   claim that you wrote the original software. If you use this software
+ *   in a product, an acknowledgment in the product documentation would be
+ *   appreciated but is not required.
+ *
+ *   2. Altered source versions must be plainly marked as such, and must not be
+ *   misrepresented as being the original software.
+ *
+ *   3. This notice may not be removed or altered from any source
+ *   distribution.
  *
  * Created on 16 juli 2009, 14:41
  */
 
-#ifndef FILE_H_
-#define	FILE_H_
+#ifndef SYLPH_CORE_FILE_H_
+#define	SYLPH_CORE_FILE_H_
 
 #include "Object.h"
 #include "String.h"
 #include "Iterator.h"
 #include "Iterable.h"
 
-// Adapted from The Boost Libraries, v1.39.0. Original license follows:
-
-//  boost/filesystem/path.hpp  -----------------------------------------------//
-
-//  Copyright Beman Dawes 2002-2005
-//  Copyright Vladimir Prus 2002
-
-//  Distributed under the Boost Software License, Version 1.0. (See accompanying
-//  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
-
-//  See library home page at http://www.boost.org/libs/filesystem
-
-//  basic_path's stem(), extension(), and replace_extension() are based on
-//  basename(), extension(), and change_extension() from the original
-//  filesystem/convenience.hpp header by Vladimir Prus.
-
-//----------------------------------------------------------------------------//
-
 SYLPH_BEGIN_NAMESPACE
-SYLPH_PUBLIC
+
+// chmod constants
+const suint S_MOD_OWN = 0x100;
+const suint S_MOD_GRP = 0x010;
+const suint S_MOD_OTH = 0x001;
+const suint S_MOD_ALL = 0x111;
+
+const suint S_MOD_N = 0x8;
+const suint S_MOD_R = 0x4;
+const suint S_MOD_W = 0x2;
+const suint S_MOD_X = 0x1;
+const suint S_MOD_K = 0x0;
 
 /**
- * @todo Write documentation!
+ * File represents the path to a file.
+ * @todo update documentation!
  */
 class File : public virtual Object {
 public:
 
+    class iterator;
+    friend class iterator;
     class iterator : public BidirectionalIterator<String, iterator> {
 	friend class File;
     public:
@@ -67,7 +69,7 @@ public:
         bool hasNext() const;
 
         bool equals(const iterator& other) const {
-            return file == other.file && cur == other.cur && pos == other.pos;
+            return file == other.file && pos == other.pos;
         }
 
         iterator(const iterator& other) {
@@ -86,87 +88,241 @@ public:
     S_ITERABLE(String)
 public:
 
+    /**
+     * Default constructor. Creates an empty path reference.
+     */
     File() {
     }
 
+    /**
+     * Creates a file from given path.
+     * @param s A path in the notational conventions of the current OS.
+     */
     File(const String s) {
-        operator/=(s);
+        append(s,true);
     }
+
+    /**
+     * Creates a file from given path as a C string.
+     * @param s A path, as a C string, in the notational conventions of the
+     * current OS.
+     */
     File(const char* s) {
-        operator/=(String(s));
+        append(String(s),true);
     }
 
-    ~File() {
+    virtual ~File() {
     }
 
-    File & removeFilename();
-    File & replaceExtension(const String newExt = String());
+    /**
+     * Replaces the extension of this abstract pathname with given, or none.
+     * @return A reference to this File object.
+     */
+    File& replaceExtension(const String newExt = String());
 
+    /**
+     * @return A string, containg the internal representation of this pathname,
+     * in the notational conventions of the current OS.
+     */
     const String toString() const {
         return path;
     }
 
-    // file_string
-    const String nativeString() const;
+    /**
+     * @return the root this file is on (unix: '/')
+     * @crossplatform Does not work on Windows.
+     */
+    inline File rootPath() const {
+        return File(rootName());
+    }
 
-    File rootPath() const;
+    /**
+     * @return The root this file is on, as a string.
+     * @crossplatform Does not work on Windows.
+     */
     String rootName() const;
-    String rootDirectory() const;
-    File relativePath() const;
+
+    /** 
+     * @return The parent directory of this file.
+     */
     File parent() const;
+
+    /** 
+     * Returns the name of the file itself. The file name is defined as 
+     * everything in the path from the last file seperator to the end.
+     * E.g, <code>/var/log/foo</code> would give <code>foo</code>, 
+     * <code>/var/cache/</code> would give <code>cache</code>.
+     * @return The file name component of the path.
+     */
     String filename() const;
+
+    /**
+     * Returns the file name without the extension.
+     * @return The file name without the extension.
+     */
     String stem() const;
+
+    /**
+     * Returns the extension of this file. The extension is everything from the
+     * last dot to the end, unless the file name starts with a dot.
+     * @return The file extension.
+     */
     String extension() const;
 
-    bool empty() const {
+    /**
+     * @return If this File's path is equal to the emtpy path.
+     */
+    inline bool empty() const {
         return path == "";
     }
-    bool complete() const;
-    bool hasRootPath() const;
-    bool hasRootName() const;
-    bool hasRootDirectory() const;
 
-    bool hasRelativePath() const {
-        return !relativePath().empty();
+    /**
+     * Returns if this File's pathname is absolute. A pathname is absolute if
+     * and only if it's location is not relative to the current working
+     * directory, in other words it starts with a root.
+     * @return @c true if the path of this file is absolute
+     */
+    bool absolute() const;
+
+    /** */
+    bool canonical() const;
+
+    /** */
+    File toAbsolute() const;
+
+    /** */
+    inline String toAbsoluteName() const {
+        return toAbsolute().toString();
     }
 
+    /** */
+    File toCanonical() const;
+
+    /** */
+    inline String toCanonicalName() const {
+        return toAbsolute().toString();
+    }
+
+    /** */
     bool hasFilename() const {
-        return path != "";
+        return filename() != "";
     }
 
+    /** */
     bool hasParent() const {
         return !parent().empty();
     }
 
-    File & operator=(const String s) {
+    /**
+     * Checks whether a given pathname exists.
+     * @return true if and only if the pathname exists
+     * @throw IOException If an IO error occurs.
+     * @crossplatform Does not work on Windows.
+     */
+    bool exists() const throw(IOException);
+
+    /**
+     * Creates an empty file if it doesn't exist. 
+     * @return <i>true</i> if a new file is created, <i>false</i> otherwise.
+     * @throw IOException If an IO error occurs.
+     */
+    bool create() const throw(IOException);
+
+    /** 
+     * Attempts to remove this file if it exists.
+     * @return <i>true</i> if the file was successfully removed.
+     * @throw IOException if an IO error occurs.
+     */
+    bool remove() const throw(IOException);
+
+    /** */
+    bool canRead() const throw(IOException);
+
+    /** */
+    bool canWrite() const throw(IOException);
+
+    bool mkdir() const throw(IOException);
+
+    /** */
+    bool mkdirs() const throw(IOException);
+
+    /** */
+    bool isFile() const throw(IOException);
+
+    /** */
+    bool isDirectory() const throw(IOException);
+
+    /** */
+    bool chmod(suint mode, bool sylphmode = false) const throw(IOException);
+
+    /** */
+    Array<File> contents() const throw(IOException);
+
+    /** */
+    static File workingDir() throw(IOException);
+
+    /** */
+    inline File& operator=(const File& f) {
+        return operator=(f.path);
+    }
+
+    /** */
+    inline File& operator=(const String s) {
         path = "";
         operator/=(s);
         return *this;
     }
 
-    File & operator/=(const File & rhs) {
+    /** */
+    inline File& operator=(const char* s) {
+        return operator=(String(s));
+    }
+
+    /** */
+    File& operator/=(const File& rhs) {
         return operator /=(rhs.toString());
     }
 
-    File & operator/=(const String);
+    /** */
+    File& operator/=(const String);
+
+    /** */
+    inline File& operator/=(const char* s) {
+        return operator/=(String(s));
+    }
+
+    /** */
+    static const String Separator;
 
 private:
-    void appendSeparatorIfNeeded();
-    void append(uchar c);
+    File& append(String, bool);
 
     String path;
 };
 
-bool operator==(const File& lhs, const File& rhs);
-bool operator<(const File& lhs, const File& rhs);
+/** */
+inline bool operator==(const File& lhs, const File& rhs) {
+    return lhs.toCanonicalName() == rhs.toCanonicalName();
+}
+
+/** */
+inline bool operator<(const File& lhs, const File& rhs) {
+    return lhs.toCanonicalName() < rhs.toCanonicalName();
+}
+
+S_CMP_SEQ(const File&)
+
+/** */
 inline File operator/(const File& lhs, const File& rhs) {
     return File(lhs) /= rhs;
 }
+
+/** */
 inline std::ostream& operator<<(std::ostream& lhs, const File& rhs) {
     return lhs << rhs.toString();
 }
 
 SYLPH_END_NAMESPACE
 
-#endif	/* FILE_H_ */
+#endif	/* SYLPH_CORE_FILE_H_ */
 

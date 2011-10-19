@@ -1,25 +1,31 @@
 /*
  * LibSylph Class Library
- * Copyright (C) 2009 Frank "SeySayux" Erens <seysayux@gmail.com>
+ * Copyright (C) 2011 Frank "SeySayux" Erens <seysayux@gmail.com>
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the LibSylph Pulbic License as published
- * by the LibSylph Developers; either version 1.0 of the License, or
- * (at your option) any later version.
+ * This software is provided 'as-is', without any express or implied
+ * warranty. In no event will the authors be held liable for any damages
+ * arising from the use of this software.
  *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the LibSylph
- * Public License for more details.
+ * Permission is granted to anyone to use this software for any purpose,
+ * including commercial applications, and to alter it and redistribute it
+ * freely, subject to the following restrictions:
  *
- * You should have received a copy of the LibSylph Public License
- * along with this Library, if not, contact the LibSylph Developers.
+ *   1. The origin of this software must not be misrepresented; you must not
+ *   claim that you wrote the original software. If you use this software
+ *   in a product, an acknowledgment in the product documentation would be
+ *   appreciated but is not required.
+ *
+ *   2. Altered source versions must be plainly marked as such, and must not be
+ *   misrepresented as being the original software.
+ *
+ *   3. This notice may not be removed or altered from any source
+ *   distribution.
  *
  * Created on: 26 november 2008
  */
 
-#ifndef STRING_H_
-#define STRING_H_
+#ifndef SYLPH_CORE_STRING_H_
+#define SYLPH_CORE_STRING_H_
 
 #include "Object.h"
 #include "Comparable.h"
@@ -30,17 +36,15 @@
 // for convenience
 #include "I18N.h"
 
-#include <cstdint>
 #include <string>
 
 SYLPH_BEGIN_NAMESPACE
 
-SYLPH_PUBLIC
 
 /**
  * A integral type for storing an UTF-16 character
  */
-typedef std::uint16_t uchar;
+typedef sushort uchar;
 
 /**
  * This array contains the characters that are considered to be whitespace
@@ -218,13 +222,13 @@ public:
      * <li>If the magnitude is an integer, i.e. there is no decimal fraction,
      * the actual conversion will be done by the integer conversion algorithm.
      * </li>
-     * <li>If the magnitude is greater than or equal to 10<sup>-3</sup>, but
+     * <li>If the magnitude is greater than or equal to 10<sup>-4</sup>, but
      * less than 10<sup>7</sup> then it is represented as the integer part
      * in decimal form with no leading zeroes, followed by a dot ('.', U+002E),
      * followed by up to 8 digits representing the fractional part. No trailing
      * zeroes will be put in the resulting string.</li>
      * <li>If the magnitude is greater than or equal to 10<sup>7</sup>, or less
-     * than 10<sup>-3</sup>, the number will be represented in scientific
+     * than 10<sup>-4</sup>, the number will be represented in scientific
      * notation. It is composed of a single significant digit, followed by an
      * optional decimal fraction and an exponent. The decimal fraction consists
      * of a dot ('.', U+002E) and up to 8 significant digits without trailing
@@ -258,13 +262,13 @@ public:
      * <li>If the magnitude is an integer, i.e. there is no decimal fraction,
      * the actual conversion will be done by the integer conversion algorithm.
      * </li>
-     * <li>If the magnitude is greater than or equal to 10<sup>-3</sup>, but
+     * <li>If the magnitude is greater than or equal to 10<sup>-4</sup>, but
      * less than 10<sup>7</sup> then it is represented as the integer part
      * in decimal form with no leading zeroes, followed by a dot ('.', U+002E),
      * followed by up to 16 digits representing the fractional part. No trailing
      * zeroes will be put in the resulting string.</li>
      * <li>If the magnitude is greater than or equal to 10<sup>7</sup>, or less
-     * than 10<sup>-3</sup>, the number will be represented in scientific
+     * than 10<sup>-4</sup>, the number will be represented in scientific
      * notation. It is composed of a single significant digit, followed by an
      * optional decimal fraction and an exponent. The decimal fraction consists
      * of a dot ('.', U+002E) and up to 16 significant digits without trailing
@@ -298,7 +302,7 @@ public:
      * @param idx the index of the character to return
      * @return the character at the specified index, in UTF-16.
      */
-    const uchar at(std::size_t idx) const;
+    const uchar at(sidx_t idx) const throw(ArrayException);
 
     /**
      * Converts the String to ASCII. The conversion algorithm goes as follows:
@@ -396,6 +400,15 @@ public:
     String trim() const;
 
     /**
+     * Tokenizes a string with a given set of delimiters. This will split a
+     * String into tokens, with as boundary any character given in the array.
+     * Empty strings will not be included in the array.
+     * @param delimiters A set of delimiters, by default equal to @c spacechars.
+     * @return An array of Strings, containing each token.
+     */
+    Array<String> split(Array<uchar> delimiters = spacechars) const;
+
+    /**
      * Returns a new String containing all characters from the given index to
      * the end of the String. The index is 0-based. The length of the new
      * String will be equal to <code>length() - begin - 1</code>.
@@ -403,7 +416,7 @@ public:
      * @return A string containing all characters from the given begin index.
      * @throw ArrayException if <code>begin >= length()</code>.
      */
-    String substring(std::idx_t begin) const;
+    String substring(idx_t begin) const throw(ArrayException);
 
     /**
      * Returns a new String containing all characters from the given begin index
@@ -416,7 +429,8 @@ public:
      * @throw ArrayException if <code>begin >= length() || end >= length() ||
      * begin > end</code>.
      */
-    String substring(std::idx_t begin, std::idx_t end) const;
+    String substring(idx_t begin, idx_t end) const
+            throw(ArrayException);
 
     /**
      * Returns the first index from given start index in this String on which
@@ -427,7 +441,8 @@ public:
      * first character of that substring is returned, else -1 is returned.
      * @throw ArrayException if <code>start >= length()</code>
      */
-    sidx_t indexOf(const String substr, idx_t start = 0) const;
+    sidx_t indexOf(const String substr, idx_t start = 0) const
+            throw(ArrayException);
 
     /**
      * Returns the last index in this String on which the specified substring
@@ -447,7 +462,8 @@ public:
      * first character of that substring is returned, else -1 is returned.
      * @throw ArrayException if <code>end >= length()</code>
      */
-    sidx_t lastIndexOf(const String substr, idx_t end) const;
+    sidx_t lastIndexOf(const String substr, idx_t end) const
+            throw(ArrayException);
 
     String copy() const;
     bool merge(String other) const;
@@ -473,6 +489,7 @@ public:
     /**
      * Creates a string from given float in scientific notation. The returned
      * string will match the regex <code>[0-9]+[eE]-?[0-9]{1,2}</code>.
+     * Trailing zeroes will not be removed.
      * @param f A float to represent in scientific notation
      * @param up Whether to print the exponentional @c E in upper case.
      */
@@ -481,6 +498,7 @@ public:
     /**
      * Creates a string from given double in scientific notation. The returned
      * string will match the regex <code>[0-9]+[eE]-?[0-9]{1,2}</code>.
+     * Trailing zeroes will not be removed.
      * @param d A double to represent in scientific notation
      * @param up Whether to print the exponentional @c E in upper case.
      */
@@ -488,8 +506,9 @@ public:
 
     /**
      * Interprets this string as a bool.
-     * @return <i>true</i> iff this string equals ignoring case
-     * <code>"true"</code>, false otherwise.
+     * @return <i>true</i> iff this string equals ignoring case either
+     * <code>"true"</code>, <code>"yes"</code>, </code>"on"</code> or
+     * <code>"1</code>, false otherwise.
      */
     bool boolValue() const;
 
@@ -539,7 +558,14 @@ public:
     const String & operator=(const std::string & orig) const;
     const String & operator=(const String orig)const;
 
-    const String & operator+=(const String rhs)const;
+    /**
+     * Appends given String to this String. The internally shared data will be
+     * replaced by the new String, its reference count will be decreased by
+     * one and deleted if it reaches zero.
+     * @param rhs The String to append
+     * @return This String, with the new part appended to it.
+     */
+    const String& operator+=(const String rhs) const;
 
 
     /**
@@ -577,6 +603,10 @@ private:
 
 bool operator==(const String lhs, const String rhs);
 
+/**
+ * Overridden version of Hash<T> for String.
+ * @todo Explain how it works.
+ */
 template<>
 struct Hash<String> {
 
@@ -606,6 +636,12 @@ inline bool operator==(const char* rhs, const String lhs) {
     return operator==(String(rhs), lhs);
 }
 bool operator<(const String lhs, const String rhs);
+inline bool operator<(const String lhs, const char* rhs) {
+    return lhs < String(rhs);
+}
+inline bool operator<(const char* lhs, const String rhs) {
+    return String(lhs) < rhs;
+}
 String operator+(const String lhs, const String rhs);
 //String operator%(const String lhs, const String rhs);
 String operator&(const String lhs, String(*rhs)(const String));
@@ -617,9 +653,9 @@ String lc(const String rhs);
 String uc(const String rhs);
 String t(const String rhs);
 
-S_CMP_SEQ(String)
-S_CMP_SEQ_2(String,const char*)
+S_CMP_SEQ(const String)
+S_CMP_SEQ_2(const String,const char*)
 
 SYLPH_END_NAMESPACE
 
-#endif /* STRING_H_ */
+#endif /* SYLPH_CORE_STRING_H_ */

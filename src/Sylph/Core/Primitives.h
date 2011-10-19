@@ -1,33 +1,38 @@
 /*
  * LibSylph Class Library
- * Copyright (C) 2009 Frank "SeySayux" Erens <seysayux@gmail.com>
+ * Copyright (C) 2011 Frank "SeySayux" Erens <seysayux@gmail.com>
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the LibSylph Pulbic License as published
- * by the LibSylph Developers; either version 1.0 of the License, or
- * (at your option) any later version.
+ * This software is provided 'as-is', without any express or implied
+ * warranty. In no event will the authors be held liable for any damages
+ * arising from the use of this software.
  *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the LibSylph
- * Public License for more details.
+ * Permission is granted to anyone to use this software for any purpose,
+ * including commercial applications, and to alter it and redistribute it
+ * freely, subject to the following restrictions:
  *
- * You should have received a copy of the LibSylph Public License
- * along with this Library, if not, contact the LibSylph Developers.
+ *   1. The origin of this software must not be misrepresented; you must not
+ *   claim that you wrote the original software. If you use this software
+ *   in a product, an acknowledgment in the product documentation would be
+ *   appreciated but is not required.
+ *
+ *   2. Altered source versions must be plainly marked as such, and must not be
+ *   misrepresented as being the original software.
+ *
+ *   3. This notice may not be removed or altered from any source
+ *   distribution.
  *
  * Created on 7 april 2009, 20:19
  */
 
-#ifndef PRIMITIVES_H_
-#define	PRIMITIVES_H_
+#ifndef SYLPH_CORE_PRIMITIVES_H_
+#define	SYLPH_CORE_PRIMITIVES_H_
 
 #include "Object.h"
-#include <cstdint>
+#include <stdint.h>
 #define __STDC_FORMAT_MACROS
-#include <cinttypes>
+#include <inttypes.h>
 
 SYLPH_BEGIN_NAMESPACE
-SYLPH_PUBLIC
 
 SYLPH_END_NAMESPACE
 
@@ -66,14 +71,6 @@ typedef sulong ptr_t;
 
 typedef sulong fsize_t;
 typedef slong fssize_t;
-
-namespace std {
-    using ::sidx_t;
-    using ::idx_t;
-    using ::fsize_t;
-    using ::fssize_t;
-    using ::ptr_t;
-}
 
 #ifndef SYLPH_LIKELY
     #if __GNUC__ - 0 >= 3
@@ -136,5 +133,5 @@ namespace Convert {
 }
 SYLPH_END_NAMESPACE
 
-#endif	/* PRIMITIVES_H_ */
+#endif	/* SYLPH_CORE_PRIMITIVES_H_ */
 

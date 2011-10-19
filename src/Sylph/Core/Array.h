@@ -1,25 +1,31 @@
 /*
  * LibSylph Class Library
- * Copyright (C) 2009 Frank "SeySayux" Erens <seysayux@gmail.com>
+ * Copyright (C) 2011 Frank "SeySayux" Erens <seysayux@gmail.com>
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the LibSylph Pulbic License as published
- * by the LibSylph Developers; either version 1.0 of the License, or
- * (at your option) any later version.
+ * This software is provided 'as-is', without any express or implied
+ * warranty. In no event will the authors be held liable for any damages
+ * arising from the use of this software.
  *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the LibSylph
- * Public License for more details.
+ * Permission is granted to anyone to use this software for any purpose,
+ * including commercial applications, and to alter it and redistribute it
+ * freely, subject to the following restrictions:
  *
- * You should have received a copy of the LibSylph Public License
- * along with this Library, if not, contact the LibSylph Developers.
+ *   1. The origin of this software must not be misrepresented; you must not
+ *   claim that you wrote the original software. If you use this software
+ *   in a product, an acknowledgment in the product documentation would be
+ *   appreciated but is not required.
+ *
+ *   2. Altered source versions must be plainly marked as such, and must not be
+ *   misrepresented as being the original software.
+ *
+ *   3. This notice may not be removed or altered from any source
+ *   distribution.
  *
  * Created on 8 februari 2009, 14:18
  */
 
-#ifndef ARRAY_H_
-#define	ARRAY_H_
+#ifndef SYLPH_CORE_ARRAY_H_
+#define	SYLPH_CORE_ARRAY_H_
 
 #include "Iterable.h"
 #include "Iterator.h"
@@ -29,14 +35,16 @@
 #include "Primitives.h"
 
 #include <algorithm>
-#include <initializer_list>
 #include <iostream>
+
+#ifndef SYLPH_NO_CXX0X
+#include <initializer_list>
+#endif
 
 SYLPH_BEGIN_NAMESPACE
 class Any;
 template<class T> class Array;
 
-SYLPH_PUBLIC
 
 /**
  * Array provides a safe array. It works the same like a c-style array (not like
@@ -98,7 +106,7 @@ public:
         }
 
         bool hasPrevious() const {
-            return _currentIndex >= 0;
+            return _currentIndex > 0;
         }
 
         void previous() const {
@@ -142,7 +150,7 @@ public:
      */
     inline static Array<T> fromPointer(std::size_t length, T * orig) {
         Array<T> ar(length);
-        for (int x = 0; x < length; x++)ar[x] = orig[x];
+        for (idx_t x = 0; x < length; x++)ar[x] = orig[x];
         return ar;
     }
 public:
@@ -157,6 +165,7 @@ public:
             data(new Data(len)) {
     }
 
+#ifndef SYLPH_NO_CXX0X
     /**
      * Creates an Array from an intializer list. This constructor allows the
      * easier, more familiar syntax of Array creation, but requires C++0x. Using
@@ -173,6 +182,7 @@ public:
             data->_carray[i] = il.begin()[i];
         }
     }
+#endif
 
     /**
      * Creates an Array from an existing C-style array. Note that you can only
@@ -330,10 +340,10 @@ public:
     }
 
     /**
-     * Swaps the data pointer of this Array with the other Array. The refcount
+     * Sets the data pointer of this Array to the other Array's. The refcount
      * for the current data pointer gets decreased by 1, the refcount for the
      * data pointer of the other array gets increased by 1. In case the this
-     * Array'soriginal data pointer's refcount reaches zero, the original data
+     * Array's original data pointer's refcount reaches zero, the original data
      * will be deleted.
      * @param other The other array from which to use the data pointer
      */
@@ -355,11 +365,14 @@ public:
      * @param idx the index in the array from which to return an element
      * @throw ArrayException if <code>idx > length</code>
      */
-    T & operator[](std::sidx_t idx) throw (Exception) {
+    T & operator[](sidx_t idx) throw (Exception) {
         if ((idx < (sidx_t)length) && (idx >= -(sidx_t)length)) {
             return idx >= 0 ? data->_carray[idx] : data->_carray[length + idx];
         } else {
-            sthrow(ArrayException, "Array overflow");
+            char buf[2048];
+            sprintf(buf, "Array overflow - index: %d , length: %u",
+                    signed(idx), unsigned(length));
+            sthrow(ArrayException, buf);
         }
     }
 
@@ -370,11 +383,14 @@ public:
      * @param idx the index in the array from which to return an element
      * @throw ArrayException if <code>idx > length</code>
      */
-    const T & operator[](std::sidx_t idx) const throw (Exception) {
+    const T & operator[](sidx_t idx) const throw (Exception) {
         if ((idx < (sidx_t)length) && (idx >= -(sidx_t)length)) {
             return idx >= 0 ? data->_carray[idx] : data->_carray[length + idx];
         } else {
-            sthrow(ArrayException, "Array overflow");
+            char buf[2048];
+            sprintf(buf, "Array overflow - index: %d , length: %u",
+                    signed(idx), unsigned(length));
+            sthrow(ArrayException, buf);
         }
     }
 
@@ -386,12 +402,21 @@ public:
      * @param ran The range describing the slice.
      * @throw ArrayException if ran.last() > length
      */
-    Array<T> operator[](const range & ran) throw (Exception) {
-        if (ran.first() < 0 || ran.last() >= length)
-            sthrow(ArrayException, "Array overflow");
+    Array<T> operator[](const range & r) throw (Exception) {
+        range ran = r;
+        if(ran.inverse()) sthrow(ArrayException, "Inversed range");
+        ran.last = ran.last < 0 ? length + ran.last : ran.last;
+        ran.first = ran.first < 0 ? length + ran.first : ran.first;
+        if(ran.inverse()) ran.swap();
+        if (ran.first < 0 || ran.last >= length) {
+            char buf[2048];
+            sprintf(buf, "Array overflow - range: %u - %u , length: %u",
+                    ran.first, ran.last, unsigned(length));
+            sthrow(ArrayException, buf);
+        }
 
-        Array<T> toReturn = Array<T>::fromPointer((ran.last() - ran.first())+1,
-                data->_carray + ran.first());
+        Array<T> toReturn = Array<T>::fromPointer((ran.last - ran.first)+1,
+                data->_carray + ran.first);
         return toReturn;
     }
 
@@ -400,12 +425,20 @@ public:
      * @param ran The range describing the slice
      * @throw ArrayException if ran.last() > length
      */
-    const Array<T> operator[](const range & ran) const throw (Exception) {
-        if (ran.first() < 0 || ran.last() >= length)
-            sthrow(ArrayException, "Array overflow");
+    const Array<T> operator[](const range & r) const throw (Exception) {
+        range ran = r;
+        ran.last = ran.last < 0 ? length + ran.last : ran.last;
+        ran.first = ran.first < 0 ? length + ran.first : ran.first;
+        if(ran.inverse()) ran.swap();
+        if (ran.first < 0 || ran.last >= length) {
+            char buf[2048];
+            sprintf(buf, "Array overflow - range: %u - %u , length: %u",
+                    ran.first, ran.last, unsigned(length));
+            sthrow(ArrayException, buf);
+        }
 
-        Array<T> toReturn = Array<T>::fromPointer((ran.last() - ran.first())+1,
-                data->_carray + ran.first());
+        Array<T> toReturn = Array<T>::fromPointer((ran.last - ran.first)+1,
+                data->_carray + ran.first);
         return toReturn;
     }
 
@@ -494,5 +527,6 @@ std::ostream& operator<<(std::ostream& out, const Array<T>& rhs) {
 
 SYLPH_END_NAMESPACE
 
-#endif	/* ARRAY_H_ */
+#endif	/* SYLPH_CORE_ARRAY_H_ */
+
 

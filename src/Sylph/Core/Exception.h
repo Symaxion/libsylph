@@ -1,29 +1,37 @@
 /*
  * LibSylph Class Library
- * Copyright (C) 2009 Frank "SeySayux" Erens <seysayux@gmail.com>
+ * Copyright (C) 2011 Frank "SeySayux" Erens <seysayux@gmail.com>
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the LibSylph Pulbic License as published
- * by the LibSylph Developers; either version 1.0 of the License, or
- * (at your option) any later version.
+ * This software is provided 'as-is', without any express or implied
+ * warranty. In no event will the authors be held liable for any damages
+ * arising from the use of this software.
  *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the LibSylph
- * Public License for more details.
+ * Permission is granted to anyone to use this software for any purpose,
+ * including commercial applications, and to alter it and redistribute it
+ * freely, subject to the following restrictions:
  *
- * You should have received a copy of the LibSylph Public License
- * along with this Library, if not, contact the LibSylph Developers.
+ *   1. The origin of this software must not be misrepresented; you must not
+ *   claim that you wrote the original software. If you use this software
+ *   in a product, an acknowledgment in the product documentation would be
+ *   appreciated but is not required.
+ *
+ *   2. Altered source versions must be plainly marked as such, and must not be
+ *   misrepresented as being the original software.
+ *
+ *   3. This notice may not be removed or altered from any source
+ *   distribution.
  *
  * Created on 14 november 2008, 8:07
  */
 
-#ifndef EXCEPTION_H_
-#define	EXCEPTION_H_
+#ifndef SYLPH_CORE_EXCEPTION_H_
+#define	SYLPH_CORE_EXCEPTION_H_
 
 #include "Object.h"
 
 #include <exception>
+#include <cstdio>
+
 #include "Primitives.h"
 #include "CurrentFunction.h"
 
@@ -145,17 +153,17 @@ public:
         }
     }
 
+protected:
+    const char * _reason;
+public:
+    const char * _file;
+    const unsigned int _line;
+    
     mutable struct TraceMessage {
         mutable const char * message;
         mutable TraceMessage * next;
     } * tracemsg;
-protected:
-    const char * _reason;
-public:
-#ifndef SYLPH_DOXYGEN
-    const char * _file;
-    const unsigned int _line;
-#endif
+
 };
 
 #define S_CREATE_EXCEPTION(Class) \
@@ -188,12 +196,10 @@ public: \
  * ...
  */
 S_CREATE_EXCEPTION(ArrayException);
-S_CREATE_EXCEPTION(EncodingException);
 /**
- * A genreric Exception which gets thrown whenever something goes wrong in the
- * File class.
+ * A generic exception for an unexpected value supplied to a parser.
  */
-S_CREATE_EXCEPTION(FileException);
+S_CREATE_EXCEPTION(ParseException);
 /**
  * This is a generic exception for I/O errors. It can get thrown for example
  * when a file doesn't exist, when a file can't be accessed, when an socket
@@ -241,12 +247,15 @@ catch(::Sylph::Exception& ex) { \
 #ifdef SYLPH_DEBUG
 #define straced strace
 #else
-#define straced do{} while(0)
+#define straced \
+catch(::Sylph::Exception& ex) { \
+    throw; \
+} do{} while(0)
 #endif
 
 #define if_nullptr(__x) if(SYLPH_UNLIKELY(__x == 0))
 #define check_nullptr(__x) if_nullptr(__x) sthrow (NullPointerException, \
     "Dereferenced a null pointer")
         
-#endif	/* EXCEPTION_H_ */
+#endif	/* SYLPH_CORE_EXCEPTION_H_ */
 

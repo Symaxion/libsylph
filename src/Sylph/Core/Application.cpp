@@ -1,9 +1,35 @@
+/*
+ * LibSylph Class Library
+ * Copyright (C) 2011 Frank "SeySayux" Erens <seysayux@gmail.com>
+ *
+ * This software is provided 'as-is', without any express or implied
+ * warranty. In no event will the authors be held liable for any damages
+ * arising from the use of this software.
+ *
+ * Permission is granted to anyone to use this software for any purpose,
+ * including commercial applications, and to alter it and redistribute it
+ * freely, subject to the following restrictions:
+ *
+ *   1. The origin of this software must not be misrepresented; you must not
+ *   claim that you wrote the original software. If you use this software
+ *   in a product, an acknowledgment in the product documentation would be
+ *   appreciated but is not required.
+ *
+ *   2. Altered source versions must be plainly marked as such, and must not be
+ *   misrepresented as being the original software.
+ *
+ *   3. This notice may not be removed or altered from any source
+ *   distribution.
+ *
+ */
+
 #include "Application.h"
 #include "String.h"
 #include "File.h"
 
 #include <iostream>
 #include <cstdlib>
+#include <unicode/uclean.h>
 
 #include "../OS/LinuxBundleAppSelf.h"
 #include "../OS/LinuxFHSAppSelf.h"
@@ -52,8 +78,12 @@ ApplicationSelf * Application::self_app = 0;
     }
 
     void ApplicationSelf::_preconstruct() {
-        // can be used for preconstruction. Doesn't do anything yet (used for
-        // gc, but Object now handles this)
+        // Unicode stuff
+        UErrorCode err = U_ZERO_ERROR;
+        u_init(&err);
+        if(U_FAILURE(err)) {
+            fail(u_errorName(err));
+        }
     }
 
     AppType ApplicationSelf::appType() {
@@ -62,22 +92,23 @@ ApplicationSelf * Application::self_app = 0;
 
     ApplicationSelf::~ApplicationSelf() {}
 
-    void ApplicationSelf::fail(const String reason) {
-        _fail(appName(), reason);
+    void ApplicationSelf::fail(const String reason, bool exit) {
+        _fail(appName(), reason, exit);
     }
     void ApplicationSelf::fail(const String reason, const String file,
-            unsigned int line) {
-        _fail(appName(), reason, file, line);
-    }
-    void ApplicationSelf::_fail(const String appName, const String reason) {
-        std::cout << appName <<" error: " << reason << std::endl;
-        exit(1);
+            unsigned int line, bool exit) {
+        _fail(appName(), reason, file, line, exit);
     }
     void ApplicationSelf::_fail(const String appName, const String reason,
-                const String file, unsigned int line) {
+            bool exit) {
+        std::cout << appName <<" error: " << reason << std::endl;
+        if(exit) ::exit(1);
+    }
+    void ApplicationSelf::_fail(const String appName, const String reason,
+                const String file, unsigned int line, bool exit) {
         std::cout << appName <<" error: " << reason << "@" << file << ":" <<
            line << std::endl;
-        exit(1);
+        if(exit) ::exit(1);
     }
 
 SYLPH_END_NAMESPACE
