@@ -8,7 +8,7 @@
 #ifndef INTERNAL_BASE_H_
 #define	INTERNAL_BASE_H_
 
-#include "../Core/Common.h"
+#include "../Sylph.h"
 
 #define SYLPH_START_MATHNS SYLPH_START_NAMESPACE namespace Math {
 #define SYLPH_END_MATHNS } SYLPH_END_NAMESPACE
