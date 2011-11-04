@@ -21,17 +21,31 @@
  *   3. This notice may not be removed or altered from any source
  *   distribution.
  *
- * Created on 16 maart 2010, 15:23
  */
 
-#ifndef SYLPH_MATH_INTERNAL_BASE_H_
-#define	SYLPH_MATH_INTERNAL_BASE_H_
+#include "internal_base.h"
 
-#include "../Sylph.h"
-#include <cmath>
+SYLPH_BEGIN_MATHNS
+#define S_OVER / FracHelper() /
+#if !defined(SYLPH_NO_KEYWORDS) && !defined(SYLPH_NO_OVER)
+#define over S_OVER
+#endif
 
-#define SYLPH_BEGIN_MATHNS SYLPH_BEGIN_NAMESPACE namespace Math {
-#define SYLPH_END_MATHNS } SYLPH_END_NAMESPACE
+    class FracHelper {
+    };
 
-#endif	/* SYLPH_MATH_INTERNAL_BASE_H_ */
+    class FracHelper2 {
+    public:
+        FracHelper2(sint _i) : i(_i) {}
+        sint i;
+    }:
 
+    FracHelper2 operator/(sint i, FracHelper) {
+        return FracHelper2(i);
+    }
+
+    frac operator/(FracHelper2 h, suint i) {
+        return frac(h.i,i);
+    }
+
+SYLPH_END_MATHNS

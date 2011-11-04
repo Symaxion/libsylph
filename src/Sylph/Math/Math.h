@@ -21,17 +21,9 @@
  *   3. This notice may not be removed or altered from any source
  *   distribution.
  *
- * Created on 16 maart 2010, 15:23
  */
 
-#ifndef SYLPH_MATH_INTERNAL_BASE_H_
-#define	SYLPH_MATH_INTERNAL_BASE_H_
+#ifndef SYLPH_MATH_MATH_H_
+#define SYLPH_MATH_MATH_H_
 
-#include "../Sylph.h"
-#include <cmath>
-
-#define SYLPH_BEGIN_MATHNS SYLPH_BEGIN_NAMESPACE namespace Math {
-#define SYLPH_END_MATHNS } SYLPH_END_NAMESPACE
-
-#endif	/* SYLPH_MATH_INTERNAL_BASE_H_ */
-
+#endif /* SYLPH_MATH_MATH_H_ */

@@ -21,17 +21,32 @@
  *   3. This notice may not be removed or altered from any source
  *   distribution.
  *
- * Created on 16 maart 2010, 15:23
  */
 
-#ifndef SYLPH_MATH_INTERNAL_BASE_H_
-#define	SYLPH_MATH_INTERNAL_BASE_H_
+#ifndef SYLPH_MATH_PLANE_H_
+#define SYLPH_MATH_PLANE_H_
 
-#include "../Sylph.h"
-#include <cmath>
+#include "internal_base.h"
+#include "Vector.h"
 
-#define SYLPH_BEGIN_MATHNS SYLPH_BEGIN_NAMESPACE namespace Math {
-#define SYLPH_END_MATHNS } SYLPH_END_NAMESPACE
+SYLPH_BEGIN_MATHNS
+    template<class Number>
+    class Plane3 {
+    public:
+        Plane3(Vector3<Number> normal, 
+                Vector3<Number> position = Vector3<Number>::zero);
+        Plane3(Vector3<Number> a, Vector3<Number> b, Vector3<Number> c);
+        
+        static Plane<Number> fromDirection(Vector3<Number> pos,
+                Vector3<Number> a, Vector3<Number> b) {
+            // TODO
+        }
+    private:
+        Number x, y, z, t;
+    };
 
-#endif	/* SYLPH_MATH_INTERNAL_BASE_H_ */
+    typedef Plane3<float> Plane3f;
+    typedef Plane3<double> Plane3d;
+SYLPH_END_MATHNS
 
+#endif /* SYLPH_MATE_PLANE_H_ */

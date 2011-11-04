@@ -21,17 +21,38 @@
  *   3. This notice may not be removed or altered from any source
  *   distribution.
  *
- * Created on 16 maart 2010, 15:23
  */
 
-#ifndef SYLPH_MATH_INTERNAL_BASE_H_
-#define	SYLPH_MATH_INTERNAL_BASE_H_
+#ifndef SYLPH_MATH_LINE_H_
+#define SYLPH_MATH_LINE_H_
 
-#include "../Sylph.h"
-#include <cmath>
+#include "internal_base.h"
+#include "../Core/Sequence.h"
+#include "Vector.h"
 
-#define SYLPH_BEGIN_MATHNS SYLPH_BEGIN_NAMESPACE namespace Math {
-#define SYLPH_END_MATHNS } SYLPH_END_NAMESPACE
+SYLPH_BEGIN_MATHNS
 
-#endif	/* SYLPH_MATH_INTERNAL_BASE_H_ */
+template<class Number>
+class Line2 {
+public:
+private:
+    Number slope;
+    Number yIntercept;
+};
 
+typedef Line2<float> Line2f;
+typedef Line2<double> Line2d;
+
+template<class Number>
+class Line3 {
+public:
+private:
+    Vector<Number,3> direction;
+    Vector<Number,3> position;
+}
+
+typedef Line3<float> Line3f;
+typedef Line3<double> Line3f;
+SYLPH_END_MATHNS
+
+#endif /* SYLPH_MATH_LINE_H_ */

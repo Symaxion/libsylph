@@ -21,17 +21,22 @@
  *   3. This notice may not be removed or altered from any source
  *   distribution.
  *
- * Created on 16 maart 2010, 15:23
  */
 
-#ifndef SYLPH_MATH_INTERNAL_BASE_H_
-#define	SYLPH_MATH_INTERNAL_BASE_H_
+#ifndef SYLPH_MATH_QUATERNION_H_
+#define SYLPH_MATH_QUATERNION_H_
 
-#include "../Sylph.h"
-#include <cmath>
+#include "internal_base.h"
 
-#define SYLPH_BEGIN_MATHNS SYLPH_BEGIN_NAMESPACE namespace Math {
-#define SYLPH_END_MATHNS } SYLPH_END_NAMESPACE
+SYLPH_BEGIN_MATHNS
 
-#endif	/* SYLPH_MATH_INTERNAL_BASE_H_ */
+template<class Number>
+class Quaternion : public Object {
+public:
+    Quaternion(Number r = 0, Number i = 0, Number j = 0, Number k = 0) :
+            r(r), i(i), j(j), k(k) {}
+private:
+    Number r,i,j,k;
+};
 
+SYLPH_END_MATHNS
