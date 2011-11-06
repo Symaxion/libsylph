@@ -32,11 +32,11 @@ SYLPH_BEGIN_MATHNS
     class frac {
     public:
         inline frac(sint _n = 0, suint _d = 1) : n(_n), d(_d) {
-            // abc();            
+            simplify();
         }
 
         // TODO
-        explicit frac(float f) {
+        explicit frac(float f) {
         }
 
         // TODO
@@ -94,14 +94,14 @@ SYLPH_BEGIN_MATHNS
 
         inline frac& operator+=(int i) {
             n += d*i;
-            //abc();
+            simplify();
             return *this;
         }
 
         inline frac& operator+=(const frac& f) {
             n = n*f.d + f.n * d;
             d *= f.d;
-            //abc();
+            simplify();
             return *this;
         }
 
@@ -115,27 +115,27 @@ SYLPH_BEGIN_MATHNS
 
         inline frac& operator*=(int i) {
             n *= i;
-            //abc();
+            simplify();
             return *this;
         }
 
         inline frac& operator*=(const frac& f) {
             n *= f.n;
             d *= f.d;
-            //abc();
+            simplify();
             return *this;
         }
 
         inline frac& operator/=(int i) {
             d *= i;
-            //abc();
+            simplify();
             return *this;
         }
 
         inline frac& operator/=(const frac& f) {
             n *= f.d;
             d *= f.n;
-            //abc();
+            simplify();
             return *this;
         }
 
@@ -143,7 +143,7 @@ SYLPH_BEGIN_MATHNS
             return n == f.n && d == f.d;
         }
 
-        inline bool operator==(int i) {
+        inline bool operator==(int i) const {
             return n == i && d == 1;
         }
 
@@ -152,7 +152,7 @@ SYLPH_BEGIN_MATHNS
         }
 
         inline bool operator<(int i) const {
-            return n < d * i;
+            return n < signed(d * i);
         }
 
         inline operator int() const {
@@ -168,13 +168,13 @@ SYLPH_BEGIN_MATHNS
         }
 
     private:
-        /* TODO
-        
-        inline void abc() {
-            suint a = gcd(n,d);
+        inline void simplify() {
+            // TODO: get GCD to work with IsIntegral trait
+            //suint a = gcd(n,d);
+            suint a = 1;
             n /= a;
             d /= a;
-        } */
+        }
 
         sint n;
         suint d;
@@ -244,6 +244,14 @@ SYLPH_BEGIN_MATHNS
         return frac(l) /= r;
     }
 
+    inline bool operator==(int l, const frac& r) {
+        return r == l;
+    }
+
+    inline bool operator<(int l, const frac& r) {
+        return signed(den(r) * l) < num(r);
+    }
+
     S_CMP_SEQ(const frac&)
     S_CMP_SEQ_2(int,const frac&)
 
@@ -282,7 +290,7 @@ SYLPH_BEGIN_MATHNS
     frac pow(frac x, suint y) {
        if(y == 0) return 1;
        if(x == 0) return 0;
-       for(sint i = 0; i < y; ++i) {
+       for(suint i = 0; i < y; ++i) {
            x *= x;
        }
        return x;

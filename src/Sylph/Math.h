@@ -23,7 +23,7 @@
  *
  */
 
-#ifndef SYLPH_MATH_MATH_H_
-#define SYLPH_MATH_MATH_H_
+#ifndef SYLPH_MATH_H_
+#define SYLPH_MATH_H_
 
-#endif /* SYLPH_MATH_MATH_H_ */
+#endif /* SYLPH_MATH_H_ */

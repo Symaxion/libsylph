@@ -27,15 +27,21 @@
 #define SYLPH_MATH_FUNCTIONS_H_
 
 #include "internal_base.h"
+
 #include "../Core/Function.h"
 
 SYLPH_BEGIN_MATHNS
-    class anglef;
-    class angled;
-    class complexf;
-    class complexd;
-    class vec2f;
-    class vec2d;
+    template<class T> class Angle;
+    typedef Angle<float> anglef;
+    typedef Angle<double> angled;
+
+    template<class T> class Complex;
+    typedef Complex<float> complexf;
+    typedef Complex<double> complexd;
+
+    template<class T> class Vector2;
+    typedef Vector2<float> vec2f;
+    typedef Vector2<double> vec2d;
 
     const double E = M_E;
     const double LOG2E = M_LOG2E;
@@ -49,79 +55,6 @@ SYLPH_BEGIN_MATHNS
     const double SQRT2 = M_SQRT2;
     const double SQRT1_2 = M_SQRT1_2;
 
-    inline anglef acos(float a);
-    inline angled acos(double a);
-
-    inline anglef asin(float a);
-    inline angled asin(double a);
-
-    inline anglef atan(float a);
-    inline angled atan(double a);
-
-    inline anglef atan2(float a, float b);
-    inline angled atan2(double a, double a);
-
-    inline float cos(anglef a);
-    inline double cos(angled a);
-
-    inline float cot(anglef a);
-    inline double cot(angled a);
-
-    inline float csc(anglef a);
-    inline double csc(angled a);
-
-    inline float sec(anglef a);
-    inline double sec(angled a);
-
-    inline float sin(anglef a);
-    inline double sin(angled a);
-
-    inline float tan(anglef a);
-    inline double tan(anglef a);
-
-    inline float fastcos(anglef a) {
-        return fastsin(a + PI/2);
-    }
-
-    inline double fastcos(angled a) {
-        return fastsin(a + PI/2);
-    }
-
-    inline float fastcot(anglef a) {
-        return fastcos(a) / fastsin(a);
-    }
-
-    inline double fastcot(angled a) {
-        return fastcos(a) / fastsin(a);
-    }
-
-    inline float fastcsc(anglef a) {
-        return 1 / fastsin(a);
-    }
-
-    inline double fastcsc(angled a) {
-        return 1 / fastsin(a);
-    }
-
-    inline float fastsec(anglef a) {
-        return 1 / fastcos(a);
-    }
-
-    inline double fastsec(angled a) {
-        return 1 / fastcos(a);
-    }
-
-    float fastsin(anglef);
-    double fastsin(angled);
-
-    inline float fasttan(anglef a) {
-        return fastsin(a) / fastcos(a);
-    }
-
-    inline double fasttan(angled a) {
-        return fastsin(a) / fastcos(a);
-    }
-
     inline float exp(float a);
     inline double exp(double a);
 
@@ -131,8 +64,12 @@ SYLPH_BEGIN_MATHNS
     inline float expm1(float a);
     inline double expm1(double a);
 
-    inline float log(float a);
-    inline double log(double a);
+    inline float log(float a) {
+        return ::logf(a);
+    }
+    inline double log(double a) {
+        return ::log(a);
+    }
 
     inline float ln(float a);
     inline double ln(double a);
@@ -146,39 +83,43 @@ SYLPH_BEGIN_MATHNS
     inline float log1p(float a);
     inline double log1p(double a);
 
-    inline float logn(float a, float n) {
+    inline float logn(float a, float b) {
         return log(a)/log(b);
     }
 
-    inline double logn(double a, double n) {
+    inline double logn(double a, double b) {
         return log(a)/log(b);
     }
 
-    inline float modf(float a, float* a);
-    inline double modf(double* a, double* a);
+    inline float modf(float a, float* b);
+    inline double modf(double a, double* b);
 
-    inline float ldexp(float a, int a);
-    inline double ldexp(double a, int a);
+    inline float ldexp(float a, int b);
+    inline double ldexp(double a, int b);
 
-    inline float frexp(float a, int* a);
-    inline double frexp(double a, int* a);
+    inline float frexp(float a, int* b);
+    inline double frexp(double a, int* b);
 
     inline int ilogb(float a);
     inline int ilogb(double a);
 
-    inline float scalbn(float a, int a);
-    inline double scalbn(double a, int a);
+    inline float scalbn(float a, int b);
+    inline double scalbn(double a, int b);
     
     inline byte abs(byte a);
     inline sshort abs(sshort a);
-    inline sint abs(sint a);
+    inline sint abs(sint a) {
+        return ::abs(a);
+    }
     inline slong abs(slong a);
 
     inline float abs(float a);
     inline double abs(double a);
 
     inline float cbrt(float a);
-    inline double cbrt(double a);
+    inline double cbrt(double a) {
+        return ::pow(a,1.0/3.0);
+    }
 
     inline float hypot(float a);
     inline double hypot(double a);
@@ -189,7 +130,9 @@ SYLPH_BEGIN_MATHNS
     inline double pow(double a, double b);
 
     inline float sqrt(float a);
-    inline double sqrt(double a);
+    inline double sqrt(double a) {
+        return ::sqrt(a);
+    }
 
     inline float erf(float a);
     inline double erf(double a);

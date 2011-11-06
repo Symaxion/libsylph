@@ -23,6 +23,9 @@
  *
  */
 
+#ifndef SYLPH_MATH_FRACHELPER_H_
+#define SYLPH_MATH_FRACHELPER_H_
+
 #include "internal_base.h"
 
 SYLPH_BEGIN_MATHNS
@@ -38,7 +41,7 @@ SYLPH_BEGIN_MATHNS
     public:
         FracHelper2(sint _i) : i(_i) {}
         sint i;
-    }:
+    };
 
     FracHelper2 operator/(sint i, FracHelper) {
         return FracHelper2(i);
@@ -49,3 +52,5 @@ SYLPH_BEGIN_MATHNS
     }
 
 SYLPH_END_MATHNS
+
+#endif /* SYLPH_MATH_FRACHELPER_H_ */

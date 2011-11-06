@@ -39,11 +39,11 @@ SYLPH_BEGIN_MATHNS
         inline Complex(Number _r = 0, Number _i = 0) : r(_r), i(_i) {}
 
         template<class N>
-        inline Complex(const std::complex<N>& c) : real(c.real()), 
-                imag(c.imag()) {} 
+        inline Complex(const std::complex<N>& c) : r(c.real()),
+                i(c.imag()) {}
         
         template<class N>
-        inline Complex(const Complex<N>& c) : real(c.real()), imag(c.imag()) {}
+        inline Complex(const Complex<N>& c) : r(c.real()), i(c.imag()) {}
 
         inline Number& real() { 
             return r;
@@ -66,7 +66,7 @@ SYLPH_BEGIN_MATHNS
         }
 
         template<class N>
-        inline Complex& operator=(const Comples<N>& c) {
+        inline Complex& operator=(const Complex<N>& c) {
             r = c.r;
             i = c.i;
             return *this;
@@ -139,10 +139,10 @@ SYLPH_BEGIN_MATHNS
         Number r, i;
     };
 
-    typedef Complexf Complex<float>;
-    typedef Complexd Complex<double>;
-    typedef complexf Complexf;
-    typedef complexd Complexd;
+    typedef Complex<float> Complexf;
+    typedef Complex<double> Complexd;
+    typedef Complexf complexf;
+    typedef Complexd complexd;
 
     template<class Number>
     inline Number& real(Complex<Number>& c) {
@@ -171,7 +171,7 @@ SYLPH_BEGIN_MATHNS
 
     template<class Number>
     inline Number abs(const Complex<Number>& c) {
-        return sqrt(norm(abs));
+        return sqrt(norm(c));
     }
 
     template<class Number>

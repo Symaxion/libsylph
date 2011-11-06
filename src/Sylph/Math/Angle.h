@@ -28,6 +28,8 @@
 
 #include "internal_base.h"
 
+#include "Functions.h"
+
 SYLPH_BEGIN_MATHNS
 
 #define RAD * 1
@@ -58,12 +60,15 @@ SYLPH_BEGIN_MATHNS
             return value;
         }
     private:
-        static auto wrapH = Sylph::wrap(-PI,PI);
+        static function<Number(Number)> wrapH;
         void wrap(Number n) {
-            value = (n = wrapH(n)) flteq -PI ? PI : n;
+            value = (n = wrapH(n)) == -PI ? PI : n;
         }
         Number value;
     };
+
+    template<class Number>
+    function<Number(Number)> Angle<Number>::wrapH = Sylph::Math::wrap(-PI,PI);
 
     typedef Angle<float> anglef;
     typedef Angle<double> angled;
@@ -71,13 +76,16 @@ SYLPH_BEGIN_MATHNS
     template<class Number>
     class Angle3 {
     private:
-        typedef Angle<Number> Angle;
+        typedef Angle<Number> Angle_;
     public:
-        Angle x,y,z;
+        Angle_ x,y,z;
     public:
-        Angle3(Angle _x = 0, Angle _y = 0, Angle _z = 0) :
+        Angle3(Angle_ _x = 0, Angle_ _y = 0, Angle_ _z = 0) :
                 x(_x), y(_y), z(_z) {}
     };
 SYLPH_END_MATHNS
+
+// Keep this at the bottom
+#include "TrigFunctions.h"
 
 #endif /* SYLPH_MATH_ANGLE_H_ */

@@ -28,6 +28,7 @@
 
 #include "internal_base.h"
 #include "Angle.h"
+#include "TrigFunctions.h"
 
 SYLPH_BEGIN_MATHNS
     template<class Number>
@@ -38,11 +39,11 @@ SYLPH_BEGIN_MATHNS
         static Vector2<Number> unitY;
         static Vector2<Number> unitXY;
     public:
-        Vector() : x(0), y(0) {}
-        Vector(Number _x, Number _y) : x(_x), y(_y) {}
+        Vector2() : x(0), y(0) {}
+        Vector2(Number _x, Number _y) : x(_x), y(_y) {}
 
-        auto mag() const -> decltype(sqrt(normSq)) {
-            return std::sqrt(normSq);
+        auto mag() const -> decltype(sqrt(Number(0))) {
+            return std::sqrt(magSq());
         }
 
         Number magSq() const {
@@ -56,12 +57,12 @@ SYLPH_BEGIN_MATHNS
             return toReturn;
         }
 
-        bool multipleOf(const Vector& v2) const {
+        bool multipleOf(const Vector2& v2) const {
             return x*v2.y == y * v2.x;
         }
 
         bool isUnitVector() const {
-            return normSq == 1.0f;
+            return magSq() == 1.0f;
         }
 
         Vector2<Number> operator-() const {
@@ -161,8 +162,8 @@ SYLPH_BEGIN_MATHNS
     template<class Number>
     class Vector3 {
     public:
-        Vector() : x(0), y(0) {}
-        Vector(Number _x, Number _y, Number _z) : x(_x), y(_y), z(_z) {}
+        Vector3() : x(0), y(0) {}
+        Vector3(Number _x, Number _y, Number _z) : x(_x), y(_y), z(_z) {}
 
         Number norm() {
             return std::sqrt(x*x + y*y + z*z);
@@ -179,36 +180,36 @@ SYLPH_BEGIN_MATHNS
         return atan2(a.y,a.x);
     }
 
-    typedef Vector2f Vector2<float>;
-    typedef Vector2d Vector2<double>;
-    typedef Vector3f Vector3<float>;
-    typedef Vector3d Vector3<double>;
+    typedef Vector2<float> Vector2f;
+    typedef Vector2<double> Vector2d;
+    typedef Vector3<float> Vector3f;
+    typedef Vector3<double> Vector3d;
 
-    typedef vec2f Vector2f;
-    typedef vec2d Vector2d;
-    typedef vec3f Vector3f;
-    typedef vec3d Vector3d;
+    typedef Vector2f vec2f;
+    typedef Vector2d vec2d;
+    typedef Vector3f vec3f;
+    typedef Vector3d vec3d;
 
 
-    typedef Point2f Vector2f;
-    typedef Point2d Vector2d;
-    typedef Point3f Vector2f;
-    typedef Point3d Vector3d;
+    typedef Vector2f Point2f;
+    typedef Vector2d Point2d;
+    typedef Vector2f Point3f;
+    typedef Vector3d Point3d;
 
-    typedef pt2f Point2f;
-    typedef pt2d Point2d;
-    typedef pt3f Point3f;
-    typedef pt3d Point3d;
+    typedef Point2f pt2f;
+    typedef Point2d pt2d;
+    typedef Point3f pt3f;
+    typedef Point3d pt3d;
 
-    typedef Size2f Vector2f;
-    typedef Size3f Vector3f;
-    typedef Size2d Vector2d;
-    typedef Size3d Vector3d;
+    typedef Vector2f Size2f;
+    typedef Vector3f Size3f;
+    typedef Vector2d Size2d;
+    typedef Vector3d Size3d;
 
-    typedef size2f Size2f;
-    typedef size3f Size3f;
-    typedef size3d Size3d;
-    typedef size2d Size2d;
+    typedef Size2f size2f;
+    typedef Size3f size3f;
+    typedef Size3d size3d;
+    typedef Size2d size2d;
 SYLPH_END_MATHNS
 
 #endif /* SYLPH_MATH_VECTOR_H_ */

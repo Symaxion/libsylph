@@ -57,19 +57,19 @@ SYLPH_BEGIN_MATHNS
     class Matrix<T,3,3> : public SquareMatrixBase<T,3> {
     };
 
-    typedef Matrix2f Matrix<float,2>;
-    typedef Matrix3f Matrix<float,3>;
-    typedef Matrix4f Matrix<float,4>;
-    typedef Matrix2d Matrix<double,2>;
-    typedef Matrix3d Matrix<double,3>;
-    typedef Matrix4d Matrix<double,4>;
+    typedef Matrix<float,2> Matrix2f;
+    typedef Matrix<float,3> Matrix3f;
+    typedef Matrix<float,4> Matrix4f;
+    typedef Matrix<double,2> Matrix2d;
+    typedef Matrix<double,3> Matrix3d;
+    typedef Matrix<double,4> Matrix4d;
 
-    typedef mat2f Matrix2f;
-    typedef mat3f Matrix3f;
-    typedef mat4f Matrix4f;
-    typedef mat2d Matrix2d;
-    typedef mat3d Matrix3d;
-    typedef mat4d Matrix4d;
+    typedef Matrix2f mat2f;
+    typedef Matrix3f mat3f;
+    typedef Matrix4f mat4f;
+    typedef Matrix2d mat2d;
+    typedef Matrix3d mat3d;
+    typedef Matrix4d mat4d;
 SYLPH_END_MATHNS
 
 #endif /* SYLPH_MATH_MATRIX_H_ */

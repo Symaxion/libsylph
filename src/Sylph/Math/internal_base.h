@@ -27,7 +27,7 @@
 #ifndef SYLPH_MATH_INTERNAL_BASE_H_
 #define	SYLPH_MATH_INTERNAL_BASE_H_
 
-#include "../Sylph.h"
+#include "../../Sylph.h"
 #include <cmath>
 
 #define SYLPH_BEGIN_MATHNS SYLPH_BEGIN_NAMESPACE namespace Math {

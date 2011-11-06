@@ -27,6 +27,8 @@
 #define SYLPH_MATH_QUATERNION_H_
 
 #include "internal_base.h"
+#include "Vector.h"
+#include "Angle.h"
 
 SYLPH_BEGIN_MATHNS
 
@@ -35,8 +37,49 @@ class Quaternion : public Object {
 public:
     Quaternion(Number r = 0, Number i = 0, Number j = 0, Number k = 0) :
             r(r), i(i), j(j), k(k) {}
+
+    Quaternion(Angle<Number> a, const Vector<Number>& v) :
+            r(cos(a/2)), i(v.x*sin(a/2)), j(v.y*sin(a/2)), k(v.z*sin(a/2)) {};
+
+    Number& real() {
+        return r;
+    }
+
+    const Number& real() const {
+        return r;
+    }
+
+    Vector<Number&> imag() {
+        return {i,j,k};
+    }
+
+    const Vector<const Number&> imag() const {
+        return {i,j,k};
+    }
 private:
     Number r,i,j,k;
 };
 
+template<class Number>
+Number& real(Quaternion<Number>& q) {
+    return q.real();
+}
+
+template<class Number>
+const Number& real(const Quaternion<Number>& q) {
+    return q.real();
+}
+
+template<class Number>
+Vector<Number&> imag(Quaternion<Number>& q) {
+    return q.imag();
+}
+
+template<class Number>
+const Vector<const Number&> imag(const Quaternion<Number>& q) {
+    return q.imag();
+}
+
 SYLPH_END_MATHNS
+
+#endif /* SYLPH_MATH_QUATERNION */
