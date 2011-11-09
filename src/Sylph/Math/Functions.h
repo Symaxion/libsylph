@@ -29,6 +29,7 @@
 #include "internal_base.h"
 
 #include "../Core/Function.h"
+#include "../Core/Traits.h"
 
 SYLPH_BEGIN_MATHNS
     template<class T> class Angle;
@@ -141,25 +142,23 @@ SYLPH_BEGIN_MATHNS
     inline double erfc(double a);
 
 
-
     /////////////////////////////////////////////////////////////////
 
-    sint gcd(sint,sint);
-    slong gcd(sint,slong);
-    slong gcd(slong,sint);
-    slong gcd(slong,slong);
+    template<class T, class U>
+    auto gcd(T t, U u) -> decltype(t + u) {
+        static_assert(S_TRAIT(IsIntegral,T),"gcd requires integral parameters");
+        static_assert(S_TRAIT(IsIntegral,U),"gcd requires integral parameters");
 
-    #define S_LCM(R,A,B) \
-    inline R lcm(A a, B b) { \
-        return a*b/gcd(a,b); \
+        // TODO implement algorithm of Euclides
     }
 
-    S_LCM(sint,sint,sint);
-    S_LCM(slong,sint,slong);
-    S_LCM(slong,slong,sint);
-    S_LCM(slong,slong,slong);
+    template<class T, class U>
+    auto lcm(T t, U u) -> decltype(t + u) {
+        static_assert(S_TRAIT(IsIntegral,T),"lcm requires integral parameters");
+        static_assert(S_TRAIT(IsIntegral,U),"lcm requires integral parameters");
 
-    #undef S_LCM
+        return t*u / gcd(t,u);
+    }
 
     template<class T>
     function<T(T)> clip(T min, T max) {
@@ -178,7 +177,12 @@ SYLPH_BEGIN_MATHNS
     }
     
     template<class T>
-    function<T(T)> wrap(T min, T max) {
+    S_ENABLE_IF(function<T(T)>,
+            S_TRAIT(Not,
+                    S_TRAIT2(Or,
+                            S_TRAIT(IsIntegral,T),
+                            S_TRAIT(IsFloating,T))))
+            wrap(T min, T max) {
         T d = max - min;
         return [=](T a) -> T { 
             while(a > max) a -= d;
@@ -187,5 +191,23 @@ SYLPH_BEGIN_MATHNS
         };
     }
     
+    template<class T>
+    S_ENABLE_IF(function<T(T)>,
+            S_TRAIT(IsIntegral,T))
+            wrap(T min, T max) {
+        return [=](T c) -> T {
+            return a + fmod(c-a,b-a);
+        };
+    }
+
+    template<class T>
+    S_ENABLE_IF(function<T(T)>,
+            S_TRAIT(IsFlating,T))
+            wrap(T a, T b) {
+        return [=](T c) -> T {
+             return a + ((c-a)%(b-a));
+        };
+    }
+
 SYLPH_END_MATHNS
 #endif /* MATH_FUNCTIONS_H_ */
