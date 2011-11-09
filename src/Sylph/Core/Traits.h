@@ -64,7 +64,7 @@ namespace Traits {
     };
 
     template<class T>
-    struct EnableIf<bool,T> {
+    struct EnableIf<true,T> {
         typedef T type;
     };
 
@@ -151,8 +151,8 @@ namespace Traits {
     template<class T>
     struct IsTrivial : public std::is_trivial<T> {};
 
-    template<class T>
-    struct IsTriviallyCopyable : public std::is_trivially_copyable<T> {};
+    /*template<class T>
+    struct IsTriviallyCopyable : public std::is_trivially_copyable<T> {};*/
 
     template<class T>
     struct IsStandardLayout : public std::is_standard_layout<T> {};
@@ -160,8 +160,8 @@ namespace Traits {
     template<class T>
     struct IsPod : public std::is_pod<T> {};
 
-    template<class T>
-    struct IsLiteralType : public std::is_literal_type<T> {};
+    /*template<class T>
+    struct IsLiteralType : public std::is_literal_type<T> {};*/
 
     template<class T>
     struct IsEmpty : public std::is_empty<T> {};
@@ -235,8 +235,8 @@ namespace Traits {
     template<class T1, class T2>
     struct IsSame : public std::is_same<T1,T2> {};
 
-    template<class T1, class T2>
-    struct IsBaseOf : public std::is_base_of<T1,TZ> {};
+    /*template<class T1, class T2>
+    struct IsBaseOf : public std::is_base_of<T1,T2> {};*/
 
     template<class T1, class T2>
     struct IsConvertibe : public std::is_convertible<T1,T2> {};
@@ -258,7 +258,7 @@ namespace Traits {
     struct ResultOf {};
 
     template<class F, class... A>
-    struct ResultOf<F,A> {
+    struct ResultOf<F(A...)> {
         typedef decltype(declval<F>()(declval<A>()...)) type;
     };
 
@@ -296,46 +296,50 @@ namespace Traits {
 
     template<class T, class U>
     struct CopyConst {
-        typedef typename Condition<IsConst<T>::value, AddConst<U>::type,
-                RemoveConst<U>::value>::type type;
+        typedef typename Condition<IsConst<T>::value,
+                typename AddConst<U>::type,
+                typename RemoveConst<U>::value>::type type;
     };
 
     template<class T, class U>
     struct CopyVolatile {
-        typedef typename Condition<IsVolatile<T>::value, AddVolatile<U>::type,
-                RemoveVolatile<U>::value>::type type;
+        typedef typename Condition<IsVolatile<T>::value,
+                typename AddVolatile<U>::type,
+                typename RemoveVolatile<U>::value>::type type;
     };
 
     template<class T, class U>
     struct CopyCv {
-        typedef typename CopyConst<T,CopyVolatile<T,U>::type>::type type;
+        typedef typename CopyConst<T,
+                typename CopyVolatile<T,U>::type>::type type;
     };
 
     template<class T, class U>
     struct CopyLvalueReference {
          typedef typename Condition<IsLvalueReference<T>::value,
-                 AddLvalueReference<U>::type,
-                 RemoveLvalueReference<U>::type>::type type;
+                 typename AddLvalueReference<U>::type,
+                 typename RemoveReference<U>::type>::type type;
     };
 
     template<class T, class U>
     struct CopyRvalueReference {
         typedef typename Condition<IsRvalueReference<T>::value,
-                AddRvalueReference<U>::type,
-                RemoveRvalueReference<U>::type>::type type;
+                typename AddRvalueReference<U>::type,
+                typename RemoveReference<U>::type>::type type;
     };
 
     template<class T, class U>
     struct CopyPointer {
         typedef typename Condition<IsPointer<T>::value,
-                AddPointer<U>::type,
-                RemovePoineter<U>::type>::type type;
+                typename AddPointer<U>::type,
+                typename RemovePointer<U>::type>::type type;
     };
 
     template<class T, class U>
     struct CopySigned {
         typedef typename Condition<IsSigned<T>::value,
-                MakeSigned<U>::type, MakeUnsigned<U>::type>::type type;
+                typename MakeSigned<U>::type,
+                typename MakeUnsigned<U>::type>::type type;
     };
 
     // Efficiency
@@ -496,25 +500,25 @@ namespace Traits {
         struct Trait<Class1,Class2,Class3,Class4> { typedef Type type; }
 
 #define S_TRAIT(Trait,Class) \
-        ::Sylph::Trait<Class>::value
+        ::Sylph::Traits::Trait<Class>::value
 #define S_TRAIT2(Trait,Class1,Class2) \
-        ::Sylph::Trait<Class1,Class2>::value
+        ::Sylph::Traits::Trait<Class1,Class2>::value
 #define S_TRAIT3(Trait,Class1,Class2,Class3) \
-        ::Sylph::Trait<Class1,Class2,Class3>::value
+        ::Sylph::Traits::Trait<Class1,Class2,Class3>::value
 #define S_TRAIT4(Trait,Class1,Class2,Class3,Class4) \
-        ::Sylph::Trait<Class1,Class2,Class3,Class4>::value
+        ::Sylph::Traits::Trait<Class1,Class2,Class3,Class4>::value
 
 #define S_TRAIT_TYPE(Trait,Class) \
-        ::Sylph::Trait<Class>::type
+        typename ::Sylph::Traits::Trait<Class>::type
 #define S_TRAIT_TYPE2(Trait,Class1,Class2) \
-        ::Sylph::Trait<Class1,Class2>::type
+        typename ::Sylph::Traits::Trait<Class1,Class2>::type
 #define S_TRAIT_TYPE3(Trait,Class1,Class2,Class3) \
-        ::Sylph::Trait<Class1,Class2,Class3>::type
+        typename ::Sylph::Traits::Trait<Class1,Class2,Class3>::type
 #define S_TRAIT_TYPE4(Trait,Class1,Class2,Class3,Class4) \
-        ::Sylph::Trait<Class1,Class2,Class3,Class4>::type
+        typename ::Sylph::Traits::Trait<Class1,Class2,Class3,Class4>::type
 
 #define S_ENABLE_IF(Type, Condition) \
-        ::Sylph::EnableIf<Condition,Type>::type
+        typename ::Sylph::Traits::EnableIf<Condition,Type>::type
 SYLPH_END_NAMESPACE
 
 #endif /* SYLPH_CORE_TRAITS_H_ */
