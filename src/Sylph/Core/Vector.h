@@ -205,15 +205,10 @@ public:
         return _size == 0;
     }
 
-<<<<<<< HEAD
-    /** */
+    /**
+     * @complexity O(1)
+     */
     const T & get(std::size_t idx) const throw(IndexException) {
-=======
-    /**
-     * @complexity O(1)
-     */
-    const T & get(std::size_t idx) const throw(ArrayException) {
->>>>>>> refs/heads/master
         try {
             checkIfOutOfBounds(idx);
             return elements[idx];
@@ -221,15 +216,10 @@ public:
         straced;
     }
 
-<<<<<<< HEAD
-    /** */
+    /**
+     * @complexity O(1)
+     */
     T & get(std::size_t idx) throw(IndexException) {
-=======
-    /**
-     * @complexity O(1)
-     */
-    T & get(std::size_t idx) throw(ArrayException) {
->>>>>>> refs/heads/master
         try {
             checkIfOutOfBounds(idx);
             return elements[idx];
@@ -237,15 +227,10 @@ public:
         straced;
     }
 
-<<<<<<< HEAD
-    /** */
-    sidx_t indexOf(const T & t, idx_t idx = 0) const throw(IndexException) {
-=======
     /**
      * @complexity O(n)
      */
-    sidx_t indexOf(const T & t, idx_t idx = 0) const throw(ArrayException) {
->>>>>>> refs/heads/master
+    sidx_t indexOf(const T & t, idx_t idx = 0) const throw(IndexException) {
         try {
             checkIfOutOfBounds(idx);
         } straced;
@@ -289,15 +274,10 @@ public:
         removeAt(indexOf(t));
     }
 
-<<<<<<< HEAD
-    /** */
-    void removeAt(std::size_t idx) throw(IndexException) {
-=======
     /**
      * @complexity O(n)
      */
-    void removeAt(std::size_t idx) throw(ArrayException) {
->>>>>>> refs/heads/master
+    void removeAt(std::size_t idx) throw(IndexException) {
         try {
             checkIfOutOfBounds(idx);
         } straced;
@@ -307,15 +287,10 @@ public:
                 elements.length - 1 - idx);
     }
 
-<<<<<<< HEAD
-    /** */
-    void set(std::size_t idx, const T & t) throw(IndexException) {
-=======
     /**
      * @complexity O(1)
      */
-    void set(std::size_t idx, const T & t) throw(ArrayException) {
->>>>>>> refs/heads/master
+    void set(std::size_t idx, const T & t) throw(IndexException) {
         try {
             checkIfOutOfBounds(idx);
             elements[idx] = t;
@@ -354,29 +329,19 @@ public:
         }
     }
 
-<<<<<<< HEAD
-    /** */
-    T & operator[](idx_t idx) throw(IndexException) {
-=======
     /**
      * @complexity O(1)
      */
-    T & operator[](idx_t idx) throw(ArrayException) {
->>>>>>> refs/heads/master
+    T & operator[](idx_t idx) throw(IndexException) {
         try {
             return get(idx);
         } straced;
     }
 
-<<<<<<< HEAD
-    /** */
-    const T & operator[](idx_t idx) const throw(IndexException) {
-=======
     /**
      * @complexity O(1)
      */
-    const T & operator[](idx_t idx) const throw(ArrayException) {
->>>>>>> refs/heads/master
+    const T & operator[](idx_t idx) const throw(IndexException) {
         try {
             return get(idx);
         } straced;
