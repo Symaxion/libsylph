@@ -23,33 +23,38 @@
  *
  */
 
-#include "SylphTest.h"
-#include <Sylph/Core/File.h>
+#include "../SylphTest.h"
+#include <Sylph/Core/PointerManager.h>
+#include <Sylph/Core/Array.h>
 #include <Sylph/Core/Debug.h>
 
-using namespace Sylph;
-
 namespace {
-    class TestFile : public ::testing::Test {
-
+    class TestPointerManager : public ::testing::Test {
+        
     };
 
-    TEST_F(TestFile,testParent) {
-        ASSERT_NO_THROW({
-            File f = "/var/foo/example";
-            EXPECT_EQ("/var/foo",f.parent());
+    class DestructorCounting {
+    public:
+        DestructorCounting(){}
+        ~DestructorCounting() {
+            ++destroyed;
+        }
 
-            EXPECT_EQ("/",File("/").parent());
-        });
+        static idx_t destroyed;
+    };
+
+    idx_t DestructorCounting::destroyed = 0;
+
+    void testPointerManagerHelper() {
+        Sylph::Array<DestructorCounting*> arr(5);
+        for(idx_t i = 0; i < 5; ++i) {
+            arr[i] = new DestructorCounting;
+        }
+        Sylph::PointerManager pm = Sylph::manage(arr);
     }
 
-    TEST_F(TestFile, testAppend) {
-        File f = "/var/foo";
-        f /= "example";
-        EXPECT_EQ("/var/foo/example",f);
-
-        f = "/var/foo/";
-        f /= "example";
-        EXPECT_EQ("/var/foo/example",f);
+    TEST_F(TestPointerManager,testPointerManager) {
+        ASSERT_NO_THROW(testPointerManagerHelper());
+        EXPECT_EQ(5u,DestructorCounting::destroyed);
     }
 }
