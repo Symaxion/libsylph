@@ -20,37 +20,41 @@
  *
  *   3. This notice may not be removed or altered from any source
  *   distribution.
+ *
  */
 
-#include "SylphTest.h"
-#include <Sylph/Core/In.h>
+#include "../SylphTest.h"
+#include <Sylph/Core/PointerManager.h>
+#include <Sylph/Core/Array.h>
 #include <Sylph/Core/Debug.h>
 
-using namespace Sylph;
-
 namespace {
-
-    class TestIn : public ::testing::Test {
+    class TestPointerManager : public ::testing::Test {
+        
     };
 
-    TEST_F(TestIn, testIna) {
-        int i = 3;
-        EXPECT_TRUE(i ina(2,3,5));
+    class DestructorCounting {
+    public:
+        DestructorCounting(){}
+        ~DestructorCounting() {
+            ++destroyed;
+        }
+
+        static idx_t destroyed;
+    };
+
+    idx_t DestructorCounting::destroyed = 0;
+
+    void testPointerManagerHelper() {
+        Sylph::Array<DestructorCounting*> arr(5);
+        for(idx_t i = 0; i < 5; ++i) {
+            arr[i] = new DestructorCounting;
+        }
+        Sylph::PointerManager pm = Sylph::manage(arr);
     }
 
-    TEST_F(TestIn, testInaNegative) {
-        int i = 3;
-        EXPECT_FALSE(i ina(5,7,9));
+    TEST_F(TestPointerManager,testPointerManager) {
+        ASSERT_NO_THROW(testPointerManagerHelper());
+        EXPECT_EQ(5u,DestructorCounting::destroyed);
     }
-
-    TEST_F(TestIn, testInr) {
-        int i = 5;
-        EXPECT_TRUE(i inr(2,7));
-    }
-
-    TEST_F(TestIn, testInrNegative) {
-        int i = 9;
-        EXPECT_FALSE(i inr(3,6));
-    }
-
 }

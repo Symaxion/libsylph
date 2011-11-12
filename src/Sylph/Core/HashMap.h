@@ -240,6 +240,7 @@ public:
 
     /**
      * Removes all entries from the HashMap
+     * @complexity O(n)
      */
     void clear() {
         threshold = loadFactor * 11;
@@ -251,6 +252,7 @@ public:
     /**
      * Checks whether this HashMap contains a given key.
      * @return <i>true</i> iff this HashMap contains given key.
+     * @complexity O(log n)
      */
     bool containsKey(Key key) const {
         idx_t idx = hash(key);
@@ -265,6 +267,7 @@ public:
     /**
      * Checks whether this HashMap contains a given value.
      * @return <i>true</i> iff this HashMap contains given value.
+     * @complexity O(log n)
      */
     bool containsValue(const Value * value) const {
         if(buckets.length == 0) return false;
@@ -281,6 +284,7 @@ public:
     /**
      * Returns the amount of entries in this HashMap.
      * @return The amount of entries in this HashMap.
+     * @complexity O(0)
      */
     std::size_t size() const {
         return _size;
@@ -290,6 +294,7 @@ public:
      * Get the value for given key, or null if this key does not exist.
      * @param key A key to search the value for
      * @return The value for given key, or null if this key does not exist.
+     * @complexity O(log n)
      */
     Value * get(Key key) {
         int h = hash(key);
@@ -308,6 +313,7 @@ public:
      * Get the value for given key, or null if this key does not exist.
      * @param key A key to search the value for
      * @return The value for given key, or null if this key does not exist.
+     * @complexity O(log n)
      */
     const Value * get(Key key) const {
         int h = hash(key);
@@ -326,6 +332,7 @@ public:
      * Get the value for given key, or null if this key does not exist.
      * @param key A key to search the value for
      * @return The value for given key, or null if this key does not exist.
+     * @complexity O(log n)
      */
     Pointer operator[](Key key) {
         return Pointer(key, this);
@@ -335,6 +342,7 @@ public:
      * Get the value for given key, or null if this key does not exist.
      * @param key A key to search the value for
      * @return The value for given key, or null if this key does not exist.
+     * @complexity O(log n)
      */
     const Pointer operator[](Key key) const {
         return Pointer(key, this);
@@ -343,6 +351,7 @@ public:
     /**
      * Checks if this HashMap is empty, i\.e\. it has no keys in it.
      * @return <i>true</i> iff size() == 0
+     * @complexity O(1)
      */
     bool empty() const {
         return size() == 0;
@@ -355,6 +364,7 @@ public:
      * @param key A new key
      * @param value The value for this new key
      * @return The old value if the key already existed, null otherwise.
+     * @complexity O(log n)
      */
     unique_ptr<Value> put(Key key, Value * value) {
         idx_t idx = hash(key);
@@ -385,6 +395,7 @@ public:
      * Copies everything from the given HashMap into this HashMap. Existing
      * keys will be overwritten.
      * @param map Another HashMap.
+     * @complexity O(n)
      */
     void putAll(const HashMap<Key, Value, HashFunction, EqualsFunction>& map) {
 
@@ -397,6 +408,7 @@ public:
      * Removes given key from the HashMap. If the key was in the HashMap, return
      * the associated value. If it was not, return null.
      * @return The old value of the key if it existed, null otherwise.
+     * @complexity O(log n)
      */
     unique_ptr<Value> remove(Key key) {
         idx_t idx = hash(key);
@@ -457,6 +469,7 @@ private:
     }
 };
 
+/** */
 template<class K, class V, class H, class E>
 bool operator==(const HashMap<K,V,H,E>& lhs, const HashMap<K,V,H,E>& rhs) {
     static E eq;

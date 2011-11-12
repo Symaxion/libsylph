@@ -22,32 +22,35 @@
  *   distribution.
  */
 
-#include "SylphTest.h"
-#include <Sylph/Core/Traits.h>
+#include "../SylphTest.h"
+#include <Sylph/Core/In.h>
 #include <Sylph/Core/Debug.h>
 
-namespace {
-    using namespace Sylph;
+using namespace Sylph;
 
-    class TestTraits : public ::testing::Test {
+namespace {
+
+    class TestIn : public ::testing::Test {
     };
 
-    template<class T>
-    S_ENABLE_IF(bool,
-            S_TRAIT(IsIntegral,T))
-            enableIfHelper(T t) {
-        return true;
+    TEST_F(TestIn, testIna) {
+        int i = 3;
+        EXPECT_TRUE(i ina(2,3,5));
     }
 
-    template<class T>
-    S_ENABLE_IF(bool,
-            S_TRAIT(IsFloatingPoint, T))
-            enableIfHelper(T t) {
-        return false;
+    TEST_F(TestIn, testInaNegative) {
+        int i = 3;
+        EXPECT_FALSE(i ina(5,7,9));
     }
 
-    TEST_F(TestTraits, testEnableIf) {
-        EXPECT_TRUE(enableIfHelper(2));
-        EXPECT_FALSE(enableIfHelper(2.0));
+    TEST_F(TestIn, testInr) {
+        int i = 5;
+        EXPECT_TRUE(i inr(2,7));
     }
+
+    TEST_F(TestIn, testInrNegative) {
+        int i = 9;
+        EXPECT_FALSE(i inr(3,6));
+    }
+
 }

@@ -22,7 +22,7 @@
  *   distribution.
  */
 
-#include "SylphTest.h"
+#include "../SylphTest.h"
 #include <Sylph/Core/Function.h>
 #include <Sylph/Core/Debug.h>
 

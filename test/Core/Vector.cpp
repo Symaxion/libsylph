@@ -24,7 +24,7 @@
  *
  */
 
-#include "SylphTest.h"
+#include "../SylphTest.h"
 #include <Sylph/Core/Array.h>
 #include <Sylph/Core/Debug.h>
 #include <Sylph/Core/Vector.h>
