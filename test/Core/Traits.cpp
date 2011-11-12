@@ -20,36 +20,34 @@
  *
  *   3. This notice may not be removed or altered from any source
  *   distribution.
- *
  */
 
-#include "SylphTest.h"
-#include <Sylph/Core/File.h>
+#include "../SylphTest.h"
+#include <Sylph/Core/Traits.h>
 #include <Sylph/Core/Debug.h>
 
-using namespace Sylph;
-
 namespace {
-    class TestFile : public ::testing::Test {
+    using namespace Sylph;
 
+    class TestTraits : public ::testing::Test {
     };
 
-    TEST_F(TestFile,testParent) {
-        ASSERT_NO_THROW({
-            File f = "/var/foo/example";
-            EXPECT_EQ("/var/foo",f.parent());
-
-            EXPECT_EQ("/",File("/").parent());
-        });
+    template<class T>
+    S_ENABLE_IF(bool,
+            S_TRAIT(IsIntegral,T))
+            enableIfHelper(T t) {
+        return true;
     }
 
-    TEST_F(TestFile, testAppend) {
-        File f = "/var/foo";
-        f /= "example";
-        EXPECT_EQ("/var/foo/example",f);
+    template<class T>
+    S_ENABLE_IF(bool,
+            S_TRAIT(IsFloatingPoint, T))
+            enableIfHelper(T t) {
+        return false;
+    }
 
-        f = "/var/foo/";
-        f /= "example";
-        EXPECT_EQ("/var/foo/example",f);
+    TEST_F(TestTraits, testEnableIf) {
+        EXPECT_TRUE(enableIfHelper(2));
+        EXPECT_FALSE(enableIfHelper(2.0));
     }
 }
