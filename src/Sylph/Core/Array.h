@@ -505,6 +505,21 @@ inline bool operator==(const Array<T>& lhs, const Array<T>& rhs) {
 }
 
 /**
+ * Pops the first element off the Array, then returns it. As the array is
+ * changed, the popped element is no longer part of the array and will no
+ * longer be managed by any @c PointerManagers over the Array.
+ * @param a An array, from which the element will be popped.
+ * @return The first element of the array.
+ * @complexity O(1)
+ */
+template<class T>
+inline T shift(Array<T>& a) {
+    T t = a[0];
+    a = a[range(1,-1)];
+    return t;
+}
+
+/**
  * Compares the two Arrays. To Arrays compare less than when their lengths are
  * identical and each of the items compare less than to the item on the same
  * position in the other array.
