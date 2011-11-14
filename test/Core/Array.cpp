@@ -188,4 +188,11 @@ namespace {
         ASSERT_EQ(arfilled1.carray(), tmp.carray());
     }
 
+    TEST_F(TestArray, testShift) {
+        Array<int> tmp = arfilled1.copy();
+        EXPECT_EQ(5, shift(tmp));
+        EXPECT_EQ(4u, tmp.length);
+        EXPECT_EQ(A_(2,9,1,7), tmp);
+    }
+
 } // namespace
