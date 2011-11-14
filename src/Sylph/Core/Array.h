@@ -479,7 +479,7 @@ protected:
 };
 
 template<class T>
-Array<T> makeArray(std::initializer_list<T>& t) {
+Array<T> makeArray(const std::initializer_list<T>& t) {
     return t;
 }
 
