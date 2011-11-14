@@ -402,13 +402,13 @@ public:
      * @param ran The range describing the slice.
      * @throw ArrayException if ran.last() > length
      */
-    Array<T> operator[](const range & r) throw (Exception) {
-        range ran = r;
-        if(ran.inverse()) sthrow(ArrayException, "Inversed range");
+    Array<T> operator[](range&& ran) throw (ArrayException) {
+        // Check for negative indices and adjust
         ran.last = ran.last < 0 ? length + ran.last : ran.last;
         ran.first = ran.first < 0 ? length + ran.first : ran.first;
-        if(ran.inverse()) ran.swap();
-        if (ran.first < 0 || ran.last >= length) {
+        if(ran.inverse()) sthrow(ArrayException, "Inverted range");
+
+        if ((unsigned)ran.last >= length) {
             char buf[2048];
             sprintf(buf, "Array overflow - range: %u - %u , length: %u",
                     ran.first, ran.last, unsigned(length));
@@ -425,12 +425,13 @@ public:
      * @param ran The range describing the slice
      * @throw ArrayException if ran.last() > length
      */
-    const Array<T> operator[](const range & r) const throw (Exception) {
-        range ran = r;
+    const Array<T> operator[](range&& ran) const throw (ArrayException) {
+        // Check for negative indices and adjust
         ran.last = ran.last < 0 ? length + ran.last : ran.last;
         ran.first = ran.first < 0 ? length + ran.first : ran.first;
-        if(ran.inverse()) ran.swap();
-        if (ran.first < 0 || ran.last >= length) {
+        if(ran.inverse()) sthrow(ArrayException, "Inverted range");
+
+        if ((unsigned)ran.last >= length) {
             char buf[2048];
             sprintf(buf, "Array overflow - range: %u - %u , length: %u",
                     ran.first, ran.last, unsigned(length));
