@@ -175,12 +175,41 @@ namespace {
         ASSERT_THROW(arfilled1[-(arfilled1.length + 1)] = 3, IndexException);
     }
 
-    TEST_F(TestArray, testRanges) {
+    TEST_F(TestArray, testRange) {
         Array<int> section = arfilled2[range(2, 4)];
         ASSERT_EQ(3u, section.length);
         EXPECT_EQ(2, section[0]);
         EXPECT_EQ(3, section[1]);
         EXPECT_EQ(4, section[2]);
+    }
+
+    TEST_F(TestArray, testNegativeRange) {
+        Array<int> section = arfilled1[range(1,-1)];
+        ASSERT_EQ(4u, section.length);
+        EXPECT_EQ(2, section[0]);
+        EXPECT_EQ(9, section[1]);
+        EXPECT_EQ(1, section[2]);
+        EXPECT_EQ(7, section[3]);
+    }
+
+    TEST_F(TestArray, testInvertedRange) {
+        ASSERT_THROW(arfilled1[range(3,2)], IndexException);
+    }
+
+    TEST_F(TestArray, testInvertedNegativeRange) {
+        ASSERT_THROW(arfilled1[range(-2,-3)], IndexException);
+    }
+
+    TEST_F(TestArray, testInvertedDifferentlySignedRange) {
+        ASSERT_THROW(arfilled1[range(-1,1)], IndexException);
+    }
+
+    TEST_F(TestArray, testInvalidRange) {
+        ASSERT_THROW(arfilled1[range(3,6)], IndexException);
+    }
+
+    TEST_F(TestArray, testInvalidNegativeRange) {
+        ASSERT_THROW(arfilled1[range(-2,-7)], IndexException);
     }
 
     TEST_F(TestArray, testRefcounted) {

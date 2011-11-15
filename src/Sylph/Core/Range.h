@@ -62,7 +62,7 @@ public:
 };
 
 /** */
-typedef basic_range<unsigned int> range;
+typedef basic_range<int> range;
 /** */
 typedef basic_range<float> frange;
 /** */
