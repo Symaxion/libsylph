@@ -269,6 +269,24 @@ namespace Traits {
 
     // Our traits
 
+    template<class T>
+    struct RemovePointersRecursive {
+        typedef T type;
+    };
+
+    template<class T>
+    struct RemovePointersRecursive<T*> {
+        typedef T type;
+    };
+
+    template<class T>
+    struct BaseType {
+        typedef typename RemoveCV<
+                    typename RemoveReference<
+                        typename RemovePointersRecursive<T>::type>::type>::type
+                        type;
+    };
+
     // Logical
 
     template<bool B1, bool B2, bool B3 = true, bool B4 = true>
