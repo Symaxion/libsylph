@@ -181,7 +181,7 @@ SYLPH_BEGIN_MATHNS
             S_TRAIT(Not,
                     S_TRAIT2(Or,
                             S_TRAIT(IsIntegral,T),
-                            S_TRAIT(IsFloating,T))))
+                            S_TRAIT(IsFloatingPoint,T))))
             wrap(T min, T max) {
         T d = max - min;
         return [=](T a) -> T { 
@@ -193,8 +193,8 @@ SYLPH_BEGIN_MATHNS
     
     template<class T>
     S_ENABLE_IF(function<T(T)>,
-            S_TRAIT(IsIntegral,T))
-            wrap(T min, T max) {
+            S_TRAIT(IsFloatingPoint,T))
+            wrap(T a, T b) {
         return [=](T c) -> T {
             return a + fmod(c-a,b-a);
         };
@@ -202,7 +202,7 @@ SYLPH_BEGIN_MATHNS
 
     template<class T>
     S_ENABLE_IF(function<T(T)>,
-            S_TRAIT(IsFlating,T))
+            S_TRAIT(IsIntegral,T))
             wrap(T a, T b) {
         return [=](T c) -> T {
              return a + ((c-a)%(b-a));
