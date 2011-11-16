@@ -25,6 +25,7 @@
 
 #include "../SylphTest.h"
 #include <Sylph/Core/Array.h>
+#include <Sylph/Core/Util.h>
 #include <Sylph/Core/Debug.h>
 
 using namespace Sylph;
@@ -143,6 +144,17 @@ namespace {
     TEST_F(TestArray, testCopyEquality) {
         Array<int> arcopy = arfilled1.copy();
         EXPECT_TRUE(arfilled1 == arcopy);
+    }
+
+    TEST_F(TestArray, testArrayCopy) {
+        Array<int> arcopy((size_t)6u);
+        arraycopy(arfilled2,2,arcopy,3,2);
+        EXPECT_EQ(0,arcopy[0]);
+        EXPECT_EQ(0,arcopy[1]);
+        EXPECT_EQ(0,arcopy[2]);
+        EXPECT_EQ(2,arcopy[3]);
+        EXPECT_EQ(3,arcopy[4]);
+        EXPECT_EQ(0,arcopy[5]);
     }
 
     TEST_F(TestArray, testIterator) {
