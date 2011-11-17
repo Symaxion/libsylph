@@ -425,6 +425,14 @@ function<bool(const P&)> nefn(function<T(const P&)> f1,
     };
 }
 
+template<class P, class T, class U>
+function<bool(const P&)> relfn(function<bool(const T&, const U&)> rel,
+        function<T(const P&)> f1, function<U(const P&)> f2) {
+    return [=](const P& p) -> bool {
+        return rel(f1(p),f2(p));
+    };
+}
+
 // Operator wrappers
 namespace Op {
     // Binary operators
