@@ -253,20 +253,6 @@ public:
     }
 
     /**
-     * Creates an Array from a single item. This is useful for implicit
-     * conversions, as it allows a single instance of a class to be passed as
-     * an Array of that class with length 1. <p>
-     * A new instance of the reference counted data is created, the reference
-     * count set to 1, the length is set to 1, and a new C-style array with
-     * length 1 is allocated. The object is copied into this array, the original
-     * object remains unmodified.
-     * @param t An object to create a length-1 array from.
-     */
-    explicit Array(const T& t) : length(1), data(new Data(1)) {
-        data->_carray[0] = t;
-    }
-
-    /**
      * Destructor. Reduces the reference count by 1. If the reference count
      * reaches 0, the internal backing data will be destroyed.
      */
