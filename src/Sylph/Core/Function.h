@@ -365,6 +365,65 @@ CountpredHelper<C,T> countpred(const C<T>& c) {
     return CountpredHelper<C,T>(c);
 }
 
+// TODO: wait until GCC supports this or we have tuple unpacking.
+/*template<class P, class... A>
+function<bool(const P&)> andfn(function<bool(const P&)> f1,
+        function<bool(const P&)> f2, A... a) {
+    return [=](const P& p) -> bool {
+        return andfn_impl(p,f1,f2,a...);
+    };
+}
+
+template<class P, class... A>
+bool andfn_impl(const P& p, function<bool(const P&)> f1,
+        function<bool(const P&)> f2, A... a) {
+    return f1(p) && andfn_impl(p,f2,a...);
+}
+
+template<class P>
+bool andfn_impl(const P& p, function<bool(const P&)> f1) {
+    return f1(p);
+}*/
+
+
+template<class P>
+function<bool(const P&)> andfn(function<bool(const P&)> f1,
+        function<bool(const P&)> f2) {
+    return [=](const P& p) -> bool {
+        return f1(p) && f2(p);
+    };
+}
+
+template<class P>
+function<bool(const P&)> orfn(function<bool(const P&)> f1,
+        function<bool(const P&)> f2) {
+    return [=](const P& p) -> bool {
+        return f1(p) || f2(p);
+    };
+}
+
+template<class P>
+function<bool(const P&)> notfn(function<bool(const P&)> f1) {
+    return [=](const P& p) -> bool {
+        return !f1(p);
+    };
+}
+
+template<class P, class T, class U>
+function<bool(const P&)> eqfn(function<T(const P&)> f1,
+        function<U(const P&)> f2) {
+    return [=](const P& p) -> bool {
+        return f1(p) == f2(p);
+    };
+}
+
+template<class P, class T, class U>
+function<bool(const P&)> nefn(function<T(const P&)> f1,
+        function<U(const P&)> f2) {
+    return [=](const P& p) -> bool {
+        return f1(p) != f2(p);
+    };
+}
 
 // Operator wrappers
 namespace Op {
