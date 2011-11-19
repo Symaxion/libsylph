@@ -379,6 +379,9 @@ namespace Traits {
      * begin/end: iterator
      * contains(T)
      * indexOf(T)
+     * lastIndexOf(T)
+     * size()
+     * empty() (size == 0)
      */
     template<class T>
     struct IsCollection : public FalseType {
@@ -390,6 +393,8 @@ namespace Traits {
      *
      * Operations supported:
      * operator[](idx_t)
+     * get(idx_t)
+     * put(idx_t,T)
      * rbegin/rend: iterator
      */
     template<class T>
@@ -402,7 +407,12 @@ namespace Traits {
      *
      * Operations supported:
      * add(T): ensures element is in collection
+     * addAll(Collection<T>)
+     * operator<<(T) : add(All)
+     * operator+=(T) : add(All)
      * remove(T)
+     * removeAll(Collection<T>)
+     * clear()
      */
     template<class T>
     struct IsExpandableCollection : public FalseType {
@@ -419,6 +429,11 @@ namespace Traits {
      * peekBack(T)
      * pushBack(T)
      * popBack(T)
+     * insert(iterator,T)
+     * removeAt(iterator)
+     * emplace(iterator,A...)
+     * emplaceBack(A...)
+     * emplaceFront(A...)
      */
     template<class T>
     struct IsExpandableSequence : public And<IsSequentialCollection<T>::value,
@@ -430,9 +445,20 @@ namespace Traits {
      * IsSequentialCollection
      *
      * RandomAccessIterator available
+     * insert(idx_t,T)
+     * removeAt(idx_t)
+     * emplace(idx_t, A...)
      */
     template<class T>
     struct IsRandomAccessCollection : public FalseType {
+    };
+
+    /**
+     * Traits:
+     * IsCollection
+     */
+    template<class T>
+    struct IsUniqueElementCollection : public FalseType {
     };
 
     template<class T>
@@ -457,14 +483,6 @@ namespace Traits {
 
     template<class T>
     struct IsEfficientBackRetrievable : public FalseType {
-    };
-
-    /**
-     * Traits:
-     * IsCollection
-     */
-    template<class T>
-    struct IsUniqueElementCollection : public FalseType {
     };
 
     // Generic compatibility
