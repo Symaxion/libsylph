@@ -24,35 +24,119 @@
  *  Created on: 3 jan. 2011
  */
 
-#ifndef COLLECTION_H_
-#define COLLECTION_H_
+#ifndef SYLPH_CORE_COLLECTION_H_
+#define SYLPH_CORE_COLLECTION_H_
 
 #include "Object.h"
 
 SYLPH_BEGIN_NAMESPACE
 
-// TODO find a way to generalize Collections
+namespace Traits {
+    // Collection related
 
-class Collection : public virtual Object {
+    /**
+     * Operations supported:
+     * begin/end: iterator
+     * contains(T)
+     * indexOf(T)
+     * size()
+     *
+     * Operations depending on T:
+     * operator==
+     * operator!=
+     * operator<
+     * other comparison operators
+     */
+    template<class T>
+    struct IsCollection : public FalseType {
+    };
 
-};
+    /**
+     * Traits:
+     * IsCollection
+     *
+     * Operations supported:
+     * operator[](idx_t)
+     * rbegin/rend: iterator
+     */
+    template<class T>
+    struct IsSequentialCollection : public FalseType {
+    };
 
-class OrderedCollection : public virtual Collection {
+    /**
+     * Traits:
+     * IsCollection
+     *
+     * Operations supported:
+     * add(T): ensures element is in collection
+     * remove(T)
+     */
+    template<class T>
+    struct IsExpandableCollection : public FalseType {
+    };
 
-};
+    /**
+     * Traits:
+     * Sequential and Expandable
+     *
+     * Operations supported:
+     * peekFront(T)
+     * pushFront(T)
+     * popFront(T)
+     * peekBack(T)
+     * pushBack(T)
+     * popBack(T)
+     */
+    template<class T>
+    struct IsExpandableSequence : public And<IsSequentialCollection<T>::value,
+    IsExpandableCollection<T>::value> {
+    };
 
-class RandomAccessCollection : public virtual OrderedCollection {
+    /**
+     * Traits:
+     * IsSequentialCollection
+     *
+     * RandomAccessIterator available
+     */
+    template<class T>
+    struct IsRandomAccessCollection : public FalseType {
+    };
 
-};
+    template<class T>
+    struct IsEfficientFrontInsertable : public FalseType {
+    };
 
-class ExpandableCollection : public virtual Collection {
+    template<class T>
+    struct IsEfficientMiddleInsertable : public FalseType {
+    };
 
-};
+    template<class T>
+    struct IsEfficientBackInsertable : public FalseType {
+    };
 
-class UniqueCollection : public virtual Collection {
+    template<class T>
+    struct IsEfficientFrontRetrievable : public FalseType {
+    };
 
-};
+    template<class T>
+    struct IsEfficientMiddleRetrievable : public FalseType {
+    };
+
+    template<class T>
+    struct IsEfficientBackRetrievable : public FalseType {
+    };
+
+    /**
+     * Traits:
+     * IsCollection
+     */
+     template<class T>
+     struct IsUniqueElementCollection : public FalseType {
+     };
+}
+
+// Functions
 
 SYLPH_END_NAMESPACE
 
-#endif /* COLLECTION_H_ */
+#endif /* SYLPH_CORE_COLLECTION_H_ */
