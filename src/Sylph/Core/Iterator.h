@@ -371,20 +371,20 @@ I operator+(unsigned int i, const I itr) {
 }
 
 /**
- * SylphIterator provides a easier-to-use wrapper around STL iterators. The
+ * SylphIterator provides a easier-to-use wrapper around libstd iterators. The
  * interface of a SylphIterator is similar to a Java-style iterator, but it is
- * backed by a STL iterator and can therefore be used for any class supporitng
- * STL iterators. <p>
+ * backed by a libstd iterator and can therefore be used for any class
+ * supporting libstd iterators.
  */
 template<class Iter>
 class SylphIterator : public virtual Object {
 public:
 
     /**
-     * Creates a new Iterator from an STL-iterator. An Iterator can either be
+     * Creates a new Iterator from a libstd iterator. An Iterator can either be
      * constructed explicitly with this constructor, in which case the correct
      * type of Iterator for the particular collection needs to be known, or
-     * through Iterable::iterator() or Iterable::mutableIterator() .
+     * through Iterable::constIterator() or Iterable::mutableIterator() .
      * @param it The iterable to iterate over.
      */
     inline SylphIterator(Iter & it) : itr(it) {
