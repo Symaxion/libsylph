@@ -27,7 +27,7 @@
 #ifndef SYLPH_CORE_BYTEBUFFER_H_
 #define	SYLPH_CORE_BYTEBUFFER_H_
 
-#include "Common.h"
+#include "Array.h"
 #include "../IO/InputStream.h"
 #include "../IO/OutputStream.h"
 
