@@ -83,17 +83,18 @@ class SerializationBuffer;
 class DeserializationBuffer;
 
 /**
- * Used for LibSylph's garbage collection. It is passed as a parameter to new,
- * e.g.
+ * Placement new values for altering LibSylph's garbage collection's behavior.
+ * The values in this enumeration are passed to placement-new, e.g.
  * <pre>
  * Array<int>; = new (NoGC) Array<int>(5); // create a length-5 array without GC
  * </pre>
- * This is most often used for creating LibSylph-objects not managed by the
- * garbage collector.
+ *
+ * The most common use of the GC placement new as shown above is to disable GC
+ * for a particular object, GC is enabled by default.
  */
 enum GCPlacement {
-    UseGC, /**< Use the garbage collector; this is the default */
-    NoGC, /**< Do not use the garbage collector for this specific object */
+    UseGC, /**< Use the garbage collector; this is the default. */
+    NoGC, /**< Do not use the garbage collector for this specific object. */
     PointerFreeGC /**< When the object you create does not contain pointers,
                    * use this to speed up GC -- however, this is usually not
                    * useful, as most LibSylph containers contain pointers. */
@@ -105,9 +106,10 @@ enum GCPlacement {
  * LibSylph inherit from this class. If you want your class to communicate with
  * certain LibSylph features, or just if you want to let LibSylph's
  * garbage collector manage dynamic allocation of your class, you should derive
- * from Object.<p>
+ * from Object.
+ *
  * Note that arrays of Objects are <b>not</b> garbage collected. Instead, use
- * Sylph::Array if you want a garbage collected, safe Array.
+ * Sylph::Array if you want a garbage collected, safe %Array.
  */
 class Object {
 #ifndef SYLPH_DOXYGEN
@@ -122,7 +124,7 @@ public:
     void operator delete( void*, void*);
 
     // Arrays from Object are *never* gc'ed, and I recommend using Sylph::Array
-    // instead. Maybe we should document this somewhere?
+    // instead.
     void* operator new[](size_t size);
     void* operator new[](size_t size, void *p);
     void operator delete[](void* obj);
@@ -142,6 +144,7 @@ private:
  * QPushButton * but = newgc<QPushButton>("Hello");
  * </pre>
  * The syntax is very similar to that of the normal new operator.
+ *
  * @tplreqs T Constructible with @em Args
  * @tplreqs Args none
  */
@@ -151,6 +154,11 @@ template<class T, class... Args> T * newgc(const Args&... args);
  * Deletes a (non-LibSylph) object that was previously allocated with LibSylph
  * @c newgc(). Altough explicit deletion is not required when using garbage
  * collection, the function is provided anyways for your convenience.
+ *
+ * Deleting an object allocated with @c newgc with <code>operator delete</code>
+ * or deleting an object not allocated with @c newgc with @c deletegc is
+ * undefined behavior.
+ *
  * @param t pointer to a class previously allocated with @c newgc
  * @tplreqs T none
  */
