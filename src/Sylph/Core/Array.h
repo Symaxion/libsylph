@@ -135,8 +135,8 @@ public:
     typedef bool(*FilterFunction)(const T&, Any&);
     /**
      * The length of the array. This variable is 1-based, while the array itself
-     * is 0-based, i.e. if length == N the highest entry in this array is N-1.
-     * E.g if array.length == 5, then the higest entry is array[4]
+     * is 0-based, i.e. if length == N the last entry in this array is N-1.
+     * E.g if array.length == 5, then the last entry is array[4]
      */
     const size_t & length;
 
@@ -144,7 +144,7 @@ public:
      * Creates an Array<T> from a pointer to T and a length. The new array will
      * have the length specified in <code>length</code>. The original array will
      * not be modified, the contents are copied. No bounds-checking
-     * is done, therefore, use this function at your own responsability!
+     * is done, therefore, use this function at your own responsibility!
      * @param length The length of the original C array
      * @param orig The original C array, supplied as a pointer.
      */
@@ -168,9 +168,10 @@ public:
 #ifndef SYLPH_NO_CXX0X
     /**
      * Creates an Array from an intializer list. This constructor allows the
-     * easier, more familiar syntax of Array creation, but requires C++0x. Using
+     * easier, more familiar syntax of Array creation, but requires C++11. Using
      * this constructor, arrays can be initialized as following:
      * <pre>Array<int> myarr = {5,4,7,9};</pre>
+     *
      * A new instance of the reference counted data is created, the reference
      * count is set to 1, the length is set to the length of the intializer
      * list, and all data is copied into a newly allocated C array.
@@ -186,9 +187,10 @@ public:
 
     /**
      * Creates an Array from an existing C-style array. Note that you can only
-     * pass a true array, i.e. you cannot pass a pointer that acts as an array.
-     * If you only have a pointer, you'll have to initialize using
-     * Array::fromPointer(size_t, length) . <p>
+     * pass a true array, i.e. you cannot an array that decayed into a pointer.
+     * If need to create an Array from a decayed C array, you'll have to
+     * initialize using Array::fromPointer(size_t, T*) .
+     *
      * A new instance of the reference counted data is created, the reference
      * count is set to 1, the length is set to the length of the Array, all
      * data is copied into a newly allocated C array with the same length as
@@ -204,7 +206,7 @@ public:
 
     /**
      * Creates an Array from another instance of the Array class. The data is
-     * not copied, instead, the pointer to the refernce counted data will be
+     * not copied, instead, the pointer to the reference counted data will be
      * set to the reference counted data of the other Array, and the reference
      * count will increase by 1. Other fields of the reference counted data
      * remain unmodified.
@@ -218,7 +220,8 @@ public:
     /**
      * Creates an array from a range of items. Every item within the range will
      * be added to the array. This is most useful for integral types, as other
-     * types usually don't support the required semantics.<p>
+     * types usually don't support the required semantics.
+     *
      * A new instance of the reference counted data is created, the reference
      * count is set to 1, the length is set to <code>ran.last() - ran.first()
      * </code>, a new C-style array with this length will be allocated.
@@ -238,7 +241,8 @@ public:
     /**
      * Creates an Array from a single item. This is useful for implicit
      * conversions, as it allows a single instance of a class to be passed as
-     * an Array of that class with length 1. <p>
+     * an Array of that class with length 1.
+     *
      * A new instance of the reference counted data is created, the reference
      * count set to 1, the length is set to 1, and a new C-style array with
      * length 1 is allocated. The object is copied into this array, the original
@@ -340,9 +344,9 @@ public:
     }
 
     /**
-     * Sets the data pointer of this Array to the other Array's. The refcount
-     * for the current data pointer gets decreased by 1, the refcount for the
-     * data pointer of the other array gets increased by 1. In case the this
+     * Sets the data pointer of this Array to the one of the other Array. The
+     * refcount for the current data pointer gets decreased by 1, the refcount
+     * for the data pointer of the other array gets increased by 1. In case this
      * Array's original data pointer's refcount reaches zero, the original data
      * will be deleted.
      * @param other The other array from which to use the data pointer

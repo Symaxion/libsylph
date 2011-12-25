@@ -109,7 +109,7 @@ enum GCPlacement {
  * from Object.
  *
  * Note that arrays of Objects are <b>not</b> garbage collected. Instead, use
- * Sylph::Array if you want a garbage collected, safe Array.
+ * Sylph::Array if you want a garbage collected, safe %Array.
  */
 class Object {
 #ifndef SYLPH_DOXYGEN
