@@ -28,8 +28,8 @@ cmake_minimum_required(VERSION 2.6)
 project(SYLPH)
 
 # Definitions
-set( SYLPH_VERSION "0.1" )
-set( SYLPH_ABI 1 ) # update when abi changes
+set( SYLPH_VERSION "0.2" )
+set( SYLPH_ABI 2 ) # update when abi changes
 set( SYLPH_DEP_LINK gc icuuc ) # dependent libraries
 set( SYLPH_DEP_INCLUDE "" ) # for future use
 
@@ -69,11 +69,11 @@ endif ( SYLPH_NO_CXX0X )
 if ( NOT SYLPH_COMPILER_SUFFICIENT ) # manual override
     SET( SYLPH_COMPILER_SUFFICIENT 0 )
 
-    # GCC >= 4.4.0 will do the job
-    if ( CMAKE_COMPILER_IS_GNUCC AND S_GCC_VERSION STRGREATER "4.4.0" )
+    # GCC == 4.5.3 will do the job
+    if ( CMAKE_COMPILER_IS_GNUCC AND S_GCC_VERSION STREQUAL "4.5.3" )
         SET( SYLPH_COMPILER_SUFFICIENT 1 )
         SET( CXX_GCC 1 )
-    endif ( CMAKE_COMPILER_IS_GNUCC AND S_GCC_VERSION STRGREATER "4.4.0" )
+    endif ( CMAKE_COMPILER_IS_GNUCC AND S_GCC_VERSION STREQUAL "4.5.3" )
 
     # No compiler found
     if ( NOT SYLPH_COMPILER_SUFFICIENT )
