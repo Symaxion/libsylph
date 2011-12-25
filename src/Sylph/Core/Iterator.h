@@ -31,6 +31,7 @@
 #include "Exception.h"
 #include "Iterable.h"
 #include <iterator>
+#include <type_traits>
 //#include "Foreach.h" -- this line is at the bottom of the file ;)
 
 SYLPH_BEGIN_NAMESPACE
@@ -57,8 +58,10 @@ public:
     typedef std::forward_iterator_tag iterator_category;
     typedef T value_type;
     typedef ptrdiff_t difference_type;
-    typedef T* pointer;
-    typedef T& reference;
+    typedef typename remove_const<T>::type* pointer;
+    typedef typename add_const<T>::type* const_pointer;
+    typedef typename remove_const<T>::type& reference;
+    typedef typename add_const<T>::type& const_reference;
     typedef ForwardIterator<T, I> self_type;
 public:
     // Implementation of the required functions in terms of the overridable
@@ -74,28 +77,28 @@ public:
     virtual ~ForwardIterator() {
     }
 
-    reference operator*() {
+    value_type& operator*() {
         if (_end_reached_) sthrow(IteratorException,
                 "Tried to dereference an beyond-end iterator");
-        return current();
+        return static_cast<I*>(this)->current();
     }
 
-    const reference operator*() const {
+    const_reference operator*() const {
         if (_end_reached_) sthrow(IteratorException,
                 "Tried to dereference an beyond-end iterator");
-        return current();
+        return static_cast<I*>(this)->current();
     }
 
-    pointer operator->() {
+    value_type* operator->() {
         if (_end_reached_) sthrow(IteratorException,
                 "Tried to dereference an beyond-end iterator");
-        return &current();
+        return &static_cast<I*>(this)->current();
     }
 
-    const pointer operator->() const {
+    const_pointer operator->() const {
         if (_end_reached_) sthrow(IteratorException,
                 "Tried to dereference an beyond-end iterator");
-        return &current();
+        return &static_cast<I*>(this)->current();
     }
 
     const I & operator++() const {
@@ -145,7 +148,8 @@ public:
     }
 
     virtual bool operator==(const I& other) const {
-        return (_end_reached_ == other._end_reached_) && equals(other);
+        return (_end_reached_ == other._end_reached_)
+                && static_cast<const I*>(this)->equals(other);
     }
 
     bool operator!=(const I& other) const {
@@ -163,13 +167,20 @@ public:
      * to be done, this is all done automagically for you.
      * @return The object this iterator is currently pointing at.
      */
-    virtual reference current() const = 0;
+    //virtual reference current() = 0;
+    /**
+     * <b>OVERRIDE THIS METHOD</b> Returns a reference to the object the iterator
+     * is currently pointing at. Note that no beyond-the-end checking needs
+     * to be done, this is all done automagically for you.
+     * @return The object this iterator is currently pointing at.
+     */
+    //virtual const_reference current() const = 0;
     /**
      * <b>OVERRIDE THIS METHOD</b> Sets the iterator one place forward. Note
      * that no beyond-the-end checking needs to be done, this is all done
      * automagically for you.
      */
-    virtual void next() const = 0;
+    virtual void next() = 0;
     /**
      * <b>OVERRIDE THIS METHOD</b> Tells wheter there are any objects left
      * in the collection. This method should not take the past-the-end item into
@@ -186,7 +197,7 @@ public:
      * they iteratate over the same collection and currently point to the same
      * object), false otherwise.
      */
-    virtual bool equals(const I& other) const = 0;
+    //virtual bool equals(const I& other) const = 0;
     /**
      * Do not use or modify!
      */
@@ -268,7 +279,7 @@ public:
     }
 public:
     virtual bool hasPrevious() const = 0;
-    virtual void previous() const = 0;
+    virtual void previous() = 0;
 };
 
 /**

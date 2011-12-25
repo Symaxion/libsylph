@@ -155,6 +155,16 @@ namespace {
         }
     }
 
+    TEST_F(TestArray, testReverseIterator) {
+        idx_t cur = arfilled1.length - 1;
+
+        for(Array<int>::reverse_iterator it = arfilled1.rbegin();
+                it != arfilled1.rend(); ++it) {
+            EXPECT_EQ(*it,arfilled1[cur]);
+            cur--;
+        }
+    }
+
     TEST_F(TestArray, testNegativeIndices) {
         EXPECT_EQ(7, arfilled1[-1]);
         EXPECT_EQ(1, arfilled1[-2]);
