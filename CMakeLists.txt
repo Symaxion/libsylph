@@ -28,8 +28,8 @@ cmake_minimum_required(VERSION 2.6)
 project(SYLPH)
 
 # Definitions
-set( SYLPH_VERSION "0.2" )
-set( SYLPH_ABI 2 ) # update when abi changes
+set( SYLPH_VERSION "0.1" )
+set( SYLPH_ABI 1 ) # update when abi changes
 set( SYLPH_DEP_LINK gc icuuc ) # dependent libraries
 set( SYLPH_DEP_INCLUDE "" ) # for future use
 
