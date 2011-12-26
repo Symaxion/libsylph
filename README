@@ -60,12 +60,11 @@
     1.2 Supported Compilers
 
         As of now, only one specific compiler is supported: the GNU C++ compiler
-        (g++), version 4.4.0 or later. LibSylph uses certain GNU C++
-        specific extensions. Furthermore, support for certain C++0x constructs
-        is required. At the day of writing this document, only the compiler
-        mentioned above supports these extensions. In case you found another
-        compiler to meet these requirements, please contact
-        the LibSylph developers (see section 3.2)
+        (g++), version 4.5.3. LibSylph uses certain GNU C++ specific extensions. 
+        Furthermore, support for certain C++11 constructs is required. At the 
+        day of writing this document, only the compiler mentioned above supports
+        these extensions. In case you found another compiler to meet these 
+        requirements, please contact the LibSylph developers (see section 3.2).
 
   2. Build Instructions
 
@@ -85,7 +84,7 @@
                  cmake .
                  make
 
-            Please note you might need to specify the path to a C++0x compiler
+            Please note you might need to specify the path to a C++11 compiler
             explicitly by using `-DCMAKE_CXX_COMPILER=/path/to/c++'.
 
             To enable debugging symbols and other useful debug output, such
