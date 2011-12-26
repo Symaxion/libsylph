@@ -658,6 +658,28 @@ namespace Op {
     void dtr(T* t) {
         delete t;
     }
+
+    // Casts
+
+    template<class T, class U>
+    T sca(U& u) {
+        return static_cast<T>(u);
+    }
+
+    template<class T, class U>
+    T dca(U& u) {
+        return dynamic_cast<T>(u);
+    }
+
+    template<class T, class U>
+    T cca(U& u) {
+        return const_cast<T>(u);
+    }
+
+    template<class T, class U>
+    T rca(U& u) {
+        return reinterpret_cast<T>(u);
+    }
 }
 
 // Call
