@@ -269,6 +269,24 @@ namespace Traits {
 
     // Our traits
 
+    template<class T>
+    struct RemovePointersRecursive {
+        typedef T type;
+    };
+
+    template<class T>
+    struct RemovePointersRecursive<T*> {
+        typedef T type;
+    };
+
+    template<class T>
+    struct BaseType {
+        typedef typename RemoveCV<
+                    typename RemoveReference<
+                        typename RemovePointersRecursive<T>::type>::type>::type
+                        type;
+    };
+
     // Logical
 
     template<bool B1, bool B2, bool B3 = true, bool B4 = true>
@@ -354,101 +372,6 @@ namespace Traits {
                 T, const T&>::type type;
     };
 
-    // Collection related
-
-    /**
-     * Operations supported:
-     * begin/end: iterator
-     * contains(T)
-     * indexOf(T)
-     */
-    template<class T>
-    struct IsCollection : public FalseType {
-    };
-
-    /**
-     * Traits:
-     * IsCollection
-     *
-     * Operations supported:
-     * operator[](idx_t)
-     * rbegin/rend: iterator
-     */
-    template<class T>
-    struct IsSequentialCollection : public FalseType {
-    };
-
-    /**
-     * Traits:
-     * IsCollection
-     *
-     * Operations supported:
-     * add(T): ensures element is in collection
-     * remove(T)
-     */
-    template<class T>
-    struct IsExpandableCollection : public FalseType {
-    };
-
-    /**
-     * Traits:
-     * Sequential and Expandable
-     *
-     * Operations supported:
-     * peekFront(T)
-     * pushFront(T)
-     * popFront(T)
-     * peekBack(T)
-     * pushBack(T)
-     * popBack(T)
-     */
-    template<class T>
-    struct IsExpandableSequence : public And<IsSequentialCollection<T>::value,
-            IsExpandableCollection<T>::value> {
-    };
-
-    /**
-     * Traits:
-     * IsSequentialCollection
-     *
-     * RandomAccessIterator available
-     */
-    template<class T>
-    struct IsRandomAccessCollection : public FalseType {
-    };
-
-    template<class T>
-    struct IsEfficientFrontInsertable : public FalseType {
-    };
-
-    template<class T>
-    struct IsEfficientMiddleInsertable : public FalseType {
-    };
-
-    template<class T>
-    struct IsEfficientBackInsertable : public FalseType {
-    };
-
-    template<class T>
-    struct IsEfficientFrontRetrievable : public FalseType {
-    };
-
-    template<class T>
-    struct IsEfficientMiddleRetrievable : public FalseType {
-    };
-
-    template<class T>
-    struct IsEfficientBackRetrievable : public FalseType {
-    };
-
-    /**
-     * Traits:
-     * IsCollection
-     */
-    template<class T>
-    struct IsUniqueElementCollection : public FalseType {
-    };
-
     // Generic compatibility
     template<class T>
     struct IsSylphClass : public FalseType {
@@ -467,6 +390,18 @@ namespace Traits {
     struct StdEquivalent {
     };
 
+
+    // Functions
+
+    template<class T>
+    typename MakeSigned<T>::type makeSigned(T t) {
+        return static_cast<typename MakeSigned<T>::type>(t);
+    }
+
+    template<class T>
+    typename MakeUnsigned<T>::type makeUnsigned(T t) {
+        return static_cast<typename MakeUnsigned<T>::type>(t);
+    }
 }
 
 #define S_BEGIN_TRAITS namespace Sylph { namespace Traits {

@@ -72,24 +72,35 @@ namespace {
         Array<int> a = { 1, 4, 2, 4, 7 };
         function<bool(int)> lt9 = bind(Op::lst<int,int>,P::_1,9);
         EXPECT_TRUE(forall(a,lt9));
+        EXPECT_TRUE(forall(a) < 9);
     }
 
     TEST_F(TestFunction, testForAllNegative) {
         Array<int> a = { 1, 4, 2, 4, 7 };
         function<bool(int)> lt7 = bind(Op::lst<int,int>,P::_1,7);
         EXPECT_FALSE(forall(a,lt7));
+        EXPECT_FALSE(forall(a) < 7);
     }
 
     TEST_F(TestFunction, testForAny) {
         Array<int> a = { 1, 4, 2, 4, 7 };
         function<bool(int)> mt5 = bind(Op::grt<int,int>,P::_1,5);
         EXPECT_TRUE(forany(a,mt5));
+        EXPECT_TRUE(forany(a) > 5);
     }
 
     TEST_F(TestFunction, testForAnyNegative) {
         Array<int> a = { 1, 4, 2, 4, 7 };
         function<bool(int)> mt9 = bind(Op::grt<int,int>,P::_1,9);
         EXPECT_FALSE(forany(a,mt9));
+        EXPECT_FALSE(forany(a) > 9);
+    }
+
+    TEST_F(TestFunction, testCountPred) {
+        Array<int> a { 1, 7, 5, 2, 4 };
+        function<bool(int)> mt3 = bind(Op::grt<int,int>,P::_1,3);
+        EXPECT_EQ(3u,countpred(a,mt3));
+        EXPECT_EQ(3u,countpred(a) > 3);
     }
 
     TEST_F(TestFunction, testCall) {
