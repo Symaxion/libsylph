@@ -38,8 +38,21 @@ namespace Traits {
      * Operations supported:
      * begin/end: iterator
      * contains(T)
-     * indexOf(T)
+     * indexOf(T[,idx_t])
+     * lastIndexOf(T[,idx_t])
      * size()
+     * empty(): size() == 0
+     *
+     * Constructors:
+     * Default constructor
+     * Copy constructor
+     * Initializer-list constructor
+     * Move constructor
+     *
+     * Operators:
+     * Assignment
+     * Move assignment
+     * operator+ (joining)
      *
      * Operations depending on T:
      * operator==
@@ -70,6 +83,12 @@ namespace Traits {
      * Operations supported:
      * add(T): ensures element is in collection
      * remove(T)
+     * removeAt(iterator)
+     * addAll(Collection<T>)
+     * removeAll(Collection<T>)
+     * clear()
+     * operator+=
+     * operator<<
      */
     template<class T>
     struct IsExpandableCollection : public FalseType {
@@ -86,6 +105,11 @@ namespace Traits {
      * peekBack(T)
      * pushBack(T)
      * popBack(T)
+     *
+     * insert(iterator,T)
+     * emplace(iterator,A...)
+     * emplaceBack(A...)
+     * emplaceFront(A...)
      */
     template<class T>
     struct IsExpandableSequence : public And<IsSequentialCollection<T>::value,
@@ -97,6 +121,9 @@ namespace Traits {
      * IsSequentialCollection
      *
      * RandomAccessIterator available
+     * insert(idx_t,T)
+     * removeAt(idx_t)
+     * emplace(idx_t,A...)
      */
     template<class T>
     struct IsRandomAccessCollection : public FalseType {
