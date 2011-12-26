@@ -21,35 +21,36 @@
  *   3. This notice may not be removed or altered from any source
  *   distribution.
  *
+ *  Created on: 3 jan. 2011
  */
 
-#include "SylphTest.h"
-#include <Sylph/Core/File.h>
-#include <Sylph/Core/Debug.h>
+#ifndef COLLECTION_H_
+#define COLLECTION_H_
 
-using namespace Sylph;
+#include "Object.h"
 
-namespace {
-    class TestFile : public ::testing::Test {
+SYLPH_BEGIN_NAMESPACE
 
-    };
+class Collection : public virtual Object {
 
-    TEST_F(TestFile,testParent) {
-        ASSERT_NO_THROW({
-            File f = "/var/foo/example";
-            EXPECT_EQ("/var/foo",f.parent());
+};
 
-            EXPECT_EQ("/",File("/").parent());
-        });
-    }
+class OrderedCollection : public virtual Collection {
 
-    TEST_F(TestFile, testAppend) {
-        File f = "/var/foo";
-        f /= "example";
-        EXPECT_EQ("/var/foo/example",f);
+};
 
-        f = "/var/foo/";
-        f /= "example";
-        EXPECT_EQ("/var/foo/example",f);
-    }
-}
+class RandomAccessCollection : public virtual OrderedCollection {
+
+};
+
+class ExpandableCollection : public virtual Collection {
+
+};
+
+class UniqueCollection : public virtual Collection {
+
+};
+
+SYLPH_END_NAMESPACE
+
+#endif /* COLLECTION_H_ */

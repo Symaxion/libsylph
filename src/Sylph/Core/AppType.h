@@ -31,17 +31,25 @@
 
 SYLPH_BEGIN_NAMESPACE
 /**
- * This enumeration contains the possible Application Types. Each element
- * is backed by an implementation of @c ApplicationSelf in @c Sylph::OS.<p>
+ * This enumeration contains the possible Application Types.
+ *
+ * Each element is backed by an implementation of @c ApplicationSelf in
+ * @c Sylph::OS.
+ *
  * When you want to use an alternative implementation of @c ApplicationSelf,
  * you can pass one of the elements of this enumeration as the definition
  * of the macro <code>APP_TYPE</code> to the compiler, e.g. for GCC:
  * <pre>g++ -o myapp -lSylph -DAPPTYPE=S_APPTYPE_FHS myapp.cpp</pre>
- * Note that this usage is not checked, i.e. with this command you can
- * compile perfectly on Mac %OS X or Windows, but <code>S_APPTYPE_FHS</code>
- * only works on Linux, but this error will not be reported. Therefore
- * using this kind of override requires support for a dynamic configuration
- * system, such as <i>GNU Autotools</i> or <i>CMake</i>
+ * Note that LibSylph does not check if the given apptype makes sense on the
+ * current platform, i.e. with the above command you can
+ * compile perfectly under Mac %OS X or Windows, while
+ * <code>S_APPTYPE_FHS</code> only works on Linux. No error will directly be
+ * reported for faulty use of an APPTYPE, however, runtime errors are highly
+ * likely to occur.
+ *
+ * It is therefore recommended that any overrides to this variable go through
+ * an automated, cross-platform build system, such as <i>GNU Autotools</i> or
+ * <i>CMake</i>.
  */
 enum AppType {
     S_APPTYPE_BUNDLE, /**< This AppType uses a LibSylph-style 'bundle'

@@ -23,7 +23,7 @@
  *
  */
 
-#include "SylphTest.h"
+#include "../SylphTest.h"
 #include <Sylph/Core/HashMap.h>
 #include <Sylph/Core/Debug.h>
 

@@ -21,54 +21,35 @@
  *   3. This notice may not be removed or altered from any source
  *   distribution.
  *
- * Created on 24 april 2009, 19:19
  */
 
-#ifndef SYLPH_CORE_RANGE_H_
-#define	SYLPH_CORE_RANGE_H_
+#include "../SylphTest.h"
+#include <Sylph/Core/File.h>
+#include <Sylph/Core/Debug.h>
 
-#include "Object.h"
-#include <algorithm>
+using namespace Sylph;
 
-SYLPH_BEGIN_NAMESPACE
+namespace {
+    class TestFile : public ::testing::Test {
 
-/** */
-template<class T>
-class basic_range {
-public:
-    /** */
-    inline basic_range(T _first, T _last) : first(_first), last(_last) {
-    }
-    /** */
-    inline virtual ~basic_range() {}
+    };
 
-    inline bool sequential() const {
-        return first <= last;
+    TEST_F(TestFile,testParent) {
+        ASSERT_NO_THROW({
+            File f = "/var/foo/example";
+            EXPECT_EQ("/var/foo",f.parent());
+
+            EXPECT_EQ("/",File("/").parent());
+        });
     }
 
-    inline bool inverse() const {
-        return !sequential();
+    TEST_F(TestFile, testAppend) {
+        File f = "/var/foo";
+        f /= "example";
+        EXPECT_EQ("/var/foo/example",f);
+
+        f = "/var/foo/";
+        f /= "example";
+        EXPECT_EQ("/var/foo/example",f);
     }
-
-    inline bool singleton() {
-        return first == last;
-    }
-
-    inline void swap() {
-        std::swap(first,last);
-    }
-    T first;
-    T last;
-};
-
-/** */
-typedef basic_range<int> range;
-/** */
-typedef basic_range<float> frange;
-/** */
-typedef basic_range<double> drange;
-
-SYLPH_END_NAMESPACE
-
-#endif	/* SYLPH_CORE_RANGE_H_ */
-
+}
