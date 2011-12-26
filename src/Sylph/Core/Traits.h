@@ -276,12 +276,12 @@ namespace Traits {
 
     template<class T>
     struct RemovePointersRecursive<T*> {
-        typedef T type;
+        typedef typename RemovePointersRecursive<T>::type type;
     };
 
     template<class T>
     struct BaseType {
-        typedef typename RemoveCV<
+        typedef typename RemoveCv<
                     typename RemoveReference<
                         typename RemovePointersRecursive<T>::type>::type>::type
                         type;
