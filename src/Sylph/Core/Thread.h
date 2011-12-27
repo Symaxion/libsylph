@@ -24,8 +24,8 @@
  *  Created on: 9 dec. 2010
  */
 
-#ifndef THREAD_H_
-#define THREAD_H_
+#ifndef SYLPH_CORE_THREAD_H_
+#define SYLPH_CORE_THREAD_H_
 
 #include "Object.h"
 #include "String.h"
@@ -108,11 +108,6 @@ private:
 #endif
 };
 
-HashMap<Thread,String> Thread::implString;
-HashMap<String,Thread> Thread::stringImpl;
-HashMap<Thread,bool> Thread::implJoinable;
-idx_t Thread::threadCt = 1;
-
 template<class Callable>
 void* callCallable(void* c) {
 #ifdef SYLPH_OS_WINDOWS
@@ -127,4 +122,4 @@ void* callCallable(void* c) {
 SYLPH_END_NAMESPACE
 
 
-#endif /* THREAD_H_ */
+#endif /* SYLPH_CORE_THREAD_H_ */

@@ -26,6 +26,11 @@
 
 SYLPH_BEGIN_NAMESPACE
 
+HashMap<Thread,String> Thread::implString;
+HashMap<String,Thread> Thread::stringImpl;
+HashMap<Thread,bool> Thread::implJoinable;
+idx_t Thread::threadCt = 1;
+
 void Thread::addStringImpl(Thread impl, String s) {
     implString[impl] = s;
     stringImpl[s] = impl;
