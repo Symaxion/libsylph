@@ -1,6 +1,6 @@
 /*
  * LibSylph Class Library
- * Copyright (C) 2010 Frank "SeySayux" Erens <seysayux@gmail.com>
+ * Copyright (C) 2011 Frank "SeySayux" Erens <seysayux@gmail.com>
  *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -24,8 +24,8 @@
  * Created on 22 maart 2009, 16:40
  */
 
-#ifndef ANY_H_
-#define	ANY_H_
+#ifndef SYLPH_CORE_ANY_H_
+#define	SYLPH_CORE_ANY_H_
 
 #include "Object.h"
 #include "Exception.h"
@@ -179,5 +179,5 @@ template<class T> T * any_cast(Any & any) {
 }
 SYLPH_END_NAMESPACE
 
-#endif	/* ANY_H_ */
+#endif	/* SYLPH_CORE_ANY_H_ */
 

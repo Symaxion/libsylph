@@ -1,6 +1,6 @@
 /*
  * LibSylph Class Library
- * Copyright (C) 2010 Frank "SeySayux" Erens <seysayux@gmail.com>
+ * Copyright (C) 2011 Frank "SeySayux" Erens <seysayux@gmail.com>
  *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -24,8 +24,8 @@
  * Created on 30 januari 2009, 9:19
  */
 
-#ifndef LINUXBUNDLEAPPSELF_H_
-#define	LINUXBUNDLEAPPSELF_H_
+#ifndef SYLPH_OS_LINUXBUNDLEAPPSELF_H_
+#define	SYLPH_OS_LINUXBUNDLEAPPSELF_H_
 
 #include "../Core/Application.h"
 
@@ -67,5 +67,5 @@ public:
 
 SYLPH_END_NAMESPACE
 
-#endif	/* _LINUXBUNDLEAPPSELF_H */
+#endif	/* SYLPH_OS_LINUXBUNDLEAPPSELF_H */
 

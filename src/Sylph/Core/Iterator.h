@@ -1,6 +1,6 @@
 /*
  * LibSylph Class Library
- * Copyright (C) 2010 Frank "SeySayux" Erens <seysayux@gmail.com>
+ * Copyright (C) 2011 Frank "SeySayux" Erens <seysayux@gmail.com>
  *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -24,13 +24,14 @@
  * Created on 6 december 2008, 17:16
  */
 
-#ifndef ITERATOR_H_
-#define	ITERATOR_H_
+#ifndef SYLPH_CORE_ITERATOR_H_
+#define	SYLPH_CORE_ITERATOR_H_
 
 #include "Object.h"
 #include "Exception.h"
 #include "Iterable.h"
 #include <iterator>
+#include <type_traits>
 //#include "Foreach.h" -- this line is at the bottom of the file ;)
 
 SYLPH_BEGIN_NAMESPACE
@@ -57,8 +58,10 @@ public:
     typedef std::forward_iterator_tag iterator_category;
     typedef T value_type;
     typedef ptrdiff_t difference_type;
-    typedef T* pointer;
-    typedef T& reference;
+    typedef typename remove_const<T>::type* pointer;
+    typedef typename add_const<T>::type* const_pointer;
+    typedef typename remove_const<T>::type& reference;
+    typedef typename add_const<T>::type& const_reference;
     typedef ForwardIterator<T, I> self_type;
 public:
     // Implementation of the required functions in terms of the overridable
@@ -74,38 +77,38 @@ public:
     virtual ~ForwardIterator() {
     }
 
-    reference operator*() {
+    value_type& operator*() {
         if (_end_reached_) sthrow(IteratorException,
                 "Tried to dereference an beyond-end iterator");
-        return current();
+        return static_cast<I*>(this)->current();
     }
 
-    const reference operator*() const {
+    const_reference operator*() const {
         if (_end_reached_) sthrow(IteratorException,
                 "Tried to dereference an beyond-end iterator");
-        return current();
+        return static_cast<I*>(this)->current();
     }
 
-    pointer operator->() {
+    value_type* operator->() {
         if (_end_reached_) sthrow(IteratorException,
                 "Tried to dereference an beyond-end iterator");
-        return &current();
+        return &static_cast<I*>(this)->current();
     }
 
-    const pointer operator->() const {
+    const_pointer operator->() const {
         if (_end_reached_) sthrow(IteratorException,
                 "Tried to dereference an beyond-end iterator");
-        return &current();
+        return &static_cast<I*>(this)->current();
     }
 
     const I & operator++() const {
         if (_end_reached_) sthrow(IteratorException, "End of iterator");
         else if (!hasNext()) {
             _end_reached_ = true;
-            return *static_cast<I*> (this);
+            return *static_cast<const I*> (this);
         } else {
             next();
-            return *static_cast<I*> (this);
+            return *static_cast<const I*> (this);
         }
     }
 
@@ -121,7 +124,7 @@ public:
     }
 
     const I operator++(int) const {
-        I toReturn(*static_cast<I*> (this));
+        I toReturn(*static_cast<const I*> (this));
         if (_end_reached_) sthrow(IteratorException, "End of iterator");
         else if (!hasNext()) {
             _end_reached_ = true;
@@ -145,7 +148,8 @@ public:
     }
 
     virtual bool operator==(const I& other) const {
-        return (_end_reached_ == other._end_reached_) && equals(other);
+        return (_end_reached_ == other._end_reached_)
+                && static_cast<const I*>(this)->equals(other);
     }
 
     bool operator!=(const I& other) const {
@@ -163,13 +167,20 @@ public:
      * to be done, this is all done automagically for you.
      * @return The object this iterator is currently pointing at.
      */
-    virtual reference current() const = 0;
+    //virtual reference current() = 0;
+    /**
+     * <b>OVERRIDE THIS METHOD</b> Returns a reference to the object the iterator
+     * is currently pointing at. Note that no beyond-the-end checking needs
+     * to be done, this is all done automagically for you.
+     * @return The object this iterator is currently pointing at.
+     */
+    //virtual const_reference current() const = 0;
     /**
      * <b>OVERRIDE THIS METHOD</b> Sets the iterator one place forward. Note
      * that no beyond-the-end checking needs to be done, this is all done
      * automagically for you.
      */
-    virtual void next() const = 0;
+    virtual void next() = 0;
     /**
      * <b>OVERRIDE THIS METHOD</b> Tells wheter there are any objects left
      * in the collection. This method should not take the past-the-end item into
@@ -186,7 +197,7 @@ public:
      * they iteratate over the same collection and currently point to the same
      * object), false otherwise.
      */
-    virtual bool equals(const I& other) const = 0;
+    //virtual bool equals(const I& other) const = 0;
     /**
      * Do not use or modify!
      */
@@ -226,12 +237,12 @@ public:
     const I & operator--() const {
         if (super::_end_reached_) {
             super::_end_reached_ = false;
-            return *static_cast<I*> (this);
+            return *static_cast<const I*> (this);
         } else if (!hasPrevious()) {
             sthrow(IteratorException, "Begin of iterator");
         } else {
             previous();
-            return *static_cast<I*> (this);
+            return *static_cast<const I*> (this);
         }
     }
 
@@ -249,7 +260,7 @@ public:
     }
 
     const I operator--(int) const {
-        I toReturn(*static_cast<I*> (this));
+        I toReturn(*static_cast<const I*> (this));
         if (super::_end_reached_) {
             super::_end_reached_ = false;
             return toReturn;
@@ -268,7 +279,7 @@ public:
     }
 public:
     virtual bool hasPrevious() const = 0;
-    virtual void previous() const = 0;
+    virtual void previous() = 0;
 };
 
 /**
@@ -307,7 +318,7 @@ public:
     }
 
     const I & operator-=(unsigned int i) const {
-        return &*static_cast<I*>(&(*this += -i));
+        return &*static_cast<const I*>(&(*this += -i));
     }
 
     const I operator+(unsigned int i) const {
@@ -360,20 +371,20 @@ I operator+(unsigned int i, const I itr) {
 }
 
 /**
- * SylphIterator provides a easier-to-use wrapper around STL iterators. The
+ * SylphIterator provides a easier-to-use wrapper around libstd iterators. The
  * interface of a SylphIterator is similar to a Java-style iterator, but it is
- * backed by a STL iterator and can therefore be used for any class supporitng
- * STL iterators. <p>
+ * backed by a libstd iterator and can therefore be used for any class
+ * supporting libstd iterators.
  */
 template<class Iter>
 class SylphIterator : public virtual Object {
 public:
 
     /**
-     * Creates a new Iterator from an STL-iterator. An Iterator can either be
+     * Creates a new Iterator from a libstd iterator. An Iterator can either be
      * constructed explicitly with this constructor, in which case the correct
      * type of Iterator for the particular collection needs to be known, or
-     * through Iterable::iterator() or Iterable::mutableIterator() .
+     * through Iterable::constIterator() or Iterable::mutableIterator() .
      * @param it The iterable to iterate over.
      */
     inline SylphIterator(Iter & it) : itr(it) {
@@ -532,5 +543,5 @@ SYLPH_END_NAMESPACE
 // Previously defined here, now defined elsewhere
 #include "Foreach.h"
 
-#endif	/* ITERATOR_H_ */
+#endif	/* SYLPH_CORE_ITERATOR_H_ */
 

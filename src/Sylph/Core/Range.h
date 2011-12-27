@@ -1,6 +1,6 @@
 /*
  * LibSylph Class Library
- * Copyright (C) 2010 Frank "SeySayux" Erens <seysayux@gmail.com>
+ * Copyright (C) 2011 Frank "SeySayux" Erens <seysayux@gmail.com>
  *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -24,9 +24,8 @@
  * Created on 24 april 2009, 19:19
  */
 
-#ifndef RANGE_H_
-#define	RANGE_H_
-
+#ifndef SYLPH_CORE_RANGE_H_
+#define	SYLPH_CORE_RANGE_H_
 
 #include "Object.h"
 #include <algorithm>
@@ -63,7 +62,7 @@ public:
 };
 
 /** */
-typedef basic_range<unsigned int> range;
+typedef basic_range<int> range;
 /** */
 typedef basic_range<float> frange;
 /** */
@@ -71,5 +70,5 @@ typedef basic_range<double> drange;
 
 SYLPH_END_NAMESPACE
 
-#endif	/* RANGE_H_ */
+#endif	/* SYLPH_CORE_RANGE_H_ */
 
