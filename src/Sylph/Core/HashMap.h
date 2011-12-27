@@ -34,6 +34,7 @@
 #include "Util.h"
 #include "Tuple.h"
 #include "Pointer.h"
+#include "Function.h"
 
 #include "Array.h"
 
@@ -46,23 +47,22 @@ SYLPH_BEGIN_NAMESPACE
 /**
  * @todo Write better documentation!
  */
-template<class key_, class value_,
-class hash_ = Hash<key_>,
-class equals_ = Equals<value_*> >
+template<class key_, class value_>
 class HashMap : public virtual Object {
 public:
     class Entry;
 public:
     typedef key_ Key;
     typedef value_ Value;
-    typedef hash_ HashFunction;
-    typedef equals_ EqualsFunction;
     typedef Entry* EntryPtr;
 
-    typedef HashMap<Key,Value,HashFunction,EqualsFunction> Self;
+    typedef function<int(Key)> HashFunction;
+    typedef function<bool(Value*,Value*)> EqualsFunction;
+
+    typedef HashMap<Key,Value> Self;
 public:
     class Entry {
-        friend class HashMap<Key,Value,HashFunction,EqualsFunction>;
+        friend class HashMap<Key,Value>;
         friend class Self::iterator;
     public:
 
@@ -188,7 +188,8 @@ public:
      * @param e A suitable equals function.
      */
     explicit HashMap(std::size_t initialCapacity = 11, float _loadFactor = .75f,
-            HashFunction h = Hash<Key>(), EqualsFunction e = Equals<Value*>())
+            HashFunction h = Hash<Key>(),
+            EqualsFunction e = Equals<Value*>())
     : loadFactor(_loadFactor), _size(0), buckets(initialCapacity),
     threshold(initialCapacity*loadFactor), hashf(h), equf(e) {
     }
@@ -197,7 +198,7 @@ public:
      * Copies the contents of another HashMap into this HashMap.
      * @param orig The original HashMap
      */
-    HashMap(const HashMap<Key, Value, HashFunction, EqualsFunction> & orig)
+    HashMap(const HashMap<Key, Value> & orig)
     : loadFactor(orig.loadFactor), _size(orig._size),
     buckets(orig.buckets.length), threshold(orig.threshold),
     hashf(orig.hashf), equf(orig.equf) {
@@ -397,7 +398,7 @@ public:
      * @param map Another HashMap.
      * @complexity O(n)
      */
-    void putAll(const HashMap<Key, Value, HashFunction, EqualsFunction>& map) {
+    void putAll(const HashMap<Key, Value>& map) {
 
         for (iterator it = map.begin(); it != map.end(); ++it) {
             this->put((*it)->key, (*it)->value);
@@ -470,16 +471,17 @@ private:
 };
 
 /** */
-template<class K, class V, class H, class E>
-bool operator==(const HashMap<K,V,H,E>& lhs, const HashMap<K,V,H,E>& rhs) {
-    static E eq;
+template<class K, class V>
+bool operator==(const HashMap<K,V>& lhs, const HashMap<K,V>& rhs) {
+    function<bool(V*,V*)>& eq = lhs.equf;
+
     if(lhs.size() == 0 && lhs.size() == 0) return true;
-    for(typename HashMap<K,V,H,E>::const_iterator it = lhs.begin();
+    for(typename HashMap<K,V>::const_iterator it = lhs.begin();
             it != lhs.end(); ++it) {
         if(!rhs.containsKey(it->key) || !eq(rhs.get(it->key), it->value))
             return false;
     }
-    for(typename HashMap<K,V,H,E>::const_iterator it = rhs.begin();
+    for(typename HashMap<K,V>::const_iterator it = rhs.begin();
             it != rhs.end(); ++it) {
         if(!lhs.containsKey(it->key) || !eq(lhs.get(it->key), it->value))
             return false;
