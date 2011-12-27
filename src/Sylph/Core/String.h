@@ -607,7 +607,7 @@ bool operator==(const String lhs, const String rhs);
  * Overridden version of Hash<T> for String.
  * @todo Explain how it works.
  */
-int hash(const String& s);
+sint hash(const String& s);
 
 inline bool operator==(const String lhs, const char* rhs) {
     return operator==(lhs, String(rhs));

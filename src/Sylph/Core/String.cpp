@@ -566,7 +566,7 @@ bool operator<(const String lhs, const String rhs) {
     return true;
 }
 
-int hash(const String& s) {
+sint hash(const String& s) {
     suint hash = 0;
     suint x = 0;
     suint i = 0;

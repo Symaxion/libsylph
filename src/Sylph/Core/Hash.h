@@ -55,17 +55,17 @@ struct Hash {
 };
 
 template<class T>
-int hash(const T& t) {
+sint hash(const T& t) {
     return hash_internal(reinterpret_cast<const byte*>(&t), sizeof (T));
 }
 
 template<class T>
-int hash(const T*& t) {
+sint hash(const T*& t) {
     return t == 0 ? 0 :
             hash_internal(reinterpret_cast<const byte*>(t), sizeof (T));
 }
 
-inline int hash(const int& i) {
+inline sint hash(const sint& i) {
     return i;
 }
 
