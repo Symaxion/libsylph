@@ -109,6 +109,13 @@ namespace Traits {
      * pushBack(T)
      * popBack(T)
      *
+     * append(T)
+     * prepend(T)
+     * appendAll(Collection<T>)
+     * prependAll(Collection<T>)
+     * first()
+     * last()
+     *
      * insert(iterator,T)
      * emplace(iterator,A...)
      * emplaceBack(A...)
