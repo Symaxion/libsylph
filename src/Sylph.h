@@ -41,11 +41,13 @@
  * <li>Exception.h</li>
  * <li>File.h</li>
  * <li>I18N.h</li>
+ * <li>Mutex.h</li>
  * <li>PointerManager.h</li>
  * <li>Primitives.h</li>
  * <li>Range.h</li>
  * <li>String.h</li>
  * <li>StringBuffer.h</li>
+ * <li>Thread.h</li>
  * <li>Util.h</li>
  * <li>Vector.h</li>
  * </ul></code>
@@ -68,6 +70,7 @@
 #include "Sylph/Core/Exception.h"
 #include "Sylph/Core/File.h"
 #include "Sylph/Core/I18N.h"
+#include "Sylph/Core/Mutex.h"
 #include "Sylph/Core/PointerManager.h"
 #include "Sylph/Core/Primitives.h"
 #include "Sylph/Core/Range.h"

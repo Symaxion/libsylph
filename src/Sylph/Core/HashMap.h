@@ -57,9 +57,12 @@ public:
     typedef Entry* EntryPtr;
 
     typedef function<int(Key)> HashFunction;
-    typedef function<bool(Value*,Value*)> EqualsFunction;
+    typedef function<bool(const Value*,const Value*)> EqualsFunction;
 
     typedef HashMap<Key,Value> Self;
+
+    template<class K, class V>
+    friend bool operator==(const HashMap<K,V>&, const HashMap<K,V>&);
 public:
     class Entry {
         friend class HashMap<Key,Value>;
@@ -473,7 +476,7 @@ private:
 /** */
 template<class K, class V>
 bool operator==(const HashMap<K,V>& lhs, const HashMap<K,V>& rhs) {
-    function<bool(V*,V*)>& eq = lhs.equf;
+    const function<bool(const V*,const V*)>& eq = lhs.equf;
 
     if(lhs.size() == 0 && lhs.size() == 0) return true;
     for(typename HashMap<K,V>::const_iterator it = lhs.begin();
