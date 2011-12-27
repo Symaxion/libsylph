@@ -91,7 +91,7 @@ class String : public virtual Object {
     friend String operator*(const String lhs, const std::size_t len);
     friend std::ostream & operator<<(std::ostream& lhs, const String rhs);
 
-    friend struct Hash<String>;
+    friend int hash(const String&);
 
 public:
     /**
@@ -607,26 +607,7 @@ bool operator==(const String lhs, const String rhs);
  * Overridden version of Hash<T> for String.
  * @todo Explain how it works.
  */
-template<>
-struct Hash<String> {
-
-    inline sint operator()(String s) const {
-        suint hash = 0;
-        suint x = 0;
-        suint i = 0;
-        uchar * b = s.strdata->data.carray();
-
-        for(i = 0; i < s.length(); b++, i++) {
-            hash = (hash << 4) + (*b);
-            if((x = hash & 0xF0000000L) != 0) {
-                hash ^= (x >> 24);
-            }
-            hash &= ~x;
-        }
-
-        return hash;
-    }
-};
+int hash(const String& s);
 
 inline bool operator==(const String lhs, const char* rhs) {
     return operator==(lhs, String(rhs));

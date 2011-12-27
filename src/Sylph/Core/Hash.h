@@ -50,24 +50,24 @@ inline sint hash_internal(const byte * b, std::size_t len) {
 template<class T>
 struct Hash {
     inline sint operator()(const T & t) const {
-        return hash_internal(reinterpret_cast<const byte*>(&t), sizeof (T));
+        return hash(t);
     }
 };
 
 template<class T>
-struct Hash<T*> {
-    inline sint operator()(const T * t) const {
-        return t == 0 ? 0 :
-                hash_internal(reinterpret_cast<const byte*>(t), sizeof (T));
-    }
-};
+int hash(const T& t) {
+    return hash_internal(reinterpret_cast<const byte*>(&t), sizeof (T));
+}
 
-template<>
-struct Hash<int> {
-    inline sint operator()(const int & i) const {
-        return i;
-    }
-};
+template<class T>
+int hash(const T*& t) {
+    return t == 0 ? 0 :
+            hash_internal(reinterpret_cast<const byte*>(t), sizeof (T));
+}
+
+inline int hash(const int& i) {
+    return i;
+}
 
 SYLPH_END_NAMESPACE
 

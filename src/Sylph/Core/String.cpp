@@ -566,6 +566,23 @@ bool operator<(const String lhs, const String rhs) {
     return true;
 }
 
+int hash(const String& s) {
+    suint hash = 0;
+    suint x = 0;
+    suint i = 0;
+    uchar * b = s.strdata->data.carray();
+
+    for(i = 0; i < s.length(); b++, i++) {
+        hash = (hash << 4) + (*b);
+        if((x = hash & 0xF0000000L) != 0) {
+            hash ^= (x >> 24);
+        }
+        hash &= ~x;
+    }
+
+    return hash;
+}
+
 const String& String::operator+=(const String rhs) const {
     Data * newdata = new Data(length() + rhs.length());
     arraycopy(strdata->data, 0, newdata->data, 0, length());
