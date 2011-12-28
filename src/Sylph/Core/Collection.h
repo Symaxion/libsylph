@@ -72,7 +72,6 @@ namespace Traits {
      * IsCollection
      *
      * Operations supported:
-     * operator[](idx_t)
      * rbegin/rend: iterator
      */
     template<class T>
@@ -89,6 +88,7 @@ namespace Traits {
      * removeAt(iterator)
      * addAll(Collection<T>)
      * removeAll(Collection<T>)
+     * retainAll(Collection<T>)
      * clear()
      * operator+=
      * operator<<
@@ -123,7 +123,7 @@ namespace Traits {
      */
     template<class T>
     struct IsExpandableSequence : public And<IsSequentialCollection<T>::value,
-    IsExpandableCollection<T>::value> {
+            IsExpandableCollection<T>::value> {
     };
 
     /**
@@ -131,12 +131,25 @@ namespace Traits {
      * IsSequentialCollection
      *
      * RandomAccessIterator available
+     * operator[](idx_t)
+     */
+    template<class T>
+    struct IsRandomAccessCollection : public FalseType {
+    };
+
+    /**
+     * Traits:
+     * IsExpandableSequence
+     * IsRandomAccessCollection
+     *
      * insert(idx_t,T)
      * removeAt(idx_t)
      * emplace(idx_t,A...)
      */
     template<class T>
-    struct IsRandomAccessCollection : public FalseType {
+    struct IsExpandableRandomAccessCollection :
+            public And<IsExpandableSequence<T>::value,
+            IsRandomAccessCollection<T>::value> {
     };
 
     template<class T>
