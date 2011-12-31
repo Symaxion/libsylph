@@ -36,6 +36,7 @@ docs/latex/**
 *.orig
 *.rej
 *.patch
+*.tmp
 
 # CMake generated files
 CMakeCache.txt
