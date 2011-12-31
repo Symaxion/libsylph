@@ -45,7 +45,7 @@ PROJECT_BRIEF          = "Class Library"
 # exceed 55 pixels and the maximum width should not exceed 200 pixels. 
 # Doxygen will copy the logo to the output directory.
 
-PROJECT_LOGO           = ../../libsylph-logos/libsylph-simple-96x96.png
+PROJECT_LOGO           = docs/incl/libsylph-simple-96x96.png
 
 # The OUTPUT_DIRECTORY tag is used to specify the (relative or absolute) 
 # base path where the generated documentation will be put. 
