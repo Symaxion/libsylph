@@ -1,6 +1,6 @@
 /*
  * LibSylph Class Library
- * Copyright (C) 2011 Frank "SeySayux" Erens <seysayux@gmail.com>
+ * Copyright (C) 2012 Frank "SeySayux" Erens <seysayux@gmail.com>
  * Copyright (C) 2010 Scott "ernieballsep" Philbrook <ernieballsep@gmail.com>
  *
  * This software is provided 'as-is', without any express or implied
