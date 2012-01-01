@@ -1,0 +1,9 @@
+This "code" is here purely to have doxygen generate documentation. It is not
+used by anything else in LibSylph and will never be compiled. In fact, it
+probably won't even compile.
+
+The documentation generated here is for the various "concepts", or standardized
+interfaces a class in LibSylph can comply to. Often, you'll find that a piece of
+documentation says that a function or an object should comply to the
+such-and-such concept. To know what that means, check the documentation
+generated from this directory.
