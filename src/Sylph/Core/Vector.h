@@ -1,6 +1,6 @@
 /*
  * LibSylph Class Library
- * Copyright (C) 2010 Frank "SeySayux" Erens <seysayux@gmail.com>
+ * Copyright (C) 2012 Frank "SeySayux" Erens <seysayux@gmail.com>
  * Copyright (C) 2010 Scott "ernieballsep" Philbrook <ernieballsep@gmail.com>
  *
  * This software is provided 'as-is', without any express or implied
@@ -25,8 +25,8 @@
  * Created on 6 december 2008, 12:07
  */
 
-#ifndef VECTOR_H_
-#define	VECTOR_H_
+#ifndef SYLPH_CORE_VECTOR_H_
+#define	SYLPH_CORE_VECTOR_H_
 
 #include "Array.h"
 #include "Util.h"
@@ -47,31 +47,33 @@ template<class T>
 class Vector : public Object {
 public:
 
-    class iterator : public RandomAccessIterator<T, iterator> {
+    template<class C, class V>
+    class S_ITERATOR : public RandomAccessIterator<V, S_ITERATOR<C,V> > {
     public:
-        typedef RandomAccessIterator<T, iterator> super;
+        typedef RandomAccessIterator<V, S_ITERATOR<C,V> > super;
 
-        iterator(bool begin = false, Vector<T>* obj = NULL)
-        : super(begin), _obj(obj) {
+        S_ITERATOR(bool begin = false, C* obj = null) : super(begin),
+                _obj(obj) {
             _currentIndex = begin ? 0 : _obj->size() - 1;
         }
 
-        iterator(bool begin = false, const Vector<T>* obj = NULL)
-        : super(begin), _obj(const_cast<Vector<T>*> (obj)) {
-            _currentIndex = begin ? 0 : _obj->size() - 1;
-        }
-
-        bool equals(const iterator& other) const {
+        template<class C1, class V1>
+        bool equals(const S_ITERATOR<C1,V1>& other) const {
             return _currentIndex == other._currentIndex &&
                     _obj == other._obj;
         }
 
-        iterator(const iterator& other) {
+        template<class C1, class V1>
+        S_ITERATOR(const S_ITERATOR<C1,V1>& other) {
             _currentIndex = other._currentIndex;
             _obj = other._obj;
         }
 
-        typename super::reference current() const {
+        typename super::value_type& current() {
+            return (*_obj)[_currentIndex];
+        }
+
+        typename super::const_reference current() const {
             return (*_obj)[_currentIndex];
         }
 
@@ -79,7 +81,7 @@ public:
             return _currentIndex < _obj->size() - 1;
         }
 
-        void next() const {
+        void next() {
             _currentIndex++;
         }
 
@@ -87,7 +89,7 @@ public:
             return _currentIndex > 0;
         }
 
-        void previous() const {
+        void previous() {
             _currentIndex--;
         }
 
@@ -98,12 +100,13 @@ public:
         size_t length() const {
             return _obj->size() - 1;
         }
-    private:
-        mutable idx_t _currentIndex;
-        Vector<T>* _obj;
+    //private:
+        idx_t _currentIndex;
+        C* _obj;
     };
 
-    S_ITERABLE(T)
+    S_ITERABLE(Vector<T>,T)
+    S_REVERSE_ITERABLE(Vector<T>,T)
 
 
     /**
@@ -139,6 +142,7 @@ public:
      * and all existing data will be copied into the new array. The size
      * of this Vector will increase by 1.
      * @param t The element to append.
+     * @complexity O(1)
      */
     void add(const T & t) {
         ensureCapacity(_size + 1);
@@ -153,6 +157,7 @@ public:
      * they have been inserted.
      * The size of this Vector will increase by the size of the given Vector.
      * @param c Another Vector whose elements to append to this one.
+     * @complexity O(n)
      */
     void addAll(Vector<T> & c) {
         ensureCapacity(_size + c._size);
@@ -168,6 +173,7 @@ public:
      * copy all elements to a new, bigger array. Therefore, the capacity must
      * always be greater than or equal to the size of this Vector.
      * @return The current capacity of this Vector.
+     * @complexity O(0)
      */
     std::size_t capacity() const {
         return elements.length;
@@ -176,23 +182,32 @@ public:
     /**
      * Removes all elements from this vector. This will clear the underlying
      * array of the vector and reduces the sice effectively to 0.
+     * @complexity O(n)
      */
     void clear() {
         _size = 0;
         elements.clear();
     }
 
-    /** */
+    /**
+     * @param An object @c t
+     * @returns if this Vector has an element equal to @c t
+     * @complexity O(n)
+     */
     bool contains(const T & t) const {
         return indexOf(t) != -1;
     }
 
-    /** */
+    /**
+     * @complexity O(1)
+     */
     bool empty() const {
         return _size == 0;
     }
 
-    /** */
+    /**
+     * @complexity O(1)
+     */
     const T & get(std::size_t idx) const throw(ArrayException) {
         try {
             checkIfOutOfBounds(idx);
@@ -201,7 +216,9 @@ public:
         straced;
     }
 
-    /** */
+    /**
+     * @complexity O(1)
+     */
     T & get(std::size_t idx) throw(ArrayException) {
         try {
             checkIfOutOfBounds(idx);
@@ -210,7 +227,9 @@ public:
         straced;
     }
 
-    /** */
+    /**
+     * @complexity O(n)
+     */
     sidx_t indexOf(const T & t, idx_t idx = 0) const throw(ArrayException) {
         try {
             checkIfOutOfBounds(idx);
@@ -224,12 +243,16 @@ public:
         return -1;
     }
 
-    /** */
+    /**
+     * @complexity O(n)
+     */
     sidx_t lastIndexOf(const T & t) const {
         return lastIndexOf(t, _size - 1);
     }
 
-    /** */
+    /**
+     * @complexity O(n)
+     */
     sidx_t lastIndexOf(const T & t, std::size_t idx) const 
             throw(ArrayException) {
         static Equals<T> equf;
@@ -244,12 +267,16 @@ public:
         return -1;
     }
 
-    /** */
+    /**
+     * @complexity O(n)
+     */
     void remove(const T & t) {
         removeAt(indexOf(t));
     }
 
-    /** */
+    /**
+     * @complexity O(n)
+     */
     void removeAt(std::size_t idx) throw(ArrayException) {
         try {
             checkIfOutOfBounds(idx);
@@ -260,7 +287,9 @@ public:
                 elements.length - 1 - idx);
     }
 
-    /** */
+    /**
+     * @complexity O(1)
+     */
     void set(std::size_t idx, const T & t) throw(ArrayException) {
         try {
             checkIfOutOfBounds(idx);
@@ -269,12 +298,16 @@ public:
         straced;
     }
 
-    /** */
+    /**
+     * @complexity O(0)
+     */
     std::size_t size() const {
         return _size;
     }
 
-    /** */
+    /**
+     * @complexity O(n)
+     */
     Array<T> toArray() const {
         Array<T> toReturn(size());
         for(idx_t i = 0; i < size(); ++i) {
@@ -283,7 +316,9 @@ public:
         return toReturn;
     }
 
-    /** */
+    /**
+     * @complexity O(n)
+     */
     bool operator==(const Vector<T> & c) const {
         if (_size != c.size()) return false;
         else {
@@ -294,21 +329,27 @@ public:
         }
     }
 
-    /** */
+    /**
+     * @complexity O(1)
+     */
     T & operator[](idx_t idx) throw(ArrayException) {
         try {
             return get(idx);
         } straced;
     }
 
-    /** */
+    /**
+     * @complexity O(1)
+     */
     const T & operator[](idx_t idx) const throw(ArrayException) {
         try {
             return get(idx);
         } straced;
     }
 
-    /** */
+    /**
+     * @complexity O(n)
+     */
     Vector& operator=(const Vector<T> & rhs) {
         elements = Array<T > (rhs.elements.length);
         _size = rhs.size();
@@ -340,4 +381,4 @@ private:
 
 
 SYLPH_END_NAMESPACE
-#endif	/* VECTOR_H_ */
+#endif	/* SYLPH_CORE_VECTOR_H_ */

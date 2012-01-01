@@ -3,7 +3,7 @@
 # File:   developers.sh
 #
 # LibSylph Class Library (build script)
-# Copyright (C) 2010 Frank "SeySayux" Erens <seysayux@gmail.com>
+# Copyright (C) 2012 Frank "SeySayux" Erens <seysayux@gmail.com>
 #
 # This software is provided 'as-is', without any express or implied
 # warranty. In no event will the authors be held liable for any damages
@@ -118,6 +118,26 @@ do-release() {
     log 'Done!'
 }
 
+do-update-copyright() {
+    name="$1";
+    if [ -z "$name" ]; then
+        name=$(git config user.name)
+    fi
+
+    year=$(date +%Y)
+
+    for file in $(find . '!' -type d | grep -v '^\./\.'); do
+        if grep -q "Copyright (C) 20[0-9][0-9] $name" $file; then
+            echo "Updating $file..."
+            if [ $(uname -s) == "Darwin" ]; then
+                sed -i '' "s/Copyright (C) 20[0-9][0-9] $name/Copyright (C) $year $name/" $file
+            else 
+                sed -i '' "s/Copyright (C) 20[0-9][0-9] $name/Copyright (C) $year $name/" $file
+            fi
+    	fi
+    done           
+}
+
 error() {
     echo "Syntax error."
     exit 1
@@ -138,7 +158,10 @@ case "$1" in
         do-cmake
     ;;
     release)
-        do-release "$1"
+        do-release "$2"
+    ;;
+    update-copyright)
+        do-update-copyright "$2"
     ;;
     *)
     echo 'This script contains several useful functions for the $PROJECT devs.'

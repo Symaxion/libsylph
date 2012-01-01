@@ -1,6 +1,6 @@
 /*
  * LibSylph Class Library
- * Copyright (C) 2010 Frank "SeySayux" Erens <seysayux@gmail.com>
+ * Copyright (C) 2012 Frank "SeySayux" Erens <seysayux@gmail.com>
  *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -24,8 +24,8 @@
  * Created on 13 april 2009, 13:15
  */
 
-#ifndef HASHMAP_H_
-#define	HASHMAP_H_
+#ifndef SYLPH_CORE_HASHMAP_H_
+#define	SYLPH_CORE_HASHMAP_H_
 
 #include "Object.h"
 #include "Debug.h"
@@ -55,6 +55,8 @@ public:
     typedef hash_ HashFunction;
     typedef equals_ EqualsFunction;
     typedef Entry* EntryPtr;
+
+    typedef HashMap<Key,Value,HashFunction,EqualsFunction> Self;
 public:
 
     struct EntryHelper {
@@ -63,8 +65,8 @@ public:
     };
 
     class Entry {
-        friend class HashMap;
-        friend class iterator;
+        friend class HashMap<Key,Value,HashFunction,EqualsFunction>;
+        friend class Self::iterator;
     public:
 
         Entry(Key & _key, Value * _value) : key(_key), value(_value),
@@ -113,13 +115,13 @@ public:
         HashMap * map;
     };
 
-    class iterator : public ForwardIterator<Entry, iterator> {
-        typedef ForwardIterator<Entry, iterator> super;
+    template<class C, class V>
+    class S_ITERATOR : public ForwardIterator<V, S_ITERATOR<C,V> > {
+        typedef ForwardIterator<V, S_ITERATOR<C,V> > super;
     public:
 
-        iterator(bool begin = false,
-                HashMap<key_, value_, hash_, equals_>* obj = null) : super(begin),
-        map(obj) {
+        S_ITERATOR(bool begin = false, C* obj = null) : super(begin),
+                map(obj) {
             if (begin && !map->empty()) {
                 count = map->size();
                 idx = map->buckets.length - 1;
@@ -134,34 +136,21 @@ public:
             }
         }
 
-        iterator(bool begin = false,
-                const HashMap<key_, value_, hash_, equals_>* obj = null) :
-        super(begin),
-        map(const_cast<HashMap<key_, value_, hash_, equals_>*> (obj)) {
-            if (begin && !map->empty()) {
-                count = map->size();
-                idx = map->buckets.length - 1;
-                currentPointer = map->buckets[idx];
-                while (currentPointer == null) {
-                    currentPointer = map->buckets[--idx];
-                }
-            } else {
-                count = 0;
-                idx = 0;
-                currentPointer = null;
-                super::_end_reached_ = true;
-            }
+        template<class C1, class V1>
+        S_ITERATOR(const S_ITERATOR<C1, V1>& other) : map(other.map),
+                count(other.count), idx(other.idx),
+                currentPointer(other.currentPointer) {
         }
 
-        iterator(const iterator& other) : map(other.map), count(other.count),
-        idx(other.idx), currentPointer(other.currentPointer) {
-        }
-
-        typename super::reference current() const {
+        typename super::value_type& current() {
             return *currentPointer;
         }
 
-        void next() const {
+        typename super::const_reference current() const {
+            return *currentPointer;
+        }
+
+        void next() {
             currentPointer = currentPointer->next;
             while (currentPointer == null) {
                 currentPointer = map->buckets[--idx];
@@ -173,21 +162,22 @@ public:
             return count > 1;
         }
 
-        bool equals(const iterator& other) const {
+        template<class C1, class V1>
+        bool equals(const S_ITERATOR<C1,V1>& other) const {
             return map == other.map && ((count == other.count && idx == other.idx
                     && currentPointer == other.currentPointer) || 
                     (super::_end_reached_&& other.super::_end_reached_));
         }
 
 
-    private:
-        HashMap * map;
-        mutable idx_t count;
-        mutable idx_t idx;
-        mutable EntryPtr currentPointer;
+    //private:
+        C* map;
+        idx_t count;
+        idx_t idx;
+        V* currentPointer;
     };
 
-    S_ITERABLE(Entry)
+    S_ITERABLE(Self,Entry)
 
 public:
 
@@ -253,6 +243,7 @@ public:
 
     /**
      * Removes all entries from the HashMap
+     * @complexity O(n)
      */
     void clear() {
         threshold = loadFactor * 11;
@@ -264,6 +255,7 @@ public:
     /**
      * Checks whether this HashMap contains a given key.
      * @return <i>true</i> iff this HashMap contains given key.
+     * @complexity O(log n)
      */
     bool containsKey(Key key) const {
         idx_t idx = hash(key);
@@ -278,6 +270,7 @@ public:
     /**
      * Checks whether this HashMap contains a given value.
      * @return <i>true</i> iff this HashMap contains given value.
+     * @complexity O(log n)
      */
     bool containsValue(const Value * value) const {
         if(buckets.length == 0) return false;
@@ -294,6 +287,7 @@ public:
     /**
      * Returns the amount of entries in this HashMap.
      * @return The amount of entries in this HashMap.
+     * @complexity O(0)
      */
     std::size_t size() const {
         return _size;
@@ -303,6 +297,7 @@ public:
      * Get the value for given key, or null if this key does not exist.
      * @param key A key to search the value for
      * @return The value for given key, or null if this key does not exist.
+     * @complexity O(log n)
      */
     Value * get(Key key) {
         int h = hash(key);
@@ -321,6 +316,7 @@ public:
      * Get the value for given key, or null if this key does not exist.
      * @param key A key to search the value for
      * @return The value for given key, or null if this key does not exist.
+     * @complexity O(log n)
      */
     const Value * get(Key key) const {
         int h = hash(key);
@@ -339,6 +335,7 @@ public:
      * Get the value for given key, or null if this key does not exist.
      * @param key A key to search the value for
      * @return The value for given key, or null if this key does not exist.
+     * @complexity O(log n)
      */
     Pointer operator[](Key key) {
         return Pointer(key, this);
@@ -348,6 +345,7 @@ public:
      * Get the value for given key, or null if this key does not exist.
      * @param key A key to search the value for
      * @return The value for given key, or null if this key does not exist.
+     * @complexity O(log n)
      */
     const Pointer operator[](Key key) const {
         return Pointer(key, this);
@@ -356,6 +354,7 @@ public:
     /**
      * Checks if this HashMap is empty, i\.e\. it has no keys in it.
      * @return <i>true</i> iff size() == 0
+     * @complexity O(1)
      */
     bool empty() const {
         return size() == 0;
@@ -368,6 +367,7 @@ public:
      * @param key A new key
      * @param value The value for this new key
      * @return The old value if the key already existed, null otherwise.
+     * @complexity O(log n)
      */
     Value * put(Key key, Value * value) {
         idx_t idx = hash(key);
@@ -398,6 +398,7 @@ public:
      * Copies everything from the given HashMap into this HashMap. Existing
      * keys will be overwritten.
      * @param map Another HashMap.
+     * @complexity O(n)
      */
     void putAll(const HashMap<Key, Value, HashFunction, EqualsFunction>& map) {
 
@@ -410,6 +411,7 @@ public:
      * Removes given key from the HashMap. If the key was in the HashMap, return
      * the associated value. If it was not, return null.
      * @return The old value of the key if it existed, null otherwise.
+     * @complexity O(log n)
      */
     Value * remove(Key key) {
         idx_t idx = hash(key);
@@ -433,6 +435,7 @@ public:
         return null;
     }
 
+    /** */
     HashMap & operator<<(const EntryHelper& eh) {
         put(eh.key, &(eh.value));
         return *this;
@@ -470,15 +473,17 @@ private:
     }
 };
 
+/** */
 template<class K, class V, class H, class E>
 bool operator==(const HashMap<K,V,H,E>& lhs, const HashMap<K,V,H,E>& rhs) {
     static E eq;
-    for(typename HashMap<K,V,H,E>::iterator it = lhs.begin();
+    if(lhs.size() == 0 && lhs.size() == 0) return true;
+    for(typename HashMap<K,V,H,E>::const_iterator it = lhs.begin();
             it != lhs.end(); ++it) {
         if(!rhs.containsKey(it->key) || !eq(rhs.get(it->key), it->value))
             return false;
     }
-    for(typename HashMap<K,V,H,E>::iterator it = rhs.begin();
+    for(typename HashMap<K,V,H,E>::const_iterator it = rhs.begin();
             it != rhs.end(); ++it) {
         if(!lhs.containsKey(it->key) || !eq(lhs.get(it->key), it->value))
             return false;
@@ -487,5 +492,5 @@ bool operator==(const HashMap<K,V,H,E>& lhs, const HashMap<K,V,H,E>& rhs) {
 }
 
 SYLPH_END_NAMESPACE
-#endif	/* HASHMAP_H_ */
+#endif	/* SYLPH_CORE_HASHMAP_H_ */
 

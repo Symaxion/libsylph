@@ -1,6 +1,6 @@
 /*
  * LibSylph Class Library
- * Copyright (C) 2010 Frank "SeySayux" Erens <seysayux@gmail.com>
+ * Copyright (C) 2012 Frank "SeySayux" Erens <seysayux@gmail.com>
  *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -24,10 +24,10 @@
  * Created on 25 april 2009, 15:59
  */
 
-#ifndef BYTEBUFFER_H_
-#define	BYTEBUFFER_H_
+#ifndef SYLPH_CORE_BYTEBUFFER_H_
+#define	SYLPH_CORE_BYTEBUFFER_H_
 
-#include "Common.h"
+#include "Array.h"
 #include "../IO/InputStream.h"
 #include "../IO/OutputStream.h"
 
@@ -131,4 +131,4 @@ InputStream& operator>>(InputStream&, ByteBuffer&);
 
 SYLPH_END_NAMESPACE
 
-#endif	/* BYTEBUFFER_H_ */
+#endif	/* SYLPH_CORE_BYTEBUFFER_H_ */

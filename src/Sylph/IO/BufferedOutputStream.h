@@ -1,6 +1,6 @@
 /*
  * LibSylph Class Library
- * Copyright (C) 2010 Frank "SeySayux" Erens <seysayux@gmail.com>
+ * Copyright (C) 2012 Frank "SeySayux" Erens <seysayux@gmail.com>
  *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -24,8 +24,8 @@
  * Created on 30 juni 2009, 12:07
  */
 
-#ifndef BUFFEREDOUTPUTSTREAM_H_
-#define	BUFFEREDOUTPUTSTREAM_H_
+#ifndef SYLPH_IO_BUFFEREDOUTPUTSTREAM_H_
+#define	SYLPH_IO_BUFFEREDOUTPUTSTREAM_H_
 
 #include "OutputStream.h"
 
@@ -47,5 +47,5 @@ private:
 
 SYLPH_END_NAMESPACE
 
-#endif	/* BUFFEREDOUTPUTSTREAM_H_ */
+#endif	/* SYLPH_IO_BUFFEREDOUTPUTSTREAM_H_ */
 

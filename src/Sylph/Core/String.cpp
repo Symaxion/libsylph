@@ -1,6 +1,6 @@
 /*
  * LibSylph Class Library
- * Copyright (C) 2010 Frank "SeySayux" Erens <seysayux@gmail.com>
+ * Copyright (C) 2012 Frank "SeySayux" Erens <seysayux@gmail.com>
  *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -33,9 +33,6 @@
 #include <cctype>
 #include <cstring>
 #include <cmath>
-
-using std::isinf;
-using std::isnan;
 
 #include <unicode/uchar.h>
 #include <unicode/ustring.h>
@@ -138,13 +135,13 @@ String::String(const sulong l) {
 }
 
 String::String(const float f) {
-    if (isinf(f)) {
+    if (std::isinf(f)) {
         if (copysign(1.0, f) == -1.0) {
             fromAscii("-Infinity");
         } else {
             fromAscii("Infinity");
         }
-    } else if (isnan(f)) {
+    } else if (std::isnan(f)) {
         fromAscii("NaN");
     } else {
         char * buf = static_cast<char*>(GC_MALLOC_ATOMIC(20));
@@ -154,13 +151,13 @@ String::String(const float f) {
 }
 
 String::String(const double d) {
-    if (isinf(d)) {
+    if (std::isinf(d)) {
         if (copysign(1.0, d) == -1.0) {
             fromAscii("-Infinity");
         } else {
             fromAscii("Infinity");
         }
-    } else if (isnan(d)) {
+    } else if (std::isnan(d)) {
         fromAscii("NaN");
     } else {
         char * buf = static_cast<char*>(GC_MALLOC_ATOMIC(20));

@@ -1,6 +1,6 @@
 /*
  * LibSylph Class Library
- * Copyright (C) 2010 Frank "SeySayux" Erens <seysayux@gmail.com>
+ * Copyright (C) 2012 Frank "SeySayux" Erens <seysayux@gmail.com>
  *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -24,8 +24,8 @@
  * Created on 9 december 2008, 15:34
  */
 
-#ifndef UTIL_H_
-#define	UTIL_H_
+#ifndef SYLPH_CORE_UTIL_H_
+#define	SYLPH_CORE_UTIL_H_
 
 #include "Object.h" // macros
 #include "Exception.h"
@@ -35,6 +35,7 @@
 
 SYLPH_BEGIN_NAMESPACE
 
+// TODO: move this to Array
 template<class T>
 inline void carraycopy(const T src[], std::size_t srcPos, T dest[],
         std::size_t destPos, std::size_t length) throw (Exception) {
@@ -62,6 +63,7 @@ inline std::size_t carraysize(T(&)[N]) {
     return N;
 }
 
+// TODO: Move this to math
 template<class T, class U = T>
 inline U abs(T t) {
     return t > 0 ? t : -t;
@@ -84,7 +86,7 @@ inline unsigned short abs<short, unsigned short>(short t) {
 
 template<class T>
 inline signed char sign(T t) {
-    return t > 0? : t == 0? 0 : -1;
+    return t > 0 ? 1 : t == 0? 0 : -1;
 }
 
 template<>
@@ -101,5 +103,5 @@ inline signed char sign<float>(float t) {
 
 SYLPH_END_NAMESPACE
 
-#endif	/* UTIL_H_ */
+#endif	/* SYLPH_CORE_UTIL_H_ */
 

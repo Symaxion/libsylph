@@ -1,6 +1,6 @@
 /*
  * LibSylph Class Library
- * Copyright (C) 2010 Frank "SeySayux" Erens <seysayux@gmail.com>
+ * Copyright (C) 2012 Frank "SeySayux" Erens <seysayux@gmail.com>
  *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -21,86 +21,68 @@
  *   3. This notice may not be removed or altered from any source
  *   distribution.
  *
- * Created on 17 januari 2009, 15:14
+ * Created on 25 april 2009, 15:42
  */
 
 #ifndef SYLPH_H_
 #define	SYLPH_H_
 
-#include "Sylph/OS/OS.h"
+/**
+ * @file
+ * @headerfile Sylph.h
+ * This file is a shortcut to include many commonly used headers. Actually, it
+ * will include the following headers (relative to @c Sylph/Core):
+ * <code><ul>
+ * <li>Any.h</li>
+ * <li>Application.h</li>
+ * <li>Array.h</li>
+ * <li>ByteBuffer.h</li>
+ * <li>Dictionary.h</li>
+ * <li>Exception.h</li>
+ * <li>File.h</li>
+ * <li>I18N.h</li>
+ * <li>PointerManager.h</li>
+ * <li>Primitives.h</li>
+ * <li>Range.h</li>
+ * <li>String.h</li>
+ * <li>StringBuffer.h</li>
+ * <li>Util.h</li>
+ * <li>Vector.h</li>
+ * </ul></code>
+ * It also has 'using' statements for following classes:
+ * <code><ul>
+ * <li>Sylph::Array</li>
+ * <li>Sylph::Dictionary</li>
+ * <li>Sylph::String</li>
+ * <li>Sylph::range</li>
+ * </ul></code>
+ * You can turn this of by defining the macro @c SYLPH_NO_COMMON_USING before
+ * inclusion.
+ */
+
+#include "Sylph/Core/Any.h"
 #include "Sylph/Core/Application.h"
 #include "Sylph/Core/Array.h"
+#include "Sylph/Core/ByteBuffer.h"
+#include "Sylph/Core/Dictionary.h"
+#include "Sylph/Core/Exception.h"
+#include "Sylph/Core/File.h"
+#include "Sylph/Core/I18N.h"
+#include "Sylph/Core/PointerManager.h"
+#include "Sylph/Core/Primitives.h"
+#include "Sylph/Core/Range.h"
 #include "Sylph/Core/String.h"
-#include "Sylph/Core/Common.h"
-#include "Sylph/Core/AppType.h"
-#include "Sylph/Core/UncaughtExceptionHandler.h"
+#include "Sylph/Core/StringBuffer.h"
+#include "Sylph/Core/Util.h"
+#include "Sylph/Core/Vector.h"
 
-#ifndef SYLPH_NO_SYLPHMAIN
-#ifndef SYLPH_APP_NAME
-#define SYLPH_APP_NAME "Application"
+#ifndef SYLPH_NO_COMMON_USING
+using Sylph::Array;
+using Sylph::Dictionary;
+using Sylph::String;
+using Sylph::range;
 #endif
 
-#ifdef SYLPH_OS_MACOSX
-int main(int argc, char * argv[], char * envp[], char * apple[]);
-#else
-int main(int argc, char * argv[]);
-#endif
-static inline void SylphInit(int argc, char * argv[], char * apple[]) {
-    Sylph::Application::init(argc, argv, apple, Sylph::SYLPH_APP_TYPE,
-            SYLPH_APP_NAME);
-}
-#ifdef SYLPH_MAIN_CLASSIC_PARAMS
-extern int SylphMain(int argc, char** argv);
-#else
-extern int SylphMain(Sylph::Array<Sylph::String> argv);
-#endif
 
-#ifdef SYLPH_OS_MACOSX
-
-int main(int argc, char * argv[], char * envp[], char * apple[]) {
-    try {
-        SylphInit(argc, argv, apple);
-        #ifdef SYLPH_MAIN_CLASSIC_PARAMS
-        return SylphMain(argc, argv);
-        #else
-        Array<String> args(argc);
-        for(int i = 0; i < argc; ++i) {
-            args[i] = argv[i];
-        }
-        return SylphMain(args);
-        #endif
-    } catch(const Sylph::Assertion& as) {
-        Sylph::UncaughtExceptionHandler::handler->handleAssertion(as);
-        abort();
-    } catch (const Sylph::Exception & ex) {
-        Sylph::UncaughtExceptionHandler::handler->handle(ex);
-        abort();
-    }
-}
-#else
-
-int main(int argc, char * argv[]) {
-    try {
-        SylphInit(argc, argv, Sylph::null);
-        #ifdef SYLPH_MAIN_CLASSIC_PARAMS
-        return SylphMain(argc, argv);
-        #else
-        Array<String> args(argc);
-        for(int i = 0; i < argc; ++i) {
-            args[i] = argv[i];
-        }
-        return SylphMain(args);
-        #endif
-    } catch(const Sylph::Assertion& as) {
-        Sylph::UncaughtExceptionHandler::handler->handleAssertion(as);
-        abort();
-    } catch (const Sylph::Exception & ex) {
-        Sylph::UncaughtExceptionHandler::handler->handle(ex);
-        abort();
-    }
-}
-#endif
-
-#endif
-#endif	/* SYLPH_H_ */
+#endif	/* SYLPH_CORE_COMMON_H_ */
 

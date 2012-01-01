@@ -1,6 +1,6 @@
 /*
  * LibSylph Class Library
- * Copyright (C) 2010 Frank "SeySayux" Erens <seysayux@gmail.com>
+ * Copyright (C) 2012 Frank "SeySayux" Erens <seysayux@gmail.com>
  *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -24,8 +24,8 @@
  * Created on 30 juni 2009, 12:07
  */
 
-#ifndef BUFFEREDINPUTSTREAM_H_
-#define	BUFFEREDINPUTSTREAM_H_
+#ifndef SYLPH_IO_BUFFEREDINPUTSTREAM_H_
+#define	SYLPH_IO_BUFFEREDINPUTSTREAM_H_
 
 #include "InputStream.h"
 #include "../Core/Primitives.h"
@@ -56,5 +56,5 @@ private:
 };
 SYLPH_END_NAMESPACE
 
-#endif	/* BUFFEREDINPUTSTREAM_H_ */
+#endif	/* SYLPH_IO_BUFFEREDINPUTSTREAM_H_ */
 

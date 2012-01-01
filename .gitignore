@@ -7,9 +7,11 @@
 .*
 !.gitignore
 !.devctl
+!.gitattributes
 
 # Eclipse project files
-!.settings
+!.settings/
+!.settings/*
 !.cproject
 !.project
 
@@ -21,6 +23,12 @@ a.out
 *.dylib
 *.dll
 test/SylphTestExe
+test/SylphTestExe.exe
+Default/**
+
+# Generated documenation
+docs/html/**
+docs/latex/**
 
 # Backup and patch files
 *~
@@ -28,13 +36,14 @@ test/SylphTestExe
 *.orig
 *.rej
 *.patch
+*.tmp
 
 # CMake generated files
 CMakeCache.txt
 CMakeFiles/**
 Makefile
 cmake_install.cmake
-/build
+build/**
 
 # OS Specific
 .DS_Store

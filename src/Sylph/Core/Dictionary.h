@@ -1,6 +1,6 @@
 /*
  * LibSylph Class Library
- * Copyright (C) 2010 Frank "SeySayux" Erens <seysayux@gmail.com>
+ * Copyright (C) 2012 Frank "SeySayux" Erens <seysayux@gmail.com>
  *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -24,8 +24,8 @@
  * Created on 8 februari 2009, 14:19
  */
 
-#ifndef _DICTIONARY_H
-#define	_DICTIONARY_H
+#ifndef SYLPH_CORE_DICTIONARY_H
+#define	SYLPH_CORE_DICTIONARY_H
 
 #include "HashMap.h"
 #include "String.h"
@@ -42,5 +42,5 @@ SYLPH_BEGIN_NAMESPACE
 typedef HashMap<String, Any> Dictionary;
 SYLPH_END_NAMESPACE
 
-#endif	/* _DICTIONARY_H */
+#endif	/* SYLPH_CORE_DICTIONARY_H */
 

@@ -1,6 +1,6 @@
 /*
  * LibSylph Class Library
- * Copyright (C) 2010 Frank "SeySayux" Erens <seysayux@gmail.com>
+ * Copyright (C) 2012 Frank "SeySayux" Erens <seysayux@gmail.com>
  *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -24,8 +24,8 @@
  * Created on 9 november 2008, 11:48
  */
 
-#ifndef APPLICATION_H_
-#define	APPLICATION_H_
+#ifndef SYLPH_CORE_APPLICATION_H_
+#define	SYLPH_CORE_APPLICATION_H_
 
 #include "Object.h"
 #include "Array.h"
@@ -182,22 +182,31 @@ public:
      * Returns the canonical path to the bundle this executable is part of.
      * If this application isn't part of a bundle, the empty file will be
      * returned. 
-     * @return the canonical path to the bundle this executable is part of.
+     * @return The canonical path to the bundle this executable is part of.
      */
     virtual const File& bundle() = 0;
     /**
      * Returns the path to the resource directory specific for this application.
+     * @return A File object for this application's resources.
      */
     virtual const File& resourceDir() = 0;
     /**
      * Returns the path to a resource specific to this application.
+     * @param rsc The path to a resource, relative to the resource directory
+     * for this application.
+     * @return A File object pointing to the resource with the given name.
      */
     virtual const File resource(String rsc) = 0;
     /**
      * Returns the path to the library directory specific for this application.
+     * @return A File object pointing to the directory in this Application's
+     * bundle for library files and framework bundles.
      */
     virtual const File& libraryDir() = 0;
-    /** */
+    /**
+     * Returns the path to the directory for storing plugins specific for this
+     * application.
+     */
     virtual const File& pluginDir() = 0;
     /** */
     virtual const File& plugindisabledDir() = 0;
@@ -234,7 +243,9 @@ public:
     /** */
     virtual const File userResource(String rsc) = 0;
 
-    /** */
+    /**
+     * @return The grandfather of the executable in of this file.
+     */
     virtual const File& prefix() = 0;
 
 protected:
@@ -257,5 +268,5 @@ private:
 
 SYLPH_END_NAMESPACE
 
-#endif	/* APPLICATION_H_ */
+#endif	/* SYLPH_CORE_APPLICATION_H_ */
 

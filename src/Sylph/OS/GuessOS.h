@@ -1,6 +1,6 @@
 /*
  * LibSylph Class Library
- * Copyright (C) 2010 Frank "SeySayux" Erens <seysayux@gmail.com>
+ * Copyright (C) 2012 Frank "SeySayux" Erens <seysayux@gmail.com>
  *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -37,8 +37,8 @@
 
 //  See http://www.boost.org for most recent version.
 
-#ifndef GUESSOS_H_
-#define	GUESSOS_H_
+#ifndef SYLPH_OS_GUESSOS_H_
+#define	SYLPH_OS_GUESSOS_H_
 
 #if defined(linux) || defined(__linux) || defined(__linux__)
 // linux:
@@ -76,5 +76,5 @@
 #endif
 
 
-#endif	/* GUESSOS_H_ */
+#endif	/* SYLPH_OS_GUESSOS_H_ */
 

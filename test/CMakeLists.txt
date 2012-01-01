@@ -1,9 +1,9 @@
 include(SourcesList.txt)
 include(AddFileDependencies)
 
-include_directories(${SYLPH_SOURCE_DIR}/src)
+include_directories(${SYLPH_SOURCE_DIR}/src ${SYLPH_SOURCE_DIR}/deps/gtest/include)
 
-link_directories(${SYLPH_BINARY_DIR}/src)
+link_directories(${SYLPH_BINARY_DIR}/src) 
 
 if( SYLPH_DEBUG )
 add_definitions(${SYLPH_CONFIG_DEFS} -DSYLPH_DEBUG)
