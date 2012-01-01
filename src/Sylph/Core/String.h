@@ -1,6 +1,6 @@
 /*
  * LibSylph Class Library
- * Copyright (C) 2011 Frank "SeySayux" Erens <seysayux@gmail.com>
+ * Copyright (C) 2012 Frank "SeySayux" Erens <seysayux@gmail.com>
  *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -58,7 +58,7 @@ typedef sushort uchar;
  * <li> vertical tab (Unicode U+000B, character literal '\\v' or '\\013')</li>
  * </ul><p>
  * Certain functions, such as String::trim() and String::split() use this array
- * to determine a default set of characters to look after.
+ * to determine a default set of characters to look for.
  */
 static Array<uchar> spacechars = {' ', '\n', '\r', '\f', '\t', '\013'};
 

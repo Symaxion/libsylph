@@ -1,6 +1,6 @@
 #
 # LibSylph Class Library (build script)
-# Copyright (C) 2011 Frank "SeySayux" Erens <seysayux@gmail.com>
+# Copyright (C) 2012 Frank "SeySayux" Erens <seysayux@gmail.com>
 #
 # This software is provided 'as-is', without any express or implied
 # warranty. In no event will the authors be held liable for any damages
@@ -69,11 +69,11 @@ endif ( SYLPH_NO_CXX0X )
 if ( NOT SYLPH_COMPILER_SUFFICIENT ) # manual override
     SET( SYLPH_COMPILER_SUFFICIENT 0 )
 
-    # GCC >= 4.4.0 will do the job
-    if ( CMAKE_COMPILER_IS_GNUCC AND S_GCC_VERSION STRGREATER "4.4.0" )
+    # GCC == 4.5.3 will do the job
+    if ( CMAKE_COMPILER_IS_GNUCC AND S_GCC_VERSION STREQUAL "4.5.3" )
         SET( SYLPH_COMPILER_SUFFICIENT 1 )
         SET( CXX_GCC 1 )
-    endif ( CMAKE_COMPILER_IS_GNUCC AND S_GCC_VERSION STRGREATER "4.4.0" )
+    endif ( CMAKE_COMPILER_IS_GNUCC AND S_GCC_VERSION STREQUAL "4.5.3" )
 
     # No compiler found
     if ( NOT SYLPH_COMPILER_SUFFICIENT )

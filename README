@@ -1,15 +1,21 @@
 ####################################################################
-
-     _             _       _______             _            _
-    / /           / /     / _____/            / /          / /
-   / /       _   / /__   / /____    _    _   / / _____    / /_
-  / /       / / / __  \  \_____ \  / /  / / / / / __  \  / __ \
- / /_____  / / / /__/ /  _____/ / / /__/ / / / / /__/ / / /``\ \
-/_______/ /_/ /______/  /______/  \___  / /_/ / _____/ /_/   /_/
-````````  ``  ```````   ```````    ``/ /  `` / /`````  ``    ``
-                                    / /     / /
-                                   /_/     /_/
-                                   ``      ``
+                                                                                
+  _=<|=;_. .                                                                  
+ <vm#Xsii|====;;...             _,                        _,           ,,      
+:i3##o1|iii||||+=;.   a/    _,. $#        .awa,           QE           Qk      
+:i3Xn1i|ii||||+=:..   Qk    WQ( m#       _QB?9Qc          Wk           Qf      
+ <iiii||i|+===-::.    Qk    -"  m#       jW`  "`          WE           Qf      
+  :++++=-- .   .      Qk    ..  m# _,    ]Ww.    ..    .. Wk  .. _,    Qf._,   
+  . ..                Qk    jQ  mQmQQQc   ?QWgc  4Q/  <QF Wk .QmQQQm,  QmQQQc  
+           .::__..    Qk    jQ  mW^  4Q,    "4QL  $Q. m@  Wk .Q@` -Qm  Q@  $Q  
+ ....:::_=||iwoai|.   Qk    jQ  mE   =Q[  .   4Q. "WLjW'  WE .Qf   ]Q; Qf  jQ  
+ .;=+|+||iiimWZoiI>   Qk    jQ  mm   ]Q[ Qh   jQ   ]QQF   Wk .QL   jQ  Qf  jQ  
+ .:=+||||i|vXXSlii>.  Qmwaw jQ  mQgaam@  ]QgayQf    Q@    WE .QQwawQF  Qf  jQ  
+ ..:===+||iiI1li|l=   Y?T?T )T  ???9V?    "9TT'    ]Q(    ?! .Qf?VT!   T(  )T  
+  . ... --=+||||+=.                               _QP        .Qf              
+             --  .                                dW`        .Qf              
+                                                 =V(         .V[              
+                                                 
 ###################################################################
 
   Table of Contents
@@ -23,7 +29,7 @@
     2.1 Compiling the source code
     2.2 Installing
 
-  3. Acknowledgements
+  3. Contact info
     3.1 Copyright and licensing
     3.2 Reporting bugs
 
@@ -36,7 +42,7 @@
        Currently, LibSylph can be run most Unix-systems, including, but not
        limited to, Linux, FreeBSD, Cygwin, Mac OS X, and a few others.
        In order for the binary relocation function to work (i.e.
-       thisapp->getXXX() ), support for /proc/self/exe is required. On Mac OS X,
+       thisapp->XXX() ), support for /proc/self/exe is required. On Mac OS X,
        the /proc filesystem is not enabled by default. However, OS X provides
        an alternate method for retrieving the full path to the running
        executable, therefore no extra software is needed to function correctly
@@ -44,22 +50,21 @@
 
        Minimal support for Microsoft Windows is included as well. However, no
        prepackaged compiler for this platform meets the required features (see 
-       section 1.2), therefore LibSylph WON'T run by default on Microsoft Windows
-       currently. You can always try to set up a conforming compiler yourself.
-       For that reason, we do not support nor endorse LibSylph on Microsoft
-       Windows. You will see that certain functionality might be flawed,
-       lacking, or nonexistent on Windows. Please do not report this as a bug
-       until official support is added.
+       section 1.2), therefore LibSylph WON'T run by default on Microsoft 
+       Windows currently. You can always try to set up a conforming compiler 
+       yourself. For that reason, we do not support nor endorse LibSylph on 
+       Microsoft Windows. You will see that certain functionality might be 
+       flawed, lacking, or nonexistent on Windows. Please do not report this as
+       a bug until official support is added.
 
     1.2 Supported Compilers
 
         As of now, only one specific compiler is supported: the GNU C++ compiler
-        (g++), version 4.4.0 or later. LibSylph uses certain GNU C++
-        specific extensions. Furthermore, support for certain C++0x constructs
-        is required. At the day of writing this document, only the compiler
-        mentioned above supports these extensions. In case you found another
-        compiler to meet these requirements, please contact
-        the LibSylph developers (see section 3.2)
+        (g++), version 4.5.3. LibSylph uses certain GNU C++ specific extensions. 
+        Furthermore, support for certain C++11 constructs is required. At the 
+        day of writing this document, only the compiler mentioned above supports
+        these extensions. In case you found another compiler to meet these 
+        requirements, please contact the LibSylph developers (see section 3.2).
 
   2. Build Instructions
 
@@ -69,10 +74,8 @@
              
             LibSylph depends on boehm-gc, icu, and gettext. You need to have
             these programs installed first. Please consult your operating
-            system vendor's manuals or look at our wiki.
-            If you want to run test cases, you need to have gtest installed
-            as well. For more information about the unit test system, see
-            section 2.3.
+            system vendor's manuals or look at the Installation page on our 
+            wiki.
             
        2.1.2 Building
             
@@ -81,7 +84,7 @@
                  cmake .
                  make
 
-            Please note you might need to specify the path to a C++0x compiler
+            Please note you might need to specify the path to a C++11 compiler
             explicitly by using `-DCMAKE_CXX_COMPILER=/path/to/c++'.
 
             To enable debugging symbols and other useful debug output, such
@@ -108,11 +111,10 @@
  
              make test
 
-        This will build and run the entire test suite. You need to have
-        gtest (Google Test) installed for this. Please consult the manual
-        of your operating system vendor on how to install this library.
+        This will build and run the entire test suite, as well as building the 
+        gtest (Google Test) framework, which is included with the source code.
 
-  3. Acknowledgements
+  3. Contact info
 
     3.1 Copyright and licensing
 
