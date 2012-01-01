@@ -1,25 +1,31 @@
 /*
  * LibSylph Class Library
- * Copyright (C) 2009 Frank "SeySayux" Erens <seysayux@gmail.com>
+ * Copyright (C) 2012 Frank "SeySayux" Erens <seysayux@gmail.com>
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the LibSylph Pulbic License as published
- * by the LibSylph Developers; either version 1.0 of the License, or
- * (at your option) any later version.
+ * This software is provided 'as-is', without any express or implied
+ * warranty. In no event will the authors be held liable for any damages
+ * arising from the use of this software.
  *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the LibSylph
- * Public License for more details.
+ * Permission is granted to anyone to use this software for any purpose,
+ * including commercial applications, and to alter it and redistribute it
+ * freely, subject to the following restrictions:
  *
- * You should have received a copy of the LibSylph Public License
- * along with this Library, if not, contact the LibSylph Developers.
+ *   1. The origin of this software must not be misrepresented; you must not
+ *   claim that you wrote the original software. If you use this software
+ *   in a product, an acknowledgment in the product documentation would be
+ *   appreciated but is not required.
+ *
+ *   2. Altered source versions must be plainly marked as such, and must not be
+ *   misrepresented as being the original software.
+ *
+ *   3. This notice may not be removed or altered from any source
+ *   distribution.
  *
  * Created on 8 februari 2009, 14:18
  */
 
-#ifndef ARRAY_H_
-#define	ARRAY_H_
+#ifndef SYLPH_CORE_ARRAY_H_
+#define	SYLPH_CORE_ARRAY_H_
 
 #include "Iterable.h"
 #include "Iterator.h"
@@ -29,14 +35,16 @@
 #include "Primitives.h"
 
 #include <algorithm>
-#include <initializer_list>
 #include <iostream>
+
+#ifndef SYLPH_NO_CXX0X
+#include <initializer_list>
+#endif
 
 SYLPH_BEGIN_NAMESPACE
 class Any;
 template<class T> class Array;
 
-SYLPH_PUBLIC
 
 /**
  * Array provides a safe array. It works the same like a c-style array (not like
@@ -61,31 +69,33 @@ public:
     /**
      * @todo Write documentation!
      */
-    class iterator : public RandomAccessIterator<T, iterator> {
+    template<class C, class V>
+    class S_ITERATOR : public RandomAccessIterator<V, S_ITERATOR<C,V> > {
     public:
-        typedef RandomAccessIterator<T, iterator> super;
+        typedef RandomAccessIterator<V, S_ITERATOR<C,V> > super;
 
-        iterator(bool begin = false, Array<T>* obj = null)
-        : super(begin), _obj(obj) {
+        S_ITERATOR(bool begin = false, C* obj = null) : super(begin),
+                _obj(obj) {
             _currentIndex = begin ? 0 : (_obj->length - 1);
         }
 
-        iterator(bool begin = false, const Array<T>* obj = null)
-        : super(begin), _obj(const_cast<Array<T>*> (obj)) {
-            _currentIndex = begin ? 0 : (_obj->length - 1);
-        }
-
-        bool equals(const iterator& other) const {
+        template<class C1, class V1>
+        bool equals(const S_ITERATOR<C1,V1>& other) const {
             return _currentIndex == other._currentIndex &&
                     _obj == other._obj;
         }
 
-        iterator(const iterator& other) {
+        template<class C1, class V1>
+        S_ITERATOR(const S_ITERATOR<C1,V1>& other) {
             _currentIndex = other._currentIndex;
             _obj = other._obj;
         }
 
-        typename super::reference current() const {
+        typename super::value_type& current() {
+            return (*_obj)[_currentIndex];
+        }
+
+        typename super::const_reference current() const {
             return (*_obj)[_currentIndex];
         }
 
@@ -93,15 +103,15 @@ public:
             return _currentIndex < (_obj->length - 1);
         }
 
-        void next() const {
+        void next() {
             _currentIndex++;
         }
 
         bool hasPrevious() const {
-            return _currentIndex >= 0;
+            return _currentIndex > 0;
         }
 
-        void previous() const {
+        void previous() {
             _currentIndex--;
         }
 
@@ -112,11 +122,13 @@ public:
         size_t length() const {
             return _obj->length;
         }
-    private:
-        mutable idx_t _currentIndex;
-        Array<T>* _obj;
+    //private:
+        idx_t _currentIndex;
+        C* _obj;
     };
-    S_ITERABLE(T)
+
+    S_ITERABLE(Array<T>,T)
+    S_REVERSE_ITERABLE(Array<T>,T)
 public:
     /**
      * A function that is used for filtering by the filter() method. This
@@ -128,7 +140,7 @@ public:
     /**
      * The length of the array. This variable is 1-based, while the array itself
      * is 0-based, i.e. if length == N the highest entry in this array is N-1.
-     * E.g if array.length == 5, then the higest entry is array[4]
+     * E.g if array.length == 5, then the highest entry is array[4]
      */
     const size_t & length;
 
@@ -136,13 +148,13 @@ public:
      * Creates an Array<T> from a pointer to T and a length. The new array will
      * have the length specified in <code>length</code>. The original array will
      * not be modified, the contents are copied. No bounds-checking
-     * is done, therefore, use this function at your own responsability!
+     * is done, therefore, use this function at your own responsibility!
      * @param length The length of the original C array
      * @param orig The original C array, supplied as a pointer.
      */
     inline static Array<T> fromPointer(std::size_t length, T * orig) {
         Array<T> ar(length);
-        for (int x = 0; x < length; x++)ar[x] = orig[x];
+        for (idx_t x = 0; x < length; x++)ar[x] = orig[x];
         return ar;
     }
 public:
@@ -157,13 +169,15 @@ public:
             data(new Data(len)) {
     }
 
+#ifndef SYLPH_NO_CXX0X
     /**
      * Creates an Array from an intializer list. This constructor allows the
-     * easier, more familiar syntax of Array creation, but requires C++0x. Using
+     * easier, more familiar syntax of Array creation, but requires C++11. Using
      * this constructor, arrays can be initialized as following:
      * <pre>Array<int> myarr = {5,4,7,9};</pre>
+     *
      * A new instance of the reference counted data is created, the reference
-     * count is set to 1, the length is set to the length of the intializer
+     * count is set to 1, the length is set to the length of the initializer
      * list, and all data is copied into a newly allocated C array.
      * @param il The initializer_list used to create the array.
      */
@@ -173,12 +187,14 @@ public:
             data->_carray[i] = il.begin()[i];
         }
     }
+#endif
 
     /**
      * Creates an Array from an existing C-style array. Note that you can only
-     * pass a true array, i.e. you cannot pass a pointer that acts as an array.
-     * If you only have a pointer, you'll have to initialize using
-     * Array::fromPointer(size_t, length) . <p>
+     * pass a true array, i.e. you cannot an array that decayed into a pointer.
+     * If need to create an Array from a decayed C array, you'll have to
+     * initialize using Array::fromPointer(size_t, T*) .
+     *
      * A new instance of the reference counted data is created, the reference
      * count is set to 1, the length is set to the length of the Array, all
      * data is copied into a newly allocated C array with the same length as
@@ -194,7 +210,7 @@ public:
 
     /**
      * Creates an Array from another instance of the Array class. The data is
-     * not copied, instead, the pointer to the refernce counted data will be
+     * not copied, instead, the pointer to the reference counted data will be
      * set to the reference counted data of the other Array, and the reference
      * count will increase by 1. Other fields of the reference counted data
      * remain unmodified.
@@ -208,7 +224,8 @@ public:
     /**
      * Creates an array from a range of items. Every item within the range will
      * be added to the array. This is most useful for integral types, as other
-     * types usually don't support the required semantics.<p>
+     * types usually don't support the required semantics.
+     *
      * A new instance of the reference counted data is created, the reference
      * count is set to 1, the length is set to <code>ran.last() - ran.first()
      * </code>, a new C-style array with this length will be allocated.
@@ -228,7 +245,8 @@ public:
     /**
      * Creates an Array from a single item. This is useful for implicit
      * conversions, as it allows a single instance of a class to be passed as
-     * an Array of that class with length 1. <p>
+     * an Array of that class with length 1.
+     *
      * A new instance of the reference counted data is created, the reference
      * count set to 1, the length is set to 1, and a new C-style array with
      * length 1 is allocated. The object is copied into this array, the original
@@ -330,10 +348,10 @@ public:
     }
 
     /**
-     * Swaps the data pointer of this Array with the other Array. The refcount
-     * for the current data pointer gets decreased by 1, the refcount for the
-     * data pointer of the other array gets increased by 1. In case the this
-     * Array'soriginal data pointer's refcount reaches zero, the original data
+     * Sets the data pointer of this Array to the one of the other Array. The
+     * refcount for the current data pointer gets decreased by 1, the refcount
+     * for the data pointer of the other array gets increased by 1. In case this
+     * Array's original data pointer's refcount reaches zero, the original data
      * will be deleted.
      * @param other The other array from which to use the data pointer
      */
@@ -348,33 +366,39 @@ public:
     }
 
     /**
-     * Used for accessing the Array's contents. Its behaviour is identical to
+     * Used for accessing the Array's contents. Its behavior is identical to
      * that of c-style arrays, but throws an exception instead of overflowing
      * or causing segfaults. <p>
      * The Array will assume ownership over any pointers entered in this way.
      * @param idx the index in the array from which to return an element
      * @throw ArrayException if <code>idx > length</code>
      */
-    T & operator[](std::sidx_t idx) throw (Exception) {
+    T & operator[](sidx_t idx) throw (Exception) {
         if ((idx < (sidx_t)length) && (idx >= -(sidx_t)length)) {
             return idx >= 0 ? data->_carray[idx] : data->_carray[length + idx];
         } else {
-            sthrow(ArrayException, "Array overflow");
+            char buf[2048];
+            sprintf(buf, "Array overflow - index: %d , length: %u",
+                    signed(idx), unsigned(length));
+            sthrow(ArrayException, buf);
         }
     }
 
     /**
-     * This is the <code>const</code> version of T& operator[] . Its behaviour
+     * This is the <code>const</code> version of T& operator[] . Its behavior
      * is identical to that of c-style const arrays, but throws an exception
      * instead of overflowing or causing segfaults.
      * @param idx the index in the array from which to return an element
      * @throw ArrayException if <code>idx > length</code>
      */
-    const T & operator[](std::sidx_t idx) const throw (Exception) {
+    const T & operator[](sidx_t idx) const throw (Exception) {
         if ((idx < (sidx_t)length) && (idx >= -(sidx_t)length)) {
             return idx >= 0 ? data->_carray[idx] : data->_carray[length + idx];
         } else {
-            sthrow(ArrayException, "Array overflow");
+            char buf[2048];
+            sprintf(buf, "Array overflow - index: %d , length: %u",
+                    signed(idx), unsigned(length));
+            sthrow(ArrayException, buf);
         }
     }
 
@@ -386,12 +410,21 @@ public:
      * @param ran The range describing the slice.
      * @throw ArrayException if ran.last() > length
      */
-    Array<T> operator[](const range & ran) throw (Exception) {
-        if (ran.first() < 0 || ran.last() >= length)
-            sthrow(ArrayException, "Array overflow");
+    Array<T> operator[](range&& ran) throw (ArrayException) {
+        // Check for negative indices and adjust
+        ran.last = ran.last < 0 ? length + ran.last : ran.last;
+        ran.first = ran.first < 0 ? length + ran.first : ran.first;
+        if(ran.inverse()) sthrow(ArrayException, "Inverted range");
 
-        Array<T> toReturn = Array<T>::fromPointer((ran.last() - ran.first())+1,
-                data->_carray + ran.first());
+        if ((unsigned)ran.last >= length) {
+            char buf[2048];
+            sprintf(buf, "Array overflow - range: %u - %u , length: %u",
+                    ran.first, ran.last, unsigned(length));
+            sthrow(ArrayException, buf);
+        }
+
+        Array<T> toReturn = Array<T>::fromPointer((ran.last - ran.first)+1,
+                data->_carray + ran.first);
         return toReturn;
     }
 
@@ -400,12 +433,21 @@ public:
      * @param ran The range describing the slice
      * @throw ArrayException if ran.last() > length
      */
-    const Array<T> operator[](const range & ran) const throw (Exception) {
-        if (ran.first() < 0 || ran.last() >= length)
-            sthrow(ArrayException, "Array overflow");
+    const Array<T> operator[](range&& ran) const throw (ArrayException) {
+        // Check for negative indices and adjust
+        ran.last = ran.last < 0 ? length + ran.last : ran.last;
+        ran.first = ran.first < 0 ? length + ran.first : ran.first;
+        if(ran.inverse()) sthrow(ArrayException, "Inverted range");
 
-        Array<T> toReturn = Array<T>::fromPointer((ran.last() - ran.first())+1,
-                data->_carray + ran.first());
+        if ((unsigned)ran.last >= length) {
+            char buf[2048];
+            sprintf(buf, "Array overflow - range: %u - %u , length: %u",
+                    ran.first, ran.last, unsigned(length));
+            sthrow(ArrayException, buf);
+        }
+
+        Array<T> toReturn = Array<T>::fromPointer((ran.last - ran.first)+1,
+                data->_carray + ran.first);
         return toReturn;
     }
 
@@ -494,5 +536,6 @@ std::ostream& operator<<(std::ostream& out, const Array<T>& rhs) {
 
 SYLPH_END_NAMESPACE
 
-#endif	/* ARRAY_H_ */
+#endif	/* SYLPH_CORE_ARRAY_H_ */
+
 

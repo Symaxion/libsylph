@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="62">
+<configurationDescriptor version="69">
   <logicalFolder name="root" displayName="root" projectFiles="true">
     <logicalFolder name="f1" displayName="Other files" projectFiles="true">
       <logicalFolder name="f4" displayName="bin" projectFiles="true">
         <itemPath>bin/sylo</itemPath>
         <itemPath>bin/sylphparams.in</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f1" displayName="binreloc" projectFiles="true">
-        <itemPath>deps/binreloc/CMakeLists.txt</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f3" displayName="gc" projectFiles="true">
-        <itemPath>deps/gc-cmake/CMakeLists.txt</itemPath>
-        <itemPath>deps/gc-cmake/build-gc.sh</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="src" projectFiles="true">
         <itemPath>src/CMakeLists.txt</itemPath>
@@ -24,6 +17,7 @@
       <itemPath>COPYING</itemPath>
       <itemPath>README</itemPath>
       <itemPath>developers.sh</itemPath>
+      <itemPath>sylph.pc.in</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -92,7 +86,6 @@
           <itemPath>src/Sylph/IO/PrintWriter.h</itemPath>
         </logicalFolder>
         <logicalFolder name="f4" displayName="Math" projectFiles="true">
-          <itemPath>src/Math/internal_base.h</itemPath>
         </logicalFolder>
         <logicalFolder name="f1" displayName="OS" projectFiles="true">
           <itemPath>src/Sylph/OS/GuessOS.h</itemPath>
@@ -115,7 +108,9 @@
       <itemPath>test/Array.cpp</itemPath>
       <itemPath>test/Array2d.cpp</itemPath>
       <itemPath>test/ByteBuffer.cpp</itemPath>
+      <itemPath>test/File.cpp</itemPath>
       <itemPath>test/HashMap.cpp</itemPath>
+      <itemPath>test/PointerManager.cpp</itemPath>
       <itemPath>test/String.cpp</itemPath>
       <itemPath>test/SylphTest.h</itemPath>
       <itemPath>test/Vector.cpp</itemPath>

@@ -1,0 +1,49 @@
+# Gitignore for LibSylph and probably a load of other stuff.
+# This file is public domain. Use it in your own projects if you wish.
+# Seriously, I'm not going to copyright this, it's way too trivial.
+# I'm European and sane afterall.
+
+# Invisible files
+.*
+!.gitignore
+!.devctl
+!.gitattributes
+
+# Eclipse project files
+!.settings/
+!.settings/*
+!.cproject
+!.project
+
+# Built files
+a.out
+*.o
+*.so
+*.so.*
+*.dylib
+*.dll
+test/SylphTestExe
+test/SylphTestExe.exe
+Default/**
+
+# Generated documenation
+docs/html/**
+docs/latex/**
+
+# Backup and patch files
+*~
+*.bak
+*.orig
+*.rej
+*.patch
+*.tmp
+
+# CMake generated files
+CMakeCache.txt
+CMakeFiles/**
+Makefile
+cmake_install.cmake
+build/**
+
+# OS Specific
+.DS_Store

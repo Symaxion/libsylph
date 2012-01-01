@@ -2,4 +2,4 @@
 # the main source directory. DO NOT EDIT MANUALLY!
 
 SET ( STEST_ALL_SRC 
-Application.cpp Array.cpp HashMap.cpp String.cpp Vector.cpp main.cpp  )
+Core/Array.cpp Core/ByteBuffer.cpp Core/File.cpp Core/HashMap.cpp Core/PointerManager.cpp Core/String.cpp Core/Vector.cpp main.cpp  )

@@ -1,32 +1,33 @@
 /*
  * LibSylph Class Library
- * Copyright (C) 2009 Frank "SeySayux" Erens <seysayux@gmail.com>
+ * Copyright (C) 2012 Frank "SeySayux" Erens <seysayux@gmail.com>
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the LibSylph Pulbic License as published
- * by the LibSylph Developers; either version 1.0 of the License, or
- * (at your option) any later version.
+ * This software is provided 'as-is', without any express or implied
+ * warranty. In no event will the authors be held liable for any damages
+ * arising from the use of this software.
  *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the LibSylph
- * Public License for more details.
+ * Permission is granted to anyone to use this software for any purpose,
+ * including commercial applications, and to alter it and redistribute it
+ * freely, subject to the following restrictions:
  *
- * You should have received a copy of the LibSylph Public License
- * along with this Library, if not, contact the LibSylph Developers.
- * 
+ *   1. The origin of this software must not be misrepresented; you must not
+ *   claim that you wrote the original software. If you use this software
+ *   in a product, an acknowledgment in the product documentation would be
+ *   appreciated but is not required.
+ *
+ *   2. Altered source versions must be plainly marked as such, and must not be
+ *   misrepresented as being the original software.
+ *
+ *   3. This notice may not be removed or altered from any source
+ *   distribution.
+ *
  * Created on 4 november 2008, 18:48
  */
 
 
 
-#ifndef OBJECT_H_
-#define	OBJECT_H_
-
-#ifdef SYLPH_PUBLIC
-#undef SYLPH_PUBLIC
-#endif /* SYLPH_PUBLIC */
-#define SYLPH_PUBLIC
+#ifndef SYLPH_CORE_OBJECT_H_
+#define	SYLPH_CORE_OBJECT_H_
 
 #define SYLPH_BEGIN_NAMESPACE namespace Sylph {
 #define SYLPH_END_NAMESPACE }
@@ -40,7 +41,6 @@
 
 
 SYLPH_BEGIN_NAMESPACE
-SYLPH_PUBLIC
 
 /**
  * null is a safe %null pointer. It can only be assigned to pointers, not to
@@ -83,17 +83,18 @@ class SerializationBuffer;
 class DeserializationBuffer;
 
 /**
- * Used for LibSylph's garbage collection. It is passed as a parameter to new,
- * e.g.
+ * Placement new values for altering LibSylph's garbage collection's behavior.
+ * The values in this enumeration are passed to placement-new, e.g.
  * <pre>
  * Array<int>; = new (NoGC) Array<int>(5); // create a length-5 array without GC
  * </pre>
- * This is most often used for creating LibSylph-objects not managed by the
- * garbage collector.
+ *
+ * The most common use of the GC placement new as shown above is to disable GC
+ * for a particular object, GC is enabled by default.
  */
 enum GCPlacement {
-    UseGC, /**< Use the garbage collector; this is the default */
-    NoGC, /**< Do not use the garbage collector for this specific object */
+    UseGC, /**< Use the garbage collector; this is the default. */
+    NoGC, /**< Do not use the garbage collector for this specific object. */
     PointerFreeGC /**< When the object you create does not contain pointers,
                    * use this to speed up GC -- however, this is usually not
                    * useful, as most LibSylph containers contain pointers. */
@@ -105,9 +106,10 @@ enum GCPlacement {
  * LibSylph inherit from this class. If you want your class to communicate with
  * certain LibSylph features, or just if you want to let LibSylph's
  * garbage collector manage dynamic allocation of your class, you should derive
- * from Object.<p>
+ * from Object.
+ *
  * Note that arrays of Objects are <b>not</b> garbage collected. Instead, use
- * Sylph::Array if you want a garbage collected, safe Array.
+ * Sylph::Array if you want a garbage collected, safe %Array.
  */
 class Object {
 #ifndef SYLPH_DOXYGEN
@@ -122,7 +124,7 @@ public:
     void operator delete( void*, void*);
 
     // Arrays from Object are *never* gc'ed, and I recommend using Sylph::Array
-    // instead. Maybe we should document this somewhere?
+    // instead.
     void* operator new[](size_t size);
     void* operator new[](size_t size, void *p);
     void operator delete[](void* obj);
@@ -134,6 +136,7 @@ private:
 #endif
 };
 
+#ifndef SYLPH_NO_CXX0X
 /**
  * Creates a new (non-LibSylph) object using the LibSylph garbage
  * collection. Example (using Qt):
@@ -141,6 +144,7 @@ private:
  * QPushButton * but = newgc<QPushButton>("Hello");
  * </pre>
  * The syntax is very similar to that of the normal new operator.
+ *
  * @tplreqs T Constructible with @em Args
  * @tplreqs Args none
  */
@@ -150,13 +154,19 @@ template<class T, class... Args> T * newgc(const Args&... args);
  * Deletes a (non-LibSylph) object that was previously allocated with LibSylph
  * @c newgc(). Altough explicit deletion is not required when using garbage
  * collection, the function is provided anyways for your convenience.
+ *
+ * Deleting an object allocated with @c newgc with <code>operator delete</code>
+ * or deleting an object not allocated with @c newgc with @c deletegc is
+ * undefined behavior.
+ *
  * @param t pointer to a class previously allocated with @c newgc
  * @tplreqs T none
  */
 template<class T> void deletegc(const T * t);
 // Undocumented, do not use directly! 
 template<class T> void cleanupgc(void *obj, void *displ);
+#endif
 SYLPH_END_NAMESPACE
 
-#endif	/* OBJECT_H_ */
+#endif	/* SYLPH_CORE_OBJECT_H_ */
 

@@ -1,25 +1,31 @@
 /*
  * LibSylph Class Library
- * Copyright (C) 2009 Frank "SeySayux" Erens <seysayux@gmail.com>
+ * Copyright (C) 2012 Frank "SeySayux" Erens <seysayux@gmail.com>
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the LibSylph Pulbic License as published
- * by the LibSylph Developers; either version 1.0 of the License, or
- * (at your option) any later version.
+ * This software is provided 'as-is', without any express or implied
+ * warranty. In no event will the authors be held liable for any damages
+ * arising from the use of this software.
  *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the LibSylph
- * Public License for more details.
+ * Permission is granted to anyone to use this software for any purpose,
+ * including commercial applications, and to alter it and redistribute it
+ * freely, subject to the following restrictions:
  *
- * You should have received a copy of the LibSylph Public License
- * along with this Library, if not, contact the LibSylph Developers.
+ *   1. The origin of this software must not be misrepresented; you must not
+ *   claim that you wrote the original software. If you use this software
+ *   in a product, an acknowledgment in the product documentation would be
+ *   appreciated but is not required.
+ *
+ *   2. Altered source versions must be plainly marked as such, and must not be
+ *   misrepresented as being the original software.
+ *
+ *   3. This notice may not be removed or altered from any source
+ *   distribution.
  *
  * Created on 31 juli 2009, 21:21
  */
 
-#ifndef FOREACH_H_
-#define	FOREACH_H_
+#ifndef SYLPH_CORE_FOREACH_H_
+#define	SYLPH_CORE_FOREACH_H_
 
 #include "Object.h"
 #include <cstddef>
@@ -54,22 +60,22 @@ inline foreach_container<T> foreach_container_create(const T& t) {
 
 template <typename T>
 inline const foreach_container<T>* foreach_cast(
-        const foreach_container_base& base, const T&) {
-    return static_cast<const foreach_container<T*> *> (base);
+        const foreach_container_base* base, const T*) {
+    return static_cast<const foreach_container<T> *> (base);
 }
 
 
 #define sforeach(variable, container) \
-for (const ::foreach_container_base &_container_ = \
-	::foreach_container_create(container); ::foreach_cast(_container_, \
+for (const ::foreach_container_base& _container_ = \
+	::foreach_container_create(container); ::foreach_cast(&_container_, \
 	true ? 0 : ::foreach_pointer(container))->condition(); \
-	++::foreach_cast(_container_, true ? 0 : \
+	++::foreach_cast(&_container_, true ? 0 : \
 	::foreach_pointer(container))->i) \
-    for (variable = *::foreach_cast(_container_, true ? 0 : \
-            ::foreach_pointer(container))->i; ::foreach_cast(_container_, \
+    for (variable = *::foreach_cast(&_container_, true ? 0 : \
+            ::foreach_pointer(container))->i; ::foreach_cast(&_container_, \
             true ? 0 : ::foreach_pointer(container))->brk; \
-            --::foreach_cast(_container_, true ? 0 : \
-            ::foreach_cast(container))->brk)
+            --::foreach_cast(&_container_, true ? 0 : \
+            ::foreach_pointer(container))->brk)
 
-#endif	/* FOREACH_H_ */
+#endif	/* SYLPH_CORE_FOREACH_H_ */
 
