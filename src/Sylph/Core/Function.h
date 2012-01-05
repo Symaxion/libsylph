@@ -62,9 +62,9 @@ T& iden(T& t) {
 }
 
 // Cons
-template<class T>
-function<T&(void)> cons(T& t) {
-    return [=]() -> T& { return t; };
+template<class T, class... P>
+function<T(P...)> cons(T& t) {
+    return [=](P...) -> T { return t; };
 }
 
 // Car
