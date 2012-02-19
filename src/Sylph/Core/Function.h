@@ -76,7 +76,18 @@ T1& car(T1& t1, T2& t2, P&... p) {
 // Cdr
 template<class T1, class T2, class... P>
 T2& cdr(T1& t1, T2& t2,  P&... p) {
-    return t1;
+    return t2;
+}
+
+// Constify
+template<class T>
+const T& constify(const T& t) {
+    return t;
+}
+
+template<class T>
+const T& constipate(const T& t) {
+    return t;
 }
 
 // Map
