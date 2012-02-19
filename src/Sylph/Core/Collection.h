@@ -152,6 +152,19 @@ namespace Traits {
             IsRandomAccessCollection<T>::value> {
     };
 
+    /**
+     * FIXME: might not be really suited for Collection.h, as it can be applied
+     * to streams and other stuff. Move this to Array.h?
+     *
+     * size()
+     * resize(size_t)
+     * reserve(size_t) -> resize(size() + size_t)
+     * fit(size_t) -> resize(size())
+     */
+    template<class T>
+    struct IsArrayBacked : public FalseType {
+    };
+
     template<class T>
     struct IsEfficientFrontInsertable : public FalseType {
     };
