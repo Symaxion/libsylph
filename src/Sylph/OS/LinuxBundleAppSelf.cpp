@@ -31,6 +31,7 @@
 
 #include <unistd.h>
 #include <pwd.h>
+#include <unistd.h>
 
 SYLPH_BEGIN_NAMESPACE
 
