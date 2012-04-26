@@ -29,6 +29,7 @@
 
 #include <string>
 #include <pwd.h>
+#include <unistd.h>
 
 SYLPH_BEGIN_NAMESPACE
 
