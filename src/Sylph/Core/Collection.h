@@ -56,6 +56,7 @@ namespace Traits {
      * Assignment
      * Move assignment
      * operator+ (joining)
+     * operator| (T, Collection): Contains (global implementation)
      *
      * Operations depending on T:
      * operator==
@@ -200,6 +201,25 @@ namespace Traits {
 
 // Functions
 
+/**
+ * Alias for Collection::contains().
+ *
+ * This operator is a shorthand for the contains() operation provided by every
+ * collection. So, instead of writing
+ * <pre>
+ *      if(c.contains(t)) // ...
+ * </pre>
+ * one could write:
+ * <pre>
+ *      if(t|c) // Read: "if t in c"
+ * </pre>
+ */
+template<class T, template<class> class C>
+auto operator|(const T& t, const C<T>& c) -> 
+        S_ENABLE_IF(bool, S_TRAIT(IsCollection, T)) {
+    return c.contains(t);
+}
+
 SYLPH_END_NAMESPACE
 
-#endif /* SYLPH_CORE_COLLECTION_H_ */
+#endif /* SYLPH_CORE_COLLECTION_H_ */)
