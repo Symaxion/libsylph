@@ -55,6 +55,41 @@ namespace P {
 template<class... T>
 void noop(T...) {}
 
+// Iden
+template<class T>
+T& iden(T& t) {
+    return t;
+}
+
+// Cons
+template<class T, class... P>
+function<T(P...)> cons(T& t) {
+    return [=](P...) -> T { return t; };
+}
+
+// Car
+template<class T1, class T2, class... P>
+T1& car(T1& t1, T2& t2, P&... p) {
+    return t1;
+}
+
+// Cdr
+template<class T1, class T2, class... P>
+T2& cdr(T1& t1, T2& t2,  P&... p) {
+    return t2;
+}
+
+// Constify
+template<class T>
+const T& constify(const T& t) {
+    return t;
+}
+
+template<class T>
+const T& constipate(const T& t) {
+    return t;
+}
+
 // Map
 template<class T, class R>
 class MappedFunction {
