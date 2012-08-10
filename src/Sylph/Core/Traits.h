@@ -408,6 +408,7 @@ namespace Traits {
 #define S_END_TRAITS }}
 
 #define S_SET_TRAIT(Trait,Class) \
+        template<> \
         struct Trait<Class> : public TrueType {}
 #define S_SET_TRAIT2(Trait,Class1,Class2) \
         struct Trait<Class1,Class2> : public TrueType {}

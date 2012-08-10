@@ -64,7 +64,7 @@ namespace Traits {
      * operator<
      * other comparison operators
      */
-    template<class T>
+    template<template<class...> class T>
     struct IsCollection : public FalseType {
     };
 
@@ -75,7 +75,7 @@ namespace Traits {
      * Operations supported:
      * rbegin/rend: iterator
      */
-    template<class T>
+    template<template<class...> class T>
     struct IsSequentialCollection : public FalseType {
     };
 
@@ -94,7 +94,7 @@ namespace Traits {
      * operator+=
      * operator<<
      */
-    template<class T>
+    template<template<class...> class T>
     struct IsExpandableCollection : public FalseType {
     };
 
@@ -122,7 +122,7 @@ namespace Traits {
      * emplaceBack(A...)
      * emplaceFront(A...)
      */
-    template<class T>
+    template<template<class...> class T>
     struct IsExpandableSequence : public And<IsSequentialCollection<T>::value,
             IsExpandableCollection<T>::value> {
     };
@@ -134,7 +134,7 @@ namespace Traits {
      * RandomAccessIterator available
      * operator[](idx_t)
      */
-    template<class T>
+    template<template<class...> class T>
     struct IsRandomAccessCollection : public FalseType {
     };
 
@@ -147,7 +147,7 @@ namespace Traits {
      * removeAt(idx_t)
      * emplace(idx_t,A...)
      */
-    template<class T>
+    template<template<class...> class T>
     struct IsExpandableRandomAccessCollection :
             public And<IsExpandableSequence<T>::value,
             IsRandomAccessCollection<T>::value> {
@@ -162,31 +162,31 @@ namespace Traits {
      * reserve(size_t) -> resize(size() + size_t)
      * fit(size_t) -> resize(size())
      */
-    template<class T>
+    template<template<class...> class T>
     struct IsArrayBacked : public FalseType {
     };
 
-    template<class T>
+    template<template<class...> class T>
     struct IsEfficientFrontInsertable : public FalseType {
     };
 
-    template<class T>
+    template<template<class...> class T>
     struct IsEfficientMiddleInsertable : public FalseType {
     };
 
-    template<class T>
+    template<template<class...> class T>
     struct IsEfficientBackInsertable : public FalseType {
     };
 
-    template<class T>
+    template<template<class...> class T>
     struct IsEfficientFrontRetrievable : public FalseType {
     };
 
-    template<class T>
+    template<template<class...> class T>
     struct IsEfficientMiddleRetrievable : public FalseType {
     };
 
-    template<class T>
+    template<template<class...> class T>
     struct IsEfficientBackRetrievable : public FalseType {
     };
 
@@ -194,7 +194,7 @@ namespace Traits {
      * Traits:
      * IsCollection
      */
-     template<class T>
+     template<template<class...> class T>
      struct IsUniqueElementCollection : public FalseType {
      };
 }
@@ -216,10 +216,10 @@ namespace Traits {
  */
 template<class T, template<class> class C>
 auto operator|(const T& t, const C<T>& c) -> 
-        S_ENABLE_IF(bool, S_TRAIT(IsCollection, T)) {
+        S_ENABLE_IF(bool, S_TRAIT(IsCollection, C)) {
     return c.contains(t);
 }
 
 SYLPH_END_NAMESPACE
 
-#endif /* SYLPH_CORE_COLLECTION_H_ */)
+#endif /* SYLPH_CORE_COLLECTION_H_ */

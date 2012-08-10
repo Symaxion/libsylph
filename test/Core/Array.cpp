@@ -24,6 +24,8 @@
  */
 
 #include "../SylphTest.h"
+#include "Collection.h"
+
 #include <Sylph/Core/Array.h>
 #include <Sylph/Core/Util.h>
 #include <Sylph/Core/Debug.h>
@@ -59,12 +61,14 @@ namespace {
         Array<int> * testObj1;
         Array<Dummy> * testObj2;
         Array<int> * ar1;
-        Array<int> * ar2;
+        Array<int> * ar2;            
         Array<int> * ar3;
         Array<int> arfilled1;
         Array<int> arfilled2;
         Array<int> arfilled3;
     };
+
+    TEST_IS_COLLECTION(Array);
 
     TEST_F(TestArray, testCorrectConstructed) {
         EXPECT_EQ(5u, testObj1->length);

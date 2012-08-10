@@ -72,13 +72,13 @@ public:
         return toReturn;
     }
 
-    Array<Rp> operator()(Array<Tp> list) {
-        Array<Rp> toReturn(list.length);
-        for(idx_t i = 0; i < list.length;++i) {
-            toReturn[i] = func(list[i]);
-        }
-        return toReturn;
-    }
+//     Array<Rp> operator()(Array<Tp> list) {
+//         Array<Rp> toReturn(list.length);
+//         for(idx_t i = 0; i < list.length;++i) {
+//             toReturn[i] = func(list[i]);
+//         }
+//         return toReturn;
+//     }
 private:
     function<R(T)> func;
 };

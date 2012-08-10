@@ -33,6 +33,7 @@
 #include "Exception.h"
 #include "Range.h"
 #include "Primitives.h"
+#include "Collection.h"
 
 #include <algorithm>
 #include <iostream>
@@ -311,9 +312,11 @@ public:
     }
 
     /**
-     * This will filter the Array according to a FilterFunction. This function
-     * returns a new, 'filtered' Array, which only contains the entries for
-     * which the FilterFunction returns true.
+     * This will filter the Array according to a FilterFunction. 
+     *
+     * This function returns a new, 'filtered' Array, which only contains the 
+     * entries for which the FilterFunction returns true.
+     *
      * @param func A pointer to the function which is used for filtering
      * @param clientData %Any data to be passed to the FilterFunction
      * @return A new array containing only the filtered data
@@ -333,6 +336,47 @@ public:
             }
         }
         return toReturn;
+    }
+
+    /**
+     * Checks whether this array contains the given element.
+     *
+     * @param t An object
+     * @return true if this array containts the element, false otherwise
+     */
+    bool contains(const T& t) const {
+        for(idx_t i = 0; i < size(); ++i) {
+            if(get(i) == t) return true;
+        }
+        return false;
+    }
+
+    /**
+     *
+     */
+    sidx_t indexOf(const T& t, sidx_t offset = 0) const {
+        return -1;
+    }
+
+    /**
+     * 
+     */
+    sidx_t lastIndexOf(const T& t, sidx_t offset = -1) const {
+        return -1;
+    }
+
+    /**
+     *
+     */
+    size_t size() const {
+        return length();
+    }
+
+    /**
+     *
+     */
+    bool empty() const {
+        return size() == 0;
     }
 
     /**
@@ -554,6 +598,17 @@ std::ostream& operator<<(std::ostream& out, const Array<T>& rhs) {
 }
 
 SYLPH_END_NAMESPACE
+
+S_BEGIN_TRAITS
+
+S_SET_TRAIT(IsCollection, Array);
+S_SET_TRAIT(IsSequentialCollection, Array);
+S_SET_TRAIT(IsRandomAccessCollection, Array);
+S_SET_TRAIT(IsEfficientFrontInsertable, Array);
+S_SET_TRAIT(IsEfficientMiddleInsertable, Array);
+S_SET_TRAIT(IsEfficientBackInsertable, Array);
+
+S_END_TRAITS
 
 #endif	/* SYLPH_CORE_ARRAY_H_ */
 
