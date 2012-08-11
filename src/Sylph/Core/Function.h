@@ -61,9 +61,9 @@ T& iden(T& t) {
     return t;
 }
 
-// Cons
+// Cnst
 template<class T, class... P>
-function<T(P...)> cons(T& t) {
+function<T(P...)> cnst(T& t) {
     return [=](P...) -> T { return t; };
 }
 
