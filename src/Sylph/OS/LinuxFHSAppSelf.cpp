@@ -30,6 +30,7 @@
 #include <binreloc.h>
 
 #include <pwd.h>
+#include <unistd.h>
 
 SYLPH_BEGIN_NAMESPACE
 

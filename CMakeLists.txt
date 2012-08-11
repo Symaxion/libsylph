@@ -69,15 +69,15 @@ endif ( SYLPH_NO_CXX0X )
 if ( NOT SYLPH_COMPILER_SUFFICIENT ) # manual override
     SET( SYLPH_COMPILER_SUFFICIENT 0 )
 
-    # GCC == 4.5.3 will do the job
-    if ( CMAKE_COMPILER_IS_GNUCC AND S_GCC_VERSION STREQUAL "4.5.3" )
+    # GCC >= 4.5.3 will do the job
+    if ( CMAKE_COMPILER_IS_GNUCC AND S_GCC_VERSION STRGREATER "4.5.2" )
         SET( SYLPH_COMPILER_SUFFICIENT 1 )
         SET( CXX_GCC 1 )
-    endif ( CMAKE_COMPILER_IS_GNUCC AND S_GCC_VERSION STREQUAL "4.5.3" )
+    endif ( CMAKE_COMPILER_IS_GNUCC AND S_GCC_VERSION STRGREATER "4.5.2" )
 
     # No compiler found
     if ( NOT SYLPH_COMPILER_SUFFICIENT )
-        message ( FATAL_ERROR "Your compiler does not support C++0x. Please install a compliant compiler. G++ > 4.4.0 supports the required constructs. Use the -DCMAKE_CXX_COMPILER flag to set a compiler." )
+        message ( FATAL_ERROR "Your compiler does not support C++0x. Please install a compliant compiler. G++ >= 4.5.3 supports the required constructs. Use the -DCMAKE_CXX_COMPILER flag to set a compiler." )
     endif ( NOT SYLPH_COMPILER_SUFFICIENT )
 
 endif ( NOT SYLPH_COMPILER_SUFFICIENT )
@@ -87,11 +87,15 @@ if ( NOT SYLPH_CXXFLAGS )
     set ( SYLPH_CXXFLAGS "" )
     set ( COVERAGE_LIBS "" )
 
-    # GCC >= 4.4.0
+    # GCC >= 4.5.4
     # Enable C++0x and disable some warnings
     if ( CXX_GCC )
         if( NOT SYLPH_NO_CXX0X )
-            set( SYLPH_CXXFLAGS "-std=c++0x")
+            if(S_GCC_VERSION STRGREATER "4.7.0")
+                set( SYLPH_CXXFLAGS "-std=c++11" )
+            else(S_GCC_VERSION STRGREATER "4.7.0")
+                set( SYLPH_CXXFLAGS "-std=c++0x")
+            endif(S_GCC_VERSION STRGREATER "4.7.0")
         endif ( NOT SYLPH_NO_CXX0X )
 
         if( SYLPH_ENABLE_COVERAGE )
