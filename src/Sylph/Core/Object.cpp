@@ -128,7 +128,7 @@ template<class T, class... Args> T * newgc(const Args&... args) {
     if (0 != base) {
         // Don't call the debug version, since this is a real base address.
         GC_register_finalizer_ignore_self(
-                base, (GC_finalization_proc) cleanupgc, (void*) ((char*) tr - (char*) base),
+                base, (GC_finalization_proc) cleanupgc<T>, (void*) ((char*) tr - (char*) base),
                 &oldProc, &oldData);
         if (0 != oldProc) {
             GC_register_finalizer_ignore_self(base, oldProc, oldData, 0, 0);

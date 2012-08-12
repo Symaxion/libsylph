@@ -66,7 +66,6 @@ public:
 
     class Entry {
         friend class HashMap<Key,Value,HashFunction,EqualsFunction>;
-        friend class Self::iterator;
     public:
 
         Entry(Key & _key, Value * _value) : key(_key), value(_value),

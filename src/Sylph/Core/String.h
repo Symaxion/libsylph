@@ -296,6 +296,15 @@ public:
     std::size_t length() const;
 
     /**
+     * Checks whether this string is empty.
+     *
+     * This is the same as checking if the length of this string is 0.
+     * 
+     * @return true if the string is empty, false otherwise.
+     */
+    bool empty() const { return length() == 0; }
+
+    /**
      * Returns the character at the specified index. The index is 0-based and
      * has a maximal value of length() - 1.
      * @throw ArrayException if <code>idx > length() - 1</code>.
@@ -551,7 +560,7 @@ public:
     double doubleValue() const;
 
     inline bool toBool() const {
-        return *this != "";
+        return !empty();
     }
 
     const String & operator=(const char * orig) const;

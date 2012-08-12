@@ -259,7 +259,7 @@ public:
         try {
             checkIfOutOfBounds(idx);
         } straced;
-        for (std::size_t i = idx; i >= 0; i--) {
+        for (std::size_t i = idx; (signed)i >= 0; --i) {
             if (equf(get(i), t)) {
                 return i;
             }

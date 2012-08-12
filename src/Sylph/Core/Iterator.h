@@ -299,14 +299,14 @@ public:
 		super(other) {
     }
 
-    I & operator+=(unsigned int i) {
+    I & operator+=(int i) {
         ptrdiff_t diff = i;
         if (i >= 0) while (diff--) ++(*this);
         else while (diff++) --(*this);
         return *static_cast<I*>(this);
     }
 
-    const I & operator+=(unsigned int i) const {
+    const I & operator+=(int i) const {
         ptrdiff_t diff = i;
         if (i >= 0) while (diff--) ++(*this);
         else while (diff++) --(*this);
