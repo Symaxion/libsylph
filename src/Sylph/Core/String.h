@@ -668,3 +668,5 @@ S_CMP_SEQ_2(const String,const char*)
 SYLPH_END_NAMESPACE
 
 #endif /* SYLPH_CORE_STRING_H_ */
+
+// vim: syntax=cpp11:ts=4:sts=4:sw=4:sta:et:tw=80:nobk

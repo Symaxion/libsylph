@@ -103,3 +103,5 @@ int main(int argc, char** argv) {
 
 #endif	/* SYLPHMAIN_H_ */
 
+
+// vim: syntax=cpp11:ts=4:sts=4:sw=4:sta:et:tw=80:nobk
