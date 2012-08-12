@@ -28,6 +28,8 @@
 #include "internal_base.h"
 #include "Functions.h"
 
+#include "../Core/Debug.h"
+
 SYLPH_BEGIN_MATHNS
     class frac {
     public:
@@ -37,10 +39,14 @@ SYLPH_BEGIN_MATHNS
 
         // TODO
         explicit frac(float f) {
+            (void)f;
+            SYLPH_STUB;
         }
 
         // TODO
         explicit frac(double d) {
+            (void)d;
+            SYLPH_STUB;
         }
 
         inline frac(const frac& o) : n(o.n), d(o.d) {}
