@@ -407,53 +407,93 @@ namespace Traits {
 #define S_BEGIN_TRAITS namespace Sylph { namespace Traits {
 #define S_END_TRAITS }}
 
-#define S_SET_TRAIT(Trait,Class) \
-        struct Trait<Class> : public TrueType {}
-#define S_SET_TRAIT2(Trait,Class1,Class2) \
-        struct Trait<Class1,Class2> : public TrueType {}
-#define S_SET_TRAIT3(Trait,Class1,Class2,Class3) \
-        struct Trait<Class1,Class2,Class3> : public TrueType {}
-#define S_SET_TRAIT4(Trait,Class1,Class2,Class3,Class4) \
-        struct Trait<Class1,Class2,Class3,Class4> : public TrueType {}
+#ifndef SYLPH_FTR_NO_VA_ARGS
+#define S_SET_TRAIT_TPL(Trait, ...) \
+    struct Trait<__VA_ARGS__> : public TrueType {}
+#else
+#define S_SET_TRAIT_TPL(Trait, Class) \
+    struct Trait<Class> : public TrueType {}
+#endif
+#define S_SET_TRAIT_TPL2(Trait,Class1,Class2) \
+    struct Trait<Class1,Class2> : public TrueType {}
+#define S_SET_TRAIT_TPL3(Trait,Class1,Class2,Class3) \
+    struct Trait<Class1,Class2,Class3> : public TrueType {}
+#define S_SET_TRAIT_TPL4(Trait,Class1,Class2,Class3,Class4) \
+    struct Trait<Class1,Class2,Class3,Class4> : public TrueType {}
 
-#define S_SET_TRAIT_FALSE(Trait,Class) \
-        struct Trait<Class> : public FalseType {}
+#ifndef SYLPH_FTR_NO_VA_ARGS
+#define S_SET_TRAIT_TPL_FALSE(Trait, ...) \
+    struct Trait<__VA_ARGS__> : public FalseType {}
+#else
+#define S_SET_TRAIT_TPL_FALSE(Trait, Class) \
+    struct Trait<Class> : public FalseType {}
+#endif
+#define S_SET_TRAIT_TPL_FALSE2(Trait,Class1,Class2) \
+    struct Trait<Class1,Class2> : public FalseType {}
+#define S_SET_TRAIT_TPL_FALSE3(Trait,Class1,Class2,Class3) \
+    struct Trait<Class1,Class2,Class3> : public FalseType {}
+#define S_SET_TRAIT_TPL_FALSE4(Trait,Class1,Class2,Class3,Class4) \
+    struct Trait<Class1,Class2,Class3,Class4> : public FalseType {}
+
+#ifndef SYLPH_FTR_NO_VA_ARGS
+#define S_SET_TRAIT(Trait, ...) \
+    template<> S_SET_TRAIT_TPL(Trait, __VA_ARGS__)
+#else
+#define S_SET_TRAIT(Trait, Class) \
+    template<> S_SET_TRAIT_TPL(Trait,Class)
+#endif
+#define S_SET_TRAIT2(Trait,Class1,Class2) \
+    template<> S_SET_TRAIT_TPL2(Trait,Class1, Class2)
+#define S_SET_TRAIT3(Trait,Class1,Class2,Class3) \
+    template<> S_SET_TRAIT_TPL3(Trait,Class1,Class2,Class3)
+#define S_SET_TRAIT4(Trait,Class1,Class2,Class3,Class4) \
+    template<> S_SET_TRAIT_TPL4(Trait,Class1,Class2,Class3,Class4)
+
+#ifndef SYLPH_FTR_NO_VA_ARGS
+#define S_SET_TRAIT_FALSE(Trait, ...) \
+    template<> S_SET_TRAIT_TPL_FALSE(Trait, __VA_ARGS__)
+#else
+#define S_SET_TRAIT_FALSE(Trait, Class) \
+    template<> S_SET_TRAIT_TPL_FALSE(Trait,Class)
+#endif
 #define S_SET_TRAIT_FALSE2(Trait,Class1,Class2) \
-        struct Trait<Class1,Class2> : public FalseType {}
+    template<> S_SET_TRAIT_TPL_FALSE2(Trait,Class1, Class2)
 #define S_SET_TRAIT_FALSE3(Trait,Class1,Class2,Class3) \
-        struct Trait<Class1,Class2,Class3> : public FalseType {}
+    template<> S_SET_TRAIT_TPL_FALSE3(Trait,Class1,Class2,Class3)
 #define S_SET_TRAIT_FALSE4(Trait,Class1,Class2,Class3,Class4) \
-        struct Trait<Class1,Class2,Class3,Class4> : public FalseType {}
+    template<> S_SET_TRAIT_TPL_FALSE4(Trait,Class1,Class2,Class3,Class4)
 
 #define S_SET_TRAIT_TYPE(Trait,Type,Class) \
-        struct Trait<Class> { typedef Type type; }
+    struct Trait<Class> { typedef Type type; }
 #define S_SET_TRAIT_TYPE2(Trait,Type,Class1,Class2) \
-        struct Trait<Class1,Class2> { typedef Type type; }
+    struct Trait<Class1,Class2> { typedef Type type; }
 #define S_SET_TRAIT_TYPE3(Trait,Type,Class1,Class2,Class3) \
-        struct Trait<Class1,Class2,Class3> { typedef Type type; }
+    struct Trait<Class1,Class2,Class3> { typedef Type type; }
 #define S_SET_TRAIT_TYPE4(Trait,Type,Class1,Class2,Class3,Class4) \
-        struct Trait<Class1,Class2,Class3,Class4> { typedef Type type; }
+    struct Trait<Class1,Class2,Class3,Class4> { typedef Type type; }
 
 #define S_TRAIT(Trait,Class) \
-        ::Sylph::Traits::Trait<Class>::value
+    ::Sylph::Traits::Trait<Class>::value
 #define S_TRAIT2(Trait,Class1,Class2) \
-        ::Sylph::Traits::Trait<Class1,Class2>::value
+    ::Sylph::Traits::Trait<Class1,Class2>::value
 #define S_TRAIT3(Trait,Class1,Class2,Class3) \
-        ::Sylph::Traits::Trait<Class1,Class2,Class3>::value
+    ::Sylph::Traits::Trait<Class1,Class2,Class3>::value
 #define S_TRAIT4(Trait,Class1,Class2,Class3,Class4) \
-        ::Sylph::Traits::Trait<Class1,Class2,Class3,Class4>::value
+    ::Sylph::Traits::Trait<Class1,Class2,Class3,Class4>::value
 
 #define S_TRAIT_TYPE(Trait,Class) \
-        typename ::Sylph::Traits::Trait<Class>::type
+    typename ::Sylph::Traits::Trait<Class>::type
 #define S_TRAIT_TYPE2(Trait,Class1,Class2) \
-        typename ::Sylph::Traits::Trait<Class1,Class2>::type
+    typename ::Sylph::Traits::Trait<Class1,Class2>::type
 #define S_TRAIT_TYPE3(Trait,Class1,Class2,Class3) \
-        typename ::Sylph::Traits::Trait<Class1,Class2,Class3>::type
+    typename ::Sylph::Traits::Trait<Class1,Class2,Class3>::type
 #define S_TRAIT_TYPE4(Trait,Class1,Class2,Class3,Class4) \
-        typename ::Sylph::Traits::Trait<Class1,Class2,Class3,Class4>::type
+    typename ::Sylph::Traits::Trait<Class1,Class2,Class3,Class4>::type
 
 #define S_ENABLE_IF(Type, Condition) \
-        typename ::Sylph::Traits::EnableIf<Condition,Type>::type
+    typename ::Sylph::Traits::EnableIf<Condition,Type>::type
 SYLPH_END_NAMESPACE
 
 #endif /* SYLPH_CORE_TRAITS_H_ */
+
+// vim: syntax=cpp11:ts=4:sts=4:sw=4:sta:et:tw=80:nobk
