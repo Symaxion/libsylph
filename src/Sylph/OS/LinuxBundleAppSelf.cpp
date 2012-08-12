@@ -31,6 +31,7 @@
 
 #include <unistd.h>
 #include <pwd.h>
+#include <unistd.h>
 
 SYLPH_BEGIN_NAMESPACE
 
@@ -156,3 +157,5 @@ const File& LinuxBundleAppSelf::prefix() {
 
 SYLPH_END_NAMESPACE
 #endif // SYLPH_OS_LINUX
+
+// vim: syntax=cpp11:ts=4:sts=4:sw=4:sta:et:tw=80:nobk

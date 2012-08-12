@@ -6,9 +6,11 @@ include_directories(${SYLPH_SOURCE_DIR}/src ${SYLPH_SOURCE_DIR}/deps/gtest/inclu
 link_directories(${SYLPH_BINARY_DIR}/src) 
 
 if( SYLPH_DEBUG )
-add_definitions(${SYLPH_CONFIG_DEFS} -DSYLPH_DEBUG)
+    add_definitions(${SYLPH_CONFIG_DEFS} -DSYLPH_DEBUG -DGTEST_USE_OWN_TR1_TUPLE
+            -DGTEST_HAS_TR1_TUPLE)
 else ( SYLPH_DEBUG )
-add_definitions(${SYLPH_CONFIG_DEFS})
+    add_definitions(${SYLPH_CONFIG_DEFS} -DGTEST_USE_OWN_TR1_TUPLE
+            -DGTEST_HAS_TR1_TUPLE)
 endif( SYLPH_DEBUG )
 
 add_executable( SylphTestExe EXCLUDE_FROM_ALL ${STEST_ALL_SRC})

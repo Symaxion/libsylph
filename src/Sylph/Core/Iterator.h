@@ -299,14 +299,14 @@ public:
 		super(other) {
     }
 
-    I & operator+=(unsigned int i) {
+    I & operator+=(int i) {
         ptrdiff_t diff = i;
         if (i >= 0) while (diff--) ++(*this);
         else while (diff++) --(*this);
         return *static_cast<I*>(this);
     }
 
-    const I & operator+=(unsigned int i) const {
+    const I & operator+=(int i) const {
         ptrdiff_t diff = i;
         if (i >= 0) while (diff--) ++(*this);
         else while (diff++) --(*this);
@@ -545,3 +545,5 @@ SYLPH_END_NAMESPACE
 
 #endif	/* SYLPH_CORE_ITERATOR_H_ */
 
+
+// vim: syntax=cpp11:ts=4:sts=4:sw=4:sta:et:tw=80:nobk

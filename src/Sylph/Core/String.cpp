@@ -105,7 +105,7 @@ String::String(const bool b) {
 String::String(const sint i) {
     size_t tmplen = sizeof (i) * 5; // long enough, i presume?
     char * buf = new char[tmplen];
-    sprintf(buf, "%"S_FMT_I, i);
+    sprintf(buf, "%" S_FMT_I, i);
     fromAscii(buf);
     delete[] buf;
 }
@@ -113,7 +113,7 @@ String::String(const sint i) {
 String::String(const suint i) {
     size_t tmplen = sizeof (i) * 5; // long enough, i presume?
     char * buf = new char[tmplen];
-    sprintf(buf, "%"S_FMT_UI, i);
+    sprintf(buf, "%" S_FMT_UI, i);
     fromAscii(buf);
     delete[] buf;
 }
@@ -121,7 +121,7 @@ String::String(const suint i) {
 String::String(const slong l) {
     size_t tmplen = sizeof (l) * 5; // long enough, i presume?
     char * buf = new char[tmplen];
-    sprintf(buf, "%"S_FMT_L, l);
+    sprintf(buf, "%" S_FMT_L, l);
     fromAscii(buf);
     delete[] buf;
 }
@@ -129,7 +129,7 @@ String::String(const slong l) {
 String::String(const sulong l) {
     size_t tmplen = sizeof (l) * 5; // long enough, i presume?
     char * buf = new char[tmplen];
-    sprintf(buf, "%"S_FMT_UL, l);
+    sprintf(buf, "%" S_FMT_UL, l);
     fromAscii(buf);
     delete[] buf;
 }
@@ -178,7 +178,7 @@ std::size_t String::length() const {
     return strdata->data.length;
 }
 
-const uchar String::at(sidx_t idx) const throw(ArrayException) {
+uchar String::at(sidx_t idx) const throw(ArrayException) {
     try {
         return strdata->data[idx];
     } straced;
@@ -406,25 +406,25 @@ bool String::boolValue() const {
 
 sint String::intValue() const {
     sint i = 0;
-    sscanf(this->ascii(), "%"S_FMT_I, &i);
+    sscanf(this->ascii(), "%" S_FMT_I, &i);
     return i;
 }
 
 suint String::uintValue() const {
     suint i = 0;
-    sscanf(this->ascii(), "%"S_FMT_UI, &i);
+    sscanf(this->ascii(), "%" S_FMT_UI, &i);
     return i;
 }
 
 slong String::longValue() const {
     slong l = 0;
-    sscanf(this->ascii(), "%"S_FMT_L, &l);
+    sscanf(this->ascii(), "%" S_FMT_L, &l);
     return l;
 }
 
 sulong String::ulongValue() const {
     sulong l = 0;
-    sscanf(this->ascii(), "%"S_FMT_UL, &l);
+    sscanf(this->ascii(), "%" S_FMT_UL, &l);
     return l;
 }
 
@@ -613,3 +613,5 @@ String t(const String rhs) {
 }
 
 SYLPH_END_NAMESPACE
+
+// vim: syntax=cpp11:ts=4:sts=4:sw=4:sta:et:tw=80:nobk
