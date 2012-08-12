@@ -33,6 +33,8 @@
 #include "Equals.h"
 #include "Iterator.h"
 
+#include "Debug.h"
+
 #include <vector>
 #include <initializer_list>
 
@@ -120,12 +122,17 @@ public:
     }
 
     /**
-     * Creates a copy of the vector. All elements of the other vector will be
-     * copied into this vector.
+     * Creates a copy of the vector. 
+     *
+     * All elements of the other vector will be copied into this vector.
+     *
+     * TODO implement this!
+     *
      * @param other The other Vector.
      */
     Vector(const Vector<T>& other) {
-
+        (void)other;
+        SYLPH_STUB;
     }
 
     /**

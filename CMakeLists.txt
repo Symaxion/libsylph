@@ -142,7 +142,7 @@ if ( NOT SYLPH_CXXFLAGS )
         endif ( APPLE )
 
         # Enable all warnings
-        set ( SYLPH_CXXFLAGS "${SYLPH_CXXFLAGS} -Wall -Werror -fno-strict-aliasing" )
+        set ( SYLPH_CXXFLAGS "${SYLPH_CXXFLAGS} -Wall -Wextra -Werror -fno-strict-aliasing" )
     endif( CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_CLANG )
 
 endif ( NOT SYLPH_CXXFLAGS )

@@ -178,7 +178,7 @@ std::size_t String::length() const {
     return strdata->data.length;
 }
 
-const uchar String::at(sidx_t idx) const throw(ArrayException) {
+uchar String::at(sidx_t idx) const throw(ArrayException) {
     try {
         return strdata->data[idx];
     } straced;

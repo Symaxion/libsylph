@@ -66,7 +66,7 @@ void* Object::operator new( size_t size, GCPlacement gcp) {
     else return toReturn;
 }
 
-void* Object::operator new( size_t size, void *p) {
+void* Object::operator new(size_t, void *p) {
     return p;
 }
 
@@ -76,7 +76,7 @@ void Object::operator delete( void* obj) {
 
 void Object::operator delete( void*, void*) { }
 
-void Object::operator delete( void* p, GCPlacement gcp) {
+void Object::operator delete( void* p, GCPlacement) {
     GC_FREE(p);
 }
 
@@ -84,7 +84,7 @@ void* Object::operator new[](size_t size) {
     return Object::operator new(size, NoGC);
 }
 
-void* Object::operator new[](size_t size, void *p) {
+void* Object::operator new[](size_t, void *p) {
     return p;
 }
 

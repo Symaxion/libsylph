@@ -33,7 +33,7 @@
 
 SYLPH_BEGIN_NAMESPACE
 
-MacOSFHSAppSelf::MacOSFHSAppSelf(int argc, char * argv[], char * apple[]) {
+MacOSFHSAppSelf::MacOSFHSAppSelf(int, char**, char** apple) {
     _location= String(apple[0]);
 }
 
