@@ -29,10 +29,11 @@
 
 #include <string>
 #include <pwd.h>
+#include <unistd.h>
 
 SYLPH_BEGIN_NAMESPACE
 
-MacOSAppSelf::MacOSAppSelf(int argc, char * argv[], char * apple[]) {
+MacOSAppSelf::MacOSAppSelf(int, char**, char** apple) {
     _location= String(apple[0]);
 }
 
@@ -146,3 +147,5 @@ const File& MacOSAppSelf::prefix() {
 SYLPH_END_NAMESPACE
 
 #endif // SYLPH_OS_MACOSX
+
+// vim: syntax=cpp11:ts=4:sts=4:sw=4:sta:et:tw=80:nobk

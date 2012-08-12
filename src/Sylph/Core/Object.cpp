@@ -66,7 +66,7 @@ void* Object::operator new( size_t size, GCPlacement gcp) {
     else return toReturn;
 }
 
-void* Object::operator new( size_t size, void *p) {
+void* Object::operator new(size_t, void *p) {
     return p;
 }
 
@@ -76,7 +76,7 @@ void Object::operator delete( void* obj) {
 
 void Object::operator delete( void*, void*) { }
 
-void Object::operator delete( void* p, GCPlacement gcp) {
+void Object::operator delete( void* p, GCPlacement) {
     GC_FREE(p);
 }
 
@@ -84,7 +84,7 @@ void* Object::operator new[](size_t size) {
     return Object::operator new(size, NoGC);
 }
 
-void* Object::operator new[](size_t size, void *p) {
+void* Object::operator new[](size_t, void *p) {
     return p;
 }
 
@@ -128,7 +128,7 @@ template<class T, class... Args> T * newgc(const Args&... args) {
     if (0 != base) {
         // Don't call the debug version, since this is a real base address.
         GC_register_finalizer_ignore_self(
-                base, (GC_finalization_proc) cleanupgc, (void*) ((char*) tr - (char*) base),
+                base, (GC_finalization_proc) cleanupgc<T>, (void*) ((char*) tr - (char*) base),
                 &oldProc, &oldData);
         if (0 != oldProc) {
             GC_register_finalizer_ignore_self(base, oldProc, oldData, 0, 0);
@@ -149,3 +149,5 @@ void deletegc(const T * obj) {
 #endif
 
 SYLPH_END_NAMESPACE
+
+// vim: syntax=cpp11:ts=4:sts=4:sw=4:sta:et:tw=80:nobk
