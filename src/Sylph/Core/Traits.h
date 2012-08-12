@@ -390,18 +390,18 @@ namespace Traits {
     struct StdEquivalent {
     };
 
+}
 
-    // Functions
+// Functions
 
-    template<class T>
-    typename MakeSigned<T>::type makeSigned(T t) {
-        return static_cast<typename MakeSigned<T>::type>(t);
-    }
+template<class T>
+typename Traits::MakeSigned<T>::type makeSigned(T t) {
+    return static_cast<typename Traits::MakeSigned<T>::type>(t);
+}
 
-    template<class T>
-    typename MakeUnsigned<T>::type makeUnsigned(T t) {
-        return static_cast<typename MakeUnsigned<T>::type>(t);
-    }
+template<class T>
+typename Traits::MakeUnsigned<T>::type makeUnsigned(T t) {
+    return static_cast<typename Traits::MakeUnsigned<T>::type>(t);
 }
 
 #define S_BEGIN_TRAITS namespace Sylph { namespace Traits {

@@ -32,6 +32,7 @@
 #include "Hash.h"
 #include "Primitives.h"
 #include "Array.h"
+#include "Exception.h"
 
 // for convenience
 #include "I18N.h"
@@ -307,11 +308,11 @@ public:
     /**
      * Returns the character at the specified index. The index is 0-based and
      * has a maximal value of length() - 1.
-     * @throw ArrayException if <code>idx > length() - 1</code>.
+     * @throw IndexException if <code>idx > length() - 1</code>.
      * @param idx the index of the character to return
      * @return the character at the specified index, in UTF-16.
      */
-    uchar at(sidx_t idx) const throw(ArrayException);
+    uchar at(sidx_t idx) const throw(IndexException);
 
     /**
      * Converts the String to ASCII. The conversion algorithm goes as follows:

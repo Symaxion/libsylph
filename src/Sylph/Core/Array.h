@@ -352,16 +352,20 @@ public:
     }
 
     /**
-     *
+     * TODO
      */
     sidx_t indexOf(const T& t, sidx_t offset = 0) const {
+        (void)t;
+        (void)offset;
         return -1;
     }
 
     /**
-     * 
+     * TODO
      */
     sidx_t lastIndexOf(const T& t, sidx_t offset = -1) const {
+        (void)t;
+        (void)offset;
         return -1;
     }
 
@@ -415,7 +419,7 @@ public:
      * @throw ArrayException if <code>idx > length</code>
      */
     T & operator[](sidx_t idx) throw (Exception) {
-        if ((idx < (sidx_t)length) && (idx >= -(sidx_t)length)) {
+        if ((idx < sidx_t(length)) && (idx >= -sidx_t(length))) {
             return idx >= 0 ? data->_carray[idx] : data->_carray[length + idx];
         } else {
             char buf[2048];
@@ -457,7 +461,7 @@ public:
         ran.first = ran.first < 0 ? length + ran.first : ran.first;
         if(ran.inverse()) sthrow(IndexException, "Inverted range");
 
-        if ((unsigned)ran.last >= length) {
+        if (makeUnsigned(ran.last) >= length) {
             char buf[2048];
             sprintf(buf, "Array overflow - range: %u - %u , length: %u",
                     ran.first, ran.last, unsigned(length));
@@ -480,10 +484,10 @@ public:
         ran.first = ran.first < 0 ? length + ran.first : ran.first;
         if(ran.inverse()) sthrow(IndexException, "Inverted range");
 
-        if ((unsigned)ran.last >= length) {
+        if (makeUnsigned(ran.last) >= length) {
             char buf[2048];
             sprintf(buf, "Array overflow - range: %u - %u , length: %u",
-                    ran.first, ran.last, unsigned(length));
+                    ran.first, ran.last, makeUnsigned(length));
             sthrow(IndexException, buf);
         }
 
@@ -608,10 +612,13 @@ S_SET_TRAIT(IsEfficientFrontInsertable, Array);
 S_SET_TRAIT(IsEfficientMiddleInsertable, Array);
 S_SET_TRAIT(IsEfficientBackInsertable, Array);
 
+template<class T>
+S_SET_TRAIT_TPL(IsSylphClass, Array<T>);
+template<class T>
+S_SET_TRAIT_TPL(IsEfficientlyCopyable, Array<T>)
+
 S_END_TRAITS
 
 #endif	/* SYLPH_CORE_ARRAY_H_ */
-
-
 
 // vim: syntax=cpp11:ts=4:sts=4:sw=4:sta:et:tw=80:nobk
