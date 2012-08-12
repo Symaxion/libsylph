@@ -33,7 +33,7 @@
 
 SYLPH_BEGIN_NAMESPACE
 
-MacOSFHSAppSelf::MacOSFHSAppSelf(int argc, char * argv[], char * apple[]) {
+MacOSFHSAppSelf::MacOSFHSAppSelf(int, char**, char** apple) {
     _location= String(apple[0]);
 }
 
@@ -142,3 +142,5 @@ const File& MacOSFHSAppSelf::prefix() {
 SYLPH_END_NAMESPACE
 
 #endif // SYLPH_OS_MACOSX
+
+// vim: syntax=cpp11:ts=4:sts=4:sw=4:sta:et:tw=80:nobk

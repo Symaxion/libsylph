@@ -66,7 +66,6 @@ public:
 public:
     class Entry {
         friend class HashMap<Key,Value>;
-        friend class Self::iterator;
     public:
 
         Entry(Key & _key, Value * _value) : key(_key), value(_value),
@@ -495,3 +494,5 @@ bool operator==(const HashMap<K,V>& lhs, const HashMap<K,V>& rhs) {
 SYLPH_END_NAMESPACE
 #endif	/* SYLPH_CORE_HASHMAP_H_ */
 
+
+// vim: syntax=cpp11:ts=4:sts=4:sw=4:sta:et:tw=80:nobk

@@ -35,14 +35,14 @@ namespace {
     template<class T>
     S_ENABLE_IF(bool,
             S_TRAIT(IsIntegral,T))
-            enableIfHelper(T t) {
+            enableIfHelper(T) {
         return true;
     }
 
     template<class T>
     S_ENABLE_IF(bool,
             S_TRAIT(IsFloatingPoint, T))
-            enableIfHelper(T t) {
+            enableIfHelper(T) {
         return false;
     }
 
@@ -51,3 +51,5 @@ namespace {
         EXPECT_FALSE(enableIfHelper(2.0));
     }
 }
+
+// vim: syntax=cpp11:ts=4:sts=4:sw=4:sta:et:tw=80:nobk:pa+=,../../src

@@ -194,9 +194,9 @@ namespace Traits {
      * Traits:
      * IsCollection
      */
-     template<template<class...> class T>
-     struct IsUniqueElementCollection : public FalseType {
-     };
+    template<template<class...> class T>
+    struct IsUniqueElementCollection : public FalseType {
+    };
 }
 
 // Functions
@@ -223,3 +223,5 @@ auto operator|(const T& t, const C<T>& c) ->
 SYLPH_END_NAMESPACE
 
 #endif /* SYLPH_CORE_COLLECTION_H_ */
+
+// vim: syntax=cpp11:ts=4:sts=4:sw=4:sta:et:tw=80:nobk

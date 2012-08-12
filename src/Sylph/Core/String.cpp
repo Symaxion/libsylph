@@ -178,7 +178,7 @@ std::size_t String::length() const {
     return strdata->data.length;
 }
 
-const uchar String::at(sidx_t idx) const throw(IndexException) {
+uchar String::at(sidx_t idx) const throw(ArrayException) {
     try {
         return strdata->data[idx];
     } straced;
@@ -630,3 +630,5 @@ String t(const String rhs) {
 }
 
 SYLPH_END_NAMESPACE
+
+// vim: syntax=cpp11:ts=4:sts=4:sw=4:sta:et:tw=80:nobk

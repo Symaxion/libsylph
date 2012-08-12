@@ -37,8 +37,9 @@ set( SYLPH_DEP_INCLUDE "" ) # for future use
 option(SYLPH_DEBUG "Enable assertions and exception line info")
 set(SYLPH_CONFIG_DEFS "" CACHE STRING "Add extra preprocessor definitions")
 option(SYLPH_COMPILER_SUFFICIENT "Set a manual override to make your compiler pass all tests")
-set(SYLPH_CXXFLAGS "" CACHE STRING "Add a manual override to the C++ flags needed to activate C++0x and other stuff")
-option(SYLPH_NO_CXX0X "Disable C++0x support (experimental)")
+set(SYLPH_CXXFLAGS "" CACHE STRING "Add a manual override to the C++ flags
+needed to activate C++11 and other stuff")
+option(SYLPH_NO_CXX0X "Disable C++11 support (experimental)")
 option(SYLPH_ENABLE_COVERAGE "Enable code coverage support [developers]")
 option(SYLPH_ENABLE_PROFILING "Enable profiling support [developers]")
 
@@ -52,6 +53,12 @@ macro (get_gcc_version version)
     endif(CMAKE_COMPILER_IS_GNUCC)
 endmacro (get_gcc_version)
 
+macro (get_clang_version version)
+    if (CMAKE_COMPILER_IS_GNUCC)
+        exec_program( ${SYLPH_SOURCE_DIR}/deps/bin/clangver.sh ARGS ${CMAKE_CXX_COMPILER} OUTPUT_VARIABLE ${version})
+    endif(CMAKE_COMPILER_IS_GNUCC)
+endmacro (get_clang_version)
+
 #Yea, I know *BSD, Irix, HP-UX, Solaris, ... != Linux, but for simplicity...
 if( UNIX AND NOT APPLE )
     set(LINLIKE 1)
@@ -59,6 +66,15 @@ endif ( UNIX AND NOT APPLE )
 
 # Get Versions
 get_gcc_version ( S_GCC_VERSION )
+get_clang_version ( S_CLANG_VERSION )
+
+# Workaround for CMake not detecting this...
+if( CMAKE_CXX_COMPILER_ID STREQUAL "Clang" )
+    set( CMAKE_COMPILER_IS_CLANG 1 )
+    set( CMAKE_EXE_LINKER_FLAGS "-std=c++11 -stdlib=libc++" )
+    set( CMAKE_SHARED_LINKER_FLAGS "-std=c++11 -stdlib=libc++" )
+    set( CMAKE_MODULE_LINKER_FLAGS "-std=c++11 -stdlib=libc++" )
+endif( CMAKE_CXX_COMPILER_ID STREQUAL "Clang" )
 
 # C++0x disabled
 # Assume each compiler can compile at least C++99 or C++03
@@ -72,15 +88,24 @@ endif ( SYLPH_NO_CXX0X )
 if ( NOT SYLPH_COMPILER_SUFFICIENT ) # manual override
     SET( SYLPH_COMPILER_SUFFICIENT 0 )
 
+    if( CMAKE_COMPILER_IS_CLANG AND S_CLANG_VERSION STREQUAL "1" )
+    # For Clang, we use feature checks instead of hardcoded version numbers
+        SET ( SYLPH_COMPILER_SUFFICIENT 1 )
+    elseif ( CMAKE_COMPILER_IS_GNUCC AND S_GCC_VERSION STRGREATER "4.5.2" )
     # GCC >= 4.5.3 will do the job
-    if ( CMAKE_COMPILER_IS_GNUCC AND S_GCC_VERSION STRGREATER "4.5.2" )
         SET( SYLPH_COMPILER_SUFFICIENT 1 )
-        SET( CXX_GCC 1 )
-    endif ( CMAKE_COMPILER_IS_GNUCC AND S_GCC_VERSION STRGREATER "4.5.2" )
+    endif ( CMAKE_COMPILER_IS_CLANG AND S_CLANG_VERSION STREQUAL "1")
 
     # No compiler found
     if ( NOT SYLPH_COMPILER_SUFFICIENT )
-        message ( FATAL_ERROR "Your compiler does not support C++0x. Please install a compliant compiler. G++ >= 4.5.3 supports the required constructs. Use the -DCMAKE_CXX_COMPILER flag to set a compiler." )
+        message ( FATAL_ERROR "
+  Your compiler does not support C++11. Please install a compliant compiler.
+  The following compilers are known to work:
+   
+    * GCC (>= 4.5.3)
+    * Clang (>= 3.1) or Apple Clang (>= 4.0, with XCode) with libc++
+   
+  Use the -DCMAKE_CXX_COMPILER flag to set a compiler." )
     endif ( NOT SYLPH_COMPILER_SUFFICIENT )
 
 endif ( NOT SYLPH_COMPILER_SUFFICIENT )
@@ -90,9 +115,11 @@ if ( NOT SYLPH_CXXFLAGS )
     set ( SYLPH_CXXFLAGS "" )
     set ( COVERAGE_LIBS "" )
 
-    # GCC >= 4.5.4
-    # Enable C++0x and disable some warnings
-    if ( CXX_GCC )
+    if ( CMAKE_COMPILER_IS_CLANG )
+    # Clang
+        set( SYLPH_CXXFLAGS "-std=c++11 -stdlib=libc++" )
+    elseif ( CMAKE_COMPILER_IS_GNUCC )
+    # GCC >= 4.5.3
         if( NOT SYLPH_NO_CXX0X )
             if(S_GCC_VERSION STRGREATER "4.7.0")
                 set( SYLPH_CXXFLAGS "-std=c++11" )
@@ -100,7 +127,9 @@ if ( NOT SYLPH_CXXFLAGS )
                 set( SYLPH_CXXFLAGS "-std=c++0x")
             endif(S_GCC_VERSION STRGREATER "4.7.0")
         endif ( NOT SYLPH_NO_CXX0X )
+    endif ( CMAKE_COMPILER_IS_CLANG )
 
+    if( CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_CLANG )
         if( SYLPH_ENABLE_COVERAGE )
             set( SYLPH_CXXFLAGS "${SYLPH_CXXFLAGS} -fprofile-arcs -ftest-coverage" )
             set( COVERAGE_LIBS "gcov" )
@@ -116,11 +145,8 @@ if ( NOT SYLPH_CXXFLAGS )
         endif ( APPLE )
 
         # Enable all warnings
-        set ( SYLPH_CXXFLAGS "${SYLPH_CXXFLAGS} -Wall -Werror -fno-strict-aliasing" )
-    endif ( CXX_GCC )
-
-    if ( NOT SYLPH_CXXFLAGS )
-    endif ( NOT SYLPH_CXXFLAGS )
+        set ( SYLPH_CXXFLAGS "${SYLPH_CXXFLAGS} -Wall -Wextra -Werror -fno-strict-aliasing" )
+    endif( CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_CLANG )
 
 endif ( NOT SYLPH_CXXFLAGS )
 
@@ -141,10 +167,13 @@ endif ( LINLIKE )
 set(SYLPH_LINK ${SYLPH_PLATFORM_LINK} ${SYLPH_DEP_LINK})
 set(SYLPH_INCLUDE ${SYLPH_PLATFORM_INCLUDE} ${SYLPH_DEP_INCLUDE})
 
+# Gtest options
+set( GTEST_USE_OWN_TR1_TUPLE 1 )
+set( GTEST_HAS_TR1_TUPLE 0 )
+
 # Subdirs
 
 add_subdirectory(src)
-
 add_subdirectory(deps/gtest EXCLUDE_FROM_ALL)
 add_subdirectory(test)
 
