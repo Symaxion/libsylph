@@ -89,3 +89,5 @@ SYLPH_END_MATHNS
 #include "TrigFunctions.h"
 
 #endif /* SYLPH_MATH_ANGLE_H_ */
+
+// vim: syntax=cpp11:ts=4:sts=4:sw=4:sta:et:tw=80:nobk

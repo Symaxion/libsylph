@@ -54,3 +54,5 @@ SYLPH_BEGIN_MATHNS
 SYLPH_END_MATHNS
 
 #endif /* SYLPH_MATH_FRACHELPER_H_ */
+
+// vim: syntax=cpp11:ts=4:sts=4:sw=4:sta:et:tw=80:nobk

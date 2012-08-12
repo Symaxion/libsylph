@@ -56,3 +56,5 @@ typedef Line3<double> Line3f;
 SYLPH_END_MATHNS
 
 #endif /* SYLPH_MATH_LINE_H_ */
+
+// vim: syntax=cpp11:ts=4:sts=4:sw=4:sta:et:tw=80:nobk
