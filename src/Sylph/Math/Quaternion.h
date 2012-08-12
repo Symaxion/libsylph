@@ -83,3 +83,5 @@ const Vector<const Number&> imag(const Quaternion<Number>& q) {
 SYLPH_END_MATHNS
 
 #endif /* SYLPH_MATH_QUATERNION */
+
+// vim: syntax=cpp11:ts=4:sts=4:sw=4:sta:et:tw=80:nobk

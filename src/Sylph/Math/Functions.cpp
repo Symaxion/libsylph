@@ -5,12 +5,14 @@ SYLPH_BEGIN_NAMESPACE
 namespace Math {
     float fastsin(float a) {
         // TODO implement this
+        (void)a;
         SYLPH_STUB;
         return 0.0;
     }
 
     double fastsin(double a) {
         // TODO implement this
+        (void)a;
         SYLPH_STUB;
         return 0.0;
     }
@@ -35,3 +37,5 @@ namespace Math {
     
 }
 SYLPH_END_NAMESPACE
+
+// vim: syntax=cpp11:ts=4:sts=4:sw=4:sta:et:tw=80:nobk
