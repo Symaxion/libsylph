@@ -592,6 +592,16 @@ inline bool operator>(const Array<T>& lhs, const Array<T>& rhs) {
 }
 
 template<class T>
+Array<T> operator+(Array<T> lhs, Array<T> rhs) {
+    Array<T> toReturn(lhs.size() + rhs.size());
+
+    arraycopy(lhs, 0, toReturn, 0, lhs.size());
+    arraycopy(rhs, 0, toReturn, lhs.size(), rhs.size());
+
+    return toReturn;
+}
+
+template<class T>
 std::ostream& operator<<(std::ostream& out, const Array<T>& rhs) {
     out << "{ ";
     for(idx_t i = 0; i < rhs.length - 1; ++i) {
@@ -615,7 +625,7 @@ S_SET_TRAIT(IsEfficientBackInsertable, Array);
 template<class T>
 S_SET_TRAIT_TPL(IsSylphClass, Array<T>);
 template<class T>
-S_SET_TRAIT_TPL(IsEfficientlyCopyable, Array<T>)
+S_SET_TRAIT_TPL(IsEfficientlyCopyable, Array<T>);
 
 S_END_TRAITS
 

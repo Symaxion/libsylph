@@ -29,7 +29,6 @@
 
 #include "Object.h"
 #include "Traits.h"
-#include "Function.h"
 #include "Primitives.h"
 
 SYLPH_BEGIN_NAMESPACE

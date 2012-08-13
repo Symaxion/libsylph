@@ -63,6 +63,10 @@ namespace Sfinae {
         b = t1 == t2;
         b = t1 != t2;
         b = t1 < t2;
+
+        (void)si;
+        (void)s;
+        (void)b;
     }
 }
 
