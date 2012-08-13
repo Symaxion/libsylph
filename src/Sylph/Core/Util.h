@@ -30,6 +30,7 @@
 #include "Object.h" // macros
 #include "Exception.h"
 #include "Array.h"
+#include "Traits.h"
 
 #include <math.h>
 #include <string.h>
@@ -38,9 +39,19 @@ SYLPH_BEGIN_NAMESPACE
 
 // TODO: move this to Array
 template<class T>
-inline void carraycopy(const T src[], std::size_t srcPos, T dest[],
-        std::size_t destPos, std::size_t length) throw (Exception) {
+inline S_ENABLE_IF(void, S_TRAIT(IsPod, T)) 
+carraycopy(const T* src, std::size_t srcPos, T* dest,
+        std::size_t destPos, std::size_t length) {
     memcpy(dest+destPos,src+srcPos, length*sizeof(T));
+}
+
+template<class T>
+inline S_DISABLE_IF(void, S_TRAIT(IsPod, T))
+carraycopy(const T* src, std::size_t srcPos, T* dest, 
+        std::size_t destPos, std::size_t length) {
+    for(size_t i = 0; i < length; i++) {
+        dest[destPos + i] = src[srcPos + i];
+    }
 }
 
 template<class T>
@@ -49,10 +60,12 @@ inline void arraycopy(const Array<T> & src, std::size_t srcPos, Array<T> & dest,
 
     std::size_t srcSize = src.length;
     std::size_t destSize = dest.length;
-    if (srcPos + length > srcSize) sthrow(IndexException, "Source array too short");
-    if (destPos + length > destSize) sthrow(IndexException, "Dest array too short");
+    if(srcPos + length > srcSize) 
+        sthrow(IndexException, "Source array too short");
+    if(destPos + length > destSize) 
+        sthrow(IndexException, "Dest array too short");
 
-    memcpy(dest.carray() + destPos, src.carray() + srcPos, length*sizeof(T));
+    carraycopy(src.carray(), srcPos, dest.carray(), destPos, length);
 }
 
 template <typename T, std::size_t N>
@@ -101,6 +114,5 @@ inline signed char sign<float>(float t) {
 SYLPH_END_NAMESPACE
 
 #endif	/* SYLPH_CORE_UTIL_H_ */
-
 
 // vim: syntax=cpp11:ts=4:sts=4:sw=4:sta:et:tw=80:nobk
