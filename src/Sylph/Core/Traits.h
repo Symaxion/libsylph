@@ -490,8 +490,24 @@ typename Traits::MakeUnsigned<T>::type makeUnsigned(T t) {
 #define S_TRAIT_TYPE4(Trait,Class1,Class2,Class3,Class4) \
     typename ::Sylph::Traits::Trait<Class1,Class2,Class3,Class4>::type
 
+#ifndef SYLPH_FTR_NO_VA_ARGS
+#define S_OR(Condition1, Condition2, ...) \
+    S_TRAIT(Or, Condition1, Condition2, __VA_ARGS__)
+#define S_AND(Condition1, Condition2, ...) \
+    S_TRAIT(And, Condition1, Condition2, __VA_ARGS__)
+#else
+#define S_OR(Condition1, Condition2) \
+    S_TRAIT2(Or, Condition1, Condition2)
+#define S_AND(Condition1, Condition2) \
+    S_TRAIT2(And, Condition1, Condition2)
+#endif
+#define S_NOT(Condition) \
+    S_TRAIT2(Not, Condition)
+
 #define S_ENABLE_IF(Type, Condition) \
     typename ::Sylph::Traits::EnableIf<Condition,Type>::type
+#define S_DISABLE_IF(Type, Condition) \
+    typename ::Sylph::Traits::EnableIf<S_TRAIT(Not, Condition), Type>::type
 SYLPH_END_NAMESPACE
 
 #endif /* SYLPH_CORE_TRAITS_H_ */
