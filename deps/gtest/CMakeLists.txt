@@ -45,7 +45,7 @@ endif()
 
 # Adapted for LibSylph
 set(gtest_SOURCE_DIR ${SYLPH_SOURCE_DIR}/deps/gtest)
-set(gtest_BINARY_DIR} ${SYLPH_BINARY_DIR}/deps/gtest)
+set(gtest_BINARY_DIR ${SYLPH_BINARY_DIR}/deps/gtest)
 
 if (COMMAND set_up_hermetic_build)
   set_up_hermetic_build()
