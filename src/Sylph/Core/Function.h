@@ -61,22 +61,10 @@ T& iden(T& t) {
     return t;
 }
 
-// Cons
+// Cnst
 template<class T, class... P>
-function<T(P...)> cons(T& t) {
+function<T(P...)> cnst(T& t) {
     return [=](P...) -> T { return t; };
-}
-
-// Car
-template<class T1, class T2, class... P>
-T1& car(T1& t1, T2& t2, P&... p) {
-    return t1;
-}
-
-// Cdr
-template<class T1, class T2, class... P>
-T2& cdr(T1& t1, T2& t2,  P&... p) {
-    return t2;
 }
 
 // Constify
@@ -722,3 +710,5 @@ using Op::call;
 SYLPH_END_NAMESPACE
 
 #endif /* SYLPH_CORE_FUNCTION_H_ */
+
+// vim: syntax=cpp11:ts=4:sts=4:sw=4:sta:et:tw=80:nobk
