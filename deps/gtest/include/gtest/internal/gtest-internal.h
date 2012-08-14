@@ -1109,7 +1109,7 @@ class NativeArray {
 // statement if it returns or throws (or doesn't return or throw in some
 // situations).
 #define GTEST_SUPPRESS_UNREACHABLE_CODE_WARNING_BELOW_(statement) \
-  if (::testing::internal::AlwaysTrue()) { statement; }
+  if (::testing::internal::AlwaysTrue()) { (void)(statement); }
 
 #define GTEST_TEST_THROW_(statement, expected_exception, fail) \
   GTEST_AMBIGUOUS_ELSE_BLOCKER_ \

@@ -1,0 +1,13 @@
+Contrib folder
+==============
+
+This folder contains various extras for LibSylph that are not officially part
+of LibSylph itself, but are useful in conjunction with it nonetheless. This
+folder is distributed with LibSylph for your convenience.
+
+Index
+-----
+
+* ide/              -- settings for your specific ide
+  * ide/vim/        -- settings for Vim (Frank Erens, Ken Shan)
+  * ide/astyle/     -- settings for astyle (Frank Erens)

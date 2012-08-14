@@ -296,13 +296,22 @@ public:
     std::size_t length() const;
 
     /**
+     * Checks whether this string is empty.
+     *
+     * This is the same as checking if the length of this string is 0.
+     * 
+     * @return true if the string is empty, false otherwise.
+     */
+    bool empty() const { return length() == 0; }
+
+    /**
      * Returns the character at the specified index. The index is 0-based and
      * has a maximal value of length() - 1.
      * @throw ArrayException if <code>idx > length() - 1</code>.
      * @param idx the index of the character to return
      * @return the character at the specified index, in UTF-16.
      */
-    const uchar at(sidx_t idx) const throw(ArrayException);
+    uchar at(sidx_t idx) const throw(ArrayException);
 
     /**
      * Converts the String to ASCII. The conversion algorithm goes as follows:
@@ -551,7 +560,7 @@ public:
     double doubleValue() const;
 
     inline bool toBool() const {
-        return *this != "";
+        return !empty();
     }
 
     const String & operator=(const char * orig) const;
@@ -659,3 +668,5 @@ S_CMP_SEQ_2(const String,const char*)
 SYLPH_END_NAMESPACE
 
 #endif /* SYLPH_CORE_STRING_H_ */
+
+// vim: syntax=cpp11:ts=4:sts=4:sw=4:sta:et:tw=80:nobk

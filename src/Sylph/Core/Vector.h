@@ -33,6 +33,8 @@
 #include "Equals.h"
 #include "Iterator.h"
 
+#include "Debug.h"
+
 #include <vector>
 #include <initializer_list>
 
@@ -120,12 +122,17 @@ public:
     }
 
     /**
-     * Creates a copy of the vector. All elements of the other vector will be
-     * copied into this vector.
+     * Creates a copy of the vector. 
+     *
+     * All elements of the other vector will be copied into this vector.
+     *
+     * TODO implement this!
+     *
      * @param other The other Vector.
      */
     Vector(const Vector<T>& other) {
-
+        (void)other;
+        SYLPH_STUB;
     }
 
     /**
@@ -259,7 +266,7 @@ public:
         try {
             checkIfOutOfBounds(idx);
         } straced;
-        for (std::size_t i = idx; i >= 0; i--) {
+        for (std::size_t i = idx; (signed)i >= 0; --i) {
             if (equf(get(i), t)) {
                 return i;
             }
@@ -382,3 +389,5 @@ private:
 
 SYLPH_END_NAMESPACE
 #endif	/* SYLPH_CORE_VECTOR_H_ */
+
+// vim: syntax=cpp11:ts=4:sts=4:sw=4:sta:et:tw=80:nobk

@@ -41,11 +41,11 @@
 #endif
 
 #ifdef SYLPH_OS_MACOSX
-int main(int argc, char * argv[], char * envp[], char * apple[]);
+int main(int argc, char** argv, char**, char** apple);
 #else
-int main(int argc, char * argv[]);
+int main(int argc, char** argv);
 #endif
-static inline void SylphInit(int argc, char * argv[], char * apple[]) {
+static inline void SylphInit(int argc, char** argv, char** apple) {
     Sylph::Application::init(argc, argv, apple, Sylph::SYLPH_APP_TYPE,
             SYLPH_APP_NAME);
 }
@@ -57,7 +57,7 @@ extern int SylphMain(Sylph::Array<Sylph::String> argv);
 
 #ifdef SYLPH_OS_MACOSX
 
-int main(int argc, char * argv[], char * envp[], char * apple[]) {
+int main(int argc, char** argv, char**, char** apple) {
     try {
         SylphInit(argc, argv, apple);
         #ifdef SYLPH_MAIN_CLASSIC_PARAMS
@@ -79,7 +79,7 @@ int main(int argc, char * argv[], char * envp[], char * apple[]) {
 }
 #else
 
-int main(int argc, char * argv[]) {
+int main(int argc, char** argv) {
     try {
         SylphInit(argc, argv, Sylph::null);
         #ifdef SYLPH_MAIN_CLASSIC_PARAMS
@@ -103,3 +103,5 @@ int main(int argc, char * argv[]) {
 
 #endif	/* SYLPHMAIN_H_ */
 
+
+// vim: syntax=cpp11:ts=4:sts=4:sw=4:sta:et:tw=80:nobk
