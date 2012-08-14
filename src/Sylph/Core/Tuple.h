@@ -28,6 +28,8 @@
 #define SYLPH_CORE_TUPLE_H_
 
 #include "Object.h"
+#include "Debug.h"
+
 #include <tuple>
 #include <utility>
 
@@ -37,7 +39,10 @@ template<class... T>
 class Tuple {
     // TODO implement Tuple
 
-    Tuple(const T&... t) {}
+    Tuple(const T&... t) {
+        (void)(t...);
+        SYLPH_STUB;
+    }
 };
 
 template<class T, class U>
@@ -50,11 +55,17 @@ struct Pair {
 
     Pair() : first(), second() {}
     Pair(const T& t, const U& u) : first(t), second(u) {}
+
     Pair(const Tuple<T,U>& t) {
         // TODO Pair(const Tuple<T,U>&)
+        (void)t;
+        SYLPH_STUB;
     }
+
     Pair(const std::tuple<T,U>& t) {
         // TODO Pair(const std::tuple&)
+        (void)t;
+        SYLPH_STUB;
     }
 
     Pair(const std::pair<T,U>& t) : first(t.first), second(t.second) {}
@@ -92,10 +103,14 @@ struct Triplet {
             third(v) {}
     Triplet(const Tuple<T,U,V>& t) {
         // TODO Triplet(const Tuple<T,U,V>&)
+        (void)t;
+        SYLPH_STUB;
     }
 
     Triplet(const std::tuple<T,U,V>& t) {
         // TODO Triplet(const std::tuple&)
+        (void)t;
+        SYLPH_STUB;
     }
 
     operator Tuple<T,U,V>() const {
@@ -123,7 +138,7 @@ inline Tuple<T&&...> R_(T&&... t) {
 
 struct IgnoreHelper {
     template<class T>
-    const IgnoreHelper& operator=(T t) const {
+    const IgnoreHelper& operator=(T) const {
         return *this;
     }
 };
