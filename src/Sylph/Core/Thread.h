@@ -44,6 +44,9 @@
 
 SYLPH_BEGIN_NAMESPACE
 
+template<class Callable>
+void* callCallable(void*);
+
 class Thread : public virtual Object {
     template<class Callable>
     friend void* callCallable(void*);
@@ -121,5 +124,6 @@ void* callCallable(void* c) {
 
 SYLPH_END_NAMESPACE
 
-
 #endif /* SYLPH_CORE_THREAD_H_ */
+
+// vim: syntax=cpp11:ts=4:sts=4:sw=4:sta:et:tw=80:nobk
