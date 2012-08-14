@@ -28,7 +28,6 @@
 #define	SYLPH_CORE_DEBUG_H_
 
 #include "Exception.h"
-#include "String.h"
 #include "CurrentFunction.h"
 #include <iostream>
 
@@ -48,7 +47,7 @@ inline void Assert(bool b) {
 }
 
 template<class A>
-inline void Assert(bool b, String s) {
+inline void Assert(bool b, const char* s) {
     if(!b) throw A(s);
 }
 
@@ -62,8 +61,6 @@ inline void Assert(bool b, String s) {
 
 SYLPH_END_NAMESPACE
 
-
 #endif	/* SYLPH_CORE_DEBUG_H_ */
-
 
 // vim: syntax=cpp11:ts=4:sts=4:sw=4:sta:et:tw=80:nobk
