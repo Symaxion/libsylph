@@ -21,33 +21,18 @@
  *   3. This notice may not be removed or altered from any source
  *   distribution.
  *
- * Created on 17 januari 2009, 15:17
+ *  Created on: Aug 14, 2012
  */
 
-#ifndef SYLPH_OS_OS_H_
-#define	SYLPH_OS_OS_H_
+#ifndef SYLPH_OS_NOCXX11_H_
+#define SYLPH_OS_NOCXX11_H_
 
-#include "GuessOS.h"
+#if defined(SYLPH_NO_CXX0X) || defined(SYLPH_NO_CXX11)
+#define SYLPH_NO_CXX0X
+#define SYLPH_NO_CXX11
 
-#if defined(SYLPH_OS_WINDOWS)
-#define OS_TYPE "Windows"
-#elif defined(SYLPH_OS_MACOSX)
-#define OS_TYPE "Mac OS X"
-#elif defined(SYLPH_OS_CYGWIN)
-#define OS_TYPE "Cygwin"
-#elif defined(SYLPH_OS_LINUX)
-#define OS_TYPE "Linux"
-#else
-#error "OS not supported"
-#endif
-#ifdef SYLPH_OS_MACOSX
-#define S_MAIN_PARAMS int argc, char ** argv, char ** envp, char ** apple
-#define S_INIT_PARAMS argc, argv, apple
-#else
-#define S_MAIN_PARAMS int argc, char ** argv
-#define S_INIT_PARAMS argc, argv, 0
-#endif
+#endif /* defined(SYLPH_NO_CXX0X) || defined(SYLPH_NO_CXX11) */
 
-#endif	/* SYLPH_OS_OS_H_ */
+#endif /* NOCXX11_H_ */
 
 // vim: syntax=cpp11:ts=4:sts=4:sw=4:sta:et:tw=80:nobk

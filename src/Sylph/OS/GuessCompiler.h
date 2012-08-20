@@ -21,33 +21,35 @@
  *   3. This notice may not be removed or altered from any source
  *   distribution.
  *
- * Created on 17 januari 2009, 15:17
+ *  Created on: Aug 14, 2012
  */
 
-#ifndef SYLPH_OS_OS_H_
-#define	SYLPH_OS_OS_H_
+#ifndef SYLPH_OS_GUESSCOMPILER_H_
+#define SYLPH_OS_GUESSCOMPILER_H_
 
-#include "GuessOS.h"
+#include "Object.h"
 
-#if defined(SYLPH_OS_WINDOWS)
-#define OS_TYPE "Windows"
-#elif defined(SYLPH_OS_MACOSX)
-#define OS_TYPE "Mac OS X"
-#elif defined(SYLPH_OS_CYGWIN)
-#define OS_TYPE "Cygwin"
-#elif defined(SYLPH_OS_LINUX)
-#define OS_TYPE "Linux"
-#else
-#error "OS not supported"
-#endif
-#ifdef SYLPH_OS_MACOSX
-#define S_MAIN_PARAMS int argc, char ** argv, char ** envp, char ** apple
-#define S_INIT_PARAMS argc, argv, apple
-#else
-#define S_MAIN_PARAMS int argc, char ** argv
-#define S_INIT_PARAMS argc, argv, 0
+#if defined(SYLPH_NO_CXX0X) || defined(SYLPH_NO_CXX11)
+#include "NoCxx11.h"
 #endif
 
-#endif	/* SYLPH_OS_OS_H_ */
+#if defined(__clang__)
+#define SYLPH_CC_CLANG
+#include "Clang.h"
+#elif defined(__GNUC__)
+#define SYLPH_CC_GCC
+#include "Gcc.h"
+#else
+
+#ifndef SYLPH_COMPILER_SUFFICIENT
+#error "I could not detect your compiler; set SYLPH_COMPILER_SUFFICIENT if you"\
+    " want to continue."
+#else
+#define SYLPH_CC_UNKNOWN
+#endif
+
+#endif
+
+#endif /* SYLPH_OS_GUESSCOMPILER_H_ */
 
 // vim: syntax=cpp11:ts=4:sts=4:sw=4:sta:et:tw=80:nobk
