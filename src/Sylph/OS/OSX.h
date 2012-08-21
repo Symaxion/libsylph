@@ -21,41 +21,14 @@
  *   3. This notice may not be removed or altered from any source
  *   distribution.
  *
- *  Created on: Aug 14, 2012
+ *  Created on: Aug 21, 2012
  */
 
-#ifndef SYLPH_OS_GUESSCOMPILER_H_
-#define SYLPH_OS_GUESSCOMPILER_H_
+#ifndef SYLPH_OS_OSX_H_
+#define SYLPH_OS_OSX_H_
 
-#include "Object.h"
+#include "Unix.h"
 
-#if defined(SYLPH_NO_CXX0X) || defined(SYLPH_NO_CXX11)
-#include "NoCxx11.h"
-#endif
-
-#if defined(__clang__)
-#define SYLPH_CC_CLANG
-#define SYLPH_CC_GCCLIKE
-#include "Clang.h"
-#elif defined(__GNUC__)
-#define SYLPH_CC_GCC
-#define SYLPH_CC_GCCLIKE
-#include "Gcc.h"
-#else
-
-#ifndef SYLPH_COMPILER_SUFFICIENT
-#error "I could not detect your compiler; set SYLPH_COMPILER_SUFFICIENT if you"\
-    " want to continue."
-#else
-#define SYLPH_CC_UNKNOWN
-#include "UnknownCompiler.h"
-#endif /* SYLPH_COMPILER_SUFFICIENT */
-
-#endif
-
-// Now we know everything, let's set some common (standardized) stuff.
-#include "AllCompilers.h"
-
-#endif /* SYLPH_OS_GUESSCOMPILER_H_ */
+#endif /* SYLPH_OS_OSX_H_ */
 
 // vim: syntax=cpp11:ts=4:sts=4:sw=4:sta:et:tw=80:nobk

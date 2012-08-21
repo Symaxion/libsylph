@@ -27,9 +27,60 @@
 #ifndef SYLPH_OS_GCC_H_
 #define SYLPH_OS_GCC_H_
 
+// GCC supports va_args, even in non-C++11 mode.
+#undef SYLPH_FTR_NO_VA_ARGS
+
+#if __GNUC__ <= 3 || (__GNUC__ == 4 && __GNUC_MINOR__ <= 3)
+// GCC 4.3 and below
+
+#define SYLPH_FTR_NO_GEN_INIT
+#define SYLPH_FTR_NO_STATIC_ASSERT
+#define SYLPH_FTR_NO_AUTO
+#define SYLPH_FTR_NO_TRAILING_RETURN
+#define SYLPH_FTR_NO_DEFAULT_DELETE
+#define SYLPH_FTR_NO_ATOMIC
+
+#endif
+
+#if __GNUC__ == 4
+
+#if __GNUC_MINOR__ <= 4
+// GCC 4.4 and below
+#define SYLPH_FTR_NO_LAMBDAS
+#define SYLPH_FTR_NO_EXPLICIT_CONVERSION
+#define SYLPH_FTR_NO_UNICODE_LITERALS
+
+#endif
+
+#if __GNUC_MINOR__ <= 5
+// GCC 4.5 and below
+#define SYLPH_FTR_NO_NULLPTR
+#define SYLPH_FTR_NO_FWDDECL_ENUMS
+#define SYLPH_FTR_NO_CONSTEXPR
+#define SYLPH_FTR_NO_RANGE_FOR 
+
+// GCC had rvalues since 4.3, but they did not become useful (for move operations)
+// until 4.6
+#define SYLPH_FTR_NO_RVALUES 
+
+#endif
+
+#if __GNUC_MINOR__ <= 6
+// GCC 4.6 and below
+#define SYLPH_FTR_NO_USER_LITERALS
+#define SYLPH_FTR_NO_TEMPLATE_TYPEDEF
+#define SYLPH_FTR_NO_DELEGATING_CONSTRUCTORS
+#define SYLPH_FTR_NO_OVERRIDE
+
+#endif
+
+#if __GNUC_MINOR__ <= 7
+// GCC 4.7 and below
+#endif
+
+#endif
+
 #include "GccLike.h"
-
-
 
 #endif /* SYLPH_OS_GCC_H_ */
 
