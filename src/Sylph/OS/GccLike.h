@@ -27,9 +27,9 @@
 #ifndef SYLPH_OS_GCCLIKE_H_
 #define SYLPH_OS_GCCLIKE_H_
 
-#define SYLPH_UNUSED __void sylph_unused() __attribute__((unused))
+#define SYLPH_UNUSED void sylph_unused() __attribute__((unused))
 #define SYLPH_END_MACRO SYLPH_UNUSED
-#define SYLPH_DEPECRATE(x) x __attribute((deprecated))
+#define SYLPH_DEPECRATE(x) x __attribute__((deprecated))
 
 // Feature check
 
