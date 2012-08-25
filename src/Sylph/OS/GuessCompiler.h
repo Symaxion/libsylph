@@ -27,8 +27,6 @@
 #ifndef SYLPH_OS_GUESSCOMPILER_H_
 #define SYLPH_OS_GUESSCOMPILER_H_
 
-#include "Object.h"
-
 #if defined(SYLPH_NO_CXX0X) || defined(SYLPH_NO_CXX11)
 #include "NoCxx11.h"
 #endif
