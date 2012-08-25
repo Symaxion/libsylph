@@ -29,7 +29,7 @@
 
 #define SYLPH_UNUSED void sylph_unused() __attribute__((unused))
 #define SYLPH_END_MACRO SYLPH_UNUSED
-#define SYLPH_DEPECRATE(x) x __attribute((deprecated))
+#define SYLPH_DEPECRATE(x) x __attribute__((deprecated))
 
 // Feature check
 
