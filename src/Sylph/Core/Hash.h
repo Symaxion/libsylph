@@ -48,13 +48,6 @@ inline sint hash_internal(const byte * b, std::size_t len) {
 }
 
 template<class T>
-struct Hash {
-    inline sint operator()(const T & t) const {
-        return hash(t);
-    }
-};
-
-template<class T>
 sint hash(const T& t) {
     return hash_internal(reinterpret_cast<const byte*>(&t), sizeof (T));
 }
@@ -68,6 +61,13 @@ sint hash(const T*& t) {
 inline sint hash(const sint& i) {
     return i;
 }
+
+template<class T>
+struct Hash {
+    inline sint operator()(const T & t) const {
+        return hash(t);
+    }
+};
 
 SYLPH_END_NAMESPACE
 

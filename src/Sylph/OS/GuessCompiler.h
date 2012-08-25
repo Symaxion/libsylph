@@ -21,46 +21,39 @@
  *   3. This notice may not be removed or altered from any source
  *   distribution.
  *
- * Created on 14 december 2009, 16:19
+ *  Created on: Aug 14, 2012
  */
 
-#ifndef SYLPH_CORE_DEBUG_H_
-#define	SYLPH_CORE_DEBUG_H_
+#ifndef SYLPH_OS_GUESSCOMPILER_H_
+#define SYLPH_OS_GUESSCOMPILER_H_
 
-#include "Exception.h"
-#include "CurrentFunction.h"
-#include <iostream>
-
-SYLPH_BEGIN_NAMESPACE
-/**
- * @todo Write documentation!
- */
-S_CREATE_EXCEPTION(Assertion);
-#define S_CREATE_ASSERTION(Class) S_CREATE_EXCEPTION2(Class,Assertion)
-
-#define SYLPH_STUB std::cerr << "Warning: stub function: " << \
-    S_CURRENT_FUNCTION << " in " << __FILE__ << ":" << __LINE__ << "\n"
-
-template<class A>
-inline void Assert(bool b) {
-    if(!b) throw A("");
-}
-
-template<class A>
-inline void Assert(bool b, const char* s) {
-    if(!b) throw A(s);
-}
-
-#define S_ASSERT(Pred) Assert<Assertion>(Pred,#Pred)
-
-#ifdef SYLPH_DEBUG
-#define S_DEBUG(Str) std::cerr << "Debug: " << Str << "\n";
-#else
-#define S_DEBUG(Str)
+#if defined(SYLPH_NO_CXX0X) || defined(SYLPH_NO_CXX11)
+#include "NoCxx11.h"
 #endif
 
-SYLPH_END_NAMESPACE
+#if defined(__clang__)
+#define SYLPH_CC_CLANG
+#define SYLPH_CC_GCCLIKE
+#include "Clang.h"
+#elif defined(__GNUC__)
+#define SYLPH_CC_GCC
+#define SYLPH_CC_GCCLIKE
+#include "Gcc.h"
+#else
 
-#endif	/* SYLPH_CORE_DEBUG_H_ */
+#ifndef SYLPH_COMPILER_SUFFICIENT
+#error "I could not detect your compiler; set SYLPH_COMPILER_SUFFICIENT if you"\
+    " want to continue."
+#else
+#define SYLPH_CC_UNKNOWN
+#include "UnknownCompiler.h"
+#endif /* SYLPH_COMPILER_SUFFICIENT */
+
+#endif
+
+// Now we know everything, let's set some common (standardized) stuff.
+#include "AllCompilers.h"
+
+#endif /* SYLPH_OS_GUESSCOMPILER_H_ */
 
 // vim: syntax=cpp11:ts=4:sts=4:sw=4:sta:et:tw=80:nobk

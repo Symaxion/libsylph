@@ -33,6 +33,8 @@
 #include <Sylph/Core/Collection.h>
 #include <Sylph/Core/Function.h>
 
+#include <Sylph/OS/GuessCompiler.h>
+
 namespace Sfinae {
 
     template<template<class> class T>
@@ -77,12 +79,12 @@ namespace Sfinae {
         void(*f)(void) = &Sfinae::isCollection<Class>; \
         (void)f; \
     } \
-    void __sylph_unused()
+    SYLPH_END_MACRO 
 
 #else ////////////////////////////////////////////////
 
 #define TEST_IS_COLLECTION_COMPILE(Class) \
-    void __sylph_unused()
+    SYLPH_END_MACRO
 
 #endif ///////////////////////////////////////////////
 
@@ -90,7 +92,7 @@ namespace Sfinae {
     TEST_F(Test##Class, testIsCollectionTraits) { \
         ASSERT_TRUE(S_TRAIT(IsCollection, Class)); \
     } \
-    void __sylph_unused()
+    SYLPH_END_MACRO
 
 //////////////////////////////////////////////////////
 
@@ -98,7 +100,7 @@ namespace Sfinae {
     TEST_F(Test##Class, testIsCollectionRuntime) { \
         SYLPH_STUB_TEST; \
     } \
-    void __sylph_unused()
+    SYLPH_END_MACRO
 
 //////////////////////////////////////////////////////
 
@@ -108,3 +110,5 @@ namespace Sfinae {
     TEST_IS_COLLECTION_RUNTIME(Class);
 
 #endif /* SYLPHTEST_CORE_COLLECTION_H_ */
+
+// vim: syntax=cpp11:ts=4:sts=4:sw=4:sta:et:tw=80:nobk:pa+=,../../src

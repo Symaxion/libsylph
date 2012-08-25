@@ -27,6 +27,8 @@
 #include <Sylph/Core/HashMap.h>
 #include <Sylph/Core/Debug.h>
 
+#include <Sylph/Core/String.h>
+
 using namespace Sylph;
 
 namespace {

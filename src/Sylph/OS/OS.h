@@ -38,7 +38,7 @@
 #elif defined(SYLPH_OS_LINUX)
 #define OS_TYPE "Linux"
 #else
-#error OS not supported
+#error "OS not supported"
 #endif
 #ifdef SYLPH_OS_MACOSX
 #define S_MAIN_PARAMS int argc, char ** argv, char ** envp, char ** apple
@@ -49,6 +49,5 @@
 #endif
 
 #endif	/* SYLPH_OS_OS_H_ */
-
 
 // vim: syntax=cpp11:ts=4:sts=4:sw=4:sta:et:tw=80:nobk

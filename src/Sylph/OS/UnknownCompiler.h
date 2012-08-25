@@ -21,46 +21,16 @@
  *   3. This notice may not be removed or altered from any source
  *   distribution.
  *
- * Created on 14 december 2009, 16:19
+ *  Created on: Aug 20, 2012
  */
 
-#ifndef SYLPH_CORE_DEBUG_H_
-#define	SYLPH_CORE_DEBUG_H_
+#ifndef SYLPH_OS_UNKNOWNCOMPILER_H_
+#define SYLPH_OS_UNKNOWNCOMPILER_H_
 
-#include "Exception.h"
-#include "CurrentFunction.h"
-#include <iostream>
+#define SYLPH_UNUSED void __sylph_unused()
+#define SYLPH_END_MACRO SYLPH_UNUSED
+#define SYLPH_DEPECRATE(x) x
 
-SYLPH_BEGIN_NAMESPACE
-/**
- * @todo Write documentation!
- */
-S_CREATE_EXCEPTION(Assertion);
-#define S_CREATE_ASSERTION(Class) S_CREATE_EXCEPTION2(Class,Assertion)
-
-#define SYLPH_STUB std::cerr << "Warning: stub function: " << \
-    S_CURRENT_FUNCTION << " in " << __FILE__ << ":" << __LINE__ << "\n"
-
-template<class A>
-inline void Assert(bool b) {
-    if(!b) throw A("");
-}
-
-template<class A>
-inline void Assert(bool b, const char* s) {
-    if(!b) throw A(s);
-}
-
-#define S_ASSERT(Pred) Assert<Assertion>(Pred,#Pred)
-
-#ifdef SYLPH_DEBUG
-#define S_DEBUG(Str) std::cerr << "Debug: " << Str << "\n";
-#else
-#define S_DEBUG(Str)
-#endif
-
-SYLPH_END_NAMESPACE
-
-#endif	/* SYLPH_CORE_DEBUG_H_ */
+#endif /* SYLPH_OS_UNKNOWNCOMPILER_H_ */
 
 // vim: syntax=cpp11:ts=4:sts=4:sw=4:sta:et:tw=80:nobk
