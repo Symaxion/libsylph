@@ -39,8 +39,7 @@ template<class... T>
 class Tuple {
     // TODO implement Tuple
 
-    Tuple(const T&... t) {
-        (void)(t...);
+    Tuple(const T&...) {
         SYLPH_STUB;
     }
 };
@@ -56,15 +55,13 @@ struct Pair {
     Pair() : first(), second() {}
     Pair(const T& t, const U& u) : first(t), second(u) {}
 
-    Pair(const Tuple<T,U>& t) {
+    Pair(const Tuple<T,U>&) {
         // TODO Pair(const Tuple<T,U>&)
-        (void)t;
         SYLPH_STUB;
     }
 
-    Pair(const std::tuple<T,U>& t) {
+    Pair(const std::tuple<T,U>&) {
         // TODO Pair(const std::tuple&)
-        (void)t;
         SYLPH_STUB;
     }
 
@@ -151,3 +148,5 @@ const struct IgnoreHelper __ = IgnoreHelper();
 SYLPH_END_NAMESPACE
 
 #endif /* SYLPH_CORE_TUPLE_H_ */
+
+// vim: syntax=cpp11:ts=4:sts=4:sw=4:sta:et:tw=80:nobk
