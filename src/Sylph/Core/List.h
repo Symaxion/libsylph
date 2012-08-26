@@ -90,48 +90,48 @@ public:
     S_REVERSE_ITERABLE(List,T)
 
 public:
-    List() : _first(null), _last(null) {}
-    List(const List& other) : _first(null), _last(null) {
+    List() : mFirst(null), mLast(null) {}
+    List(const List& other) : mFirst(null), mLast(null) {
         appendAll(other);
     }
 
-    List(const std::initializer_list<T>& il) : _first(null), _last(null) {
+    List(const std::initializer_list<T>& il) : mFirst(null), mLast(null) {
         sforeach(T& t, il) {
             append(t);
         }
     }
 
     List(List&& other) {
-        _first = other._first;
-        _last = other._last;
-        other._first = null;
-        other._last = null;
+        mFirst = other.mFirst;
+        mLast = other.mLast;
+        other.mFirst = null;
+        other.mLast = null;
     }
 
     virtual ~List() {
-        if_nullptr(first) return;
-        for(idx_t i = 0; i < _size; ++i) {
-            ListNode* n = _first;
-            _first = _first->next;
+        if_nullptr(mFirst) return;
+        for(idx_t i = 0; i < mSize; ++i) {
+            ListNode* n = mFirst;
+            mFirst = mFirst->next;
             delete n;
         }
     }
 
     size_t size() const {
-        return _size;
+        return mSize;
     }
 
     void append(const T& t) {
-        if_nullptr(first) {
-            _first = new ListNode;
-            _last = _first;
+        if_nullptr(mFirst) {
+            mFirst = new ListNode;
+            mLast = mFirst;
         } else {
-            _last->next = new ListNode;
-            _last->next->prev = _last;
-            _last = _last->next;
+            mLast->next = new ListNode;
+            mLast->next->prev = mLast;
+            mLast = mLast->next;
         }
-        _last->value = t;
-        ++_size;
+        mLast->value = t;
+        ++mSize;
     }
 
     void appendAll(const List<T>& c) {
@@ -147,16 +147,16 @@ public:
     }
 
     void prepend(const T& t) {
-        if_nullptr(first) {
-            _first = new ListNode;
-            _last = _first;
+        if_nullptr(mFirst) {
+            mFirst = new ListNode;
+            mLast = mFirst;
         } else {
-            _first->prev = new ListNode;
-            _first->prev->next = _first;
-            _first = _first->prev;
+            mFirst->prev = new ListNode;
+            mFirst->prev->next = mFirst;
+            mFirst = mFirst->prev;
         }
-        _first->value = t;
-        ++_size;
+        mFirst->value = t;
+        ++mSize;
     }
 
     void prependAll(const List<T>& c) {
@@ -180,23 +180,23 @@ public:
     }
 
     T& first() {
-        return _first->value;
+        return mFirst->value;
     }
     const T& first() const {
-        return _first->value;
+        return mFirst->value;
     }
 
     T& last() {
-        return _last->value;
+        return mLast->value;
     }
 
     const T& last() const {
-        return _last->value;
+        return mLast->value;
     }
 
     void insertAfter(idx_t i, const T& t) {
         if(i > size()) sthrow(IndexException,"List out of bounds!");
-        ListNode* n = _first;
+        ListNode* n = mFirst;
         for(idx_t j = 0; j < i; ++j) {
             n = n->next;
         }
@@ -211,7 +211,7 @@ public:
     }
     void insertBefore(idx_t i, const T& t) {
         if(i > size()) sthrow(IndexException,"List out of bounds!");
-        ListNode* n = _first;
+        ListNode* n = mFirst;
         for(idx_t j = 0; j < i; ++j) {
             n = n->next;
         }
@@ -226,18 +226,28 @@ public:
     }
 
     // TODO implement List::insertAfter(iterator, const T&)
-    void insertAfter(iterator i, const T& t) {}
+    void insertAfter(iterator i, const T& t) {
+        (void)i;
+        (void)t;
+    }
     // TODO implement List::insertBefore(iterator, const T&)
-    void insertBefore(iterator i, const T& t) {}
+    void insertBefore(iterator i, const T& t) {
+        (void)i;
+        (void)t;
+    }
 
     // TODO implement List::remove(idx_t)
-    void remove(idx_t i) {}
+    void remove(idx_t i) {
+        (void)i;
+    }
     // TODO implement List::iterator(iterator)
-    void remove(iterator i) {}
+    void remove(iterator i) {
+        (void)i;
+    }
 
     T& at(idx_t i) {
         if(i > size()) sthrow(IndexException,"List out of bounds!");
-        ListNode* n = _first;
+        ListNode* n = mFirst;
         for(idx_t j = 0; j < i; ++j) {
             n = n->next;
         }
@@ -245,7 +255,7 @@ public:
     }
     const T& at(idx_t i) const {
         if(i > size()) sthrow(IndexException,"List out of bounds!");
-        ListNode* n = _first;
+        ListNode* n = mFirst;
         for(idx_t j = 0; j < i; ++j) {
             n = n->next;
         }
@@ -282,10 +292,10 @@ public:
     }
 
 private:
-    std::size_t _size;
+    std::size_t mSize;
 
-    ListNode* _first;
-    ListNode* _last;
+    ListNode* mFirst;
+    ListNode* mLast;
 };
 
 // TODO finish implementation of List
