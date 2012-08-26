@@ -188,6 +188,48 @@ namespace Sfinae {
     } \
     SYLPH_END_MACRO
 
+#define TEST_IS_ARRAY_BACKED_TRAITS(Class) \
+    TEST_F(Test##Class, testIsRandomAccessCollectionTraits) { \
+        ASSERT_TRUE(S_TRAIT(IsRandomAccessCollection, Class)); \
+    } \
+    SYLPH_END_MACRO
+
+#define TEST_IS_EFFICIENT_FRONT_INSERTABLE_TRAITS(Class) \
+    TEST_F(Test##Class, testIsEfficientFrontInsertable) { \
+        ASSERT_TRUE(S_TRAIT(IsEfficientFrontInsertable, Class)); \
+    } \
+    SYLPH_END_MACRO
+
+#define TEST_IS_EFFICIENT_MIDDLE_INSERTABLE_TRAITS(Class) \
+    TEST_F(Test##Class, testIsEfficientMiddleInsertable) { \
+        ASSERT_TRUE(S_TRAIT(IsEfficientMiddleInsertable, Class)); \
+    } \
+    SYLPH_END_MACRO
+
+#define TEST_IS_EFFICIENT_BACK_INSERTABLE_TRAITS(Class) \
+    TEST_F(Test##Class, testIsEfficientBackInsertable) { \
+        ASSERT_TRUE(S_TRAIT(IsEfficientBackInsertable, Class)); \
+    } \
+    SYLPH_END_MACRO
+
+#define TEST_IS_EFFICIENT_FRONT_RETRIEVABLE_TRAITS(Class) \
+    TEST_F(Test##Class, testIsEfficientFrontRetrievable) { \
+        ASSERT_TRUE(S_TRAIT(IsEfficientFrontRetrievable, Class)); \
+    } \
+    SYLPH_END_MACRO
+
+#define TEST_IS_EFFICIENT_MIDDLE_RETRIEVABLE_TRAITS(Class) \
+    TEST_F(Test##Class, testIsEfficientMiddleRetrievable) { \
+        ASSERT_TRUE(S_TRAIT(IsEfficientMiddleRetrievable, Class)); \
+    } \
+    SYLPH_END_MACRO
+
+#define TEST_IS_EFFICIENT_BACK_RETRIEVABLE_TRAITS(Class) \
+    TEST_F(Test##Class, testIsEfficientBackRetrievable) { \
+        ASSERT_TRUE(S_TRAIT(IsEfficientBackRetrievable, Class)); \
+    } \
+    SYLPH_END_MACRO
+
 //////////////////////////////////////////////////////
 
 #define TEST_IS_COLLECTION_RUNTIME(Class) \
@@ -257,6 +299,27 @@ namespace Sfinae {
     TEST_IS_EXPANDABLE_RANDOM_ACCESS_COLLECTION_COMPILE(Class); \
     TEST_IS_EXPANDABLE_RANDOM_ACCESS_COLLECTION_TRAITS(Class); \
     TEST_IS_EXPANDABLE_RANDOM_ACCESS_COLLECTION_RUNTIME(Class)
+
+#define TEST_IS_ARRAY_BACKED(Class) \
+    TEST_IS_ARRAY_BACKED_TRAITS(Class)
+
+#define TEST_IS_EFFICIENT_FRONT_INSERTABLE(Class) \
+    TEST_IS_EFFICIENT_FRONT_INSERTABLE_TRAITS(Class)
+
+#define TEST_IS_EFFICIENT_MIDDLE_INSERTABLE(Class) \
+    TEST_IS_EFFICIENT_MIDDLE_INSERTABLE_TRAITS(Class)
+
+#define TEST_IS_EFFICIENT_BACK_INSERTABLE(Class) \
+    TEST_IS_EFFICIENT_BACK_INSERTABLE_TRAITS(Class)
+
+#define TEST_IS_EFFICIENT_FRONT_RETRIEVABLE(Class) \
+    TEST_IS_EFFICIENT_FRONT_RETRIEVABLE_TRAITS(Class)
+
+#define TEST_IS_EFFICIENT_MIDDLE_RETRIEVABLE(Class) \
+    TEST_IS_EFFICIENT_MIDDLE_RETRIEVABLE_TRAITS(Class)
+
+#define TEST_IS_EFFICIENT_BACK_RETRIEVABLE(Class) \
+    TEST_IS_EFFICIENT_BACK_RETRIEVABLE_TRAITS(Class)
 
 #endif /* SYLPHTEST_CORE_COLLECTION_H_ */
 

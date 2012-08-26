@@ -71,6 +71,9 @@ namespace {
     TEST_IS_COLLECTION(Array);
     TEST_IS_SEQ_COLLECTION(Array);
     TEST_IS_RANDOM_ACCESS_COLLECTION(Array);
+    TEST_IS_EFFICIENT_FRONT_RETRIEVABLE(Array);
+    TEST_IS_EFFICIENT_MIDDLE_RETRIEVABLE(Array);
+    TEST_IS_EFFICIENT_BACK_RETRIEVABLE(Array);
 
     TEST_F(TestArray, testCorrectConstructed) {
         EXPECT_EQ(5u, testObj1->length);

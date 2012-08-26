@@ -618,9 +618,9 @@ S_BEGIN_TRAITS
 S_SET_TRAIT(IsCollection, Array);
 S_SET_TRAIT(IsSequentialCollection, Array);
 S_SET_TRAIT(IsRandomAccessCollection, Array);
-S_SET_TRAIT(IsEfficientFrontInsertable, Array);
-S_SET_TRAIT(IsEfficientMiddleInsertable, Array);
-S_SET_TRAIT(IsEfficientBackInsertable, Array);
+S_SET_TRAIT(IsEfficientFrontRetrievable, Array);
+S_SET_TRAIT(IsEfficientMiddleRetrievable, Array);
+S_SET_TRAIT(IsEfficientBackRetrievable, Array);
 
 template<class T>
 S_SET_TRAIT_TPL(IsSylphClass, Array<T>);
