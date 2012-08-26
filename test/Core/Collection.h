@@ -70,6 +70,31 @@ namespace Sfinae {
         (void)s;
         (void)b;
     }
+
+    template<template<class> class T>
+    void isSequentialCollection() {
+
+    }
+    
+    template<template<class> class T>
+    void isExpandableCollection() {
+
+    }
+
+    template<template<class> class T>
+    void isExpandableSequence() {
+
+    }
+
+    template<template<class> class T>
+    void isRandomAccessCollection() {
+
+    }
+
+    template<template<class> class T>
+    void isExpandableRandomAccessCollection() {
+
+    }
 }
 
 #ifndef SYLPH_NO_TEST_COMPILE ////////////////////////
@@ -81,9 +106,54 @@ namespace Sfinae {
     } \
     SYLPH_END_MACRO 
 
+#define TEST_IS_SEQ_COLLECTION_COMPILE(Class) \
+    TEST_F(Test##Class, testIsSequentialCollectionCompile) { \
+        void(*f)(void) = &Sfinae::isSequentialCollection<Class>; \
+        (void)f; \
+    } \
+    SYLPH_END_MACRO 
+
+#define TEST_IS_EXPANDABLE_COLLECTION_COMPILE(Class) \
+    TEST_F(Test##Class, testIsExpandableCollectionCompile) { \
+        void(*f)(void) = &Sfinae::isExpandableCollection<Class>; \
+        (void)f; \
+    } \
+    SYLPH_END_MACRO 
+
+#define TEST_IS_EXPANDABLE_SEQUENCE_COMPILE(Class) \
+    TEST_F(Test##Class, testIsExpandableSequenceCompile) { \
+        void(*f)(void) = &Sfinae::isExpandableSequence<Class>; \
+        (void)f; \
+    } \
+    SYLPH_END_MACRO 
+
+#define TEST_IS_RANDOM_ACCESS_COLLECTION_COMPILE(Class) \
+    TEST_F(Test##Class, testIsExpandableSequenceCompile) { \
+        void(*f)(void) = &Sfinae::isRandomAccessCollection<Class>; \
+        (void)f; \
+    } \
+    SYLPH_END_MACRO
+
+#define TEST_IS_EXPANDABLE_RANDOM_ACCESS_COLLECTION_COMPILE(Class) \
+    TEST_F(Test##Class, testIsExpandableSequenceCompile) { \
+        void(*f)(void) = &Sfinae::isExpandableRandomAccessCollection<Class>; \
+        (void)f; \
+    } \
+    SYLPH_END_MACRO
+
 #else ////////////////////////////////////////////////
 
 #define TEST_IS_COLLECTION_COMPILE(Class) \
+    SYLPH_END_MACRO
+#define TEST_IS_SEQ_COLLECTION_COMPILE(Class) \
+    SYLPH_END_MACRO
+#define TEST_IS_EXPANDABLE_COLLECTION_COMPILE(Class) \
+    SYLPH_END_MACRO
+#define TEST_IS_EXPANDABLE_SEQUENCE_COMPILE(Class) \
+    SYLPH_END_MACRO
+#define TEST_IS_RANDOM_ACCESS_COLLECTION_COMPILE(Class) \
+    SYLPH_END_MACRO
+#define TEST_IS_EXPANDABLE_RANDOM_ACCESS_COLLECTION_COMPILE(Class) \
     SYLPH_END_MACRO
 
 #endif ///////////////////////////////////////////////
@@ -91,6 +161,30 @@ namespace Sfinae {
 #define TEST_IS_COLLECTION_TRAITS(Class) \
     TEST_F(Test##Class, testIsCollectionTraits) { \
         ASSERT_TRUE(S_TRAIT(IsCollection, Class)); \
+    } \
+    SYLPH_END_MACRO
+
+#define TEST_IS_SEQ_COLLECTION_TRAITS(Class) \
+    TEST_F(Test##Class, testIsSequentialCollectionTraits) { \
+        ASSERT_TRUE(S_TRAIT(IsSequentialCollection, Class)); \
+    } \
+    SYLPH_END_MACRO
+
+#define TEST_IS_EXPANDABLE_COLLECTION_TRAITS(Class) \
+    TEST_F(Test##Class, testIsExpandableCollectionTraits) { \
+        ASSERT_TRUE(S_TRAIT(IsExpandableCollection, Class)); \
+    } \
+    SYLPH_END_MACRO
+
+#define TEST_IS_EXPANDABLE_SEQUENCE_TRAITS(Class) \
+    TEST_F(Test##Class, testIsExpandableSequenceTraits) { \
+        ASSERT_TRUE(S_TRAIT(IsExpandableSequence, Class)); \
+    } \
+    SYLPH_END_MACRO
+
+#define TEST_IS_RANDOM_ACCESS_COLLECTION_TRAITS(Class) \
+    TEST_F(Test##Class, testIsRandomAccessCollectionTraits) { \
+        ASSERT_TRUE(S_TRAIT(IsRandomAccessCollection, Class)); \
     } \
     SYLPH_END_MACRO
 
@@ -102,12 +196,67 @@ namespace Sfinae {
     } \
     SYLPH_END_MACRO
 
+#define TEST_IS_SEQ_COLLECTION_RUNTIME(Class) \
+    TEST_F(Test##Class, testIsSequentialCollectionRuntime) { \
+        SYLPH_STUB_TEST; \
+    } \
+    SYLPH_END_MACRO
+
+#define TEST_IS_EXPANDABLE_COLLECTION_RUNTIME(Class) \
+    TEST_F(Test##Class, testIsExpandableCollectionRuntime) { \
+        SYLPH_STUB_TEST; \
+    } \
+    SYLPH_END_MACRO
+
+#define TEST_IS_EXPANDABLE_SEQUENCE_RUNTIME(Class) \
+    TEST_F(Test##Class, testIsExpandableSequenceRuntime) { \
+        SYLPH_STUB_TEST; \
+    } \
+    SYLPH_END_MACRO
+
+#define TEST_IS_RANDOM_ACCESS_COLLECTION_RUNTIME(Class) \
+    TEST_F(Test##Class, testIsRandomAccessCollectionRuntime) { \
+        SYLPH_STUB_TEST; \
+    } \
+    SYLPH_END_MACRO
+
+#define TEST_IS_EXPANDABLE_RANDOM_ACCESS_COLLECTION_RUNTIME(Class) \
+    TEST_F(Test##Class, testIsExpandableRandomAccessCollectionRuntime) { \
+        SYLPH_STUB_TEST; \
+    } \
+    SYLPH_END_MACRO
+
 //////////////////////////////////////////////////////
 
 #define TEST_IS_COLLECTION(Class) \
     TEST_IS_COLLECTION_COMPILE(Class); \
     TEST_IS_COLLECTION_TRAITS(Class); \
-    TEST_IS_COLLECTION_RUNTIME(Class);
+    TEST_IS_COLLECTION_RUNTIME(Class)
+
+#define TEST_IS_SEQ_COLLECTION(Class) \
+    TEST_IS_SEQ_COLLECTION_COMPILE(Class); \
+    TEST_IS_SEQ_COLLECTION_TRAITS(Class); \
+    TEST_IS_SEQ_COLLECTION_RUNTIME(Class)
+
+#define TEST_IS_EXPANDABLE_COLLECTION(Class) \
+    TEST_IS_EXPANDABLE_COLLECTION_COMPILE(Class); \
+    TEST_IS_EXPANDABLE_COLLECTION_TRAITS(Class); \
+    TEST_IS_EXPANDABLE_COLLECTION_RUNTIME(Class)
+
+#define TEST_IS_EXPANDABLE_SEQUENCE(Class) \
+    TEST_IS_EXPANDABLE_SEQUENCE_COMPILE(Class); \
+    TEST_IS_EXPANDABLE_SEQUENCE_TRAITS(Class); \
+    TEST_IS_EXPANDABLE_SEQUENCE_RUNTIME(Class)
+
+#define TEST_IS_RANDOM_ACCESS_COLLECTION(Class) \
+    TEST_IS_RANDOM_ACCESS_COLLECTION_COMPILE(Class); \
+    TEST_IS_RANDOM_ACCESS_COLLECTION_TRAITS(Class); \
+    TEST_IS_RANDOM_ACCESS_COLLECTION_RUNTIME(Class)
+
+#define TEST_IS_EXPANDABLE_RANDOM_ACCESS_COLLECTION(Class) \
+    TEST_IS_EXPANDABLE_RANDOM_ACCESS_COLLECTION_COMPILE(Class); \
+    TEST_IS_EXPANDABLE_RANDOM_ACCESS_COLLECTION_TRAITS(Class); \
+    TEST_IS_EXPANDABLE_RANDOM_ACCESS_COLLECTION_RUNTIME(Class)
 
 #endif /* SYLPHTEST_CORE_COLLECTION_H_ */
 
