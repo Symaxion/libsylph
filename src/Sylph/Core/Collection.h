@@ -39,6 +39,7 @@ namespace Traits {
     /**
      * Operations supported:
      * begin/end: iterator
+     * cbegin/cend: iterator
      * contains(T)
      * indexOf(T[,idx_t])
      * lastIndexOf(T[,idx_t])
@@ -73,6 +74,7 @@ namespace Traits {
      *
      * Operations supported:
      * rbegin/rend: iterator
+     * crbegin/crend: iterator
      */
     template<template<class...> class T>
     struct IsSequentialCollection : public FalseType {

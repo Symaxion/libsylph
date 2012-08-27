@@ -42,6 +42,10 @@ namespace Sfinae {
         sidx_t si;
         size_t s;
         bool b;
+        typename T<int>::iterator i1;
+        typename T<int>::Iterator i2;
+        typename T<int>::const_iterator ci1;
+        typename T<int>::ConstIterator ci2;
 
         T<int> t1;
         T<int> t2(t1);
@@ -66,14 +70,39 @@ namespace Sfinae {
         b = t1 != t2;
         b = t1 < t2;
 
+        i1 = t1.begin();
+        i1 = t1.end();
+        i2 = t1.begin();
+        i2 = t1.end();
+        ci1 = t1.cbegin();
+        ci1 = t1.cend();
+        ci2 = t1.cbegin();
+        ci2 = t1.cend();
+
         (void)si;
         (void)s;
         (void)b;
+        (void)i1;
+        (void)i2;
     }
 
     template<template<class> class T>
     void isSequentialCollection() {
+        typename T<int>::reverse_iterator i1;
+        typename T<int>::ReverseIterator i2;
+        typename T<int>::const_reverse_iterator ci1;
+        typename T<int>::ConstReverseIterator ci2;
+        T<int> t1;
 
+        i1 = t1.rbegin();
+        i1 = t1.rend();
+        i2 = t1.rbegin();
+        i2 = t1.rend();
+        i1 = t1.crbegin();
+        i1 = t1.crend();
+        i2 = t1.crbegin();
+        i2 = t1.crend();
+        
     }
     
     template<template<class> class T>
