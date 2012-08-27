@@ -33,13 +33,14 @@
 #include "Equals.h"
 #include "Iterator.h"
 
+#include "Collection.h"
+
 #include "Debug.h"
 
 #include <vector>
 #include <initializer_list>
 
 SYLPH_BEGIN_NAMESPACE
-
 
 /**
  * @todo Write documentation!
@@ -385,9 +386,24 @@ private:
 
 };
 
-
-
 SYLPH_END_NAMESPACE
+
+S_BEGIN_TRAITS
+S_SET_TRAIT(IsCollection, Vector);
+S_SET_TRAIT(IsSequentialCollection, Vector);
+S_SET_TRAIT(IsExpandableCollection, Vector);
+S_SET_TRAIT(IsRandomAccessCollection, Vector);
+S_SET_TRAIT(IsEfficientFrontRetrievable, Vector);
+S_SET_TRAIT(IsEfficientMiddleRetrievable, Vector);
+S_SET_TRAIT(IsEfficientBackRetrievable, Vector);
+S_SET_TRAIT(IsEfficientBackInsertable, Vector);
+
+template<class T>
+S_SET_TRAIT_TPL(IsSylphClass, Vector<T>);
+template<class T>
+S_SET_TRAIT_TPL(IsArrayBacked, Vector<T>);
+S_END_TRAITS
+
 #endif	/* SYLPH_CORE_VECTOR_H_ */
 
 // vim: syntax=cpp11:ts=4:sts=4:sw=4:sta:et:tw=80:nobk

@@ -161,7 +161,7 @@ namespace Traits {
      * reserve(size_t) -> resize(size() + size_t)
      * fit(size_t) -> resize(size())
      */
-    template<template<class...> class T>
+    template<class T>
     struct IsArrayBacked : public FalseType {
     };
 

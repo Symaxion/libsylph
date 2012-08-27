@@ -25,6 +25,8 @@
  */
 
 #include "../SylphTest.h"
+#include "Collection.h"
+
 #include <Sylph/Core/Array.h>
 #include <Sylph/Core/Debug.h>
 #include <Sylph/Core/Vector.h>
@@ -38,6 +40,18 @@ namespace {
 
     class TestVector : public ::testing::Test {
     };
+
+    TEST_IS_COLLECTION(Vector);
+    TEST_IS_SEQ_COLLECTION(Vector);
+    TEST_IS_EXPANDABLE_COLLECTION(Vector);
+    TEST_IS_EXPANDABLE_SEQUENCE(Vector);
+    TEST_IS_RANDOM_ACCESS_COLLECTION(Vector);
+    TEST_IS_EXPANDABLE_RANDOM_ACCESS_COLLECTION(Vector);
+    TEST_IS_ARRAY_BACKED(Vector);
+    TEST_IS_EFFICIENT_FRONT_RETRIEVABLE(Vector);
+    TEST_IS_EFFICIENT_MIDDLE_RETRIEVABLE(Vector);
+    TEST_IS_EFFICIENT_BACK_RETRIEVABLE(Vector);
+    TEST_IS_EFFICIENT_BACK_INSERTABLE(Vector);
 
     TEST_F(TestVector, testCapacity) {
         Vector<int> testObj1((size_t) 5);

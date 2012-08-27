@@ -128,14 +128,14 @@ namespace Sfinae {
     SYLPH_END_MACRO 
 
 #define TEST_IS_RANDOM_ACCESS_COLLECTION_COMPILE(Class) \
-    TEST_F(Test##Class, testIsExpandableSequenceCompile) { \
+    TEST_F(Test##Class, testIsRandomAccessCollectionCompile) { \
         void(*f)(void) = &Sfinae::isRandomAccessCollection<Class>; \
         (void)f; \
     } \
     SYLPH_END_MACRO
 
 #define TEST_IS_EXPANDABLE_RANDOM_ACCESS_COLLECTION_COMPILE(Class) \
-    TEST_F(Test##Class, testIsExpandableSequenceCompile) { \
+    TEST_F(Test##Class, testIsExpandableRandomAccessCompile) { \
         void(*f)(void) = &Sfinae::isExpandableRandomAccessCollection<Class>; \
         (void)f; \
     } \
@@ -176,12 +176,6 @@ namespace Sfinae {
     } \
     SYLPH_END_MACRO
 
-#define TEST_IS_EXPANDABLE_SEQUENCE_TRAITS(Class) \
-    TEST_F(Test##Class, testIsExpandableSequenceTraits) { \
-        ASSERT_TRUE(S_TRAIT(IsExpandableSequence, Class)); \
-    } \
-    SYLPH_END_MACRO
-
 #define TEST_IS_RANDOM_ACCESS_COLLECTION_TRAITS(Class) \
     TEST_F(Test##Class, testIsRandomAccessCollectionTraits) { \
         ASSERT_TRUE(S_TRAIT(IsRandomAccessCollection, Class)); \
@@ -189,8 +183,8 @@ namespace Sfinae {
     SYLPH_END_MACRO
 
 #define TEST_IS_ARRAY_BACKED_TRAITS(Class) \
-    TEST_F(Test##Class, testIsRandomAccessCollectionTraits) { \
-        ASSERT_TRUE(S_TRAIT(IsRandomAccessCollection, Class)); \
+    TEST_F(Test##Class, testIsArrayBackedTraits) { \
+        ASSERT_TRUE(S_TRAIT(IsArrayBacked, Class<void>)); \
     } \
     SYLPH_END_MACRO
 
@@ -287,7 +281,6 @@ namespace Sfinae {
 
 #define TEST_IS_EXPANDABLE_SEQUENCE(Class) \
     TEST_IS_EXPANDABLE_SEQUENCE_COMPILE(Class); \
-    TEST_IS_EXPANDABLE_SEQUENCE_TRAITS(Class); \
     TEST_IS_EXPANDABLE_SEQUENCE_RUNTIME(Class)
 
 #define TEST_IS_RANDOM_ACCESS_COLLECTION(Class) \
@@ -297,7 +290,6 @@ namespace Sfinae {
 
 #define TEST_IS_EXPANDABLE_RANDOM_ACCESS_COLLECTION(Class) \
     TEST_IS_EXPANDABLE_RANDOM_ACCESS_COLLECTION_COMPILE(Class); \
-    TEST_IS_EXPANDABLE_RANDOM_ACCESS_COLLECTION_TRAITS(Class); \
     TEST_IS_EXPANDABLE_RANDOM_ACCESS_COLLECTION_RUNTIME(Class)
 
 #define TEST_IS_ARRAY_BACKED(Class) \
