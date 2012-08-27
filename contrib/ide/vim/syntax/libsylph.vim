@@ -12,6 +12,7 @@ syn keyword cppStatement newgc deletegc thisapp
 syn keyword cppOperator over
 syn keyword cppExceptions sthrow
 syn keyword cConstant SYLPH_BEGIN_NAMESPACE SYLPH_END_NAMESPACE
+syn keyword cConstant S_BEGIN_TRAITS S_END_TRAITS
 
 " Constants and member variables
 syn match cConstant /\<k[A-Z]\w\+/
