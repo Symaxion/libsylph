@@ -51,6 +51,7 @@ ApplicationSelf * Application::self_app = 0;
     }
     void Application::init(int argc, char* argv[], char * apple[], AppType type,
             String name) {
+        (void) apple;
         switch(type) {
             #ifdef SYLPH_OS_LINUX
             case S_APPTYPE_BUNDLE:

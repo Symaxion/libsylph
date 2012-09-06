@@ -179,8 +179,8 @@ _br_find_exe (BrInitError *error)
  * Returns a filename which must be freed, or NULL on error.
  */
 static char *
-_br_find_exe_for_symbol (const void *symbol, BrInitError *error)
-{
+_br_find_exe_for_symbol (const void *symbol, BrInitError *error){
+    (void) error;
 #ifndef ENABLE_BINRELOC
 	if (error)
 		*error = BR_INIT_ERROR_DISABLED;
