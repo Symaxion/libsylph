@@ -1,6 +1,7 @@
 /*
  * LibSylph Class Library
  * Copyright (C) 2012 Frank "SeySayux" Erens <seysayux@gmail.com>
+ * Copyright (C) 2012 Randy "Villadelfia" Thiemann <uselinuxnow@gmail.com>
  *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -63,6 +64,8 @@ public:
 
 /** */
 typedef basic_range<int> range;
+/** */
+typedef basic_range<idx_t> irange;
 /** */
 typedef basic_range<float> frange;
 /** */
