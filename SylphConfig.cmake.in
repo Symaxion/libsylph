@@ -6,6 +6,8 @@ else()
     set(SYLPH_INCLUDE_DIRS "${FOOBAR_CMAKE_DIR}/@S_CONF_REL_INCLUDE_DIR@")
 endif()
  
+include("${SYLPH_CMAKE_DIR}/DetectClangVersion.cmake")
+include("${SYLPH_CMAKE_DIR}/DetectGccVersion.cmake")
 include("${SYLPH_CMAKE_DIR}/SylphLibraryDepends.cmake")
 include("${SYLPH_CMAKE_DIR}/EnableCxx11.cmake")
  

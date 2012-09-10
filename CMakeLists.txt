@@ -201,6 +201,7 @@ install(FILES
         "${PROJECT_BINARY_DIR}/SylphConfig.cmake"
         "${PROJECT_BINARY_DIR}/SylphConfigVersion.cmake"
         "${PROJECT_SOURCE_DIR}/cmake/DetectGccVersion.cmake"
+        "${PROJECT_SOURCE_DIR}/cmake/DetectClangVersion.cmake"
         "${PROJECT_SOURCE_DIR}/cmake/EnableCxx11.cmake"
         DESTINATION "${SYLPH_INSTALL_CMAKE_DIR}" COMPONENT dev)
  
