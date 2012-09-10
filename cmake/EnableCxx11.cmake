@@ -1,4 +1,4 @@
-###########################################################
+#########################################################################
 #
 # LibSylph Class Library (build script)
 # Copyright (C) 2012 Frank "SeySayux" Erens <seysayux@gmail.com>
@@ -24,24 +24,21 @@
 #
 #########################################################################
 
-include(SourcesList.txt)
-include(AddFileDependencies)
-
-include_directories(${CMAKE_SOURCE_DIR}/src 
-        ${CMAKE_SOURCE_DIR}/deps/gtest/include)
-
-link_directories(${CMAKE_BINARY_DIR}/src) 
-
-if(SYLPH_DEBUG)
-    add_definitions(${SYLPH_CONFIG_DEFS} -DSYLPH_DEBUG -DGTEST_USE_OWN_TR1_TUPLE
-            -DGTEST_HAS_TR1_TUPLE)
-else()
-    add_definitions(${SYLPH_CONFIG_DEFS} -DGTEST_USE_OWN_TR1_TUPLE
-            -DGTEST_HAS_TR1_TUPLE)
+# Flags to enable C++11
+if(CMAKE_COMPILER_IS_CLANG)
+    # Clang
+    if(NOT SYLPH_NO_CXX11)
+        set(SYLPH_CXXFLAGS "-std=c++11 -stdlib=libc++" )
+    endif()
+elseif(CMAKE_COMPILER_IS_GNUCC)
+    # GCC >= 4.5.3
+    # GCC is pretty schizophrenic when it comes to the name of the new C++
+    # standard...
+    if(NOT SYLPH_NO_CXX11)
+        if(GCC_VERSION STRGREATER "4.7.0")
+            set(SYLPH_CXXFLAGS "-std=c++11")
+        else(GCC_VERSION STRGREATER "4.7.0")
+            set(SYLPH_CXXFLAGS "-std=c++0x")
+        endif()
+    endif()
 endif()
-
-add_executable(SylphTestExe EXCLUDE_FROM_ALL ${STEST_ALL_SRC})
-target_link_libraries(SylphTestExe ${SYLPH_TARGET} gtest ${COVERAGE_LIBS})
-add_custom_target(test SylphTestExe DEPENDS SylphTestExe)
-
-set_target_properties(SylphTestExe PROPERTIES COMPILE_FLAGS "${SYLPH_CXXFLAGS}")
