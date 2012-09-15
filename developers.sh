@@ -164,6 +164,6 @@ case "$1" in
         do-update-copyright "$2"
     ;;
     *)
-    echo 'This script contains several useful functions for the $PROJECT devs.'
+    echo "This script contains several useful functions for the $PROJECT devs."
     ;;
 esac
