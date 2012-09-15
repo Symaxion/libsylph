@@ -33,6 +33,23 @@ extern "C" {
 
 using namespace std;
 
+/** @internal
+ * Not all platforms seem to have _br_strdup, so we implement our own here.
+ * (Modified for LibSylph)
+ */
+static char*
+_br_strdup (const char *in)
+{
+    char *toreturn;
+    size_t len;
+
+    len = strlen (in) + 1;
+
+    toreturn = (char *) malloc (len);
+    memcpy (toreturn, in, len);
+
+    return toreturn;
+}
 
 /** @internal
  * Find the canonical filename of the executable. Returns the filename
@@ -166,7 +183,7 @@ _br_find_exe (BrInitError *error)
 		return NULL;
 	}
 
-	path = strdup (path);
+	path = _br_strdup (path);
 	free (line);
 	fclose (f);
 	return path;
@@ -277,7 +294,7 @@ _br_find_exe_for_symbol (const void *symbol, BrInitError *error){
 	if (found == NULL)
 		return (char *) NULL;
 	else
-		return strdup (found);
+		return _br_strdup (found);
 #endif /* ENABLE_BINRELOC */
 }
 
@@ -356,11 +373,11 @@ br_find_exe (const char *default_exe)
 	if (exe == (char *) NULL) {
 		/* BinReloc is not initialized. */
 		if (default_exe != (const char *) NULL)
-			return strdup (default_exe);
+			return _br_strdup (default_exe);
 		else
 			return (char *) NULL;
 	}
-	return strdup (exe);
+	return _br_strdup (exe);
 }
 
 
@@ -384,7 +401,7 @@ br_find_exe_dir (const char *default_dir)
 	if (exe == NULL) {
 		/* BinReloc not initialized. */
 		if (default_dir != NULL)
-			return strdup (default_dir);
+			return _br_strdup (default_dir);
 		else
 			return (char*)NULL;
 	}
@@ -414,7 +431,7 @@ br_find_prefix (const char *default_prefix)
 	if (exe == (char *) NULL) {
 		/* BinReloc not initialized. */
 		if (default_prefix != (const char *) NULL)
-			return strdup (default_prefix);
+			return _br_strdup (default_prefix);
 		else
 			return (char *) NULL;
 	}
@@ -448,7 +465,7 @@ br_find_bin_dir (const char *default_bin_dir)
 	if (prefix == (char *) NULL) {
 		/* BinReloc not initialized. */
 		if (default_bin_dir != (const char *) NULL)
-			return strdup (default_bin_dir);
+			return _br_strdup (default_bin_dir);
 		else
 			return (char *) NULL;
 	}
@@ -481,7 +498,7 @@ br_find_sbin_dir (const char *default_sbin_dir)
 	if (prefix == (char *) NULL) {
 		/* BinReloc not initialized. */
 		if (default_sbin_dir != (const char *) NULL)
-			return strdup (default_sbin_dir);
+			return _br_strdup (default_sbin_dir);
 		else
 			return (char *) NULL;
 	}
@@ -515,7 +532,7 @@ br_find_data_dir (const char *default_data_dir)
 	if (prefix == (char *) NULL) {
 		/* BinReloc not initialized. */
 		if (default_data_dir != (const char *) NULL)
-			return strdup (default_data_dir);
+			return _br_strdup (default_data_dir);
 		else
 			return (char *) NULL;
 	}
@@ -548,7 +565,7 @@ br_find_locale_dir (const char *default_locale_dir)
 	if (data_dir == (char *) NULL) {
 		/* BinReloc not initialized. */
 		if (default_locale_dir != (const char *) NULL)
-			return strdup (default_locale_dir);
+			return _br_strdup (default_locale_dir);
 		else
 			return (char *) NULL;
 	}
@@ -581,7 +598,7 @@ br_find_lib_dir (const char *default_lib_dir)
 	if (prefix == (char *) NULL) {
 		/* BinReloc not initialized. */
 		if (default_lib_dir != (const char *) NULL)
-			return strdup (default_lib_dir);
+			return _br_strdup (default_lib_dir);
 		else
 			return (char *) NULL;
 	}
@@ -614,7 +631,7 @@ br_find_libexec_dir (const char *default_libexec_dir)
 	if (prefix == (char *) NULL) {
 		/* BinReloc not initialized. */
 		if (default_libexec_dir != (const char *) NULL)
-			return strdup (default_libexec_dir);
+			return _br_strdup (default_libexec_dir);
 		else
 			return (char *) NULL;
 	}
@@ -647,7 +664,7 @@ br_find_etc_dir (const char *default_etc_dir)
 	if (prefix == (char *) NULL) {
 		/* BinReloc not initialized. */
 		if (default_etc_dir != (const char *) NULL)
-			return strdup (default_etc_dir);
+			return _br_strdup (default_etc_dir);
 		else
 			return (char *) NULL;
 	}
@@ -724,7 +741,7 @@ br_strndup (const char *str, size_t size)
 
 	len = strlen (str);
 	if (len == 0)
-		return strdup ("");
+		return _br_strdup ("");
 	if (size > len)
 		size = len;
 
@@ -757,14 +774,14 @@ br_dirname (const char *path)
 
 	end = strrchr ((char*)path, '/');
 	if (end == (const char *) NULL)
-		return strdup (".");
+		return _br_strdup (".");
 
 	while (end > path && *end == '/')
 		end--;
 	result = br_strndup (path, end - path + 1);
 	if (result[0] == 0) {
 		free (result);
-		return strdup ("/");
+		return _br_strdup ("/");
 	} else
 		return result;
 }
