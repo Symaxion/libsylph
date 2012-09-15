@@ -111,7 +111,7 @@ public:
     /**
      * Ctor to init the bitfield to 0.
      */
-    BitField() : mBf({0}) {}
+    BitField() : mBf{0} {}
 
     /**
      * Set the bit at index i high.
