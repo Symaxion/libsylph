@@ -72,17 +72,6 @@ typedef sulong ptr_t;
 typedef sulong fsize_t;
 typedef slong fssize_t;
 
-#ifndef SYLPH_LIKELY
-    #if __GNUC__ - 0 >= 3
-        #define SYLPH_LIKELY(x) __builtin_expect(!!(x),1)
-        #define SYLPH_UNLIKELY(x) __builtin_expect(!!(x),0)
-    #else
-        #define SYLPH_LIKELY(x) (x)
-        #define SYLPH_UNLIKELY(x) (x)
-    #endif
-#endif
-
-
 #define SYLPH_SPECIALIZE(Class,Type) extern template class Class<Type>
 
 #define SYLPH_SPECIALIZE_PRIMS(Class) \

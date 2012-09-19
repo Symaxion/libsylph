@@ -34,6 +34,9 @@
 
 #include <cstddef>
 
+#include "../OS/OS.h"
+#include "../OS/GuessCompiler.h"
+
 /**
  * \namespace Sylph
  * The Sylph namespace contains everything in LibSylph.

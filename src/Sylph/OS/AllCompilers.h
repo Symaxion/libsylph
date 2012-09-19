@@ -33,6 +33,11 @@
 #define S_OVERRIDE
 #endif
 
+#ifndef SYLPH_LIKELY
+#define SYLPH_LIKELY(x) (x)
+#define SYLPH_UNLIKELY(x) (x)
+#endif
+
 #endif /* SYLPH_OS_ALLCOMPILERS_H_ */
 
 // vim: syntax=cpp11:ts=4:sts=4:sw=4:sta:et:tw=80:nobk

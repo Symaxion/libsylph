@@ -31,6 +31,14 @@
 #define SYLPH_END_MACRO SYLPH_UNUSED
 #define SYLPH_DEPECRATE(x) x __attribute__((deprecated))
 
+#ifndef SYLPH_LIKELY
+    #if __GNUC__ - 0 >= 3
+        #define SYLPH_LIKELY(x) __builtin_expect(!!(x),1)
+        #define SYLPH_UNLIKELY(x) __builtin_expect(!!(x),0)
+    #endif
+#endif
+
+
 // Feature check
 
 #ifdef SYLPH_FTR_NO_GEN_INIT
