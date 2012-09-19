@@ -1,3 +1,4 @@
+#########################################################################
 #
 # LibSylph Class Library (build script)
 # Copyright (C) 2012 Frank "SeySayux" Erens <seysayux@gmail.com>
@@ -21,18 +22,17 @@
 #     3. This notice may not be removed or altered from any source
 #     distribution.
 #
-
 #########################################################################
 
-if( SYLPH_DEBUG )
+if(SYLPH_DEBUG)
     add_definitions(${SYLPH_CONFIG_DEFS} -DSYLPH_DEBUG)
-else ( SYLPH_DEBUG )
+else()
     add_definitions(${SYLPH_CONFIG_DEFS})
-endif( SYLPH_DEBUG )
+endif()
 
-if ( SYLPH_NO_CXX0X )
-    add_definitions( -DSYLPH_NO_CXX0X )
-endif ( SYLPH_NO_CXX0X ) 
+if(SYLPH_NO_CXX11)
+    add_definitions(-DSYLPH_NO_CXX0X)
+endif() 
 
 include(SourcesList.txt)
 
@@ -41,8 +41,14 @@ link_directories(${SYLPH_LINK_DIR})
 
 add_library(${SYLPH_TARGET} SHARED ${SYLPH_ALL_SRC} ${SYLPH_PLATFORM_SRC})
 target_link_libraries(${SYLPH_TARGET} ${SYLPH_LINK} ${COVERAGE_LIBS})
-set_target_properties(${SYLPH_TARGET} PROPERTIES COMPILE_FLAGS "${SYLPH_CXXFLAGS}" VERSION ${SYLPH_VERSION} SOVERSION ${SYLPH_ABI} )
+set_target_properties(${SYLPH_TARGET} PROPERTIES 
+        COMPILE_FLAGS "${SYLPH_CXXFLAGS}" VERSION ${SYLPH_VERSION} 
+        SOVERSION ${SYLPH_ABI})
 
-install( TARGETS ${SYLPH_TARGET} RUNTIME DESTINATION bin LIBRARY DESTINATION lib ARCHIVE DESTINATION lib)
-install( DIRECTORY . DESTINATION include FILES_MATCHING PATTERN "*.h"
-        PATTERN "CMakeFiles" EXCLUDE )
+install(TARGETS ${SYLPH_TARGET} 
+        EXPORT SylphLibraryDepends 
+        RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin 
+        LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/lib ARCHIVE 
+        DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
+install(DIRECTORY . DESTINATION include FILES_MATCHING PATTERN "*.h"
+        PATTERN "CMakeFiles" EXCLUDE)
