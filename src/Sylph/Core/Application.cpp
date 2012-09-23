@@ -61,7 +61,7 @@ ApplicationSelf * Application::self_app = 0;
                 self_app = new LinuxFHSAppSelf(argc,argv);
                 break;
             #endif
-            #ifdef SYLPH_OS_MACOSX
+            #ifdef SYLPH_OS_OSX
             case S_APPTYPE_MACOS:
                 self_app = new MacOSAppSelf(argc,argv,apple);
                 break;

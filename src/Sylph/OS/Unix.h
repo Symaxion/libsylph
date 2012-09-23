@@ -27,7 +27,7 @@
 #ifndef SYLPH_OS_UNIX_H_
 #define SYLPH_OS_UNIX_H_
 
-#define SYLPH_PUBLIC
+const char* DladdrLibLocator(const void* symbol);
 
 #endif /* SYLPH_OS_UNIX_H_ */
 

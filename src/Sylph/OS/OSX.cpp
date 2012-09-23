@@ -24,15 +24,32 @@
  *  Created on: Aug 21, 2012
  */
 
-#ifndef SYLPH_OS_OSX_H_
-#define SYLPH_OS_OSX_H_
+#include "GuessOS.h"
 
-#include "Unix.h"
-#include "SharedObject.h"
+#ifdef SYLPH_OS_OSX
+#include <mach-o/dyld.h>
+#include <sys/param.h>
+#include <stdint.h>
+#include <stdlib.h>
 
-const char* OSXExeLocator();
-const char* OSXLibLocator(const void* symbol);
+const char* OSXExeLocator() {
+    char* path = (char*)malloc(MAXPATHLEN);
+    uint32_t bufsize = MAXPATHLEN;
 
-#endif /* SYLPH_OS_OSX_H_ */
+    if(_NSGetExecutablePath(path, &bufsize) == -1) {
+        path = (char*)realloc(path, bufsize);
+        _NSGetExecutablePath(path, &bufsize);
+    }
 
-// vim: syntax=cpp11:ts=4:sts=4:sw=4:sta:et:tw=80:nobk
+    return path;
+    
+}
+
+const char* OSXLibLocator(const void* symbol) {
+    return DladdrLibLocator(symbol);
+}
+
+const char* (*ExeLocator)() = OSXExeLocator;
+const char* (*LibLocator)(const void*) = OSXLibLocator;
+
+#endif

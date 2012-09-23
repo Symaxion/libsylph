@@ -31,8 +31,8 @@
 
 #if defined(SYLPH_OS_WINDOWS)
 #define OS_TYPE "Windows"
-#elif defined(SYLPH_OS_MACOSX)
-#define OS_TYPE "Mac OS X"
+#elif defined(SYLPH_OS_OSX)
+#define OS_TYPE "OS X"
 #elif defined(SYLPH_OS_CYGWIN)
 #define OS_TYPE "Cygwin"
 #elif defined(SYLPH_OS_LINUX)
@@ -40,7 +40,7 @@
 #else
 #error "OS not supported"
 #endif
-#ifdef SYLPH_OS_MACOSX
+#ifdef SYLPH_OS_OSX
 #define S_MAIN_PARAMS int argc, char ** argv, char ** envp, char ** apple
 #define S_INIT_PARAMS argc, argv, apple
 #else

@@ -20,19 +20,28 @@
  *
  *   3. This notice may not be removed or altered from any source
  *   distribution.
- *
- *  Created on: Aug 21, 2012
  */
 
-#ifndef SYLPH_OS_OSX_H_
-#define SYLPH_OS_OSX_H_
+#include "GuessOS.h"
 
-#include "Unix.h"
-#include "SharedObject.h"
+#if defined(SYLPH_OS_LINUX) || defined(SYLPH_OS_CYGWIN)
 
-const char* OSXExeLocator();
-const char* OSXLibLocator(const void* symbol);
+const char* LinuxExeLocator() {
+    BrInitError error;
+    if(br_init(&error) == 0 && error != BR_INIT_ERROR_DISABLED) {
+        return ""
+    }
 
-#endif /* SYLPH_OS_OSX_H_ */
+    return br_find_exe("");
+}
+
+const char* LinuxLibLocator(const void* symbol) {
+    return DladdrLibLocator(symbol);
+}
+
+const char* (*ExeLocator)() = LinuxExeLocator;
+const char* (*LibLocator)(const void*) = LinuxLibLocator;
+
+#endif
 
 // vim: syntax=cpp11:ts=4:sts=4:sw=4:sta:et:tw=80:nobk

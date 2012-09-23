@@ -27,11 +27,10 @@
 #ifndef SYLPH_OS_WINDOWS_H_
 #define SYLPH_OS_WINDOWS_H_
 
-#ifdef Sylph_EXPORTS
-#define SYLPH_PUBLIC __declspec(dllexport)
-#else
-#define SYLPH_PUBLIC __declspec(dllimport)
-#endif
+#include "Dll.h"
+
+const char* WindowsExeLocator();
+const char* WindowsLibLocator(const void* symbol);
 
 #endif /* SYLPH_OS_WINDOWS_H_ */
 

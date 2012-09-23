@@ -20,19 +20,36 @@
  *
  *   3. This notice may not be removed or altered from any source
  *   distribution.
- *
- *  Created on: Aug 21, 2012
  */
 
-#ifndef SYLPH_OS_OSX_H_
-#define SYLPH_OS_OSX_H_
+#include "GuessOS.h"
 
-#include "Unix.h"
-#include "SharedObject.h"
+#ifdef SYLPH_OS_POSIX
 
-const char* OSXExeLocator();
-const char* OSXLibLocator(const void* symbol);
+#include <dlfcn.h>
+#include <stdlib.h>
+#include <string.h>
 
-#endif /* SYLPH_OS_OSX_H_ */
+static char* systrdup(const char *in) {
+    char* toreturn;
+    size_t len;
+
+    len = strlen(in) + 1;
+
+    toreturn = (char*)malloc(len);
+    memcpy(toreturn, in, len);
+
+    return toreturn;
+}
+
+const char* DladdrLibLocator(const void* symbol) {
+    Dl_info info;
+
+    dladdr(symbol, &info);
+    
+    return systrdup(info.dli_fname);
+} 
+
+#endif
 
 // vim: syntax=cpp11:ts=4:sts=4:sw=4:sta:et:tw=80:nobk

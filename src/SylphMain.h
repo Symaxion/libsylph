@@ -40,7 +40,7 @@
 #define SYLPH_APP_NAME "Application"
 #endif
 
-#ifdef SYLPH_OS_MACOSX
+#ifdef SYLPH_OS_OSX
 int main(int argc, char** argv, char**, char** apple);
 #else
 int main(int argc, char** argv);
@@ -55,7 +55,7 @@ extern int SylphMain(int argc, char** argv);
 extern int SylphMain(Sylph::Array<Sylph::String> argv);
 #endif
 
-#ifdef SYLPH_OS_MACOSX
+#ifdef SYLPH_OS_OSX
 
 int main(int argc, char** argv, char**, char** apple) {
     try {

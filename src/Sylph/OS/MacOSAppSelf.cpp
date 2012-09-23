@@ -25,7 +25,7 @@
 #include "MacOSAppSelf.h"
 #include "../Core/File.h"
 
-#ifdef SYLPH_OS_MACOSX
+#ifdef SYLPH_OS_OSX
 
 #include <string>
 #include <pwd.h>
@@ -146,6 +146,6 @@ const File& MacOSAppSelf::prefix() {
 
 SYLPH_END_NAMESPACE
 
-#endif // SYLPH_OS_MACOSX
+#endif // SYLPH_OS_OSX
 
 // vim: syntax=cpp11:ts=4:sts=4:sw=4:sta:et:tw=80:nobk

@@ -28,6 +28,10 @@
 #define SYLPH_OS_LINUX_H_
 
 #include "Unix.h"
+#include "SharedObject.h"
+
+const char* LinuxExeLocator();
+const char* LinuxLibLocator(const void* symbol);
 
 #endif /* SYLPH_OS_LINUX_H_ */
 

@@ -20,19 +20,47 @@
  *
  *   3. This notice may not be removed or altered from any source
  *   distribution.
- *
- *  Created on: Aug 21, 2012
  */
 
-#ifndef SYLPH_OS_OSX_H_
-#define SYLPH_OS_OSX_H_
+#include "GuessOS.h"
 
-#include "Unix.h"
-#include "SharedObject.h"
+#ifdef SYLPH_OS_WINDOWS
+#include <windows.h>
+#include <stdlib.h>
 
-const char* OSXExeLocator();
-const char* OSXLibLocator(const void* symbol);
+// TODO: maybe expose this publicly?
+const char* WindowsStringToCString(LPTSTR buf) {
+#ifdef UNICODE
+    size_t buflen = WideCharToMultiByte(CP_UTF8, 0, buf, -1, NULL, 0, 
+            NULL, NULL);
+    char* newbuf = malloc(buflen);
+    WideCharToMultiByte(CP_UTF8, 0, buf, -1, newbuf, buflen, NULL, NULL);
+    return newbuf;
+#else
+    return buf;
+#endif
+}
 
-#endif /* SYLPH_OS_OSX_H_ */
+const char* WindowsExeLocator() {
+    return WindowsLibLocator(0);
+}
+
+const char* WindowsLibLocator(const void* symbol) {
+    size_t size = 1024;
+    LPTSTR buf = 0;
+
+    do {
+        buf = (TCHAR*)realloc(buf, size);
+        GetModuleFileName(symbol, buf, 255);
+        size <<= 1;
+    } while(GetLastError() == ERROR_INSUFFICIENT_BUFFER);
+
+    return WindowsStringToCString(buf);
+}
+
+const char* (*ExeLocator)() = WindowsExeLocator;
+const char* (*LibLocator)(const void*) = WindowsLibLocator;
+
+#endif
 
 // vim: syntax=cpp11:ts=4:sts=4:sw=4:sta:et:tw=80:nobk

@@ -42,16 +42,19 @@
 
 #if defined(linux) || defined(__linux) || defined(__linux__)
 // linux:
-#  define SYLPH_OS_LINUX
+#define SYLPH_OS_LINUX
+#define SYLPH_OS_POSIX
+#include "Linux.h"
 
 #ifndef SYLPH_APP_TYPE
 #define SYLPH_APP_TYPE S_APPTYPE_BUNDLE
 #endif
 
 #elif defined(__CYGWIN__)
-// cygwin is not win32 -- Linux can be used as a substitute:
-#  define SYLPH_OS_CYGWIN
-#  define SYLPH_OS_LINUX
+// cygwin is not win32:
+#define SYLPH_OS_CYGWIN
+#define SYLPH_OS_POSIX
+#include "Cygwin.h"
 
 #ifndef SYLPH_APP_TYPE
 #define SYLPH_APP_TYPE S_APPTYPE_BUNDLE
@@ -59,15 +62,18 @@
 
 #elif defined(_WIN32) || defined(__WIN32__) || defined(WIN32)
 // win32:
-#  define SYLPH_OS_WINDOWS
+#define SYLPH_OS_WINDOWS
+#include "Windows.h"
 
 #ifndef SYLPH_APP_TYPE
 #define SYLPH_APP_TYPE S_APPTYPE_WINDOWS
 #endif
 
 #elif defined(macintosh) || defined(__APPLE__) || defined(__APPLE_CC__)
-// MacOS
-#  define SYLPH_OS_MACOSX
+// OS X
+#define SYLPH_OS_OSX
+#define SYLPH_OS_POSIX
+#include "OSX.h"
 
 #ifndef SYLPH_APP_TYPE
 #define SYLPH_APP_TYPE S_APPTYPE_MACOS
@@ -75,6 +81,8 @@
 
 #endif
 
+extern const char* (*ExeLocator)();
+extern const char* (*LibLocator)(const void*);
 
 #endif	/* SYLPH_OS_GUESSOS_H_ */
 

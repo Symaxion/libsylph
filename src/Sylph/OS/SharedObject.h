@@ -21,18 +21,15 @@
  *   3. This notice may not be removed or altered from any source
  *   distribution.
  *
- *  Created on: Aug 21, 2012
+ *  Created on: Sep 22, 2012
  */
 
-#ifndef SYLPH_OS_OSX_H_
-#define SYLPH_OS_OSX_H_
+#ifndef SYLPH_OS_SHAREDOBJECT_H_
+#define SYLPH_OS_SHAREDOBJECT_H_
 
-#include "Unix.h"
-#include "SharedObject.h"
+#undef SYLPH_PUBLIC
+#define SYLPH_PUBLIC
 
-const char* OSXExeLocator();
-const char* OSXLibLocator(const void* symbol);
-
-#endif /* SYLPH_OS_OSX_H_ */
+#endif /* SYLPH_OS_SHAREDOBJECT_H_ */
 
 // vim: syntax=cpp11:ts=4:sts=4:sw=4:sta:et:tw=80:nobk
