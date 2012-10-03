@@ -41,21 +41,29 @@ const char* WindowsStringToCString(LPTSTR buf) {
 #endif
 }
 
-const char* WindowsExeLocator() {
-    return WindowsLibLocator(0);
-}
-
-const char* WindowsLibLocator(const void* symbol) {
+const char* WindowsModuleLocator(const HMODULE mod) {
     size_t size = 1024;
     LPTSTR buf = 0;
 
     do {
         buf = (TCHAR*)realloc(buf, size);
-        GetModuleFileName(symbol, buf, 255);
+        GetModuleFileName(mod, buf, 255);
         size <<= 1;
     } while(GetLastError() == ERROR_INSUFFICIENT_BUFFER);
 
     return WindowsStringToCString(buf);
+}
+
+const char* WindowsExeLocator() {
+    return WindowsModuleLocator(0);
+}
+
+const char* WindowsLibLocator(const void* symbol) {
+    MEMORY_BASIC_INFORMATION mbi;
+    VirtualQuery(&symbol,&mbi,sizeof(mbi));
+    HMODULE mod = mbi.AllocationBase;
+
+    return WindowsModuleLocator(mod);
 }
 
 const char* (*ExeLocator)() = WindowsExeLocator;
