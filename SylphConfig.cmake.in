@@ -13,3 +13,30 @@ include("${SYLPH_CMAKE_DIR}/EnableCxx11.cmake")
  
 set(SYLPH_LIBRARIES Sylph)
 
+macro(target_enable_sylph target)
+    get_target_property(cf ${target} COMPILE_FLAGS)
+    if(${cf} STREQUAL "NOTFOUND")
+        set_target_properties(${target} PROPERTIES 
+                COMPILE_FLAGS "${SYLPH_CXXFLAGS}")
+    else()
+        set_target_properties(${target} PROPERTIES 
+                COMPILE_FLAGS "${cf} ${SYLPH_CXXFLAGS}")
+    endif()
+
+    target_link_libraries(${target} ${SYLPH_LIBRARIES})
+
+    # Fixme: In CMake >= 2.8.8 we can set this per target.
+    include_directories(${SYLPH_INCLUDE})
+endmacro()
+
+macro(target_enable_sylph_flags target flags)
+    if(${cf} STREQUAL "NOTFOUND")
+        set_target_properties(${target} PROPERTIES 
+                COMPILE_FLAGS "${flags}")
+    else()
+        set_target_properties(${target} PROPERTIES 
+                COMPILE_FLAGS "${cf} ${flags}")
+    endif()
+
+    target_enable_sylph(${target})
+endmacro()
