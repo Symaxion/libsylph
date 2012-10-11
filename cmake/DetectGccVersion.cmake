@@ -1,4 +1,4 @@
-###########################################################
+#########################################################################
 #
 # LibSylph Class Library (build script)
 # Copyright (C) 2012 Frank "SeySayux" Erens <seysayux@gmail.com>
@@ -24,24 +24,8 @@
 #
 #########################################################################
 
-include(SourcesList.txt)
-include(AddFileDependencies)
-
-include_directories(${CMAKE_SOURCE_DIR}/src 
-        ${CMAKE_SOURCE_DIR}/deps/gtest/include)
-
-link_directories(${CMAKE_BINARY_DIR}/src) 
-
-if(SYLPH_DEBUG)
-    add_definitions(${SYLPH_CONFIG_DEFS} -DSYLPH_DEBUG -DGTEST_USE_OWN_TR1_TUPLE
-            -DGTEST_HAS_TR1_TUPLE)
-else()
-    add_definitions(${SYLPH_CONFIG_DEFS} -DGTEST_USE_OWN_TR1_TUPLE
-            -DGTEST_HAS_TR1_TUPLE)
+if(CMAKE_COMPILER_IS_GNUCXX)
+    execute_process(COMMAND ${CMAKE_CXX_COMPILER} -dumpversion
+                    OUTPUT_VARIABLE GCC_VERSION)
 endif()
 
-add_executable(SylphTestExe EXCLUDE_FROM_ALL ${STEST_ALL_SRC})
-target_link_libraries(SylphTestExe ${SYLPH_TARGET} gtest ${COVERAGE_LIBS})
-add_custom_target(test SylphTestExe DEPENDS SylphTestExe)
-
-set_target_properties(SylphTestExe PROPERTIES COMPILE_FLAGS "${SYLPH_CXXFLAGS}")

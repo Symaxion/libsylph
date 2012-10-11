@@ -36,6 +36,8 @@
 SYLPH_BEGIN_NAMESPACE
 
 LinuxBundleAppSelf::LinuxBundleAppSelf(int argc, char * argv[]) {
+    (void) argc;
+    (void) argv;
     // First, make binreloc work...
     BrInitError error;
 

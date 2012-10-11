@@ -233,8 +233,8 @@ const Array<uchar> String::utf16() const {
 String String::toLowerCase() const {
     Array<uchar> dest(length() << 1);
     UErrorCode error = U_ZERO_ERROR;
-    size_t newlength = u_strToLower(dest.carray(), dest.length,
-            strdata->data.carray(), length(), 0, &error);
+    size_t newlength = u_strToLower((UChar*)dest.carray(), dest.length,
+            (UChar*)strdata->data.carray(), length(), 0, &error);
     if(U_FAILURE(error)) {
         sthrow(Exception,u_errorName(error));
     }
@@ -247,8 +247,8 @@ String String::toLowerCase() const {
 String String::toUpperCase() const {
     Array<uchar> dest(length() << 1);
     UErrorCode error = U_ZERO_ERROR;
-    size_t newlength = u_strToUpper(dest.carray(), dest.length,
-            strdata->data.carray(), length(), 0, &error);
+    size_t newlength = u_strToUpper((UChar*)dest.carray(), dest.length,
+            (UChar*)strdata->data.carray(), length(), 0, &error);
 
     if(U_FAILURE(error)) {
         sthrow(Exception,u_errorName(error));

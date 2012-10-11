@@ -1,0 +1,42 @@
+get_filename_component(SYLPH_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
+if(EXISTS "${SYLPH_CMAKE_DIR}/CMakeCache.txt")
+   # In build tree
+   include("${SYLPH_CMAKE_DIR}/BuildTreeSettings.cmake")
+else()
+    set(SYLPH_INCLUDE_DIRS "${FOOBAR_CMAKE_DIR}/@S_CONF_REL_INCLUDE_DIR@")
+endif()
+ 
+include("${SYLPH_CMAKE_DIR}/DetectClangVersion.cmake")
+include("${SYLPH_CMAKE_DIR}/DetectGccVersion.cmake")
+include("${SYLPH_CMAKE_DIR}/SylphLibraryDepends.cmake")
+include("${SYLPH_CMAKE_DIR}/EnableCxx11.cmake")
+ 
+set(SYLPH_LIBRARIES Sylph)
+
+macro(target_enable_sylph target)
+    get_target_property(cf ${target} COMPILE_FLAGS)
+    if(${cf} STREQUAL "NOTFOUND")
+        set_target_properties(${target} PROPERTIES 
+                COMPILE_FLAGS "${SYLPH_CXXFLAGS}")
+    else()
+        set_target_properties(${target} PROPERTIES 
+                COMPILE_FLAGS "${cf} ${SYLPH_CXXFLAGS}")
+    endif()
+
+    target_link_libraries(${target} ${SYLPH_LIBRARIES})
+
+    # Fixme: In CMake >= 2.8.8 we can set this per target.
+    include_directories(${SYLPH_INCLUDE})
+endmacro()
+
+macro(target_enable_sylph_flags target flags)
+    if(${cf} STREQUAL "NOTFOUND")
+        set_target_properties(${target} PROPERTIES 
+                COMPILE_FLAGS "${flags}")
+    else()
+        set_target_properties(${target} PROPERTIES 
+                COMPILE_FLAGS "${cf} ${flags}")
+    endif()
+
+    target_enable_sylph(${target})
+endmacro()
