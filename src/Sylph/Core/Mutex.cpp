@@ -52,7 +52,7 @@ void MUTEX::lock() { \
     pthread_mutex_lock(impl); \
 } \
 bool MUTEX::tryLock() { \
-    return pthread_mutex_unlock(impl) != 0; \
+    return pthread_mutex_trylock(impl) != 0; \
 } \
 void MUTEX::unlock() { \
     pthread_mutex_unlock(impl); \
