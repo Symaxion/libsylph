@@ -5,6 +5,19 @@ This directory contains several settings files for Vim that make working with
 LibSylph easier, such as syntax highlighting, ... Copy them to your $VIMHOME
 to install them.
 
+Additional plugins
+------------------
+You might want to install the VimProjects plugin to get some of the
+project-specific settings for LibSylph to load automatically when you open a
+file in the tree. Download the script from http://git.io/UCarwQ and install to
+your $VIMHOME/plugins directory.
+
+For other useful but non-mandatory plugins, check out the following url:
+http://libsylph.sf.net/wiki/User:SeySayux/Setting_up_Vim_for_LibSylph
+
+This folder contains snippets for use with the Snipmate plugin (also see the
+above wiki page).
+
 Authors
 -------
 * Frank Erens (LibSylph adaptations)
@@ -16,10 +29,10 @@ Vim allows you to specify per-file settings in the files themselves through
 something called a "modeline". Below is the recommended modeline for all 
 C++ files in LibSylph:
 
-// vim: syntax=cpp11:ts=4:sts=4:sw=4:sta:et:tw=80:nobk
+// vim: ts=4:sts=4:sw=4:sta:et:tw=80:nobk
 
 For testcases, use this line:
 
-// vim: syntax=cpp11:ts=4:sts=4:sw=4:sta:et:tw=80:nobk:path+=,../../src/
+// vim: ts=4:sts=4:sw=4:sta:et:tw=80:nobk:path+=,../../src/
 
 Simply put these as the last lines of your file.

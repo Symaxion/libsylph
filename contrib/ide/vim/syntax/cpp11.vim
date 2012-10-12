@@ -9,13 +9,8 @@
 " Maintainer:	Ken Shan <ccshan@post.harvard.edu>
 " Last Change:	2002 Jul 15
 
-" For version 5.x: Clear all syntax items
-" For version 6.x: Quit when a syntax file was already loaded
-if version < 600
-  syntax clear
-elseif exists("b:current_syntax")
-  finish
-endif
+" Always clear syntax
+syntax clear
 
 " Read the C syntax to start with
 if version < 600
