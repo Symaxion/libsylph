@@ -90,11 +90,11 @@ Table of Contents
       make
 
   Please note you might need to specify the path to a C++11 compiler
-  explicitly by using `-DCMAKE_CXX_COMPILER=/path/to/c++'.
+  explicitly by using `-DCMAKE_CXX_COMPILER=/path/to/c++`.
 
   To enable debugging symbols and other useful debug output, such
   as debug logging, assertions, and line number information,
-  pass `-DCMAKE_BUILD_TYPE=Debug -DSYLPH_DEBUG=1' to cmake. Read
+  pass `-DCMAKE_BUILD_TYPE=Debug -DSYLPH_DEBUG=1` to cmake. Read
   the CMake documentation for more information about additional
   parameters that control the build.
 
@@ -144,25 +144,25 @@ Table of Contents
 
   Things you should mention:
   
-    * Your operating system, including version. For Linux users, state
-      your kernel version, architecture, and distro.
-    * The version of your compiler.
-    * The version of any other tools you are using important to the
-      problem (including LibSylph!).
-    * What you were trying to do, what actually happened, and how this
-      is not what you expected. Perhaps it's a feature, and not
-      a bug? ;)
-    * If you can reproduce the bug, and so, under what conditions.
-    * If the bug is specifically tied to a certain operating system, or
-      if you tried reproducing the bug on another operating system.
-    * A minimal test case showcasing the bug. In case this is not
-      possible, step-by-step instructions on how to reproduce the bug.
-      The test case should not contain anything more than necessary,
-      and shouldn't link with any other libraries than the standard
-      libraries and LibSylph. If a certain library is essential to
-      demonstrate the problem, please make sure it's readily available.
-    * Any error messages, including backtraces from a debugger in case
-      of program-terminating bugs (e.g. overflows, exceptions, ...)
-    * If you have one, a patch to fix the bug :)
+  * Your operating system, including version. For Linux users, state
+    your kernel version, architecture, and distro.
+  * The version of your compiler.
+  * The version of any other tools you are using important to the
+    problem (including LibSylph!).
+  * What you were trying to do, what actually happened, and how this
+    is not what you expected. Perhaps it's a feature, and not
+    a bug? ;)
+  * If you can reproduce the bug, and so, under what conditions.
+  * If the bug is specifically tied to a certain operating system, or
+    if you tried reproducing the bug on another operating system.
+  * A minimal test case showcasing the bug. In case this is not
+    possible, step-by-step instructions on how to reproduce the bug.
+    The test case should not contain anything more than necessary,
+    and shouldn't link with any other libraries than the standard
+    libraries and LibSylph. If a certain library is essential to
+    demonstrate the problem, please make sure it's readily available.
+  * Any error messages, including backtraces from a debugger in case
+    of program-terminating bugs (e.g. overflows, exceptions, ...)
+  * If you have one, a patch to fix the bug :)
 
 <!----------------------------------------------------------------------------->
