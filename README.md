@@ -30,6 +30,8 @@ Table of Contents
 - Build instructions
     - Compiling the source code
     - Installing
+    - Running the test suite
+    - Alternate installation methods
 
 - Contact info
     - Copyright and licensing
@@ -43,32 +45,37 @@ Table of Contents
 1.1 Supported Operating Systems
 -------------------------------
 
-  Currently, LibSylph can be run most Unix-systems, including, but not limited to,
-  Linux, FreeBSD, Cygwin, Mac OS X, and a few others.  In order for the binary
-  relocation function to work (i.e.  `thisapp->XXX()` ), support for
-  `/proc/self/exe` is required. On Mac OS X, the `/proc` filesystem is not 
-  enabled by default. However, OS X provides an alternate method for retrieving
-  the full path to the running executable, therefore no extra software is needed
-  to function correctly on Mac OS X.
+  Currently, LibSylph can be built for most Unix-systems, including, but not
+  limited to, Linux, FreeBSD, Cygwin, Mac OS X, and a few others.  In order for
+  the binary relocation function to work (i.e.  `thisapp->XXX()` ), support for
+  `/proc/self/exe` is required. If the operating system does not have a
+  `/proc/self/exe`, (e.g OS X) other methods are used to make binary relocation
+  work. 
 
-  Minimal support for Microsoft Windows is included as well. However, no
-  prepackaged compiler for this platform meets the required features (see
-  section 1.2), therefore LibSylph WON'T run by default on Microsoft Windows
-  currently. You can always try to set up a conforming compiler yourself. For
-  that reason, we do not support nor endorse LibSylph on Microsoft Windows. You
-  will see that certain functionality might be flawed, lacking, or nonexistent
-  on Windows. Please do not report this as a bug until official support is
-  added.  
+  LibSylph is known to work on OS X &ge; 10.6 and most Linux distributions.
+  Other platforms are not officially supported, but should work, possible with
+  minimal adaptations.
+
+  Some support for Microsoft Windows is included as well. However, no compiler
+  is currently able to build both LibSylph and all of its dependencies, which is
+  important because Windows does not have a standardized C++ ABI. 
+  
+  Preliminary tests show that LibSylph, in its current form, will build with
+  some modifications on Windows but the resulting binaries are unusable. Also,
+  many LibSylph features are either not ported yet or Microsoft's POSIX layer
+  does not implement the required functions correctly. Therefore there is no
+  official support for LibSylph on Windows yet.
 
 1.2 Supported Compilers
 -----------------------
 
-  As of now, only one specific compiler is supported: the GNU C++ compiler
-  (g++), version 4.5.3. LibSylph uses certain GNU C++ specific extensions.
-  Furthermore, support for certain C++11 constructs is required. At the day of
-  writing this document, only the compiler mentioned above supports these
-  extensions. In case you found another compiler to meet these requirements,
-  please contact the LibSylph developers (see section 3.2).
+  LibSylph requires that certain C++11 constructs are available in the compiler,
+  and, as of writing, only very few compilers support these. While there is some
+  support for building LibSylph with only C++03 available, this will disable
+  most of LibSylph's features.
+
+  Compilers which are currently known to support these features are GCC &ge;
+  4.5.3 and Clang &ge; 3.1 with libc++.
 
 2. Build Instructions
 =====================
@@ -80,7 +87,9 @@ Table of Contents
              
   LibSylph depends on boehm-gc, icu, and gettext. You need to have these
   programs installed first. Please consult your operating system vendor's
-  manuals or look at the Installation page on our wiki.
+  manuals or look at the 
+  [Installation](http://libsylph.sourceforge.net/wiki/Installation) 
+  page on our wiki.
             
 ### 2.1.2 Building ###
             
@@ -119,6 +128,26 @@ Table of Contents
 
   This will build and run the entire test suite, as well as building the gtest
   (Google Test) framework, which is included with the source code.
+
+2.4 Alternate installation methods
+----------------------------------
+
+### 2.4.1 Mac OS X ###
+  You can install LibSylph on OS X through our 
+  [Homebrew](http://mxcl.github.com/homebrew/)
+  tap. This will automate the build process for you, installing all required
+  dependencies along the way. Note: this will build and install GCC as well, as
+  there are still a few problems with using Clang. However, the resulting
+  binaries can be used for linking by Clang.
+
+  Add our tap:
+  
+      brew tab SynthiNet/synthinet
+
+  Install LibSylph (latest Git revision):
+
+      brew install --use-gcc --HEAD libsylph
+
 
 3. Contact info
 ===============
