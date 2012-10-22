@@ -1,0 +1,49 @@
+# SylphMain
+snippet symain
+	int SylphMain(Array<String> args) {
+		${1}
+		return 0;
+	}
+
+snippet sfore
+	sforeach(${1:auto}& ${2:i}, ${3:container}) {
+		${4:/* code */}
+	}${5}
+
+snippet sycl
+	class ${1:`Filename('$1', 'Name')`} : public ${2:virtual }${3:Object} {
+	public:
+		$1();
+		$1(const $1& other);
+		virtual ~$1();
+
+	private:
+		${4}
+	};
+
+snippet sycli
+	#include "${1:`Filename('$1', 'Name')`}.h"
+
+	$1::$1() {
+
+	}
+
+	$1::$1(const $1& other) {
+
+	}
+
+	$$1::~$1() {
+
+	}
+
+snippet syclt 
+	template<${1:class T}>
+	class ${2:`Filename('$1', 'Name')`} : public ${3:virtual }${4:Sylph::Object} {
+	public:
+		$2();
+		$2(const $2<$1>& other);
+		virtual ~$2();
+
+	private:
+		${5}
+	};
