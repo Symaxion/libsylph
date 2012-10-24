@@ -9,11 +9,8 @@
 !.devctl
 !.gitattributes
 
-# Eclipse project files
-!.settings/
-!.settings/*
-!.cproject
-!.project
+# Vim project files
+!.vimproject
 
 # Built files
 a.out
@@ -37,6 +34,7 @@ docs/latex/**
 *.rej
 *.patch
 *.tmp
+*.swp
 
 # CMake generated files
 CMakeCache.txt
@@ -44,7 +42,8 @@ CMakeFiles/**
 Makefile
 cmake_install.cmake
 build/**
-build-clang/**
+build-*/**
 
 # OS Specific
 .DS_Store
+Thumbs.db

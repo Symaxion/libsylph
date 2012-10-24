@@ -1,0 +1,274 @@
+" Project vimrc file for LibSylph
+" Author: Frank "SeySayux" Erens
+
+" Options {{{1
+
+" Helper functions {{{2
+fun! s:GitInfo(flag)
+  return substitute(system("git config ".a:flag), '.$', '', '')
+endfun
+" }}}
+
+if !exists("g:LibSylphEditCommand")
+  let g:LibSylphEditCommand = 'FocbTab'
+endif
+
+if !exists("g:LibSylphName")
+  let g:LibSylphName = s:GitInfo("user.name")
+endif
+
+if !exists("g:LibSylphEmail")
+  let g:LibSylphEmail = s:GitInfo("user.email")
+endif
+" }}}
+
+exe "so ".g:ProjectRoot."/.vimproject/plugins/focb.vim"
+
+exe "set makeprg=cd\\ ".g:ProjectRoot.";\\ ./developers.sh\\ cmake;\\ make\\ -C\\ ".
+    \ g:ProjectRoot."/build"
+
+" Helpers {{{1
+
+fun! s:DefaultCompiler() 
+  if has("macunix")
+    return "g++-4.7"
+  else
+    return "g++"
+  endif
+endfun
+
+fun! s:SuffixForCompiler(compiler) 
+  if match(a:compiler, 'clang') != -1
+    return 'clang'
+  elseif match(a:compiler, 'g++') != -1
+    return 'gcc'
+  elseif match(a:compiler, '/') != -1
+    return fnamemodify(a:compiler, ':h')
+  elseif match(a:compiler, 'default') != -1
+    return ''
+  else
+    return a:compiler
+  endif
+endfun
+
+fun! s:CMake(...)
+  if a:0 == 1
+    let l:compiler = a:1
+    let l:suffix = '-'.s:SuffixForCompiler(a:1)
+  else
+    let l:compiler = s:DefaultCompiler()
+    let l:suffix = ''
+  endif
+
+  exe "lcd ".g:ProjectRoot
+  exe "!rm -rf build".l:suffix."; mkdir -p build".l:suffix.";"
+        \ "cd build".l:suffix."; " . 
+        \ "cmake -DCMAKE_CXX_COMPILER=".l:compiler." .."
+endfun
+
+fun! s:ToRelativePath(path)
+  return substitute(a:path, g:ProjectRoot, '', '')
+endfun
+
+fun! s:InProject(path)
+  return match(a:path, "^".g:ProjectRoot) != -1
+endfun
+
+fun! s:EditInProject(path)
+  exe g:LibSylphEditCommand." ".g:ProjectRoot.a:path
+endfun
+
+fun! s:WarningMsg(msg)
+  echohl WarningMsg
+  echo a:msg
+  echohl NONE
+endfun
+
+" }}}
+
+" Templates {{{1
+
+fun! s:GenerateHeaderGuard()
+  let l:file = s:ToRelativePath(expand("%:p"))
+  
+  return 
+        \ substitute(
+        \ substitute(
+        \ substitute(
+        \ substitute(l:file, "^/src/", "", ""),
+        \            "/", "_", 'g'),
+        \            ".h$", "", ""),
+        \            ".*", "\\U&", "")."_H_"
+endfun
+
+fun! s:GenerateHeaderName()
+  let l:file = s:ToRelativePath(expand("%:p"))
+
+  if match(l:file, "^/test", "") != -1
+    return substitute(
+         \ substitute(l:file, "^/test", "Sylph", ''),
+         \            "\.cpp$", ".h", '')
+  else
+    return expand("%:t:r").".h"
+  endif
+endfun
+
+" Note: this function is global as snippets call it
+fun! g:GenerateTestName()
+  return "Test".expand("%:t:r")
+endfun
+
+fun! s:ReadTemplateHelper(tpl)
+  let l:author = g:LibSylphName 
+  let l:email = g:LibSylphEmail
+  let l:year = strftime("%Y")
+
+  exe "0r ".g:ProjectRoot."/.vimproject/tpl/".a:tpl
+  exe "silent %s/COPYRIGHT HERE/Copyright (c) ".l:year." ".l:author.
+       \ " <".l:email.">"
+
+  exe "silent! %s/HEADER_GUARD_HERE/".s:GenerateHeaderGuard()
+  exe "silent %s/HEADER_HERE/".escape(s:GenerateHeaderName(), '/')
+  exe "silent %s/TEST_NAME_HERE/".g:GenerateTestName()
+
+  exe "silent! ?Code here"
+
+  nohl
+  set modified
+endfun
+
+fun! s:ReadTemplate(exists)
+  if !s:InProject(expand("%:p"))
+    return
+  endif
+
+  if !a:exists || getfsize(expand("%:p")) <= 2
+    let l:file = s:ToRelativePath(expand("%:p"))
+
+    if match(l:file, "^/src/Sylph", "") != -1
+      if match(l:file, "\.h$", "") != -1
+        if match(l:file, "^/src/Sylph/Core", "") != -1
+          call s:ReadTemplateHelper("core.tpl.h")
+        else
+          call s:ReadTemplateHelper("tpl.h")
+        endif
+      elseif match(l:file, "^\.cpp$", "") != -1
+        call s:ReadTemplateHelper("tpl.cpp")
+      endif
+    elseif match(l:file, "^/test", "") != -1 && 
+          \ match(l:file, "\.cpp$", "") != -1
+      call s:ReadTemplateHelper("test.tpl.cpp")
+    endif
+  endif
+endfun
+
+" }}}
+
+" Build & Run {{{1
+fun! s:RunTests(...)
+  if a:0 == 1
+    let l:suffix = '-'.s:SuffixForCompiler(a:1)
+  else
+    let l:suffix = ''
+  endif
+
+  exe "bel 16new"
+  exe "lcd ".g:ProjectRoot."/build".l:suffix
+  set buftype=nofile
+  set bufhidden=hide
+  setlocal noswapfile
+  setlocal filetype=gtest
+  setlocal nospell
+  exe "0r !make test"
+endfun
+
+fun! s:SwitchCompiler(compiler)
+  if a:compiler == 'default'
+    let l:suffix = ''
+  else
+    let l:suffix = '-'.s:SuffixForCompiler(a:compiler)
+  endif
+
+  exe "set makeprg=make\\ -C\\ ".g:ProjectRoot."/build".l:suffix
+  echo "Now building in /build".l:suffix
+endfun
+" }}}
+
+" Go To commands {{{1
+
+fun! s:GoToHeader()
+  let l:file = s:ToRelativePath(expand("%:p"))
+
+  if match(l:file, "^/src/Sylph", "") != -1
+    if match(l:file, "\.h$", "") != -1
+      call s:WarningMsg("Already in header file.")
+    elseif match(l:file, "\.cpp$", "") != -1
+      call s:EditInProject(substitute(l:file, "\.cpp$", ".h", "")) 
+    else
+      call s:WarningMsg("Not in a source file.")
+    endif
+  elseif match(l:file, "^/test.*\.cpp$", "") != -1
+    call s:EditInProject(substitute(
+                       \ substitute(l:file, "\.cpp$", ".h", ""),
+                       \            "^/test", "/src/Sylph", ""))
+  else
+    call s:WarningMsg("Not in a source file.")
+  endif
+endfun
+
+fun! s:GoToSource()
+  let l:file = s:ToRelativePath(expand("%:p"))
+
+  if match(l:file, "^/src/Sylph", "") != -1
+    if match(l:file, "\.cpp$", "") != -1
+      call s:WarningMsg("Already in source file.")
+    elseif match(l:file, "\.h$", "") != -1
+      call s:EditInProject(substitute(l:file, "\.h$", ".cpp", "")) 
+    else
+      call s:WarningMsg("Not in a source file.")
+    endif
+  elseif match(l:file, "^/test.*\.cpp$", "") != -1
+    call s:EditInProject(substitute(l:file, "^/test", "/src/Sylph", "")) 
+  else
+    call s:WarningMsg("Not in a source file.")
+  endif
+endfun
+
+fun! s:GoToTest()
+  let l:file = s:ToRelativePath(expand("%:p"))
+
+  if match(l:file, "^/test.*\.cpp$", "") != -1
+      call s:WarningMsg("Already in test file.")
+  elseif match(l:file, "^/src/Sylph", "") != -1
+    if match(l:file, "\.cpp$", "") != -1
+      call s:EditInProject(substitute(l:file, "^/src/Sylph", "/test", ""))
+    elseif match(l:file, "\.h$", "") != -1
+      call s:EditInProject(substitute(
+                         \ substitute(l:file, "\.h$", ".cpp", ""),
+                         \            "^/src/Sylph", "/test", ""))
+    else
+      call s:WarningMsg("Not in a source file.")
+    endif
+  else
+    call s:WarningMsg("Not in a source file.")
+  endif
+endfun
+
+" }}}
+
+" Commands {{{
+command! -nargs=? CMake call s:CMake(<f-args>)
+command! -nargs=? RunTests call s:RunTests(<f-args>)
+command! -nargs=1 SwitchCompiler call s:SwitchCompiler(<f-args>)
+
+command! Header call s:GoToHeader()
+command! Source call s:GoToSource()
+command! Test   call s:GoToTest()
+
+au! BufWinEnter * call s:ReadTemplate(1)
+
+" }}}
+
+let b:ProjectFileSuccessfullyLoaded = 1
+
+" vim: fdm=marker
