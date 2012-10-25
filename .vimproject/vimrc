@@ -128,8 +128,8 @@ fun! s:ReadTemplateHelper(tpl)
        \ " <".l:email.">"
 
   exe "silent! %s/HEADER_GUARD_HERE/".s:GenerateHeaderGuard()
-  exe "silent %s/HEADER_HERE/".escape(s:GenerateHeaderName(), '/')
-  exe "silent %s/TEST_NAME_HERE/".g:GenerateTestName()
+  exe "silent! %s/HEADER_HERE/".escape(s:GenerateHeaderName(), '/')
+  exe "silent! %s/TEST_NAME_HERE/".g:GenerateTestName()
 
   exe "silent! ?Code here"
 
