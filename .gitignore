@@ -26,6 +26,7 @@ Default/**
 # Generated documenation
 docs/html/**
 docs/latex/**
+docs/xml/**
 
 # Backup and patch files
 *~

@@ -28,7 +28,6 @@
     <includes visible="$SHOW_INCLUDE_FILES"/>
     <inheritancegraph visible="$CLASS_GRAPH"/>
     <collaborationgraph visible="$COLLABORATION_GRAPH"/>
-    <allmemberslink visible="yes"/>
     <memberdecl>
       <nestedclasses visible="yes" title=""/>
       <publictypes title=""/>
@@ -73,6 +72,7 @@
       <properties title=""/>
       <events title=""/>
     </memberdef>
+    <allmemberslink visible="yes"/>
     <usedfiles visible="$SHOW_USED_FILES"/>
     <authorsection visible="yes"/>
   </class>
@@ -134,11 +134,11 @@
     <briefdescription visible="yes"/>
     <groupgraph visible="$GROUP_GRAPHS"/>
     <memberdecl>
-      <classes visible="yes" title=""/>
-      <namespaces visible="yes" title=""/>
-      <dirs visible="yes" title=""/>
       <nestedgroups visible="yes" title=""/>
+      <dirs visible="yes" title=""/>
       <files visible="yes" title=""/>
+      <namespaces visible="yes" title=""/>
+      <classes visible="yes" title=""/>
       <defines title=""/>
       <typedefs title=""/>
       <enums title=""/>
