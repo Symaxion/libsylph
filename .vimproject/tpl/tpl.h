@@ -35,3 +35,5 @@ SYLPH_BEGIN_NAMESPACE
 SYLPH_END_NAMESPACE
 
 #endif /* HEADER_GUARD_HERE */
+
+// vim: ts=4:sts=4:sw=4:sta:et:tw=80:nobk:pa+=,../../src
