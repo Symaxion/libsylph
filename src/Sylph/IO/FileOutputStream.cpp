@@ -41,10 +41,10 @@ FileOutputStream::~FileOutputStream() {
 void FileOutputStream::write(const Array<byte> b, off_t off, size_t len)
         throw(IOException,IndexException) {
     if (closed) sthrow(IOException, "Tried to write to a closed OutputStream!");
-    if (len == 0) len = b.length;
-    if (off + len > b.length) sthrow(IndexException, "Array out of bounds");
-    unsigned i = fwrite(b.carray(), 1, b.length, fptr);
-    if(i != b.length) sthrow(IOException, "Unable to write to file");
+    if (len == 0) len = b.size();
+    if (off + len > b.size()) sthrow(IndexException, "Array out of bounds");
+    unsigned i = fwrite(b.carray(), 1, b.size(), fptr);
+    if(i != b.size()) sthrow(IOException, "Unable to write to file");
 }
 void FileOutputStream::close() {
     OutputStream::close();

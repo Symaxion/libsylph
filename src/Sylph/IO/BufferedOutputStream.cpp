@@ -42,7 +42,7 @@ void BufferedOutputStream::flush() {
 }
 
 BufferedOutputStream& BufferedOutputStream::operator<<(const byte b) {
-    if(used == buffer.length) flush();
+    if(used == buffer.size()) flush();
     buffer[used] = b;
     used++;
     return *this;

@@ -53,8 +53,8 @@ public:
     virtual void flush() {}
     /** */
     virtual void write(const Array<byte> b, off_t off = 0, size_t len = 0)  {
-        if(len == 0) len = b.length;
-        if(off+len > b.length) sthrow(IndexException, "Array out of bounds");
+        if(len == 0) len = b.size();
+        if(off+len > b.size()) sthrow(IndexException, "Array out of bounds");
         for(idx_t i = off; i < off+len; i++) {
             operator<<(b[i]);
         }

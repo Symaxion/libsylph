@@ -37,7 +37,7 @@ ByteBuffer::ByteBuffer(Traits traits, size_t bufsize) : _traits(traits),
         _array(bufsize), _mark(0), _pos(0),  _size(0) { }
 
 ByteBuffer::ByteBuffer(const Array<byte> & ar) : _traits(RW), _array(ar.copy()),
-        _mark(0), _pos(0), _size(ar.length) { }
+        _mark(0), _pos(0), _size(ar.size()) { }
 
 ByteBuffer::ByteBuffer(const ByteBuffer& orig) : _traits(orig._traits), 
         _array(orig._array.copy()), _mark(orig._mark), _pos(orig._pos),
@@ -204,10 +204,10 @@ ByteBuffer::operator const Array<byte>() const {
 
 void ByteBuffer::ensureCapacity(size_t capacity) {
 
-    if (capacity < _array.length) return;
+    if (capacity < _array.size()) return;
 
-    Array<byte> newArray(size_t(_array.length << 1));
-    arraycopy(_array, 0, newArray, 0, _array.length);
+    Array<byte> newArray(size_t(_array.size() << 1));
+    arraycopy(_array, 0, newArray, 0, _array.size());
     _array = newArray;
 }
 

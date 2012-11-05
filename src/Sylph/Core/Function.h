@@ -96,8 +96,8 @@ public:
     }
 
     Array<Rp> operator()(Array<Tp> list) {
-        Array<Rp> toReturn(list.length);
-        for(idx_t i = 0; i < list.length;++i) {
+        Array<Rp> toReturn(list.size());
+        for(idx_t i = 0; i < list.size();++i) {
             toReturn[i] = func(list[i]);
         }
         return toReturn;

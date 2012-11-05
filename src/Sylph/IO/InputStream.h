@@ -54,8 +54,8 @@ public:
 
     /** */
     virtual fssize_t read(Array<byte>& b, off_t offset = 0, size_t len = 0) {
-        if(!len) len = b.length;
-        if(offset + len > b.length)
+        if(!len) len = b.size();
+        if(offset + len > b.size())
             sthrow(IndexException, "Index out of bounds");
         if(eof()) return -1;
         fssize_t actuallyRead = 0;

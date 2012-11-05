@@ -74,8 +74,8 @@ StringBuffer& StringBuffer::operator<<(char c) {
 }
 
 StringBuffer& StringBuffer::operator<<(Array<char> c) {
-    ensureCapacity(_length+c.length);
-    for(idx_t i = 0; i < c.length; i++) {
+    ensureCapacity(_length+c.size());
+    for(idx_t i = 0; i < c.size(); i++) {
         operator<<(c[i]);
     }
     return *this;
@@ -89,8 +89,8 @@ StringBuffer& StringBuffer::operator<<(uchar c) {
 }
 
 StringBuffer& StringBuffer::operator<<(Array<uchar> c) {
-    ensureCapacity(_length+c.length);
-    for(idx_t i = 0; i < c.length; i++) {
+    ensureCapacity(_length+c.size());
+    for(idx_t i = 0; i < c.size(); i++) {
         operator<<(c[i]);
     }
     return *this;
@@ -139,12 +139,12 @@ StringBuffer::operator String() const {
 }
 
 void StringBuffer::ensureCapacity(std::size_t capacity) {
-    if(buf.length > capacity) return;
+    if(buf.size() > capacity) return;
 
-    size_t newsize = buf.length;
+    size_t newsize = buf.size();
     while(newsize < capacity) newsize = newsize << 1;
     Array<uchar> newbuf(newsize);
-    arraycopy(buf,0,newbuf,0,buf.length);
+    arraycopy(buf,0,newbuf,0,buf.size());
     buf = newbuf;
 }
 SYLPH_END_NAMESPACE

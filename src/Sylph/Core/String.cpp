@@ -175,7 +175,7 @@ String::~String() {
 }
 
 std::size_t String::length() const {
-    return strdata->data.length;
+    return strdata->data.size();
 }
 
 uchar String::at(sidx_t idx) const throw(IndexException) {
@@ -233,7 +233,7 @@ const Array<uchar> String::utf16() const {
 String String::toLowerCase() const {
     Array<uchar> dest(length() << 1);
     UErrorCode error = U_ZERO_ERROR;
-    size_t newlength = u_strToLower((UChar*)dest.carray(), dest.length,
+    size_t newlength = u_strToLower((UChar*)dest.carray(), dest.size(),
             (UChar*)strdata->data.carray(), length(), 0, &error);
     if(U_FAILURE(error)) {
         sthrow(Exception,u_errorName(error));
@@ -247,7 +247,7 @@ String String::toLowerCase() const {
 String String::toUpperCase() const {
     Array<uchar> dest(length() << 1);
     UErrorCode error = U_ZERO_ERROR;
-    size_t newlength = u_strToUpper((UChar*)dest.carray(), dest.length,
+    size_t newlength = u_strToUpper((UChar*)dest.carray(), dest.size(),
             (UChar*)strdata->data.carray(), length(), 0, &error);
 
     if(U_FAILURE(error)) {
@@ -296,7 +296,7 @@ Array<String> String::split(Array<uchar> delimiters) const {
     idx_t end = 0;
 
     for(idx_t i = 0; i < length(); ++i) {
-        for(idx_t j = 0; j < delimiters.length; ++j) {
+        for(idx_t j = 0; j < delimiters.size(); ++j) {
             if(at(i) == delimiters[j]) {
                 end = i;
                 if(start != end) toReturn.add(substring(start,end-1));

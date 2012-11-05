@@ -58,8 +58,8 @@ template<class T>
 inline void arraycopy(const Array<T> & src, std::size_t srcPos, Array<T> & dest,
         std::size_t destPos, std::size_t length) throw (Exception) {
 
-    std::size_t srcSize = src.length;
-    std::size_t destSize = dest.length;
+    std::size_t srcSize = src.size();
+    std::size_t destSize = dest.size();
     if(srcPos + length > srcSize) 
         sthrow(IndexException, "Source array too short");
     if(destPos + length > destSize) 

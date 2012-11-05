@@ -44,7 +44,7 @@ bool BufferedInputStream::eof() const {
 
 void BufferedInputStream::mark(fsize_t f) {
     markpos = currentIdx;
-    marklen = std::min(int(f), int(buffer.length - currentIdx));
+    marklen = std::min(int(f), int(buffer.size() - currentIdx));
 }
 fsize_t BufferedInputStream::skip(fsize_t f) {
     byte b;
@@ -61,11 +61,11 @@ fsize_t BufferedInputStream::skip(fsize_t f) {
 }
 void BufferedInputStream::reset()  {
     currentIdx = markpos;
-    marklen = buffer.length - currentIdx;
+    marklen = buffer.size() - currentIdx;
 }
 
 InputStream & BufferedInputStream::operator>>(byte& b) {
-    if(currentIdx == buffer.length) readNext();
+    if(currentIdx == buffer.size()) readNext();
     b = buffer[currentIdx];
     if(marklen > 0) marklen--;
     else if(marklen == 0) markpos = 0;

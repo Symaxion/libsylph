@@ -123,7 +123,7 @@ public:
                 map(obj) {
             if (begin && !map->empty()) {
                 count = map->size();
-                idx = map->buckets.length - 1;
+                idx = map->buckets.size() - 1;
                 currentPointer = map->buckets[idx];
                 while (currentPointer == null) {
                     currentPointer = map->buckets[--idx];
@@ -202,9 +202,9 @@ public:
      */
     HashMap(const HashMap<Key, Value> & orig)
     : loadFactor(orig.loadFactor), _size(orig._size),
-    buckets(orig.buckets.length), threshold(orig.threshold),
+    buckets(orig.buckets.size()), threshold(orig.threshold),
     hashf(orig.hashf), equf(orig.equf) {
-        arraycopy(orig.buckets, 0, buckets, 0, orig.buckets.length);
+        arraycopy(orig.buckets, 0, buckets, 0, orig.buckets.size());
     }
 
     /**
@@ -217,7 +217,7 @@ public:
      */
     HashMap(std::initializer_list<Pair<Key,Value> > init) : loadFactor(.75f),
     _size(0), buckets((init.size() << 1) + 1),
-    threshold(buckets.length*loadFactor), hashf(Hash<Key>()),
+    threshold(buckets.size()*loadFactor), hashf(Hash<Key>()),
     equf(Equals<Value*>()) {
         for (const Pair<Key,Value>* it = init.begin(); it != init.end(); ++it) {
             put(it->first, new Value(it->second));
@@ -227,7 +227,7 @@ public:
     virtual ~HashMap() {
         try {
             size_t count = size();
-            idx_t idx = buckets.length - 1;
+            idx_t idx = buckets.size() - 1;
             EntryPtr currentPointer = buckets[idx];
             while (count > 0) {
                 while (currentPointer == null) {
@@ -273,8 +273,8 @@ public:
      * @complexity O(log n)
      */
     bool containsValue(const Value * value) const {
-        if(buckets.length == 0) return false;
-        for (idx_t i = (buckets.length - 1); (signed)i >= 0; --i) {
+        if(buckets.size() == 0) return false;
+        for (idx_t i = (buckets.size() - 1); (signed)i >= 0; --i) {
             EntryPtr entry = buckets[i];
             while (entry != null) {
                 if (equf(value, entry->value)) return true;
@@ -449,17 +449,17 @@ private:
     EqualsFunction equf;
 
     sint hash(const Key& key) const {
-        return abs(hashf(key) % buckets.length);
+        return abs(hashf(key) % buckets.size());
     }
 
     void rehash() {
         Array<EntryPtr> oldBuckets = buckets;
 
-        int newcapacity = (buckets.length * 2) + 1;
+        int newcapacity = (buckets.size() * 2) + 1;
         threshold = (int) (newcapacity * loadFactor);
         buckets = Array<EntryPtr > (newcapacity);
 
-        for (sidx_t i = oldBuckets.length - 1; i >= 0; i--) {
+        for (sidx_t i = oldBuckets.size() - 1; i >= 0; i--) {
             EntryPtr entry = oldBuckets[i];
             while (entry != null) {
                 idx_t idx = hash(entry->key);

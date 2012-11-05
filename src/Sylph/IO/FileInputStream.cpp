@@ -46,10 +46,10 @@ fsize_t FileInputStream::available() const {
 
 fssize_t FileInputStream::read(Array<byte>& b, off_t offset, size_t len)
         throw(IndexException,IOException) {
-    if (!len) len = b.length;
-    if (offset + len > b.length) sthrow(IndexException, "Index out of bounds");
+    if (!len) len = b.size();
+    if (offset + len > b.size()) sthrow(IndexException, "Index out of bounds");
     if (eof()) return -1;
-    return fread(b.carray(), 1, b.length, fptr);
+    return fread(b.carray(), 1, b.size(), fptr);
 }
 
 bool FileInputStream::eof() const {

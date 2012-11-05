@@ -184,7 +184,7 @@ public:
      * @complexity O(0)
      */
     std::size_t capacity() const {
-        return elements.length;
+        return elements.size();
     }
 
     /**
@@ -290,9 +290,9 @@ public:
             checkIfOutOfBounds(idx);
         } straced;
         _size--;
-        if (idx < (elements.length - 1))
+        if (idx < (elements.size() - 1))
             arraycopy(elements, idx + 1, elements, idx,
-                elements.length - 1 - idx);
+                elements.size() - 1 - idx);
     }
 
     /**
@@ -359,9 +359,9 @@ public:
      * @complexity O(n)
      */
     Vector& operator=(const Vector<T> & rhs) {
-        elements = Array<T > (rhs.elements.length);
+        elements = Array<T > (rhs.elements.size());
         _size = rhs.size();
-        arraycopy(rhs.elements, 0, elements, 0, rhs.elements.length);
+        arraycopy(rhs.elements, 0, elements, 0, rhs.elements.size());
         return *this;
     }
 
@@ -370,12 +370,12 @@ private:
     std::size_t _size;
 
     void ensureCapacity(std::size_t capacity) {
-        if (capacity > elements.length) {
+        if (capacity > elements.size()) {
             std::size_t newsize;
-            newsize = elements.length << 1;
+            newsize = elements.size() << 1;
             Array<T> oldElements = elements;
             elements = Array<T > (newsize);
-            arraycopy(oldElements, 0, elements, 0, oldElements.length);
+            arraycopy(oldElements, 0, elements, 0, oldElements.size());
         }
     }
 
