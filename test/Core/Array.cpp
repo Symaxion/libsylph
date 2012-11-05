@@ -76,14 +76,14 @@ namespace {
     TEST_IS_EFFICIENT_BACK_RETRIEVABLE(Array);
 
     TEST_F(TestArray, testCorrectConstructed) {
-        EXPECT_EQ(5u, testObj1->length);
-        EXPECT_EQ(4u, testObj2->length);
-        EXPECT_EQ(4u, ar1->length);
-        EXPECT_EQ(4u, ar2->length);
-        EXPECT_EQ(7u, ar3->length);
-        EXPECT_EQ(5u, arfilled1.length);
-        EXPECT_EQ(6u, arfilled2.length);
-        EXPECT_EQ(6u, arfilled3.length);
+        EXPECT_EQ(5u, testObj1->size());
+        EXPECT_EQ(4u, testObj2->size());
+        EXPECT_EQ(4u, ar1->size());
+        EXPECT_EQ(4u, ar2->size());
+        EXPECT_EQ(7u, ar3->size());
+        EXPECT_EQ(5u, arfilled1.size());
+        EXPECT_EQ(6u, arfilled2.size());
+        EXPECT_EQ(6u, arfilled3.size());
     }
 
     TEST_F(TestArray, testNulled) {
@@ -107,7 +107,7 @@ namespace {
     }
 
     TEST_F(TestArray, testInitlistFill) {
-        ASSERT_EQ(5u, arfilled1.length);
+        ASSERT_EQ(5u, arfilled1.size());
         EXPECT_EQ(5, arfilled1[0]);
         EXPECT_EQ(2, arfilled1[1]);
         EXPECT_EQ(9, arfilled1[2]);
@@ -121,7 +121,7 @@ namespace {
 
     TEST_F(TestArray, testLength) {
         Array<bool> lengthtest((size_t) 6);
-        ASSERT_EQ(6u, lengthtest.length);
+        ASSERT_EQ(6u, lengthtest.size());
     }
 
     TEST_F(TestArray, testLengthOverflow) {
@@ -177,7 +177,7 @@ namespace {
     }
 
     TEST_F(TestArray, testReverseIterator) {
-        idx_t cur = arfilled1.length - 1;
+        idx_t cur = arfilled1.size() - 1;
 
         for(Array<int>::reverse_iterator it = arfilled1.rbegin();
                 it != arfilled1.rend(); ++it) {
@@ -189,16 +189,16 @@ namespace {
     TEST_F(TestArray, testNegativeIndices) {
         EXPECT_EQ(7, arfilled1[-1]);
         EXPECT_EQ(1, arfilled1[-2]);
-        EXPECT_EQ(arfilled1[0], arfilled1[-arfilled1.length]);
+        EXPECT_EQ(arfilled1[0], arfilled1[-arfilled1.size()]);
     }
 
     TEST_F(TestArray, testNegativeOverflow) {
-        ASSERT_THROW(arfilled1[-(arfilled1.length + 1)] = 3, IndexException);
+        ASSERT_THROW(arfilled1[-(arfilled1.size() + 1)] = 3, IndexException);
     }
 
     TEST_F(TestArray, testRange) {
         Array<int> section = arfilled2[range(2, 4)];
-        ASSERT_EQ(3u, section.length);
+        ASSERT_EQ(3u, section.size());
         EXPECT_EQ(2, section[0]);
         EXPECT_EQ(3, section[1]);
         EXPECT_EQ(4, section[2]);
@@ -206,7 +206,7 @@ namespace {
 
     TEST_F(TestArray, testNegativeRange) {
         Array<int> section = arfilled1[range(1,-1)];
-        ASSERT_EQ(4u, section.length);
+        ASSERT_EQ(4u, section.size());
         EXPECT_EQ(2, section[0]);
         EXPECT_EQ(9, section[1]);
         EXPECT_EQ(1, section[2]);
@@ -241,7 +241,7 @@ namespace {
     TEST_F(TestArray, testShift) {
         Array<int> tmp = arfilled1.copy();
         EXPECT_EQ(5, shift(tmp));
-        EXPECT_EQ(4u, tmp.length);
+        EXPECT_EQ(4u, tmp.size());
         EXPECT_EQ(A_(2,9,1,7), tmp);
     }
 
