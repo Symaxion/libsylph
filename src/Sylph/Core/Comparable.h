@@ -71,6 +71,10 @@ S_CMP_SEQ_2_UNI(Right, Left)
 #define S_CMP_SEQ(Class) \
 S_CMP_SEQ_2_UNI(Class, Class)
 
+template<class T>
+int cmp(const T& a, const T& b) {
+    return a < b ? (a == b ? 0 : 1) : -1;
+}
         
 SYLPH_END_NAMESPACE
 
