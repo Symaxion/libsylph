@@ -385,7 +385,7 @@ public:
      * 
      * @param other The other array from which to use the data pointer
      */
-    Array<T> & operator=(const Array<T> & other) {
+    Array<T> & operator=(const Array<T>& other) {
         if (this->mData == other.mData) return *this;
 
         this->mData->refcount--;
@@ -472,7 +472,7 @@ public:
 
         Array<T> toReturn = Array<T>(*this);
         toReturn.mOffset += ran.first;
-        toReturn.mSize = ran.last - ran.first;
+        toReturn.mSize = ran.last - ran.first + 1;
 
         return toReturn;
     }
@@ -497,7 +497,7 @@ public:
 
         Array<T> toReturn = Array<T>(*this);
         toReturn.mOffset += ran.first;
-        toReturn.mSize = ran.last - ran.first;
+        toReturn.mSize = ran.last - ran.first + 1;
 
         return toReturn;
     }
@@ -507,16 +507,16 @@ private:
     size_t mSize;
 
     struct Data {
-        explicit Data(size_t length) : mSize(length), 
-                 mArray(new T[length]()), refcount(1) {
+        explicit Data(size_t length) : mArray(new T[length]()), refcount(1) {
         }
 
         ~Data() {
-            delete mArray;
+            delete[] mArray;
         }
-        const size_t mSize;
+
         T* mArray;
         suint refcount;
+
     } * mData;
 };
 

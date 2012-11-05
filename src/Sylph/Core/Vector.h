@@ -52,60 +52,61 @@ public:
 
     template<class C, class V>
     class S_ITERATOR : public RandomAccessIterator<V, S_ITERATOR<C,V> > {
+        template<class C1, class V1>
+        friend class S_ITERATOR;
     public:
         typedef RandomAccessIterator<V, S_ITERATOR<C,V> > super;
 
         S_ITERATOR(bool begin = false, C* obj = null) : super(begin),
-                _obj(obj) {
-            _currentIndex = begin ? 0 : _obj->size() - 1;
+                mObj(obj) {
+            mCurrentIndex = begin ? 0 : mObj->size() - 1;
         }
 
         template<class C1, class V1>
         bool equals(const S_ITERATOR<C1,V1>& other) const {
-            return _currentIndex == other._currentIndex &&
-                    _obj == other._obj;
+            return mCurrentIndex == other.mCurrentIndex &&
+                    mObj == other.mObj;
         }
 
         template<class C1, class V1>
-        S_ITERATOR(const S_ITERATOR<C1,V1>& other) {
-            _currentIndex = other._currentIndex;
-            _obj = other._obj;
+        S_ITERATOR(const S_ITERATOR<C1,V1>& other) :
+                mCurrentIndex(other.mCurrentIndex), mObj(other.mObj) {
         }
 
         typename super::value_type& current() {
-            return (*_obj)[_currentIndex];
+            return (*mObj)[mCurrentIndex];
         }
 
         typename super::const_reference current() const {
-            return (*_obj)[_currentIndex];
+            return (*mObj)[mCurrentIndex];
         }
 
         bool hasNext() const {
-            return _currentIndex < _obj->size() - 1;
+            return mCurrentIndex < mObj->size() - 1;
         }
 
         void next() {
-            _currentIndex++;
+            mCurrentIndex++;
         }
 
         bool hasPrevious() const {
-            return _currentIndex > 0;
+            return mCurrentIndex > 0;
         }
 
         void previous() {
-            _currentIndex--;
+            mCurrentIndex--;
         }
 
         idx_t currentIndex() const {
-            return _currentIndex;
+            return mCurrentIndex;
         }
 
         size_t length() const {
-            return _obj->size() - 1;
+            return mObj->size() - 1;
         }
-    //private:
-        idx_t _currentIndex;
-        C* _obj;
+    private:
+        idx_t mCurrentIndex;
+        C* mObj;
     };
 
     S_ITERABLE(Vector<T>,T)
@@ -119,7 +120,7 @@ public:
      * provided.
      */
     explicit Vector(std::size_t initialCount = 16) :
-            elements((std::size_t)initialCount), _size(0) {
+            elements((std::size_t)initialCount), mSize(0) {
     }
 
     /**
@@ -134,6 +135,20 @@ public:
     Vector(const Vector<T>& other) {
         (void)other;
         SYLPH_STUB;
+    }
+    
+    /**
+     *
+     * TODO implement
+     */
+    Vector(std::initializer_list<T> il) : elements(il.size() * 2), 
+            mSize(0) {
+        for(typename std::initializer_list<T>::const_iterator it = il.begin(); 
+                it != il.end(); ++it) {
+            add(*it);
+        }
+        
+        
     }
 
     /**
@@ -153,9 +168,9 @@ public:
      * @complexity O(1)
      */
     void add(const T & t) {
-        ensureCapacity(_size + 1);
-        _size++;
-        set(_size - 1, t);
+        ensureCapacity(mSize + 1);
+        ++mSize;
+        set(mSize - 1, t);
     }
 
     /**
@@ -167,9 +182,9 @@ public:
      * @param c Another Vector whose elements to append to this one.
      * @complexity O(n)
      */
-    void addAll(Vector<T> & c) {
-        ensureCapacity(_size + c._size);
-        for (Vector<T>::iterator it = c.begin();
+    void addAll(const Vector<T>& c) {
+        ensureCapacity(mSize + c.mSize);
+        for(Vector<T>::const_iterator it = c.begin();
                 it != c.end(); ++it) {
             add(*it);
         }
@@ -193,7 +208,7 @@ public:
      * @complexity O(n)
      */
     void clear() {
-        _size = 0;
+        mSize = 0;
         elements.clear();
     }
 
@@ -210,7 +225,7 @@ public:
      * @complexity O(1)
      */
     bool empty() const {
-        return _size == 0;
+        return mSize == 0;
     }
 
     /**
@@ -218,10 +233,9 @@ public:
      */
     const T & get(std::size_t idx) const throw(IndexException) {
         try {
-            checkIfOutOfBounds(idx);
+            checkBounds(idx);
             return elements[idx];
-        }
-        straced;
+        } straced;
     }
 
     /**
@@ -229,10 +243,9 @@ public:
      */
     T & get(std::size_t idx) throw(IndexException) {
         try {
-            checkIfOutOfBounds(idx);
+            checkBounds(idx);
             return elements[idx];
-        }
-        straced;
+        } straced;
     }
 
     /**
@@ -240,10 +253,10 @@ public:
      */
     sidx_t indexOf(const T & t, idx_t idx = 0) const throw(IndexException) {
         try {
-            checkIfOutOfBounds(idx);
+            checkBounds(idx);
         } straced;
         static Equals<T> equf;
-        for (std::size_t i = idx; i < _size; i++) {
+        for (std::size_t i = idx; i < mSize; i++) {
             if (equf(get(i), t)) {
                 return i;
             }
@@ -255,7 +268,7 @@ public:
      * @complexity O(n)
      */
     sidx_t lastIndexOf(const T & t) const {
-        return lastIndexOf(t, _size - 1);
+        return lastIndexOf(t, mSize - 1);
     }
 
     /**
@@ -265,8 +278,9 @@ public:
             throw(IndexException) {
         static Equals<T> equf;
         try {
-            checkIfOutOfBounds(idx);
+            checkBounds(idx);
         } straced;
+
         for (std::size_t i = idx; (signed)i >= 0; --i) {
             if (equf(get(i), t)) {
                 return i;
@@ -287,9 +301,9 @@ public:
      */
     void removeAt(std::size_t idx) throw(IndexException) {
         try {
-            checkIfOutOfBounds(idx);
+            checkBounds(idx);
         } straced;
-        _size--;
+        mSize--;
         if (idx < (elements.size() - 1))
             arraycopy(elements, idx + 1, elements, idx,
                 elements.size() - 1 - idx);
@@ -300,7 +314,7 @@ public:
      */
     void set(std::size_t idx, const T & t) throw(IndexException) {
         try {
-            checkIfOutOfBounds(idx);
+            checkBounds(idx);
             elements[idx] = t;
         }
         straced;
@@ -310,7 +324,7 @@ public:
      * @complexity O(0)
      */
     std::size_t size() const {
-        return _size;
+        return mSize;
     }
 
     /**
@@ -328,13 +342,22 @@ public:
      * @complexity O(n)
      */
     bool operator==(const Vector<T> & c) const {
-        if (_size != c.size()) return false;
+        if (mSize != c.size()) return false;
         else {
             for (std::size_t x = 0; x < c.size(); x++) {
                 if (get(x) != c.get(x)) return false;
             }
             return true;
         }
+    }
+
+    /**
+     * @complexity O(n)
+     */
+    inline bool operator<(const Vector<T>& rhs) const {
+    return std::lexicographical_compare(this->elements.carray(),
+            this->elements.carray() + this->size()-1, rhs.elements.carray(),
+            rhs.elements.carray() + rhs.size()-1);
     }
 
     /**
@@ -360,14 +383,15 @@ public:
      */
     Vector& operator=(const Vector<T> & rhs) {
         elements = Array<T > (rhs.elements.size());
-        _size = rhs.size();
+        mSize = rhs.size();
         arraycopy(rhs.elements, 0, elements, 0, rhs.elements.size());
         return *this;
     }
 
+
 private:
     Array<T> elements;
-    std::size_t _size;
+    std::size_t mSize;
 
     void ensureCapacity(std::size_t capacity) {
         if (capacity > elements.size()) {
@@ -379,12 +403,40 @@ private:
         }
     }
 
-    inline void checkIfOutOfBounds(std::size_t idx) const 
+    inline void checkBounds(std::size_t idx) const 
             throw(IndexException) {
-        if (idx >= _size) sthrow(IndexException, "Vector out of bounds");
+        if (idx >= mSize) sthrow(IndexException, "Vector out of bounds");
     }
 
 };
+
+template<class T>
+inline bool operator!=(const Vector<T>& lhs, const Vector<T>& rhs) {
+    return !(lhs == rhs);
+}
+
+template<class T>
+inline bool operator>=(const Vector<T>& lhs, const Vector<T>& rhs) {
+    return !(lhs < rhs);
+}
+
+template<class T>
+inline bool operator<=(const Vector<T>& lhs, const Vector<T>& rhs) {
+    return (lhs < rhs) || (lhs == rhs);
+}
+
+template<class T>
+inline bool operator>(const Vector<T>& lhs, const Vector<T>& rhs) {
+    return !(lhs < rhs) && !(lhs == rhs);
+}
+
+template<class T>
+Vector<T> operator+(const Vector<T>& lhs, const Vector<T>& rhs) {
+    Vector<T> toReturn((lhs.size() + rhs.size())*2);
+    toReturn.addAll(lhs);
+    toReturn.addAll(rhs);
+    return toReturn;
+}
 
 SYLPH_END_NAMESPACE
 

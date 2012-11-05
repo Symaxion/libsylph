@@ -244,13 +244,23 @@ namespace {
         EXPECT_EQ("wtf",s.trim());
 
         String t = "omg foo";
-        EXPECT_EQ("omg foo", s.trim());
+        EXPECT_EQ("omg foo", t.trim());
 
         String u = "lol";
-        EXPECT_EQ("lol", s.trim());
+        EXPECT_EQ("lol", u.trim());
     }
 
     TEST_F(TestString, testSplit) {
+        String s = "a   beta ccc\td";
+        Array<String> result = s.split();
+        ASSERT_EQ(4u,result.size());
+        EXPECT_EQ("a",result[0]);
+        EXPECT_EQ("beta",result[1]);
+        EXPECT_EQ("ccc",result[2]);
+        EXPECT_EQ("d",result[3]);
+    }
+
+    TEST_F(TestString, testSplitUntrimmed) {
         String s = " a   beta ccc\td ";
         Array<String> result = s.split();
         ASSERT_EQ(4u,result.size());
