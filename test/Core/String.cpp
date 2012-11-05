@@ -40,7 +40,7 @@ namespace {
     TEST_F(TestString, testFromAscii) {
         String s = "foobar";
         Array<uchar> a = s.utf16();
-        ASSERT_EQ(6u, a.length);
+        ASSERT_EQ(6u, a.size());
         EXPECT_EQ('f', a[0]);
         EXPECT_EQ('o', a[1]);
         EXPECT_EQ('o', a[2]);
@@ -52,7 +52,7 @@ namespace {
     TEST_F(TestString, testFromUtf8) {
         String s = "éèçàŒù£";
         Array<uchar> a = s.utf16();
-        ASSERT_EQ(8u, a.length);
+        ASSERT_EQ(8u, a.size());
         EXPECT_EQ(0x00E9, a[0]);
         EXPECT_EQ(0x00E8, a[1]);
         EXPECT_EQ(0x00E7, a[2]);
@@ -233,21 +233,38 @@ namespace {
     TEST_F(TestString, testContainment) {
         String s = "foobar";
         EXPECT_TRUE(s.contains("oba"));
+        EXPECT_TRUE(s.contains("foo"));
+        EXPECT_TRUE(s.contains("bar"));
+        EXPECT_TRUE(s.contains(""));
+        EXPECT_TRUE(s.contains("foobar"));
     }
 
     TEST_F(TestString, testTrim) {
         String s = "\t\twtf  \n";
         EXPECT_EQ("wtf",s.trim());
+
+        String t = "omg foo";
+        EXPECT_EQ("omg foo", s.trim());
+
+        String u = "lol";
+        EXPECT_EQ("lol", s.trim());
     }
 
     TEST_F(TestString, testSplit) {
         String s = " a   beta ccc\td ";
         Array<String> result = s.split();
-        ASSERT_EQ(4u,result.length);
+        ASSERT_EQ(4u,result.size());
         EXPECT_EQ("a",result[0]);
         EXPECT_EQ("beta",result[1]);
         EXPECT_EQ("ccc",result[2]);
         EXPECT_EQ("d",result[3]);
+    }
+
+    TEST_F(TestString, testSplitSingle) {
+        String s = "foo";
+        Array<String> result = s.split();
+        ASSERT_EQ(1u, result.size());
+        EXPECT_EQ("foo", result[0]);
     }
 
     TEST_F(TestString, testSubstring) {

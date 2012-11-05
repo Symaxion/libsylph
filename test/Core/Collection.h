@@ -68,7 +68,10 @@ namespace Sfinae {
 
         b = t1 == t2;
         b = t1 != t2;
+        b = t1 <= t2;
+        b = t1 >= t2;
         b = t1 < t2;
+        b = t1 > t2;
 
         i1 = t1.begin();
         i1 = t1.end();
@@ -98,10 +101,10 @@ namespace Sfinae {
         i1 = t1.rend();
         i2 = t1.rbegin();
         i2 = t1.rend();
-        i1 = t1.crbegin();
-        i1 = t1.crend();
-        i2 = t1.crbegin();
-        i2 = t1.crend();
+        ci1 = t1.crbegin();
+        ci1 = t1.crend();
+        ci2 = t1.crbegin();
+        ci2 = t1.crend();
         
     }
     

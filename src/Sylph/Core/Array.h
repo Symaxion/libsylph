@@ -73,6 +73,8 @@ public:
      */
     template<class C, class V>
     class S_ITERATOR : public RandomAccessIterator<V, S_ITERATOR<C,V> > {
+        template<class C1, class V1>
+        friend class S_ITERATOR;
     public:
         typedef RandomAccessIterator<V, S_ITERATOR<C,V> > super;
 
@@ -88,9 +90,8 @@ public:
         }
 
         template<class C1, class V1>
-        S_ITERATOR(const S_ITERATOR<C1,V1>& other) {
-            mCurrentIndex = other.mCurrentIndex;
-            mObj = other.mObj;
+        S_ITERATOR(const S_ITERATOR<C1,V1>& other) : 
+                mCurrentIndex(other.mCurrentIndex), mObj(other.mObj) {
         }
 
         typename super::value_type& current() {
@@ -571,8 +572,8 @@ inline T shift(Array<T>& a) {
 template<class T>
 inline bool operator<(const Array<T>& lhs, const Array<T>& rhs) {
     return std::lexicographical_compare(lhs.carray(),
-            lhs.carray()[lhs.size()-1], rhs.carray(),
-            rhs.carray()[rhs.size()-1]);
+            lhs.carray() + lhs.size()-1, rhs.carray(),
+            rhs.carray() + rhs.size()-1);
 }
 
 template<class T>

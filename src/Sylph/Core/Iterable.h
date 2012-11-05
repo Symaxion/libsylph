@@ -82,27 +82,43 @@ public: \
 typedef type Type; \
 typedef sylph__Iterator<Class,type> iterator; \
 typedef sylph__Iterator<const Class,const type> const_iterator; \
+typedef iterator Iterator; \
+typedef const_iterator ConstIterator; \
 \
     virtual iterator begin() { return iterator(true, this); }\
     virtual iterator end() { return iterator(false, this); }\
 \
+    virtual const_iterator cbegin() const \
+        { return const_iterator(true, this); } \
+    virtual const_iterator cend() const \
+        { return const_iterator(false, this); } \
+\
     virtual const_iterator begin() const { return const_iterator(true, this); }\
-    virtual const_iterator end() const { return const_iterator(false, this); }
+    virtual const_iterator end() const { return const_iterator(false, this); } \
 
 #define S_REVERSE_ITERABLE(Class, type) \
 public: \
 typedef std::reverse_iterator<iterator> reverse_iterator; \
 typedef std::reverse_iterator<const_iterator> \
         const_reverse_iterator; \
+typedef reverse_iterator ReverseIterator; \
+typedef const_reverse_iterator ConstReverseIterator; \
 \
     virtual reverse_iterator rbegin() { return reverse_iterator(end()); } \
     virtual reverse_iterator rend() { return reverse_iterator(begin()); } \
 \
+    virtual const_reverse_iterator crbegin() const { \
+        return const_reverse_iterator(cend()); \
+    } \
+    virtual const_reverse_iterator crend() const { \
+        return const_reverse_iterator(cbegin()); \
+    } \
+\
     virtual const_reverse_iterator rbegin() const { \
-        return const_reverse_iterator(end()); \
+        return const_reverse_iterator(cend()); \
     } \
     virtual const_reverse_iterator rend() const { \
-        return const_reverse_iterator(begin()); \
+        return const_reverse_iterator(cbegin()); \
     }
 
 #endif	/* SYLPH_CORE_ITERABLE_H_ */

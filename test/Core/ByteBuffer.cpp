@@ -51,7 +51,7 @@ namespace {
         ASSERT_EQ(6u, buf.size());
 
         Array<byte> dest = buf.toArray();
-        ASSERT_EQ(6u, dest.length);
+        ASSERT_EQ(6u, dest.size());
         EXPECT_EQ(dest, src);
 
     }
@@ -63,7 +63,7 @@ namespace {
         ASSERT_EQ(6u, buf.size());
 
         Array<byte> dest = buf.toArray();
-        ASSERT_EQ(6u, dest.length);
+        ASSERT_EQ(6u, dest.size());
         EXPECT_EQ(dest, src);
     }
 
@@ -77,7 +77,7 @@ namespace {
         ASSERT_EQ(6u, buf.size());
 
         Array<byte> dest = buf.toArray();
-        ASSERT_EQ(6u, dest.length);
+        ASSERT_EQ(6u, dest.size());
         EXPECT_EQ(dest, src);
     }
 
