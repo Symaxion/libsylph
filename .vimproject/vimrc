@@ -196,61 +196,116 @@ endfun
 
 " Go To commands {{{1
 
-fun! s:GoToHeader()
+fun! s:FindHeader()
   let l:file = s:ToRelativePath(expand("%:p"))
 
   if match(l:file, "^/src/Sylph", "") != -1
     if match(l:file, "\.h$", "") != -1
       call s:WarningMsg("Already in header file.")
+      return ""
     elseif match(l:file, "\.cpp$", "") != -1
-      call s:EditInProject(substitute(l:file, "\.cpp$", ".h", "")) 
+      return substitute(l:file, "\.cpp$", ".h", "")
     else
       call s:WarningMsg("Not in a source file.")
+      return ""
     endif
   elseif match(l:file, "^/test.*\.cpp$", "") != -1
-    call s:EditInProject(substitute(
+    return substitute(
                        \ substitute(l:file, "\.cpp$", ".h", ""),
-                       \            "^/test", "/src/Sylph", ""))
+                       \            "^/test", "/src/Sylph", "")
   else
     call s:WarningMsg("Not in a source file.")
+    return ""
   endif
 endfun
 
-fun! s:GoToSource()
+fun! s:FindSource()
   let l:file = s:ToRelativePath(expand("%:p"))
 
   if match(l:file, "^/src/Sylph", "") != -1
     if match(l:file, "\.cpp$", "") != -1
       call s:WarningMsg("Already in source file.")
+      return ""
     elseif match(l:file, "\.h$", "") != -1
-      call s:EditInProject(substitute(l:file, "\.h$", ".cpp", "")) 
+      return substitute(l:file, "\.h$", ".cpp", "") 
+    else
+      call s:WarningMsg("Not in a source file.")
+      return ""
+    endif
+  elseif match(l:file, "^/test.*\.cpp$", "") != -1
+    return substitute(l:file, "^/test", "/src/Sylph", "") 
+  else
+    call s:WarningMsg("Not in a source file.")
+    return ""
+  endif
+endfun
+
+fun! s:FindTest()
+  let l:file = s:ToRelativePath(expand("%:p"))
+
+  if match(l:file, "^/test.*\.cpp$", "") != -1
+      call s:WarningMsg("Already in test file.")
+      retur ""
+  elseif match(l:file, "^/src/Sylph", "") != -1
+    if match(l:file, "\.cpp$", "") != -1
+      return substitute(l:file, "^/src/Sylph", "/test", "")
+    elseif match(l:file, "\.h$", "") != -1
+      return substitute(
+                         \ substitute(l:file, "\.h$", ".cpp", ""),
+                         \            "^/src/Sylph", "/test", "")
     else
       call s:WarningMsg("Not in a source file.")
     endif
-  elseif match(l:file, "^/test.*\.cpp$", "") != -1
-    call s:EditInProject(substitute(l:file, "^/test", "/src/Sylph", "")) 
   else
     call s:WarningMsg("Not in a source file.")
   endif
 endfun
 
-fun! s:GoToTest()
-  let l:file = s:ToRelativePath(expand("%:p"))
+fun! s:GoToHeader()
+  let l:file = s:FindHeader() 
+  if l:file != ""
+    call s:EditInProject(l:file)
+  endif
+endfun
 
-  if match(l:file, "^/test.*\.cpp$", "") != -1
-      call s:WarningMsg("Already in test file.")
-  elseif match(l:file, "^/src/Sylph", "") != -1
-    if match(l:file, "\.cpp$", "") != -1
-      call s:EditInProject(substitute(l:file, "^/src/Sylph", "/test", ""))
-    elseif match(l:file, "\.h$", "") != -1
-      call s:EditInProject(substitute(
-                         \ substitute(l:file, "\.h$", ".cpp", ""),
-                         \            "^/src/Sylph", "/test", ""))
-    else
-      call s:WarningMsg("Not in a source file.")
-    endif
+fun! s:GoToSource()
+  let l:file = s:FindSource() 
+  if l:file != ""
+    call s:EditInProject(l:file)
+  endif
+endfun
+
+fun! s:GoToTest()
+  let l:file = s:FindTest() 
+  if l:file != ""
+    call s:EditInProject(l:file)
+  endif
+endfun
+
+fun! g:Header()
+  let l:file = s:FindHeader()
+  if l:file == ""
+    return ""
   else
-    call s:WarningMsg("Not in a source file.")
+    return g:ProjectRoot.l:file
+  endif
+endfun
+
+fun! g:Source()
+  let l:file = s:FindSource()
+  if l:file == ""
+    return ""
+  else
+    return g:ProjectRoot.l:file
+  endif
+endfun
+
+fun! g:Test()
+  let l:file = s:FindTest()
+  if l:file == ""
+    return ""
+  else
+    return g:ProjectRoot.l:file
   endif
 endfun
 

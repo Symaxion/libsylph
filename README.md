@@ -142,7 +142,7 @@ Table of Contents
 
   Add our tap:
   
-      brew tab SynthiNet/synthinet
+      brew tap SynthiNet/synthinet
 
   Install LibSylph (latest Git revision):
 
