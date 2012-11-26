@@ -129,10 +129,10 @@ do-update-copyright() {
     for file in $(find . '!' -type d | grep -v '^\./\.'); do
         if grep -q "Copyright (C) 20[0-9][0-9] $name" $file; then
             echo "Updating $file..."
-            if [ $(uname -s) == "Darwin" ]; then
+            if [ $(uname -s) = "Darwin" ]; then
                 sed -i '' "s/Copyright (C) 20[0-9][0-9] $name/Copyright (C) $year $name/" $file
             else 
-                sed -i '' "s/Copyright (C) 20[0-9][0-9] $name/Copyright (C) $year $name/" $file
+                sed -i "s/Copyright (C) 20[0-9][0-9] $name/Copyright (C) $year $name/" $file
             fi
     	fi
     done           
