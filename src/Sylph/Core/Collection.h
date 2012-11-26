@@ -55,4 +55,4 @@ SYLPH_END_NAMESPACE
 
 #endif /* COLLECTION_H_ */
 
-// vim: syntax=cpp11:ts=4:sts=4:sw=4:sta:et:tw=80:nobk
+// vim: ts=4:sts=4:sw=4:sta:et:tw=80:nobk

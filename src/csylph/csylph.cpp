@@ -451,4 +451,4 @@ const char* sy_cppexp() {
     return sy_excp;
 }
 
-// vim: syntax=cpp11:ts=4:sts=4:sw=4:sta:et:tw=80:nobk
+// vim: ts=4:sts=4:sw=4:sta:et:tw=80:nobk
