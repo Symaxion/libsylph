@@ -28,6 +28,8 @@
 
 #include "../Deps/p99/p99_id.h"
 
+#define S_UNIQ_ID(...) P99_LINEID(__VA_ARGS__)
+
 #endif /* SYLPH_CORE_PREPROC_H_ */
 
 // vim: ts=4:sts=4:sw=4:sta:et:tw=80:nobk
