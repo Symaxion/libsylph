@@ -54,6 +54,7 @@ public:
     class S_ITERATOR : public RandomAccessIterator<V, S_ITERATOR<C,V> > {
         template<class C1, class V1>
         friend class S_ITERATOR;
+        friend class Vector<T>;
     public:
         typedef RandomAccessIterator<V, S_ITERATOR<C,V> > super;
 
@@ -167,7 +168,7 @@ public:
      * @param t The element to append.
      * @complexity O(1)
      */
-    void add(const T & t) {
+    void add(const T& t) {
         ensureCapacity(mSize + 1);
         ++mSize;
         set(mSize - 1, t);
@@ -188,6 +189,14 @@ public:
                 it != c.end(); ++it) {
             add(*it);
         }
+    }
+
+    /**
+     * @complexity O(n)
+     * TODO
+     */
+    void removeAll(const Vector<T>& c) {
+
     }
 
     /**
@@ -231,7 +240,7 @@ public:
     /**
      * @complexity O(1)
      */
-    const T & get(std::size_t idx) const throw(IndexException) {
+    const T& get(std::size_t idx) const throw(IndexException) {
         try {
             checkBounds(idx);
             return elements[idx];
@@ -241,7 +250,7 @@ public:
     /**
      * @complexity O(1)
      */
-    T & get(std::size_t idx) throw(IndexException) {
+    T& get(std::size_t idx) throw(IndexException) {
         try {
             checkBounds(idx);
             return elements[idx];
@@ -307,6 +316,20 @@ public:
         if (idx < (elements.size() - 1))
             arraycopy(elements, idx + 1, elements, idx,
                 elements.size() - 1 - idx);
+    }
+
+    /**
+     * @complexity O(n)
+     */
+    void removeAt(const iterator& i) {
+        removeAt(i.currentIndex());
+    }
+
+    /**
+     * @complexity O(n)
+     */
+    void removeAt(const const_iterator& i) {
+        removeAt(i.currentIndex());
     }
 
     /**

@@ -463,8 +463,13 @@ typename Traits::MakeUnsigned<T>::type makeUnsigned(T t) {
 #define S_SET_TRAIT_FALSE4(Trait,Class1,Class2,Class3,Class4) \
     template<> S_SET_TRAIT_TPL_FALSE4(Trait,Class1,Class2,Class3,Class4)
 
+#ifndef SYLPH_FTR_NO_VA_ARGS
+#define S_SET_TRAIT_TYPE(Trait,Type,...) \
+    struct Trait<__VA_ARGS__> { typedef Type type; }
+#else
 #define S_SET_TRAIT_TYPE(Trait,Type,Class) \
     struct Trait<Class> { typedef Type type; }
+#endif
 #define S_SET_TRAIT_TYPE2(Trait,Type,Class1,Class2) \
     struct Trait<Class1,Class2> { typedef Type type; }
 #define S_SET_TRAIT_TYPE3(Trait,Type,Class1,Class2,Class3) \
@@ -472,8 +477,13 @@ typename Traits::MakeUnsigned<T>::type makeUnsigned(T t) {
 #define S_SET_TRAIT_TYPE4(Trait,Type,Class1,Class2,Class3,Class4) \
     struct Trait<Class1,Class2,Class3,Class4> { typedef Type type; }
 
+#ifndef SYLPH_FTR_NO_VA_ARGS
+#define S_TRAIT(Trait,...) \
+    ::Sylph::Traits::Trait<__VA_ARGS__>::value
+#else
 #define S_TRAIT(Trait,Class) \
     ::Sylph::Traits::Trait<Class>::value
+#endif
 #define S_TRAIT2(Trait,Class1,Class2) \
     ::Sylph::Traits::Trait<Class1,Class2>::value
 #define S_TRAIT3(Trait,Class1,Class2,Class3) \
@@ -481,8 +491,13 @@ typename Traits::MakeUnsigned<T>::type makeUnsigned(T t) {
 #define S_TRAIT4(Trait,Class1,Class2,Class3,Class4) \
     ::Sylph::Traits::Trait<Class1,Class2,Class3,Class4>::value
 
+#ifndef SYLPH_FTR_NO_VA_ARGS
+#define S_TRAIT_TYPE(Trait,...) \
+    typename ::Sylph::Traits::Trait<__VA_ARGS__>::type
+#else
 #define S_TRAIT_TYPE(Trait,Class) \
     typename ::Sylph::Traits::Trait<Class>::type
+#endif
 #define S_TRAIT_TYPE2(Trait,Class1,Class2) \
     typename ::Sylph::Traits::Trait<Class1,Class2>::type
 #define S_TRAIT_TYPE3(Trait,Class1,Class2,Class3) \
@@ -491,10 +506,10 @@ typename Traits::MakeUnsigned<T>::type makeUnsigned(T t) {
     typename ::Sylph::Traits::Trait<Class1,Class2,Class3,Class4>::type
 
 #ifndef SYLPH_FTR_NO_VA_ARGS
-#define S_OR(Condition1, Condition2, ...) \
-    S_TRAIT(Or, Condition1, Condition2, __VA_ARGS__)
-#define S_AND(Condition1, Condition2, ...) \
-    S_TRAIT(And, Condition1, Condition2, __VA_ARGS__)
+#define S_OR(Condition1, ...) \
+    S_TRAIT(Or, Condition1, __VA_ARGS__)
+#define S_AND(Condition1, ...) \
+    S_TRAIT(And, Condition1, __VA_ARGS__)
 #else
 #define S_OR(Condition1, Condition2) \
     S_TRAIT2(Or, Condition1, Condition2)
@@ -502,12 +517,12 @@ typename Traits::MakeUnsigned<T>::type makeUnsigned(T t) {
     S_TRAIT2(And, Condition1, Condition2)
 #endif
 #define S_NOT(Condition) \
-    S_TRAIT2(Not, Condition)
+    S_TRAIT(Not, Condition)
 
 #define S_ENABLE_IF(Type, Condition) \
     typename ::Sylph::Traits::EnableIf<Condition,Type>::type
 #define S_DISABLE_IF(Type, Condition) \
-    typename ::Sylph::Traits::EnableIf<S_TRAIT(Not, Condition), Type>::type
+    typename ::Sylph::Traits::EnableIf<S_NOT(Condition), Type>::type
 SYLPH_END_NAMESPACE
 
 #endif /* SYLPH_CORE_TRAITS_H_ */

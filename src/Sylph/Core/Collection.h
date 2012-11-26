@@ -30,6 +30,7 @@
 #include "Object.h"
 #include "Traits.h"
 #include "Primitives.h"
+#include <initializer_list>
 
 SYLPH_BEGIN_NAMESPACE
 
@@ -41,8 +42,10 @@ namespace Traits {
      * begin/end: iterator
      * cbegin/cend: iterator
      * contains(T)
-     * indexOf(T[,idx_t])
-     * lastIndexOf(T[,idx_t])
+     * containsAll(Collection)
+     * containsAll(iterator, iterator)
+     * find(T [,iterator])
+     * findLast(T [,iterator])
      * size()
      * empty(): size() == 0
      *
@@ -56,7 +59,8 @@ namespace Traits {
      * Assignment
      * Move assignment
      * operator+ (joining)
-     * operator| (T, Collection): Contains (global implementation)
+     * operator| (T, Collection): contains (global implementation)
+     * operator| (Collection, Collection): containsAll (global implementation)
      *
      * Operations depending on T:
      * operator==
@@ -86,11 +90,16 @@ namespace Traits {
      *
      * Operations supported:
      * add(T): ensures element is in collection
+     * emplace(T): like add, but in-place construction
      * remove(T)
      * removeAt(iterator)
+     * removeAt(iterator, iterator)
      * addAll(Collection<T>)
+     * addAll(iterator, iterator)
      * removeAll(Collection<T>)
+     * removeAll(iterator, iterator)
      * retainAll(Collection<T>)
+     * retainAll(iterator, iterator)
      * clear()
      * operator+=
      * operator<<
@@ -104,12 +113,12 @@ namespace Traits {
      * Sequential and Expandable
      *
      * Operations supported:
-     * peekFront(T)
+     * peekFront()
      * pushFront(T)
-     * popFront(T)
-     * peekBack(T)
+     * popFront()
+     * peekBack()
      * pushBack(T)
-     * popBack(T)
+     * popBack()
      *
      * append(T)
      * prepend(T)
@@ -134,6 +143,8 @@ namespace Traits {
      *
      * RandomAccessIterator available
      * operator[](idx_t)
+     * indexOf(T[,idx_t])
+     * lastIndexOf(T[,idx_t])
      */
     template<template<class...> class T>
     struct IsRandomAccessCollection : public FalseType {
@@ -159,6 +170,7 @@ namespace Traits {
      * to streams and other stuff. Move this to Array.h?
      *
      * size()
+     * capacity()
      * resize(size_t)
      * reserve(size_t) -> resize(size() + size_t)
      * fit(size_t) -> resize(size())
@@ -219,6 +231,27 @@ template<class T, template<class> class C>
 auto operator|(const T& t, const C<T>& c) -> 
         S_ENABLE_IF(bool, S_TRAIT(IsCollection, C)) {
     return c.contains(t);
+}
+
+ /**
+ * Alias for Collection::containAlls().
+ *
+ * This operator is a shorthand for the containsAll() operation provided by every
+ * collection. So, instead of writing
+ * <pre>
+ *      if(c.containsAll(c)) // ...
+ * </pre>
+ * one could write:
+ * <pre>
+ *      if(c2|c) // Read: "if c2 in c"
+ * </pre>
+ */
+template<template<class> class C, template<class> class C2, class T>
+auto operator|(const C2<T>& c2, const C<T>& c) -> 
+        S_ENABLE_IF(bool, S_AND(
+                    S_TRAIT(IsCollection, C),
+                    S_TRAIT(IsCollection, C2))) {
+    return c.containsAll(c2);
 }
 
 SYLPH_END_NAMESPACE

@@ -35,6 +35,8 @@
 
 #include <Sylph/OS/GuessCompiler.h>
 
+#include "MockCollection.h"
+
 namespace Sfinae {
 
     template<template<class> class T>
@@ -46,6 +48,8 @@ namespace Sfinae {
         typename T<int>::Iterator i2;
         typename T<int>::const_iterator ci1;
         typename T<int>::ConstIterator ci2;
+
+        Mock::Collection<int> mc;
 
         T<int> t1;
         T<int> t2(t1);
@@ -59,8 +63,8 @@ namespace Sfinae {
         s = constify(t1).size();
         b = constify(t1).empty();
 
-        t2 = t1;
-        t4 = move(t2);
+        t2 = mc;
+        t4 = std::move(mc);
 
         t2 = t1 + t4;
 
@@ -110,6 +114,24 @@ namespace Sfinae {
     
     template<template<class> class T>
     void isExpandableCollection() {
+        T<int> t1;
+        typename T<int>::iterator it = t1.begin();
+        typename T<int>::const_iterator cit = t1.cbegin();
+        int t;
+
+        t1.add(t);
+        t1.remove(t);
+        t1.removeAt(it);
+        t1.removeAt(cit);
+        t1.addAll(t1);
+        t1.removeAll(t1);
+        t1.retainAll(t1);
+        t1.clear();
+
+        t1 += t;
+        t1 += t1;
+        t1 << t;
+        t1 << t1;
 
     }
 
