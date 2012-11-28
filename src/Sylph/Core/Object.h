@@ -93,8 +93,8 @@ class DeserializationBuffer;
  * for a particular object, GC is enabled by default.
  */
 enum GCPlacement {
-    UseGC, /**< Use the garbage collector; this is the default. */
-    NoGC, /**< Do not use the garbage collector for this specific object. */
+    GC, /**< Use the garbage collector for this specific object. */
+    NoGC, /**< Do not use the garbage collector; this is the default. */
     PointerFreeGC /**< When the object you create does not contain pointers,
                    * use this to speed up GC -- however, this is usually not
                    * useful, as most LibSylph containers contain pointers. */
@@ -170,5 +170,4 @@ SYLPH_END_NAMESPACE
 
 #endif	/* SYLPH_CORE_OBJECT_H_ */
 
-
-// vim: syntax=cpp11:ts=4:sts=4:sw=4:sta:et:tw=80:nobk
+// vim: ts=4:sts=4:sw=4:sta:et:tw=80:nobk

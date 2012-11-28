@@ -27,6 +27,8 @@ exe "so ".g:ProjectRoot."/.vimproject/plugins/focb.vim"
 exe "set makeprg=cd\\ ".g:ProjectRoot.";\\ ./developers.sh\\ cmake;\\ make\\ -C\\ ".
     \ g:ProjectRoot."/build"
 
+exe "set path+=".g:ProjectRoot."/deps"
+
 " Plugin settings {{{1
 let g:clang_user_options = '-std=c++11 -stdlib=libc++ -I./src' . 
     \ '-I./deps/gtest/include -DSYLPH_DEBUG -DGTEST_USE_OWN_TR1_TUPLE'

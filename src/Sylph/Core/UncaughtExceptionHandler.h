@@ -60,5 +60,4 @@ SYLPH_END_NAMESPACE
 
 #endif	/* SYLPH_CORE_UNCAUGHTEXCEPTIONHANDLER_H */
 
-
-// vim: syntax=cpp11:ts=4:sts=4:sw=4:sta:et:tw=80:nobk
+// vim: ts=4:sts=4:sw=4:sta:et:tw=80:nobk

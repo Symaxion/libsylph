@@ -129,13 +129,44 @@ do-update-copyright() {
     for file in $(find . '!' -type d | grep -v '^\./\.'); do
         if grep -q "Copyright (C) 20[0-9][0-9] $name" $file; then
             echo "Updating $file..."
-            if [ $(uname -s) == "Darwin" ]; then
+            if [ $(uname -s) = "Darwin" ]; then
                 sed -i '' "s/Copyright (C) 20[0-9][0-9] $name/Copyright (C) $year $name/" $file
             else 
-                sed -i '' "s/Copyright (C) 20[0-9][0-9] $name/Copyright (C) $year $name/" $file
+                sed -i "s/Copyright (C) 20[0-9][0-9] $name/Copyright (C) $year $name/" $file
             fi
     	fi
     done           
+}
+
+do-fix-modelines() {
+    pushd src > /dev/null
+    for x in $(find . | egrep '\.(cpp|h)$'); do 
+        if grep -v '// vim: ' $x > /dev/null; then
+            :
+        else
+            echo -e '\n// vim: ts=4:sts=4:sw=4:sta:et:tw=80:nobk' >> $x
+        fi
+        perl -0777 -i -pe 's@\n(\n\n// vim:.*)@$1@' $x
+        perl -0777 -i -pe \
+            's@// vim:.*@// vim: ts=4:sts=4:sw=4:sta:et:tw=80:nobk@' $x
+    done
+    popd > /dev/null
+
+    pushd test > /dev/null
+    for x in $(find . | egrep '\.(cpp|h)$'); do 
+        n=$(echo -n $x | sed 's/[^\/]//g' | wc -c | perl -pe 's/^\s+//')
+        p=$(for (( ; n>0; --n )); do echo -n ../; done)
+
+        if grep -v '// vim: ' $x > /dev/null; then
+            :
+        else
+            echo -e '\n// vim: ts=4:sts=4:sw=4:sta:et:tw=80:nobk:path='$p'src' >> $x
+        fi
+        perl -0777 -i -pe 's@\n(\n\n// vim:.*)@$1@' $x
+        perl -0777 -i -pe \
+            's@// vim:.*@// vim: ts=4:sts=4:sw=4:sta:et:tw=80:nobk:path='$p'src@' $x
+    done
+    popd > /dev/null
 }
 
 error() {
@@ -162,6 +193,9 @@ case "$1" in
     ;;
     update-copyright)
         do-update-copyright "$2"
+    ;;
+    fix-modelines)
+        do-fix-modelines
     ;;
     *)
     echo "This script contains several useful functions for the $PROJECT devs."
