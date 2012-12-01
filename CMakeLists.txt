@@ -49,6 +49,13 @@ option(SYLPH_NO_CXX11 "Disable C++11 support (experimental)")
 option(SYLPH_ENABLE_COVERAGE "Enable code coverage support [developers]")
 option(SYLPH_ENABLE_PROFILING "Enable profiling support [developers]")
 
+IF(NOT CMAKE_BUILD_TYPE)
+  SET(CMAKE_BUILD_TYPE RelWithDebInfo CACHE STRING
+      "Choose the type of build, options are: None Debug Release 
+      RelWithDebInfo MinSizeRel."
+      FORCE)
+ENDIF(NOT CMAKE_BUILD_TYPE)
+
 if(WIN32 AND NOT CYGWIN)
     set(S_INSTALL_CMAKE_DIR CMake)
 else()
