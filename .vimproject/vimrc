@@ -38,7 +38,7 @@ let g:clang_user_options = '-std=c++11 -stdlib=libc++ -I./src' .
 
 fun! s:DefaultCompiler() 
   if has("macunix")
-    return "g++-4.7"
+    return "clang++"
   else
     return "g++"
   endif
