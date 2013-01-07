@@ -203,6 +203,6 @@ TEST_F(TestPartResultArrayDeathTest, DiesWhenIndexIsOutOfBound) {
   EXPECT_DEATH_IF_SUPPORTED(results.GetTestPartResult(1), "");
 }
 
-// TUDU(mheule@google.com): Add a test for the class HasNewFatalFailureHelper.
+// TODO(mheule@google.com): Add a test for the class HasNewFatalFailureHelper.
 
 }  // namespace
