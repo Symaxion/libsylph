@@ -132,6 +132,9 @@ if(NOT SYLPH_CXXFLAGS)
 
     include(EnableCxx11)
 
+    # Add our C++11 flags as the default for all dependencies
+    set(CMAKE_CXX_FLAGS ${SYLPH_CXXFLAGS})
+
     # Flags to enable warnings/errors and code coverage/profiling.
     if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_CLANG)
         if(SYLPH_ENABLE_COVERAGE)
