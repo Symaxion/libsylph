@@ -28,17 +28,17 @@
 if(CMAKE_COMPILER_IS_CLANG)
     # Clang
     if(NOT SYLPH_NO_CXX11)
-        set(SYLPH_CXXFLAGS "-std=c++11 -stdlib=libc++" )
+        set(CMAKE_CXX_FLAGS "-std=c++11 -stdlib=libc++" )
     endif()
 elseif(CMAKE_COMPILER_IS_GNUCC)
     # GCC >= 4.5.3
     # GCC is pretty schizophrenic when it comes to the name of the new C++
     # standard...
     if(NOT SYLPH_NO_CXX11)
-        if(GCC_VERSION STRGREATER "4.7.0")
-            set(SYLPH_CXXFLAGS "-std=c++11")
+        if(GCC_VERSION STRGREATER "4.7./")
+            set(CMAKE_CXX_FLAGS "-std=c++11")
         else(GCC_VERSION STRGREATER "4.5.2")
-            set(SYLPH_CXXFLAGS "-std=c++0x")
+            set(CMAKE_CXX_FLAGS "-std=c++0x")
         endif()
     endif()
 endif()

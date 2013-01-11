@@ -45,10 +45,10 @@ option(SYLPH_COMPILER_SUFFICIENT "Set a manual override to make your compiler
     pass all tests")
 set(SYLPH_CXXFLAGS "" CACHE STRING "Add a manual override to the C++ flags
 needed to activate C++11 and other stuff")
-option(SYLPH_NO_CXX11 "Disable C++11 support (experimental)")
 option(SYLPH_ENABLE_COVERAGE "Enable code coverage support [developers]")
 option(SYLPH_ENABLE_PROFILING "Enable profiling support [developers]")
 
+# Set build 
 IF(NOT CMAKE_BUILD_TYPE)
   SET(CMAKE_BUILD_TYPE RelWithDebInfo CACHE STRING
       "Choose the type of build, options are: None Debug Release 
@@ -56,6 +56,7 @@ IF(NOT CMAKE_BUILD_TYPE)
       FORCE)
 ENDIF(NOT CMAKE_BUILD_TYPE)
 
+# Installation settings
 if(WIN32 AND NOT CYGWIN)
     set(S_INSTALL_CMAKE_DIR CMake)
 else()
@@ -77,34 +78,23 @@ if(UNIX AND NOT APPLE)
     set(LINLIKE 1)
 endif()
 
-# Workaround for CMake not detecting this...
-if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-    set(CMAKE_COMPILER_IS_CLANG 1)
-    set(CMAKE_EXE_LINKER_FLAGS "-std=c++11 -stdlib=libc++")
-    set(CMAKE_SHARED_LINKER_FLAGS "-std=c++11 -stdlib=libc++")
-    set(CMAKE_MODULE_LINKER_FLAGS "-std=c++11 -stdlib=libc++")
-endif()
-
 # If C++11 is disabled, we rename the library so that C++11 and C++03 versions
 # can be installed side by side.
 set(SYLPH_TARGET "Sylph")
-if(SYLPH_NO_CXX11)
-    set(SYLPH_COMPILER_SUFFICIENT 1) # Assume all compilers can compile C++03
-    set(SYLPH_TARGET "Sylph03")
-endif()
 
 # Check if compiler supports all the required C++11 constructs
 if(NOT SYLPH_COMPILER_SUFFICIENT) # manual override
     set(SYLPH_COMPILER_SUFFICIENT 0)
 
-    if(CMAKE_COMPILER_IS_CLANG AND CLANG_VERSION STREQUAL "1")
+    if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang" AND CLANG_VERSION STREQUAL "1")
         # We must check for Clang first as it identifies itself as GCC as
         # well.
         # For Clang, we use feature checks instead of hardcoded version 
         # numbers, as a version number is not a guarantee of a feature (in fact,
         # redistributors may change version numbers at will -- Apple does)
         set(SYLPH_COMPILER_SUFFICIENT 1)
-    elseif(CMAKE_COMPILER_IS_GNUCC AND GCC_VERSION STRGREATER "4.5.2")
+    elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" AND 
+                GCC_VERSION STRGREATER "4.7./")
         # GCC >= 4.5.3 will do the job
         set(SYLPH_COMPILER_SUFFICIENT 1)
     endif()
@@ -115,7 +105,7 @@ if(NOT SYLPH_COMPILER_SUFFICIENT) # manual override
   Your compiler does not support C++11. Please install a compliant compiler.
   The following compilers are known to work:
    
-    * GCC (>= 4.5.3)
+    * GCC (>= 4.7.0)
     * Clang (>= 3.1) or Apple Clang (>= 4.0, with XCode) with libc++
    
   Use the -DCMAKE_CXX_COMPILER flag to set a compiler." )
@@ -131,9 +121,6 @@ if(NOT SYLPH_CXXFLAGS)
     set(COVERAGE_LIBS "")
 
     include(EnableCxx11)
-
-    # Add our C++11 flags as the default for all dependencies
-    set(CMAKE_CXX_FLAGS ${SYLPH_CXXFLAGS})
 
     # Flags to enable warnings/errors and code coverage/profiling.
     if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_CLANG)
