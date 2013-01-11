@@ -37,40 +37,12 @@ SYLPH_BEGIN_NAMESPACE
 SYLPH_END_NAMESPACE
 
 typedef unsigned char byte;
-typedef int16_t sshort;
-typedef int32_t sint;
-typedef int64_t slong;
-typedef uint16_t sushort;
-typedef uint32_t suint;
-typedef uint64_t sulong;
 
-#define S_FMT_S PRIi16
-#define S_FMT_US PRIu16
-#define S_FMT_I PRIi32
-#define S_FMT_UI PRIu32
-#define S_FMT_L PRIi64
-#define S_FMT_UL PRIu64
+typedef size_t idx_t;
+typedef ptrdiff_t sidx_t;
 
-#define SIC(x) INT32_C(x)
-#define SUIC(x) UINT32_C(x)
-#define SLC(x) INT64_C(x)
-#define SULC(x) UINT64_C(x)
-
-
-#ifdef __i386__
-typedef suint idx_t;
-typedef sint sidx_t;
-
-typedef suint ptr_t;
-#elif defined(__x86_64__)
-typedef sulong idx_t;
-typedef slong sidx_t;
-
-typedef sulong ptr_t;
-#endif
-
-typedef sulong fsize_t;
-typedef slong fssize_t;
+typedef uint64_t fsize_t;
+typedef uint64_t fssize_t;
 
 #ifndef SYLPH_LIKELY
     #if __GNUC__ - 0 >= 3
@@ -87,10 +59,10 @@ typedef slong fssize_t;
 
 #define SYLPH_SPECIALIZE_PRIMS(Class) \
     SYLPH_SPECIALIZE(Class,byte); \
-    SYLPH_SPECIALIZE(Class,sint); \
-    SYLPH_SPECIALIZE(Class,suint); \
-    SYLPH_SPECIALIZE(Class,slong); \
-    SYLPH_SPECIALIZE(Class,sulong); \
+    SYLPH_SPECIALIZE(Class,int32_t); \
+    SYLPH_SPECIALIZE(Class,uint32_t); \
+    SYLPH_SPECIALIZE(Class,int64_t); \
+    SYLPH_SPECIALIZE(Class,uint64_t); \
     SYLPH_SPECIALIZE(Class,bool); \
     SYLPH_SPECIALIZE(Class,float); \
     SYLPH_SPECIALIZE(Class,double); \
@@ -100,16 +72,16 @@ typedef slong fssize_t;
 
 SYLPH_BEGIN_NAMESPACE
 namespace Convert {
-    inline suint float2int(float f) {
-        return *reinterpret_cast<suint*>(&f);
+    inline uint32_t float2int(float f) {
+        return *reinterpret_cast<uint32_t*>(&f);
     }
-    inline float int2float(suint i) {
+    inline float int2float(uint32_t i) {
         return *reinterpret_cast<float*>(&i);
     }
-    inline sulong double2long(double d) {
-        return *reinterpret_cast<sulong*>(&d);
+    inline uint64_t double2long(double d) {
+        return *reinterpret_cast<uint64_t*>(&d);
     }
-    inline double long2double(sulong l) {
+    inline double long2double(uint64_t l) {
         return *reinterpret_cast<double*>(&l);
     }
     template<class T>
@@ -127,8 +99,8 @@ namespace Convert {
     }
 
     template<class T>
-    inline ptr_t ptr2int(const T* const t) {
-        return reinterpret_cast<ptr_t>(t);
+    inline uintptr_t ptr2int(const T* const t) {
+        return reinterpret_cast<uintptr_t>(t);
     }
 }
 SYLPH_END_NAMESPACE

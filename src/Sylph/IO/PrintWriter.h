@@ -57,10 +57,10 @@ public:
 
     PrintWriter& operator<<(bool b);
     PrintWriter& operator<<(char c);
-    PrintWriter& operator<<(sint i);
-    PrintWriter& operator<<(suint i);
-    PrintWriter& operator<<(slong l);
-    PrintWriter& operator<<(sulong l);
+    PrintWriter& operator<<(int32_t i);
+    PrintWriter& operator<<(uint32_t i);
+    PrintWriter& operator<<(int64_t l);
+    PrintWriter& operator<<(uint64_t l);
     PrintWriter& operator<<(float f);
     PrintWriter& operator<<(String s);
     PrintWriter& operator<<(PrintWriter&(*f)(PrintWriter&));

@@ -54,7 +54,7 @@ PrintWriter& PrintWriter::operator<<(char c) {
     return operator<<(String(c));
 }
 
-PrintWriter& PrintWriter::operator<<(sint i) {
+PrintWriter& PrintWriter::operator<<(int32_t i) {
     switch (_nt) {
         case DEC:
             operator<<(String(i));
@@ -69,7 +69,7 @@ PrintWriter& PrintWriter::operator<<(sint i) {
     return *this;
 }
 
-PrintWriter& PrintWriter::operator<<(suint i) {
+PrintWriter& PrintWriter::operator<<(uint32_t i) {
     switch (_nt) {
         case DEC:
             operator<<(String(i));
@@ -84,7 +84,7 @@ PrintWriter& PrintWriter::operator<<(suint i) {
     return *this;
 }
 
-PrintWriter& PrintWriter::operator<<(slong l) {
+PrintWriter& PrintWriter::operator<<(int64_t l) {
     switch (_nt) {
         case DEC:
             operator<<(String(l));
@@ -99,7 +99,7 @@ PrintWriter& PrintWriter::operator<<(slong l) {
     return *this;
 }
 
-PrintWriter& PrintWriter::operator<<(sulong l) {
+PrintWriter& PrintWriter::operator<<(uint64_t l) {
     switch (_nt) {
         case DEC:
             operator<<(String(l));

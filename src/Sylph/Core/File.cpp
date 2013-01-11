@@ -333,7 +333,7 @@ bool File::isDirectory() const throw(IOException) {
 #endif
 }
 
-bool File::chmod(suint mode, bool sylphmode) const throw(IOException) {
+bool File::chmod(uint32_t mode, bool sylphmode) const throw(IOException) {
 #ifdef SYLPH_OS_WINDOWS
     // windows doesn't support chmodding. ever.
     return false;
@@ -346,10 +346,10 @@ bool File::chmod(suint mode, bool sylphmode) const throw(IOException) {
         struct stat info;
         int ret = stat(path, &info);
         if (ret == -1) sthrow(IOException, strerror(errno));
-        suint permnow = info.st_mode;
-        suint newperm = 0;
+        uint32_t permnow = info.st_mode;
+        uint32_t newperm = 0;
 
-        suint owner = mode & S_MOD_OWN;
+        uint32_t owner = mode & S_MOD_OWN;
         if (owner >= 0x800) {
             newperm |= (permnow & 0700);
         }
@@ -359,7 +359,7 @@ bool File::chmod(suint mode, bool sylphmode) const throw(IOException) {
 
         // same for group and world
 
-        suint group = mode & S_MOD_GRP;
+        uint32_t group = mode & S_MOD_GRP;
         if (group >= 0x80) {
             newperm |= (permnow & 070);
         }
@@ -367,7 +367,7 @@ bool File::chmod(suint mode, bool sylphmode) const throw(IOException) {
         if (mode & S_MOD_W * S_MOD_GRP) newperm |= 020;
         if (mode & S_MOD_X * S_MOD_GRP) newperm |= 010;
 
-        suint world = mode & S_MOD_OTH;
+        uint32_t world = mode & S_MOD_OTH;
         if (world >= 0x8) {
             newperm |= (permnow & 07);
         }

@@ -44,7 +44,7 @@ SYLPH_BEGIN_NAMESPACE
 /**
  * A integral type for storing an UTF-16 character
  */
-typedef sushort uchar;
+typedef uint16_t uchar;
 
 /**
  * This array contains the characters that are considered to be whitespace
@@ -89,7 +89,7 @@ class String : public virtual Object {
     friend String operator&(const String lhs, const String(*rhs)(const String));
     friend String operator&(const String(*lhs)(String), const String rhs);
     friend String operator*(const String lhs, const std::size_t len);
-    friend std::ostream & operator<<(std::ostream& lhs, const String rhs);
+    friend std::ostream& operator<<(std::ostream& lhs, const String rhs);
 
     friend struct Hash<String>;
 
@@ -148,7 +148,7 @@ public:
      * function.
      * @param orig A string to share string data with.
      */
-    String(const String & orig);
+    String(const String& orig);
     /**
      * Creates a String from a single character. The length of the String will
      * be 1. The character is copied into the String.
@@ -173,7 +173,7 @@ public:
      * @c (0|-?[1-9][0-9]+).
      * @param i A 32-bit signed integer.
      */
-    String(const sint i);
+    String(const int32_t i);
     /**
      * Converts a 32-bit unsigned integer to a String. The integer will be
      * represented in base 10. If integer is equal to 0, a  single ASCII 0 will
@@ -181,7 +181,7 @@ public:
      * @c (0|[1-9][0-9]+).
      * @param i A 32-bit unsigned integer.
      */
-    String(const suint i);
+    String(const uint32_t i);
     /**
      * Converts a 64-bit signed integer to a String. The integer will be
      * represented in base 10. If the integer is negative, an ASCII minus
@@ -191,7 +191,7 @@ public:
      * @c (0|-?[1-9][0-9]+).
      * @param l A 64-bit signed integer.
      */
-    String(const slong l);
+    String(const int64_t l);
     /**
      * Converts a 64-bit unsigned integer to a String. The integer will be
      * represented in base 10. If integer is equal to 0, a  single ASCII 0 will
@@ -199,7 +199,7 @@ public:
      * @c (0|[1-9][0-9]+).
      * @param l A 64-bit unsigned integer.
      */
-    String(const sulong l);
+    String(const uint64_t l);
     /**
      * Converts a floating point number to a String. The float will be
      * represented in base 10. The exact conversion method is mentioned below.
@@ -341,7 +341,7 @@ public:
      * LibSylph's garbage collector.
      * @return A c-style Unicode string encoded in UTF-8.
      */
-    const char * utf8() const;
+    const char* utf8() const;
 
     /**
      * Returns an UTF-16 representation of this String. Because String uses
@@ -528,7 +528,7 @@ public:
      * @return The value of the integer interpreting this String in base 10. If
      * the String does not match the given regex, 0 is returned.
      */
-    sint intValue() const;
+    int32_t intValue() const;
 
     /**
      * Interprets this string as an unsigned 32-bit integer. The string has to
@@ -537,7 +537,7 @@ public:
      * @return The value of the integer interpreting this String in base 10. If
      * the String does not match the given regex, 0 is returned.
      */
-    suint uintValue() const;
+    uint32_t uintValue() const;
 
     /**
      * Interprets this string as a signed 64-bit integer. The string has to
@@ -546,7 +546,7 @@ public:
      * @return The value of the integer interpreting this String in base 10. If
      * the String does not match the given regex, 0 is returned.
      */
-    slong longValue() const;
+    int64_t longValue() const;
 
     /**
      * Interprets this string as an unsigned 64-bit integer. The string has to
@@ -555,7 +555,7 @@ public:
      * @return The value of the integer interpreting this String in base 10. If
      * the String does not match the given regex, 0 is returned.
      */
-    sulong ulongValue() const;
+    uint64_t ulongValue() const;
     float floatValue() const;
     double doubleValue() const;
 
@@ -606,7 +606,7 @@ private:
         Array<uchar> data;
         mutable std::size_t refcount;
     };
-    mutable Data * strdata;
+    mutable Data* strdata;
 
 };
 
@@ -619,10 +619,10 @@ bool operator==(const String lhs, const String rhs);
 template<>
 struct Hash<String> {
 
-    inline sint operator()(String s) const {
-        suint hash = 0;
-        suint x = 0;
-        suint i = 0;
+    inline int32_t operator()(String s) const {
+        uint32_t hash = 0;
+        uint32_t x = 0;
+        uint32_t i = 0;
         uchar * b = s.strdata->data.carray();
 
         for(i = 0; i < s.length(); b++, i++) {

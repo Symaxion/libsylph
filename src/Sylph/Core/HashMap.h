@@ -448,7 +448,7 @@ private:
     HashFunction hashf;
     EqualsFunction equf;
 
-    sint hash(const Key& key) const {
+    int32_t hash(const Key& key) const {
         return abs(hashf(key) % buckets.length);
     }
 

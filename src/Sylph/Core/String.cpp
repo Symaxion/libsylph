@@ -42,7 +42,7 @@ SYLPH_BEGIN_NAMESPACE
 
 bool startsWithHelper(idx_t from, const String& left, const String& right) {
     if (left.length() - from < right.length()) return false;
-    suint count = 0;
+    uint32_t count = 0;
     for (idx_t i = 0; i < right.length(); i++) {
         if (left.at(i + from) == right.at(i)) {
             count++;
@@ -57,7 +57,7 @@ bool endsWithHelper(idx_t from, const String& left, const String& right) {
     if (from < right.length() - 1) {
         return false;
     }
-    suint count = 0;
+    uint32_t count = 0;
     for (idx_t i = 0; i < right.length(); i++) {
         if (left.at(from - i) == right.at(-i-1)) {
             count++;
@@ -102,34 +102,34 @@ String::String(const bool b) {
     fromAscii(b ? "true" : "false");
 }
 
-String::String(const sint i) {
+String::String(const int32_t i) {
     size_t tmplen = sizeof (i) * 5; // long enough, i presume?
     char * buf = new char[tmplen];
-    sprintf(buf, "%" S_FMT_I, i);
+    sprintf(buf, "%" PRId32, i);
     fromAscii(buf);
     delete[] buf;
 }
 
-String::String(const suint i) {
+String::String(const uint32_t i) {
     size_t tmplen = sizeof (i) * 5; // long enough, i presume?
     char * buf = new char[tmplen];
-    sprintf(buf, "%" S_FMT_UI, i);
+    sprintf(buf, "%" PRIu32, i);
     fromAscii(buf);
     delete[] buf;
 }
 
-String::String(const slong l) {
+String::String(const int64_t l) {
     size_t tmplen = sizeof (l) * 5; // long enough, i presume?
     char * buf = new char[tmplen];
-    sprintf(buf, "%" S_FMT_L, l);
+    sprintf(buf, "%" PRId64, l);
     fromAscii(buf);
     delete[] buf;
 }
 
-String::String(const sulong l) {
+String::String(const uint64_t l) {
     size_t tmplen = sizeof (l) * 5; // long enough, i presume?
     char * buf = new char[tmplen];
-    sprintf(buf, "%" S_FMT_UL, l);
+    sprintf(buf, "%" PRIu64, l);
     fromAscii(buf);
     delete[] buf;
 }
@@ -404,27 +404,27 @@ bool String::boolValue() const {
     return l == "true" || l == "1" || l == "yes" || l == "on";
 }
 
-sint String::intValue() const {
-    sint i = 0;
-    sscanf(this->ascii(), "%" S_FMT_I, &i);
+int32_t String::intValue() const {
+    int32_t i = 0;
+    sscanf(this->ascii(), "%" SCNd32, &i);
     return i;
 }
 
-suint String::uintValue() const {
-    suint i = 0;
-    sscanf(this->ascii(), "%" S_FMT_UI, &i);
+uint32_t String::uintValue() const {
+    uint32_t i = 0;
+    sscanf(this->ascii(), "%" SCNu32, &i);
     return i;
 }
 
-slong String::longValue() const {
-    slong l = 0;
-    sscanf(this->ascii(), "%" S_FMT_L, &l);
+int64_t String::longValue() const {
+    int64_t l = 0;
+    sscanf(this->ascii(), "%" SCNd64, &l);
     return l;
 }
 
-sulong String::ulongValue() const {
-    sulong l = 0;
-    sscanf(this->ascii(), "%" S_FMT_UL, &l);
+uint64_t String::ulongValue() const {
+    uint64_t l = 0;
+    sscanf(this->ascii(), "%" SCNu64, &l);
     return l;
 }
 

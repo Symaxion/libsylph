@@ -69,13 +69,13 @@ public:
     /** */
     StringBuffer& operator<<(Array<uchar> c);
     /** */
-    StringBuffer& operator<<(sint i);
+    StringBuffer& operator<<(int32_t i);
     /** */
-    StringBuffer& operator<<(suint i);
+    StringBuffer& operator<<(uint32_t i);
     /** */
-    StringBuffer& operator<<(slong l);
+    StringBuffer& operator<<(int64_t l);
     /** */
-    StringBuffer& operator<<(sulong l);
+    StringBuffer& operator<<(uint64_t l);
     /** */
     StringBuffer& operator<<(float f);
     /** */

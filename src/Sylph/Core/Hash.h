@@ -32,10 +32,10 @@
 #include "Primitives.h"
 
 SYLPH_BEGIN_NAMESPACE
-inline sint hash_internal(const byte * b, std::size_t len) {
-    suint hash = 0;
-    suint x = 0;
-    suint i = 0;
+inline int32_t hash_internal(const byte * b, std::size_t len) {
+    uint32_t hash = 0;
+    uint32_t x = 0;
+    uint32_t i = 0;
 
     for(i = 0; i < len; b++, i++) {
         hash = (hash << 4) + (*b);
@@ -49,14 +49,14 @@ inline sint hash_internal(const byte * b, std::size_t len) {
 
 template<class T>
 struct Hash {
-    inline sint operator()(const T & t) const {
+    inline int32_t operator()(const T & t) const {
         return hash_internal(reinterpret_cast<const byte*>(&t), sizeof (T));
     }
 };
 
 template<class T>
 struct Hash<T*> {
-    inline sint operator()(const T * t) const {
+    inline int32_t operator()(const T * t) const {
         return t == 0 ? 0 :
                 hash_internal(reinterpret_cast<const byte*>(t), sizeof (T));
     }
@@ -64,7 +64,7 @@ struct Hash<T*> {
 
 template<>
 struct Hash<int> {
-    inline sint operator()(const int & i) const {
+    inline int32_t operator()(const int & i) const {
         return i;
     }
 };

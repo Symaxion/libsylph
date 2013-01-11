@@ -466,7 +466,7 @@ protected:
         }
         const size_t _length;
         T * _carray;
-        suint refcount;
+        uint32_t refcount;
     } * data;
 #endif
 };

@@ -35,16 +35,16 @@
 SYLPH_BEGIN_NAMESPACE
 
 // chmod constants
-const suint S_MOD_OWN = 0x100;
-const suint S_MOD_GRP = 0x010;
-const suint S_MOD_OTH = 0x001;
-const suint S_MOD_ALL = 0x111;
+const uint32_t S_MOD_OWN = 0x100;
+const uint32_t S_MOD_GRP = 0x010;
+const uint32_t S_MOD_OTH = 0x001;
+const uint32_t S_MOD_ALL = 0x111;
 
-const suint S_MOD_N = 0x8;
-const suint S_MOD_R = 0x4;
-const suint S_MOD_W = 0x2;
-const suint S_MOD_X = 0x1;
-const suint S_MOD_K = 0x0;
+const uint32_t S_MOD_N = 0x8;
+const uint32_t S_MOD_R = 0x4;
+const uint32_t S_MOD_W = 0x2;
+const uint32_t S_MOD_X = 0x1;
+const uint32_t S_MOD_K = 0x0;
 
 /**
  * File represents the path to a file.
@@ -262,7 +262,7 @@ public:
     bool isDirectory() const throw(IOException);
 
     /** */
-    bool chmod(suint mode, bool sylphmode = false) const throw(IOException);
+    bool chmod(uint32_t mode, bool sylphmode = false) const throw(IOException);
 
     /** */
     Array<File> contents() const throw(IOException);
