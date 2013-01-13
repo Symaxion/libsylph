@@ -189,7 +189,7 @@ public:
      * @param h A suitable hash function
      * @param e A suitable equals function.
      */
-    explicit HashMap(std::size_t initialCapacity = 11, float _loadFactor = .75f,
+    explicit HashMap(size_t initialCapacity = 11, float _loadFactor = .75f,
             HashFunction h = Hash<Key>(), EqualsFunction e = Equals<Value*>())
     : loadFactor(_loadFactor), _size(0), buckets(initialCapacity),
     threshold(initialCapacity*loadFactor), hashf(h), equf(e) {
@@ -288,7 +288,7 @@ public:
      * @return The amount of entries in this HashMap.
      * @complexity O(0)
      */
-    std::size_t size() const {
+    size_t size() const {
         return _size;
     }
 
@@ -442,9 +442,9 @@ public:
 
 private:
     float loadFactor;
-    std::size_t _size;
+    size_t _size;
     Array<EntryPtr> buckets;
-    std::size_t threshold;
+    size_t threshold;
     HashFunction hashf;
     EqualsFunction equf;
 

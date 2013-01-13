@@ -176,7 +176,7 @@ ByteBuffer& ByteBuffer::operator=(const ByteBuffer & orig) {
 
 Array<byte> ByteBuffer::toArray() {
     Array<byte> toReturn = Array<byte>(_size);
-    arraycopy(_array, 0, toReturn, 0, std::size_t(_size));
+    arraycopy(_array, 0, toReturn, 0, size_t(_size));
 
     return toReturn;
 }

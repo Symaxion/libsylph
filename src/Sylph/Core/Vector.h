@@ -117,8 +117,8 @@ public:
      * @param initialCount The initial capacity of the vector, 16 if none is
      * provided.
      */
-    explicit Vector(std::size_t initialCount = 16) :
-            elements((std::size_t)initialCount), _size(0) {
+    explicit Vector(size_t initialCount = 16) :
+            elements((size_t)initialCount), _size(0) {
     }
 
     /**
@@ -182,7 +182,7 @@ public:
      * @return The current capacity of this Vector.
      * @complexity O(0)
      */
-    std::size_t capacity() const {
+    size_t capacity() const {
         return elements.length;
     }
 
@@ -215,7 +215,7 @@ public:
     /**
      * @complexity O(1)
      */
-    const T & get(std::size_t idx) const throw(ArrayException) {
+    const T & get(size_t idx) const throw(ArrayException) {
         try {
             checkIfOutOfBounds(idx);
             return elements[idx];
@@ -226,7 +226,7 @@ public:
     /**
      * @complexity O(1)
      */
-    T & get(std::size_t idx) throw(ArrayException) {
+    T & get(size_t idx) throw(ArrayException) {
         try {
             checkIfOutOfBounds(idx);
             return elements[idx];
@@ -242,7 +242,7 @@ public:
             checkIfOutOfBounds(idx);
         } straced;
         static Equals<T> equf;
-        for (std::size_t i = idx; i < _size; i++) {
+        for (size_t i = idx; i < _size; i++) {
             if (equf(get(i), t)) {
                 return i;
             }
@@ -260,13 +260,13 @@ public:
     /**
      * @complexity O(n)
      */
-    sidx_t lastIndexOf(const T & t, std::size_t idx) const 
+    sidx_t lastIndexOf(const T & t, size_t idx) const 
             throw(ArrayException) {
         static Equals<T> equf;
         try {
             checkIfOutOfBounds(idx);
         } straced;
-        for (std::size_t i = idx; (signed)i >= 0; --i) {
+        for (size_t i = idx; (signed)i >= 0; --i) {
             if (equf(get(i), t)) {
                 return i;
             }
@@ -284,7 +284,7 @@ public:
     /**
      * @complexity O(n)
      */
-    void removeAt(std::size_t idx) throw(ArrayException) {
+    void removeAt(size_t idx) throw(ArrayException) {
         try {
             checkIfOutOfBounds(idx);
         } straced;
@@ -297,7 +297,7 @@ public:
     /**
      * @complexity O(1)
      */
-    void set(std::size_t idx, const T & t) throw(ArrayException) {
+    void set(size_t idx, const T & t) throw(ArrayException) {
         try {
             checkIfOutOfBounds(idx);
             elements[idx] = t;
@@ -308,7 +308,7 @@ public:
     /**
      * @complexity O(0)
      */
-    std::size_t size() const {
+    size_t size() const {
         return _size;
     }
 
@@ -329,7 +329,7 @@ public:
     bool operator==(const Vector<T> & c) const {
         if (_size != c.size()) return false;
         else {
-            for (std::size_t x = 0; x < c.size(); x++) {
+            for (size_t x = 0; x < c.size(); x++) {
                 if (get(x) != c.get(x)) return false;
             }
             return true;
@@ -366,11 +366,11 @@ public:
 
 private:
     Array<T> elements;
-    std::size_t _size;
+    size_t _size;
 
-    void ensureCapacity(std::size_t capacity) {
+    void ensureCapacity(size_t capacity) {
         if (capacity > elements.length) {
-            std::size_t newsize;
+            size_t newsize;
             newsize = elements.length << 1;
             Array<T> oldElements = elements;
             elements = Array<T > (newsize);
@@ -378,7 +378,7 @@ private:
         }
     }
 
-    inline void checkIfOutOfBounds(std::size_t idx) const 
+    inline void checkIfOutOfBounds(size_t idx) const 
             throw(ArrayException) {
         if (idx >= _size) sthrow(ArrayException, "Vector out of bounds");
     }

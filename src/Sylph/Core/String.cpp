@@ -174,7 +174,7 @@ String::~String() {
     }
 }
 
-std::size_t String::length() const {
+size_t String::length() const {
     return strdata->data.length;
 }
 
@@ -588,7 +588,7 @@ String operator&(String(*lhs)(const String), const String rhs) {
     return lhs(rhs);
 }
 
-String operator*(const String lhs, const std::size_t len) {
+String operator*(const String lhs, const size_t len) {
     StringBuffer buf;
     for (idx_t i = 0; i < len; i++) {
         buf << lhs;

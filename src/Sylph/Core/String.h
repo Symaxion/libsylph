@@ -88,7 +88,7 @@ class String : public virtual Object {
     //friend String operator%(const String lhs, const String rhs);
     friend String operator&(const String lhs, const String(*rhs)(const String));
     friend String operator&(const String(*lhs)(String), const String rhs);
-    friend String operator*(const String lhs, const std::size_t len);
+    friend String operator*(const String lhs, const size_t len);
     friend std::ostream& operator<<(std::ostream& lhs, const String rhs);
 
     friend struct Hash<String>;
@@ -293,7 +293,7 @@ public:
      * 1-based.
      * @return The amount of characters in this String.
      */
-    std::size_t length() const;
+    size_t length() const;
 
     /**
      * Checks whether this string is empty.
@@ -604,7 +604,7 @@ private:
 
         virtual ~Data() { }
         Array<uchar> data;
-        mutable std::size_t refcount;
+        mutable size_t refcount;
     };
     mutable Data* strdata;
 
@@ -655,7 +655,7 @@ String operator+(const String lhs, const String rhs);
 //String operator%(const String lhs, const String rhs);
 String operator&(const String lhs, String(*rhs)(const String));
 String operator&(String(*lhs)(const String), const String rhs);
-String operator*(const String lhs, const std::size_t len);
+String operator*(const String lhs, const size_t len);
 std::ostream & operator<<(std::ostream& lhs, const String rhs);
 
 String lc(const String rhs);

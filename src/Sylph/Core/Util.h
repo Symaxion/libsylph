@@ -37,19 +37,19 @@ SYLPH_BEGIN_NAMESPACE
 
 // TODO: move this to Array
 template<class T>
-inline void carraycopy(const T src[], std::size_t srcPos, T dest[],
-        std::size_t destPos, std::size_t length) throw (Exception) {
+inline void carraycopy(const T src[], size_t srcPos, T dest[],
+        size_t destPos, size_t length) throw (Exception) {
     for (size_t i = 0; i < length; i++) {
         dest[destPos + i] = src[srcPos + i];
     }
 }
 
 template<class T>
-inline void arraycopy(const Array<T> & src, std::size_t srcPos, Array<T> & dest,
-        std::size_t destPos, std::size_t length) throw (Exception) {
+inline void arraycopy(const Array<T> & src, size_t srcPos, Array<T> & dest,
+        size_t destPos, size_t length) throw (Exception) {
 
-    std::size_t srcSize = src.length;
-    std::size_t destSize = dest.length;
+    size_t srcSize = src.length;
+    size_t destSize = dest.length;
     if (srcPos + length > srcSize) sthrow(ArrayException, "Source array too short");
     if (destPos + length > destSize) sthrow(ArrayException, "Dest array too short");
 
@@ -58,8 +58,8 @@ inline void arraycopy(const Array<T> & src, std::size_t srcPos, Array<T> & dest,
     }
 }
 
-template <typename T, std::size_t N>
-inline std::size_t carraysize(T(&)[N]) {
+template <typename T, size_t N>
+inline size_t carraysize(T(&)[N]) {
     return N;
 }
 

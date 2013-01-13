@@ -50,7 +50,7 @@ void StringBuffer::deleteSubstring(idx_t start, idx_t end) {
 }
 
 void StringBuffer::clear() {
-    buf = Array<uchar>((std::size_t)16);
+    buf = Array<uchar>((size_t)16);
     _length = 0;
 }
 
@@ -138,7 +138,7 @@ StringBuffer::operator String() const {
     return toString();
 }
 
-void StringBuffer::ensureCapacity(std::size_t capacity) {
+void StringBuffer::ensureCapacity(size_t capacity) {
     if(buf.length > capacity) return;
 
     size_t newsize = buf.length;

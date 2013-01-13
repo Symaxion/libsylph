@@ -41,7 +41,7 @@ typedef uint16_t uchar;
 class StringBuffer : public virtual Object {
 public:
     /** */
-    explicit StringBuffer(std::size_t len = 16) : buf(len), _length(0) {}
+    explicit StringBuffer(size_t len = 16) : buf(len), _length(0) {}
     /** */
     StringBuffer(const String);
     /** */
@@ -101,7 +101,7 @@ public:
 private:
     Array<uchar> buf;
     size_t _length;
-    void ensureCapacity(std::size_t capacity);
+    void ensureCapacity(size_t capacity);
 };
 SYLPH_END_NAMESPACE
 

@@ -32,7 +32,7 @@
 #include "Primitives.h"
 
 SYLPH_BEGIN_NAMESPACE
-inline int32_t hash_internal(const byte * b, std::size_t len) {
+inline int32_t hash_internal(const byte * b, size_t len) {
     uint32_t hash = 0;
     uint32_t x = 0;
     uint32_t i = 0;

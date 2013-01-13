@@ -150,7 +150,7 @@ public:
      * @param length The length of the original C array
      * @param orig The original C array, supplied as a pointer.
      */
-    inline static Array<T> fromPointer(std::size_t length, T * orig) {
+    inline static Array<T> fromPointer(size_t length, T * orig) {
         Array<T> ar(length);
         for (idx_t x = 0; x < length; x++)ar[x] = orig[x];
         return ar;
@@ -163,7 +163,7 @@ public:
      * internal C array is allocated to have the specified length.
      * @param len The length of the new Array.
      */
-    explicit Array(std::size_t len = 0) : _length(len), length(_length),
+    explicit Array(size_t len = 0) : _length(len), length(_length),
             data(new Data(len)) {
     }
 
@@ -283,7 +283,7 @@ public:
      * @return A new Array containing the same data as this Array.
      */
     Array<T> copy() const {
-        Array<T> toReturn((std::size_t)length);
+        Array<T> toReturn((size_t)length);
         for (idx_t i = 0; i < length; i++) {
             toReturn[i] = (*this)[i];
         }
