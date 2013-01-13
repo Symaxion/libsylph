@@ -136,7 +136,6 @@ private:
 #endif
 };
 
-#ifndef SYLPH_NO_CXX0X
 /**
  * Creates a new (non-LibSylph) object using the LibSylph garbage
  * collection. Example (using Qt):
@@ -148,7 +147,7 @@ private:
  * @tplreqs T Constructible with @em Args
  * @tplreqs Args none
  */
-template<class T, class... Args> T * newgc(const Args&... args);
+template<class T, class... Args> T* newgc(const Args&... args);
 
 /**
  * Deletes a (non-LibSylph) object that was previously allocated with LibSylph
@@ -162,10 +161,9 @@ template<class T, class... Args> T * newgc(const Args&... args);
  * @param t pointer to a class previously allocated with @c newgc
  * @tplreqs T none
  */
-template<class T> void deletegc(const T * t);
+template<class T> void deletegc(const T* t);
 // Undocumented, do not use directly! 
-template<class T> void cleanupgc(void *obj, void *displ);
-#endif
+template<class T> void cleanupgc(void* obj, void* displ);
 SYLPH_END_NAMESPACE
 
 #endif	/* SYLPH_CORE_OBJECT_H_ */

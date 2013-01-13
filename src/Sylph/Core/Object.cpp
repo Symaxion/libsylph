@@ -124,7 +124,6 @@ Object::Object() {
     }
 }
 
-#ifndef SYLPH_NO_CXX0X
 template<class T, class... Args>
 T* newgc(const Args&... args) {
     T* tr = GC_MALLOC(sizeof(T));
@@ -161,7 +160,6 @@ template<class T>
 void deletegc(const T* obj) {
     GC_FREE(obj);
 }
-#endif
 
 SYLPH_END_NAMESPACE
 

@@ -37,9 +37,7 @@
 #include <algorithm>
 #include <iostream>
 
-#ifndef SYLPH_NO_CXX0X
 #include <initializer_list>
-#endif
 
 SYLPH_BEGIN_NAMESPACE
 class Any;
@@ -169,7 +167,6 @@ public:
             data(new Data(len)) {
     }
 
-#ifndef SYLPH_NO_CXX0X
     /**
      * Creates an Array from an intializer list. This constructor allows the
      * easier, more familiar syntax of Array creation, but requires C++11. Using
@@ -187,7 +184,6 @@ public:
             data->_carray[i] = il.begin()[i];
         }
     }
-#endif
 
     /**
      * Creates an Array from an existing C-style array. Note that you can only
