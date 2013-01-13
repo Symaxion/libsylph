@@ -28,13 +28,10 @@ include(CheckCXXSourceRuns)
 
 # Workaround for CMake not detecting this...
 if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-    set(CMAKE_COMPILER_IS_CLANG 1)
     set(CMAKE_EXE_LINKER_FLAGS "-std=c++11 -stdlib=libc++")
     set(CMAKE_SHARED_LINKER_FLAGS "-std=c++11 -stdlib=libc++")
     set(CMAKE_MODULE_LINKER_FLAGS "-std=c++11 -stdlib=libc++")
-endif()
 
-if(CMAKE_COMPILER_IS_CLANG)
     set(CMAKE_REQUIRED_DEFINITIONS ${CMAKE_EXE_LINKER_FLAGS})
     check_cxx_source_runs(
 "
