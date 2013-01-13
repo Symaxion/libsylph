@@ -124,6 +124,34 @@ Object::Object() {
     }
 }
 
+namespace GCInternal {
+    void* gc_malloc(size_t s) {
+        return GC_MALLOC(s); 
+    }
+
+    void gc_register_finalizer(void* data, void(*f)(void*, void*)) {
+        GC_finalization_proc oldProc;
+        void* oldData;
+        void* base = GC_base((void*)data);
+
+        if (0 != base) {
+            // Don't call the debug version, since this is a real base address.
+            GC_register_finalizer_ignore_self(
+                    base, (GC_finalization_proc)f, 
+                    (void*) ((char*)data - (char*)base),
+                    &oldProc, &oldData);
+
+            if (0 != oldProc) {
+                GC_register_finalizer_ignore_self(base, oldProc, oldData, 0, 0);
+            }
+        }
+    }
+
+    void gc_free(void* data) {
+        GC_FREE(data);
+    }
+}
+
 template<class T, class... Args>
 T* newgc(const Args&... args) {
     T* tr = GC_MALLOC(sizeof(T));
@@ -131,22 +159,8 @@ T* newgc(const Args&... args) {
 
     tr = new(tr) T(args...);
 
-    GC_finalization_proc oldProc;
 
-    void* oldData;
-    void* base = GC_base((void*)tr);
 
-    if (0 != base) {
-        // Don't call the debug version, since this is a real base address.
-        GC_register_finalizer_ignore_self(
-                base, (GC_finalization_proc) cleanupgc<T>, 
-                (void*) ((char*)tr - (char*)base),
-                &oldProc, &oldData);
-
-        if (0 != oldProc) {
-            GC_register_finalizer_ignore_self(base, oldProc, oldData, 0, 0);
-        }
-    }
 
     return tr;
 }

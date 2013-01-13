@@ -33,6 +33,7 @@
 #define SYLPH_END_NAMESPACE }
 
 #include <cstddef>
+#include <exception>
 
 /**
  * \namespace Sylph
@@ -136,6 +137,13 @@ private:
 #endif
 };
 
+// This is used to prevent exposing libgc's header files to LibSylph clients.
+namespace GCInternal {
+    void* gc_malloc(size_t);
+    void gc_register_finalizer(void(*)(void*, void*));
+    void gc_free(void*);
+}
+
 /**
  * Creates a new (non-LibSylph) object using the LibSylph garbage
  * collection. Example (using Qt):
@@ -144,10 +152,44 @@ private:
  * </pre>
  * The syntax is very similar to that of the normal new operator.
  *
+ * @param args Arguments to @em T's constructor.
+ * @return A newly constructed object of type @em T with arguments @em args
+ * @throw std::bad_alloc if an error occured during allocation.
  * @tplreqs T Constructible with @em Args
  * @tplreqs Args none
  */
-template<class T, class... Args> T* newgc(const Args&... args);
+template<class T, class... Args>
+T* newgc(const Args&... args) {
+    T* tr = GCInternal::gc_malloc(sizeof(T));
+    if(!tr) throw std::bad_alloc();
+
+    tr = new(tr) T(args...);
+
+    GCInternal::gc_register_finalizer(tr, cleanupgc<T>);
+
+    return tr;
+}
+
+/**
+ * The nothrow version of newgc. Does not throw, returns a null pointer instead.
+ *
+ * @param args Arguments to @em T's constructor.
+ * @return A newly constructed object of type @em T with arguments @em args, or
+ * null.
+ * @tplreqs T Constructible with @em Args
+ * @tplreqs Args none
+ */
+template<class T, class... Args>
+T* newgc_nothrow(const Args&... args) {
+    T* tr = GCInternal::gc_malloc(sizeof(T));
+    if(!tr) return tr;
+
+    tr = new(tr) T(args...);
+
+    GCInternal::gc_register_finalizer(tr, cleanupgc<T>);
+
+    return tr;
+}
 
 /**
  * Deletes a (non-LibSylph) object that was previously allocated with LibSylph
@@ -161,9 +203,15 @@ template<class T, class... Args> T* newgc(const Args&... args);
  * @param t pointer to a class previously allocated with @c newgc
  * @tplreqs T none
  */
-template<class T> void deletegc(const T* t);
+template<class T> void deletegc(const T* t) {
+    GCInternal::gc_free(t);
+}
+
 // Undocumented, do not use directly! 
-template<class T> void cleanupgc(void* obj, void* displ);
+template<class T> void cleanupgc(void* obj, void* displ) {
+    ((T*) ((char*)obj + (ptrdiff_t)displ))->~T();
+}
+
 SYLPH_END_NAMESPACE
 
 #endif	/* SYLPH_CORE_OBJECT_H_ */

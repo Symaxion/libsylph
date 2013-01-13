@@ -9,7 +9,7 @@ syn keyword cppOperator over fpeq fpeqn
 syn keyword cConstant null noop
 syn keyword cConditional if_nullptr check_nullptr
 syn keyword cRepeat sforeach
-syn keyword cppStatement newgc deletegc thisapp
+syn keyword cppStatement newgc newgc_nothrow deletegc thisapp
 syn keyword cppOperator over
 syn keyword cppExceptions sthrow
 syn keyword cConstant SYLPH_BEGIN_NAMESPACE SYLPH_END_NAMESPACE
