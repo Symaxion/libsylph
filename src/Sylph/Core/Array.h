@@ -38,9 +38,7 @@
 #include <algorithm>
 #include <iostream>
 
-#ifndef SYLPH_NO_CXX0X
 #include <initializer_list>
-#endif
 
 SYLPH_BEGIN_NAMESPACE
 template<class T> class Array;
@@ -143,7 +141,7 @@ public:
      * @param length The length of the original C array
      * @param orig The original C array, supplied as a pointer.
      */
-    inline static Array<T> fromPointer(std::size_t length, T* orig) {
+    inline static Array<T> fromPointer(size_t length, T* orig) {
         Array<T> ar(length);
         for (idx_t x = 0; x < length; ++x)
             ar[x] = orig[x];
@@ -160,10 +158,9 @@ public:
      *
      * @param len The length of the new Array.
      */
-    explicit Array(std::size_t len = 0) : mOffset(0), mSize(len), 
+    explicit Array(size_t len = 0) : mOffset(0), mSize(len), 
             mData(new Data(len)) {}
 
-#ifndef SYLPH_NO_CXX0X
     /**
      * Creates an Array from an intializer list. 
      *
@@ -187,7 +184,6 @@ public:
             mData->mArray[i] = il.begin()[i];
         }
     }
-#endif
 
     /**
      * Creates an Array from an existing C-style array. 
@@ -289,7 +285,7 @@ public:
      */
     Array<T> copy() const {
         Array<T> toReturn(size());
-        for (idx_t i = 0; i < size(); ++i) {
+        for(idx_t i = 0; i < size(); ++i) {
             toReturn[i] = (*this)[i];
         }
         return toReturn;

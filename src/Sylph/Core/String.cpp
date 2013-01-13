@@ -174,7 +174,7 @@ String::~String() {
     }
 }
 
-std::size_t String::length() const {
+size_t String::length() const {
     return strdata->data.size();
 }
 
@@ -566,10 +566,10 @@ bool operator<(const String lhs, const String rhs) {
     return true;
 }
 
-sint hash(const String& s) {
-    suint hash = 0;
-    suint x = 0;
-    suint i = 0;
+uint32_t hash(const String& s) {
+    uint32_t hash = 0;
+    uint32_t x = 0;
+    uint32_t i = 0;
     uchar * b = s.strdata->data.carray();
 
     for(i = 0; i < s.length(); b++, i++) {
@@ -605,7 +605,7 @@ String operator&(String(*lhs)(const String), const String rhs) {
     return lhs(rhs);
 }
 
-String operator*(const String lhs, const std::size_t len) {
+String operator*(const String lhs, const size_t len) {
     StringBuffer buf;
     for (idx_t i = 0; i < len; i++) {
         buf << lhs;

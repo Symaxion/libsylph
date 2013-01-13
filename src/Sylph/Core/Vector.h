@@ -120,8 +120,8 @@ public:
      * @param initialCount The initial capacity of the vector, 16 if none is
      * provided.
      */
-    explicit Vector(std::size_t initialCount = 16) :
-            elements((std::size_t)initialCount), mSize(0) {
+    explicit Vector(size_t initialCount = 16) :
+            elements((size_t)initialCount), mSize(0) {
     }
 
     /**
@@ -207,7 +207,7 @@ public:
      * @return The current capacity of this Vector.
      * @complexity O(0)
      */
-    std::size_t capacity() const {
+    size_t capacity() const {
         return elements.size();
     }
 
@@ -240,7 +240,7 @@ public:
     /**
      * @complexity O(1)
      */
-    const T& get(std::size_t idx) const throw(IndexException) {
+    const T& get(idx_t idx) const throw(IndexException) {
         try {
             checkBounds(idx);
             return elements[idx];
@@ -250,7 +250,7 @@ public:
     /**
      * @complexity O(1)
      */
-    T& get(std::size_t idx) throw(IndexException) {
+    T& get(idx_t idx) throw(IndexException) {
         try {
             checkBounds(idx);
             return elements[idx];
@@ -265,8 +265,8 @@ public:
             checkBounds(idx);
         } straced;
         static Equals<T> equf;
-        for (std::size_t i = idx; i < mSize; i++) {
-            if (equf(get(i), t)) {
+        for(idx_t i = idx; i < mSize; i++) {
+            if(equf(get(i), t)) {
                 return i;
             }
         }
@@ -276,22 +276,21 @@ public:
     /**
      * @complexity O(n)
      */
-    sidx_t lastIndexOf(const T & t) const {
+    sidx_t lastIndexOf(const T& t) const {
         return lastIndexOf(t, mSize - 1);
     }
 
     /**
      * @complexity O(n)
      */
-    sidx_t lastIndexOf(const T & t, std::size_t idx) const 
-            throw(IndexException) {
+    sidx_t lastIndexOf(const T& t, idx_t idx) const throw(IndexException) {
         static Equals<T> equf;
         try {
             checkBounds(idx);
         } straced;
 
-        for (std::size_t i = idx; (signed)i >= 0; --i) {
-            if (equf(get(i), t)) {
+        for(idx_t i = idx; (signed)i >= 0; --i) {
+            if(equf(get(i), t)) {
                 return i;
             }
         }
@@ -301,14 +300,14 @@ public:
     /**
      * @complexity O(n)
      */
-    void remove(const T & t) {
+    void remove(const T& t) {
         removeAt(indexOf(t));
     }
 
     /**
      * @complexity O(n)
      */
-    void removeAt(std::size_t idx) throw(IndexException) {
+    void removeAt(idx_t idx) throw(IndexException) {
         try {
             checkBounds(idx);
         } straced;
@@ -335,7 +334,7 @@ public:
     /**
      * @complexity O(1)
      */
-    void set(std::size_t idx, const T & t) throw(IndexException) {
+    void set(idx_t idx, const T & t) throw(IndexException) {
         try {
             checkBounds(idx);
             elements[idx] = t;
@@ -346,7 +345,7 @@ public:
     /**
      * @complexity O(0)
      */
-    std::size_t size() const {
+    size_t size() const {
         return mSize;
     }
 
@@ -367,7 +366,7 @@ public:
     bool operator==(const Vector<T> & c) const {
         if (mSize != c.size()) return false;
         else {
-            for (std::size_t x = 0; x < c.size(); x++) {
+            for (size_t x = 0; x < c.size(); x++) {
                 if (get(x) != c.get(x)) return false;
             }
             return true;
@@ -414,11 +413,11 @@ public:
 
 private:
     Array<T> elements;
-    std::size_t mSize;
+    size_t mSize;
 
-    void ensureCapacity(std::size_t capacity) {
+    void ensureCapacity(size_t capacity) {
         if (capacity > elements.size()) {
-            std::size_t newsize;
+            size_t newsize;
             newsize = elements.size() << 1;
             Array<T> oldElements = elements;
             elements = Array<T > (newsize);
@@ -426,7 +425,7 @@ private:
         }
     }
 
-    inline void checkBounds(std::size_t idx) const 
+    inline void checkBounds(size_t idx) const 
             throw(IndexException) {
         if (idx >= mSize) sthrow(IndexException, "Vector out of bounds");
     }

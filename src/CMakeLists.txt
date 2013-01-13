@@ -30,10 +30,6 @@ else()
     add_definitions(${SYLPH_CONFIG_DEFS})
 endif()
 
-if(SYLPH_NO_CXX11)
-    add_definitions(-DSYLPH_NO_CXX0X)
-endif() 
-
 include(SourcesList.txt)
 
 include_directories(${SYLPH_INCLUDE})

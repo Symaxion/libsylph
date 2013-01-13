@@ -40,26 +40,26 @@ SYLPH_BEGIN_NAMESPACE
 // TODO: move this to Array
 template<class T>
 inline S_ENABLE_IF(void, S_TRAIT(IsPod, T)) 
-carraycopy(const T* src, std::size_t srcPos, T* dest,
-        std::size_t destPos, std::size_t length) {
+carraycopy(const T* src, size_t srcPos, T* dest,
+        size_t destPos, size_t length) {
     memcpy(dest+destPos,src+srcPos, length*sizeof(T));
 }
 
 template<class T>
 inline S_DISABLE_IF(void, S_TRAIT(IsPod, T))
-carraycopy(const T* src, std::size_t srcPos, T* dest, 
-        std::size_t destPos, std::size_t length) {
+carraycopy(const T* src, size_t srcPos, T* dest, 
+        size_t destPos, size_t length) {
     for(size_t i = 0; i < length; i++) {
         dest[destPos + i] = src[srcPos + i];
     }
 }
 
 template<class T>
-inline void arraycopy(const Array<T> & src, std::size_t srcPos, Array<T> & dest,
-        std::size_t destPos, std::size_t length) throw (Exception) {
+inline void arraycopy(const Array<T> & src, size_t srcPos, Array<T> & dest,
+        size_t destPos, size_t length) throw(IndexException) {
 
-    std::size_t srcSize = src.size();
-    std::size_t destSize = dest.size();
+    size_t srcSize = src.size();
+    size_t destSize = dest.size();
     if(srcPos + length > srcSize) 
         sthrow(IndexException, "Source array too short");
     if(destPos + length > destSize) 
@@ -68,8 +68,8 @@ inline void arraycopy(const Array<T> & src, std::size_t srcPos, Array<T> & dest,
     carraycopy(src.carray(), srcPos, dest.carray(), destPos, length);
 }
 
-template <typename T, std::size_t N>
-inline std::size_t carraysize(T(&)[N]) {
+template <typename T, size_t N>
+inline size_t carraysize(T(&)[N]) {
     return N;
 }
 

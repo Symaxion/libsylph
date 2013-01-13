@@ -480,56 +480,6 @@ File& File::append(const String rhs, bool initial) {
     return *this;
 }
 
-// iterator
-
-template<class C, class V>
-File::S_ITERATOR<C,V>::S_ITERATOR(bool begin, C* obj) : super(begin) {
-    file = obj;
-    pos = begin ? 0 : file->path.length() - 1;
-    if (begin) next();
-}
-
-template<class C, class V>
-void File::S_ITERATOR<C,V>::next() {
-    sidx_t start = 0;
-    if (pos == 0) {
-        start = 1;
-    } else {
-        start = file->path.indexOf(File::Separator, pos);
-        if (start == -1) {
-            pos = file->path.length();
-            return;
-        } else {
-            ++start;
-        }
-    }
-
-    sidx_t end = file->path.indexOf(File::Separator, start);
-    if (end == -1) {
-        end = file->path.length();
-    }
-
-    --end;
-
-    cur = file->path.substring(start, end);
-    pos = end;
-}
-
-template<class C, class V>
-bool File::S_ITERATOR<C,V>::hasNext() const {
-    return pos < file->path.length() - 1;
-}
-
-template<class C, class V>
-bool File::S_ITERATOR<C,V>::hasPrevious() const {
-    return pos != 0;
-}
-
-template<class C, class V>
-void File::S_ITERATOR<C,V>::previous() {
-    SYLPH_STUB;
-}
-
 SYLPH_END_NAMESPACE
 
 // vim: ts=4:sts=4:sw=4:sta:et:tw=80:nobk

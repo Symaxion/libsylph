@@ -64,7 +64,7 @@ inline uint32_t hash(const uint32_t& i) {
 
 template<class T>
 struct Hash {
-    inline uint32_t operator()(const T & t) const {
+    inline uint32_t operator()(const T& t) const {
         return hash(t);
     }
 };
