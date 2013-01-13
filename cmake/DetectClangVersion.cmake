@@ -1,7 +1,7 @@
 #########################################################################
 #
 # LibSylph Class Library (build script)
-# Copyright (C) 2012 Frank "SeySayux" Erens <seysayux@gmail.com>
+# Copyright (C) 2013 Frank "SeySayux" Erens <seysayux@gmail.com>
 #
 # This software is provided 'as-is', without any express or implied
 # warranty. In no event will the authors be held liable for any damages
@@ -28,13 +28,10 @@ include(CheckCXXSourceRuns)
 
 # Workaround for CMake not detecting this...
 if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-    set(CMAKE_COMPILER_IS_CLANG 1)
     set(CMAKE_EXE_LINKER_FLAGS "-std=c++11 -stdlib=libc++")
     set(CMAKE_SHARED_LINKER_FLAGS "-std=c++11 -stdlib=libc++")
     set(CMAKE_MODULE_LINKER_FLAGS "-std=c++11 -stdlib=libc++")
-endif()
 
-if(CMAKE_COMPILER_IS_CLANG)
     set(CMAKE_REQUIRED_DEFINITIONS ${CMAKE_EXE_LINKER_FLAGS})
     check_cxx_source_runs(
 "

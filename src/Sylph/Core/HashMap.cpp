@@ -1,6 +1,6 @@
 /*
  * LibSylph Class Library
- * Copyright (C) 2012 Frank "SeySayux" Erens <seysayux@gmail.com>
+ * Copyright (C) 2013 Frank "SeySayux" Erens <seysayux@gmail.com>
  *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -29,12 +29,12 @@
 
 SYLPH_BEGIN_NAMESPACE
 
-extern template class HashMap<String,sshort>;
-extern template class HashMap<String,sushort>;
-extern template class HashMap<String,sint>;
-extern template class HashMap<String,suint>;
-extern template class HashMap<String,slong>;
-extern template class HashMap<String,sulong>;
+extern template class HashMap<String,int16_t>;
+extern template class HashMap<String,uint16_t>;
+extern template class HashMap<String,int32_t>;
+extern template class HashMap<String,uint32_t>;
+extern template class HashMap<String,int64_t>;
+extern template class HashMap<String,uint64_t>;
 extern template class HashMap<String,bool>;
 extern template class HashMap<String,double>;
 extern template class HashMap<String,float>;

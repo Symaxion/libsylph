@@ -1,6 +1,6 @@
 /*
  * LibSylph Class Library
- * Copyright (C) 2012 Frank "SeySayux" Erens <seysayux@gmail.com>
+ * Copyright (C) 2013 Frank "SeySayux" Erens <seysayux@gmail.com>
  *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -32,10 +32,10 @@
 #include "Primitives.h"
 
 SYLPH_BEGIN_NAMESPACE
-inline sint hash_internal(const byte * b, std::size_t len) {
-    suint hash = 0;
-    suint x = 0;
-    suint i = 0;
+inline uint32_t hash_internal(const byte* b, size_t len) {
+    uint32_t hash = 0;
+    uint32_t x = 0;
+    uint32_t i = 0;
 
     for(i = 0; i < len; b++, i++) {
         hash = (hash << 4) + (*b);
@@ -48,23 +48,23 @@ inline sint hash_internal(const byte * b, std::size_t len) {
 }
 
 template<class T>
-sint hash(const T& t) {
+uint32_t hash(const T& t) {
     return hash_internal(reinterpret_cast<const byte*>(&t), sizeof (T));
 }
 
 template<class T>
-sint hash(const T*& t) {
+uint32_t hash(const T*& t) {
     return t == 0 ? 0 :
             hash_internal(reinterpret_cast<const byte*>(t), sizeof (T));
 }
 
-inline sint hash(const sint& i) {
+inline uint32_t hash(const uint32_t& i) {
     return i;
 }
 
 template<class T>
 struct Hash {
-    inline sint operator()(const T & t) const {
+    inline uint32_t operator()(const T & t) const {
         return hash(t);
     }
 };

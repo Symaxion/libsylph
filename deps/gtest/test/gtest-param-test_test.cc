@@ -74,7 +74,7 @@ using ::testing::internal::UnitTestOptions;
 
 // Prints a value to a string.
 //
-// TUDU(wan@google.com): remove PrintValue() when we move matchers and
+// TODO(wan@google.com): remove PrintValue() when we move matchers and
 // EXPECT_THAT() from Google Mock to Google Test.  At that time, we
 // can write EXPECT_THAT(x, Eq(y)) to compare two tuples x and y, as
 // EXPECT_THAT() and the matchers know how to print tuples.
@@ -280,10 +280,10 @@ class DogAdder {
   bool operator<(const DogAdder& other) const {
     return value_ < other.value_;
   }
-  const ::testing::internal::String& value() const { return value_; }
+  const std::string& value() const { return value_; }
 
  private:
-  ::testing::internal::String value_;
+  std::string value_;
 };
 
 TEST(RangeTest, WorksWithACustomType) {
@@ -606,6 +606,7 @@ class TestGenerationEnvironment : public ::testing::Environment {
           << "has not been run as expected.";
     }
   }
+
  private:
   TestGenerationEnvironment() : fixture_constructor_count_(0), set_up_count_(0),
                                 tear_down_count_(0), test_body_count_(0) {}
@@ -674,6 +675,7 @@ class TestGenerationTest : public TestWithParam<int> {
 
     EXPECT_TRUE(collected_parameters_ == expected_values);
   }
+
  protected:
   int current_parameter_;
   static vector<int> collected_parameters_;

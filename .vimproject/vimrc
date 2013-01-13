@@ -38,7 +38,7 @@ let g:clang_user_options = '-std=c++11 -stdlib=libc++ -I./src' .
 
 fun! s:DefaultCompiler() 
   if has("macunix")
-    return "g++-4.7"
+    return "clang++"
   else
     return "g++"
   endif
@@ -70,7 +70,8 @@ fun! s:CMake(...)
   exe "lcd ".g:ProjectRoot
   exe "!rm -rf build".l:suffix."; mkdir -p build".l:suffix.";"
         \ "cd build".l:suffix."; " . 
-        \ "cmake -DCMAKE_CXX_COMPILER=".l:compiler." .."
+        \ "cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=".l:compiler.
+        \ " .."
 endfun
 
 fun! s:ToRelativePath(path)

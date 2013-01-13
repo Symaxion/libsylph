@@ -1,6 +1,6 @@
 /*
  * LibSylph Class Library
- * Copyright (C) 2012 Frank "SeySayux" Erens <seysayux@gmail.com>
+ * Copyright (C) 2013 Frank "SeySayux" Erens <seysayux@gmail.com>
  *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -448,7 +448,7 @@ private:
     HashFunction hashf;
     EqualsFunction equf;
 
-    sint hash(const Key& key) const {
+    uint32_t hash(const Key& key) const {
         return abs(hashf(key) % buckets.size());
     }
 

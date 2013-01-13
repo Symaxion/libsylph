@@ -71,7 +71,7 @@ namespace {
                   << "Which is: " << expected_val << "\n";\
       ::testing::internal::posix::Abort();\
     }\
-  } while(::testing::internal::AlwaysFalse())
+  } while (::testing::internal::AlwaysFalse())
 
 
 // Used for verifying that global environment set-up and tear-down are
@@ -127,7 +127,7 @@ const int kNumberOfParamTests = 10;
 class MyParamTest : public testing::TestWithParam<int> {};
 
 TEST_P(MyParamTest, ShouldPass) {
-  // TUDU(vladl@google.com): Make parameter value checking robust
+  // TODO(vladl@google.com): Make parameter value checking robust
   //                         WRT order of tests.
   GTEST_CHECK_INT_EQ_(g_param_test_count % kNumberOfParamTests, GetParam());
   g_param_test_count++;

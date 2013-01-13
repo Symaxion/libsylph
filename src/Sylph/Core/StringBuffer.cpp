@@ -1,6 +1,6 @@
 /*
  * LibSylph Class Library
- * Copyright (C) 2012 Frank "SeySayux" Erens <seysayux@gmail.com>
+ * Copyright (C) 2013 Frank "SeySayux" Erens <seysayux@gmail.com>
  *
  * This software is provided 'as-is', without any express or implied
  * warranty. In no event will the authors be held liable for any damages
@@ -96,19 +96,19 @@ StringBuffer& StringBuffer::operator<<(Array<uchar> c) {
     return *this;
 }
 
-StringBuffer& StringBuffer::operator<<(sint i) {
+StringBuffer& StringBuffer::operator<<(int32_t i) {
     return *this<<(String(i));
 }
 
-StringBuffer& StringBuffer::operator<<(suint i) {
+StringBuffer& StringBuffer::operator<<(uint32_t i) {
     return *this<<(String(i));
 }
 
-StringBuffer& StringBuffer::operator<<(slong l) {
+StringBuffer& StringBuffer::operator<<(int64_t l) {
     return *this<<(String(l));
 }
 
-StringBuffer& StringBuffer::operator<<(sulong l) {
+StringBuffer& StringBuffer::operator<<(uint64_t l) {
     return *this<<(String(l));
 }
 
