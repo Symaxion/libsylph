@@ -25,21 +25,24 @@
 #########################################################################
 
 # Flags to enable C++11
-if(CMAKE_COMPILER_IS_CLANG)
+if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
     # Clang
-    if(NOT SYLPH_NO_CXX11)
-        set(CMAKE_CXX_FLAGS "-std=c++11 -stdlib=libc++" )
-    endif()
-elseif(CMAKE_COMPILER_IS_GNUCC)
+    set(CMAKE_CXX_FLAGS 
+        "${CMAKE_CXX_FLAGS} -std=c++11 -stdlib=libc++" )
+    set(CMAKE_EXE_LINKER_FLAGS 
+        "-std=c++11 -stdlib=libc++")
+    set(CMAKE_SHARED_LINKER_FLAGS 
+        "-std=c++11 -stdlib=libc++")
+    set(CMAKE_MODULE_LINKER_FLAGS 
+        "-std=c++11 -stdlib=libc++")
+elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     # GCC >= 4.5.3
     # GCC is pretty schizophrenic when it comes to the name of the new C++
     # standard...
-    if(NOT SYLPH_NO_CXX11)
         if(GCC_VERSION STRGREATER "4.7./")
-            set(CMAKE_CXX_FLAGS "-std=c++11")
+            set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
         else(GCC_VERSION STRGREATER "4.5.2")
-            set(CMAKE_CXX_FLAGS "-std=c++0x")
+            set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
         endif()
-    endif()
 endif()
 

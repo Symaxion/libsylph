@@ -78,8 +78,7 @@ if(UNIX AND NOT APPLE)
     set(LINLIKE 1)
 endif()
 
-# If C++11 is disabled, we rename the library so that C++11 and C++03 versions
-# can be installed side by side.
+# Name of the library we are producing (libSylph)
 set(SYLPH_TARGET "Sylph")
 
 # Check if compiler supports all the required C++11 constructs
@@ -120,6 +119,7 @@ if(NOT SYLPH_CXXFLAGS)
     set(SYLPH_CXXFLAGS "")
     set(COVERAGE_LIBS "")
 
+    # C++11 support
     include(EnableCxx11)
 
     # Flags to enable warnings/errors and code coverage/profiling.

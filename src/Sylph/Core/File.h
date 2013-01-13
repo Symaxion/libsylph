@@ -31,6 +31,7 @@
 #include "String.h"
 #include "Iterator.h"
 #include "Iterable.h"
+#include "Debug.h"
 
 SYLPH_BEGIN_NAMESPACE
 
@@ -62,7 +63,11 @@ public:
     public:
         typedef BidirectionalIterator<V,S_ITERATOR<C,V> > super;
 
-        S_ITERATOR(bool begin = false, C* obj = null);
+        S_ITERATOR(bool begin = false, C* obj = null) : super(begin) {
+            file = obj;
+            pos = begin ? 0 : file->path.length() - 1;
+            if(begin) next();
+        }
 
         typename super::value_type& current() {
             return cur;
@@ -72,8 +77,34 @@ public:
             return cur;
         }
 
-        void next();
-        bool hasNext() const;
+        void next() {
+            sidx_t start = 0;
+            if (pos == 0) {
+                start = 1;
+            } else {
+                start = file->path.indexOf(File::Separator, pos);
+                if (start == -1) {
+                    pos = file->path.length();
+                    return;
+                } else {
+                    ++start;
+                }
+            }
+
+            sidx_t end = file->path.indexOf(File::Separator, start);
+            if (end == -1) {
+                end = file->path.length();
+            }
+
+            --end;
+
+            cur = file->path.substring(start, end);
+            pos = end;
+        }
+
+        bool hasNext() const {
+            return pos < file->path.length() - 1;
+        }
 
         template<class C1, class V1>
         bool equals(const S_ITERATOR<C1,V1>& other) const {
@@ -86,8 +117,14 @@ public:
             cur = other.cur;
             pos = other.pos;
         }
-        bool hasPrevious() const;
-        void previous();
+
+        bool hasPrevious() const {
+            return pos != 0;
+        }        
+
+        void previous() {
+            SYLPH_STUB;
+        }
     //private:
         C* file;
         String cur;
