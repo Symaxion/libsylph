@@ -216,7 +216,7 @@ namespace {
         // initialize random seed: 
   	    srand(time(null));
 
-        for(std::size_t x = 0; x < 1000; x++) {
+        for(size_t x = 0; x < 1000; x++) {
             int randomnumber = rand() % 10 + 1;
             testObj1.add(randomnumber);
             testObj2.add(randomnumber + 1);
@@ -251,7 +251,7 @@ namespace {
     TEST_F(TestVector, testReverseIterator) {
         idx_t cur = 1000u;
         Vector<int> testObj1 ((size_t) 5);
-        for(std::size_t x = 0; x < 1000; x++) {
+        for(size_t x = 0; x < 1000; x++) {
             testObj1.add(x);
         }
 
