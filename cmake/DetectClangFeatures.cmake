@@ -56,9 +56,9 @@ int main() {
 }" 
             S_CLANGVER)
     if(S_CLANGVER_EXITCODE EQUAL 1)
-        set(CLANG_VERSION 0)
+        set(S_CLANG_HAS_REQUIRED_FEATURES 0)
     else()
-        set(CLANG_VERSION 1)
+        set(S_CLANG_HAS_REQUIRED_FEATURES 1)
     endif()
     unset(CMAKE_REQUIRED_DEFINITIONS)
 endif()

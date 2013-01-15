@@ -70,8 +70,7 @@ if(NOT IS_ABSOLUTE "${SYLPH_INSTALL_CMAKE_DIR}")
 endif()
 
 #Version & platform checks...
-include(DetectGccVersion)
-include(DetectClangVersion)
+include(DetectClangFeatures)
 
 #Yea, I know *BSD, Irix, HP-UX, Solaris, ... != Linux, but for simplicity...
 if(UNIX AND NOT APPLE)
@@ -85,7 +84,7 @@ set(SYLPH_TARGET "Sylph")
 if(NOT SYLPH_COMPILER_SUFFICIENT) # manual override
     set(SYLPH_COMPILER_SUFFICIENT 0)
 
-    if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang" AND CLANG_VERSION STREQUAL "1")
+    if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang" AND S_CLANG_HAS_REQUIRED_FEATURES)
         # We must check for Clang first as it identifies itself as GCC as
         # well.
         # For Clang, we use feature checks instead of hardcoded version 
@@ -93,7 +92,7 @@ if(NOT SYLPH_COMPILER_SUFFICIENT) # manual override
         # redistributors may change version numbers at will -- Apple does)
         set(SYLPH_COMPILER_SUFFICIENT 1)
     elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" AND 
-                GCC_VERSION STRGREATER "4.7./")
+            CMAKE_CXX_COMPILER_VERSION STRGREATER "4.7./")
         # GCC >= 4.5.3 will do the job
         set(SYLPH_COMPILER_SUFFICIENT 1)
     endif()

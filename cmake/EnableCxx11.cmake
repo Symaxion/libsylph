@@ -39,10 +39,10 @@ elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     # GCC >= 4.5.3
     # GCC is pretty schizophrenic when it comes to the name of the new C++
     # standard...
-        if(GCC_VERSION STRGREATER "4.7./")
-            set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-        else(GCC_VERSION STRGREATER "4.5.2")
+    if(CMAKE_CXX_COMPILER_VERSION STRGREATER "4.7./")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+    else(CMAKE_CXX_COMPILER_VERSION STRGREATER "4.5.2")
             set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
-        endif()
+    endif()
 endif()
 
