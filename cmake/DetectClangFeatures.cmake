@@ -39,16 +39,45 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
 
 int main() {
 #ifdef __clang__ 
-#if __has_feature(cxx_generalized_initializers) && \\\\
-    __has_feature(cxx_lambdas) && \\\\
-    __has_feature(cxx_rvalue_references) && \\\\
-    (__has_feature(cxx_decltype) || \\\\
-    __has_extension(cxx_decltype))  && \\\\
+#if __has_feature(cxx_lambdas) && \\\\
     (__has_feature(cxx_auto_type) || \\\\
     __has_extension(cxx_auto_type)) && \\\\
     (__has_feature(cxx_trailing_return) || \\\\
     __has_extension(cxx_trailing_return)) && \\\\
-    __has_feature(cxx_variadic_templates)
+    (__has_feature(cxx_alias_templates) || \\\\
+    __has_extension(cxx_alias_templates)) && \\\\
+    (__has_feature(cxx_alignas) || \\\\
+    __has_extension(cxx_alignas)) && \\\\
+    (__has_feature(cxx_attributes) || \\\\
+    __has_extension(cxx_attributes)) && \\\\
+    __has_feature(cxx_constexpr) && \\\\
+    (__has_feature(cxx_decltype) || \\\\
+    __has_extension(cxx_decltype))  && \\\\
+    (__has_feature(cxx_default_function_template_args) || \\\\
+    __has_extension(cxx_default_function_template_args)) && \\\\
+    (__has_feature(cxx_defaulted_functions) || \\\\
+    __has_extension(cxx_defaulted_functions)) && \\\\
+    (__has_feature(cxx_deleted_functions) || \\\\
+    __has_extension(cxx_deleted_functions)) && \\\\
+    __has_feature(cxx_explicit_conversions) && \\\\
+    __has_feature(cxx_generalized_initializers) && \\\\
+    __has_feature(cxx_implicit_moves) && \\\\
+    (__has_feature(cxx_noexcept) || \\\\
+    __has_extension(cxx_noexcept)) && \\\\
+    __has_feature(cxx_nonstatic_member_init) && \\\\
+    (__has_feature(cxx_nullptr) || \\\\
+    __has_extension(cxx_nullptr)) && \\\\
+    (__has_feature(cxx_override_control) || \\\\
+    __has_extension(cxx_override_control)) && \\\\
+    (__has_feature(cxx_range_for) || \\\\
+    __has_extension(cxx_range_for)) && \\\\
+    (__has_feature(cxx_raw_string_literals) || \\\\
+    __has_extension(cxx_raw_string_literals)) && \\\\
+    (__has_feature(cxx_static_assert) || \\\\
+    __has_extension(cxx_static_assert)) && \\\\
+    (__has_feature(cxx_variadic_templates) || \\\\
+    __has_extension(cxx_variadic_templates))
+
     return 0;
 #endif
 #endif
