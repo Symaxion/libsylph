@@ -33,7 +33,7 @@
 #define SYLPH_END_NAMESPACE }
 
 #include <cstddef>
-#include <exception>
+#include <new>
 
 /**
  * \namespace Sylph
@@ -144,6 +144,11 @@ namespace GCInternal {
     void gc_free(void*);
 }
 
+// Undocumented, do not use directly! 
+template<class T> void cleanupgc(void* obj, void* displ) {
+    ((T*) ((char*)obj + (ptrdiff_t)displ))->~T();
+}
+
 /**
  * Creates a new (non-LibSylph) object using the LibSylph garbage
  * collection. Example (using Qt):
@@ -205,11 +210,6 @@ T* newgc_nothrow(const Args&... args) {
  */
 template<class T> void deletegc(const T* t) {
     GCInternal::gc_free(t);
-}
-
-// Undocumented, do not use directly! 
-template<class T> void cleanupgc(void* obj, void* displ) {
-    ((T*) ((char*)obj + (ptrdiff_t)displ))->~T();
 }
 
 SYLPH_END_NAMESPACE
