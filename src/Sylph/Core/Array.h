@@ -321,6 +321,7 @@ public:
      *
      * @param t An object
      * @return true if this array containts the element, false otherwise
+     * @complexity \f$O(n)\f$
      */
     bool contains(const T& t) const {
         for(idx_t i = 0; i < size(); ++i) {
