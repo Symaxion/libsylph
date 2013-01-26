@@ -34,6 +34,7 @@
 
 #include <cstddef>
 #include <memory>
+#include <new>
 
 /**
  * \namespace Sylph
@@ -142,6 +143,11 @@ namespace GCInternal {
     void* gc_malloc(size_t);
     void gc_register_finalizer(void(*)(void*, void*));
     void gc_free(void*);
+}
+
+// Undocumented, do not use directly! 
+template<class T> void cleanupgc(void* obj, void* displ) {
+    ((T*) ((char*)obj + (ptrdiff_t)displ))->~T();
 }
 
 /**

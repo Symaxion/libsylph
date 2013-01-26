@@ -152,29 +152,6 @@ namespace GCInternal {
     }
 }
 
-template<class T, class... Args>
-T* newgc(const Args&... args) {
-    T* tr = GC_MALLOC(sizeof(T));
-    if(!tr) throw std::bad_alloc();
-
-    tr = new(tr) T(args...);
-
-
-
-
-    return tr;
-}
-
-template<class T>
-void cleanupgc(void* obj, void* displ) {
-    ((T*) ((char*)obj + (ptrdiff_t)displ))->~T();
-}
-
-template<class T>
-void deletegc(const T* obj) {
-    GC_FREE(obj);
-}
-
 SYLPH_END_NAMESPACE
 
 // vim: ts=4:sts=4:sw=4:sta:et:tw=80:nobk
