@@ -28,6 +28,7 @@
 #define	SYLPH_CORE_RANGE_H_
 
 #include "Object.h"
+#include "Primitives.h"
 #include <algorithm>
 
 SYLPH_BEGIN_NAMESPACE
