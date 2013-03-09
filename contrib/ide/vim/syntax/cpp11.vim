@@ -35,6 +35,7 @@ syn keyword cppStorageClass	mutable
 syn keyword cppStructure	class typename template namespace
 syn keyword cppNumber		NPOS
 syn keyword cppBoolean		true false
+syn keyword cConstant           nullptr
 
 " The minimum and maximum operators in GNU C++
 syn match cppMinMax "[<>]?"

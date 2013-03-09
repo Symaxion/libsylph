@@ -6,7 +6,7 @@ syn keyword cppType function
 syn keyword cppType idx_t sidx_t
 syn keyword cppType fsize_t fssize_t
 syn keyword cppOperator over fpeq fpeqn
-syn keyword cConstant null noop
+syn keyword cConstant noop
 syn keyword cConditional if_nullptr check_nullptr
 syn keyword cRepeat sforeach
 syn keyword cppStatement newgc newgc_nothrow deletegc thisapp
@@ -14,6 +14,9 @@ syn keyword cppOperator over
 syn keyword cppExceptions sthrow
 syn keyword cConstant SYLPH_BEGIN_NAMESPACE SYLPH_END_NAMESPACE
 syn keyword cConstant S_BEGIN_TRAITS S_END_TRAITS
+
+" Do not use null anymore, use nullptr
+syn keyword cError null 
 
 " Constants and member variables
 syn match cConstant /\<k[A-Z]\w\+/
