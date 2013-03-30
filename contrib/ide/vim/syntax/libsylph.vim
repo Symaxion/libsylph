@@ -23,4 +23,4 @@ syn match cConstant /\<k[A-Z]\w\+/
 syn match cppMember /\<m[A-Z]\w\+/
 syn match cppGlobal /\<g[A-Z]\w\+/
 hi def link cppMember Identifier
-hi def link cppGlobal WarningMsg " Adequate class for globals, don't you think?
+hi def link cppGlobal WarningMsg 
