@@ -122,7 +122,8 @@ if(NOT SYLPH_CXXFLAGS)
     include(EnableCxx11)
 
     # Flags to enable warnings/errors and code coverage/profiling.
-    if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_CLANG)
+    if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR
+            CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
         if(SYLPH_ENABLE_COVERAGE)
             set(SYLPH_CXXFLAGS "${SYLPH_CXXFLAGS} 
                     -fprofile-arcs -ftest-coverage")
